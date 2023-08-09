@@ -44,7 +44,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               height: 70.h,
               width: 328.h,
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withOpacity(0.8),
                 borderRadius: BorderRadius.all(
                   const Radius.circular(15.0).w,
                 ),
