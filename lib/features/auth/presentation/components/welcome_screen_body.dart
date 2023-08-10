@@ -1,8 +1,9 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/config/router/app_router.dart';
+import 'dart:ui';
+
 import 'package:efashion_flutter/core/util/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
 
 class WelcomeScreenBody extends StatelessWidget {
   const WelcomeScreenBody({super.key});
@@ -11,12 +12,11 @@ class WelcomeScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const Image(
+        Image.asset(
+          AssetsManager.welcomeImage,
+          width: MediaQuery.sizeOf(context).width,
+          height: MediaQuery.sizeOf(context).height,
           fit: BoxFit.cover,
-          height: double.infinity,
-          image: AssetImage(
-            AssetsManager.welcomeImage,
-          ),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -32,58 +32,72 @@ class WelcomeScreenBody extends StatelessWidget {
               height: 50.h,
             ),
             Expanded(
-              child: Stack(
-                children: [
-                  const Image(
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    image: AssetImage(AssetsManager.welcomeCurvedContainer),
-                  ),
-                  Positioned(
-                    left: 24.w,
-                    bottom: 90.h,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Start your new",
-                          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                color: Colors.white,
-                              ),
-                        ),
-                        Text(
-                          "shopping experience",
-                          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                color: Colors.white,
-                              ),
-                        ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        Text(
-                          "For fancy clothes and accessories",
-                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                color: Colors.white,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    left: 273.w,
-                    bottom: 142.h,
-                    child: InkWell(
-                      onTap: () {
-                        context.pushRoute(const LoginRoute());
-                      },
-                      child: const Image(
-                        image: AssetImage(
-                          AssetsManager.swipeUpImage,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF001D34).withOpacity(.5),
+                        borderRadius: BorderRadius.only(
+                          topLeft: const Radius.circular(40.0).r,
+                          topRight: const Radius.circular(40.0).r,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    Positioned(
+                      top: 128.h,
+                      left: 24.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Start your new",
+                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.white,
+                                ),
+                          ),
+                          Text(
+                            "shopping experience",
+                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.white,
+                                ),
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          Text(
+                            "For fancy clothes and accessories",
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                  color: Colors.white,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 273.w,
+                      bottom: 142.h,
+                      child: Column(
+                        children: [
+                          const Icon(
+                            Iconsax.add,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          Text(
+                            "Swipe up",
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                                  color: Colors.white,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
