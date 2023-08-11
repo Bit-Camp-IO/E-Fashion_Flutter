@@ -75,7 +75,7 @@ class _CollectionCarouselComponentState extends State<CollectionCarouselComponen
             selectedColor: const Color(0xFFF2F2F2),
             unSelectedColor: const Color(0xFFFFFFFF).withOpacity(0.5),
             axisDirection: Axis.horizontal,
-            dotsCount: 5,
+            dotsCount: 4,
           ),
         ),
       ],
