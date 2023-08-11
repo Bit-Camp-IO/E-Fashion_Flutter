@@ -18,13 +18,13 @@ class TitledAvatar extends StatefulWidget {
 }
 
 class _TitledAvatarState extends State<TitledAvatar> {
-  bool isSelected = false;
+  bool isTapped = false;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         setState(() {
-          isSelected = !isSelected;
+          isTapped = !isTapped;
         });
         widget.onTap();
       },
@@ -46,7 +46,7 @@ class _TitledAvatarState extends State<TitledAvatar> {
       alignment: Alignment.center,
       children: [
         AnimatedOpacity(
-          opacity: isSelected ? 0.0 : 1.0,
+          opacity: isTapped ? 0.0 : 1.0,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
           child: CircleAvatar(
@@ -54,7 +54,7 @@ class _TitledAvatarState extends State<TitledAvatar> {
           ),
         ),
         AnimatedOpacity(
-          opacity: isSelected ? 1.0 : 0.0,
+          opacity: isTapped ? 1.0 : 0.0,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
           child: CircleAvatar(
