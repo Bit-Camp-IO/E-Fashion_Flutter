@@ -1,6 +1,7 @@
 class Gender {
   final String name;
   final String picture;
+
   Gender({required this.name, required this.picture});
 }
 
