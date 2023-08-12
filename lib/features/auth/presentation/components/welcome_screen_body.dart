@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/core/util/assets_manager.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/welcome_screen_custom_clip_path.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +14,12 @@ class WelcomeScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.asset(
-          AssetsManager.welcomeImage,
-          width: MediaQuery.sizeOf(context).width,
-          height: MediaQuery.sizeOf(context).height,
+        const Image(
           fit: BoxFit.cover,
+          height: double.infinity,
+          image: AssetImage(
+            AssetsManager.welcomeImage,
+          ),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -79,7 +82,9 @@ class WelcomeScreenBody extends StatelessWidget {
                     left: 273.w,
                     bottom: 142.h,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        context.pushRoute(const LoginRoute());
+                      },
                       child: const Image(
                         image: AssetImage(
                           AssetsManager.swipeUpImage,
