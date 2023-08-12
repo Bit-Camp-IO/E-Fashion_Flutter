@@ -6,18 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
-class LoginScreenBody extends StatefulWidget {
-  const LoginScreenBody({super.key});
+class SignupScreenBody extends StatefulWidget {
+  const SignupScreenBody({super.key});
 
   @override
-  State<LoginScreenBody> createState() => _LoginScreenBodyState();
+  State<SignupScreenBody> createState() => _SignupScreenBodyState();
 }
 
-class _LoginScreenBodyState extends State<LoginScreenBody> {
-  bool isChecked = false;
+class _SignupScreenBodyState extends State<SignupScreenBody> {
   final GlobalKey formKey = GlobalKey<FormState>();
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                         height: 35.h,
                       ),
                       Text(
-                        "Log in",
+                        "Sign up",
                         style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                               color: ColorsManager.lightPrimaryColor,
                             ),
@@ -76,8 +77,19 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                         label: "user name",
                         obscureText: false,
                         prefixIcon: Iconsax.user,
-                        type: TextInputType.text,
+                        type: TextInputType.name,
                         hintText: "Username",
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      CustomTextFormField(
+                        controller: emailController,
+                        label: "Email",
+                        obscureText: false,
+                        prefixIcon: Icons.email_outlined,
+                        type: TextInputType.emailAddress,
+                        hintText: "Email",
                       ),
                       SizedBox(
                         height: 16.h,
@@ -87,13 +99,14 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                         label: "Password",
                         obscureText: true,
                         prefixIcon: Iconsax.lock,
-                        type: TextInputType.number,
+                        type: TextInputType.visiblePassword,
                         hintText: "Password",
                       ),
                       SizedBox(
                         height: 24.h,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Checkbox(
                             value: isChecked,
@@ -103,34 +116,44 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                               });
                             },
                           ),
-                          Text(
-                            "Remember me",
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          const Spacer(),
-                          TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              "Forget Password",
-                              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                    color: ColorsManager.lightPrimaryColor,
-                                  ),
+                          Text.rich(
+                            TextSpan(
+                              text: "I Agree with",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              children: [
+                                TextSpan(
+                                  text: " Privacy",
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                        color: ColorsManager.lightPrimaryColor,
+                                      ),
+                                ),
+                                TextSpan(
+                                  text: " and",
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                TextSpan(
+                                  text: " policy",
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                        color: ColorsManager.lightPrimaryColor,
+                                      ),
+                                ),
+                              ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                       SizedBox(
                         height: 48.h,
                       ),
-                      CustomButton(text: "Log in", onPressed: () {}),
+                      CustomButton(text: "Sign up", onPressed: () {}),
                       SizedBox(
-                        height: 80.h,
+                        height: 40.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Don't have an account ?",
+                            "Already have an account ?",
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           SizedBox(
@@ -138,7 +161,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                           ),
                           TextButton(
                             child: Text(
-                              "Sign up",
+                              "Log in",
                               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                     color: ColorsManager.lightPrimaryColor,
                                   ),
