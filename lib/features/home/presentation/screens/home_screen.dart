@@ -3,6 +3,7 @@ import 'package:efashion_flutter/features/home/presentation/components/collectio
 import 'package:efashion_flutter/features/home/presentation/components/filter_component.dart';
 import 'package:efashion_flutter/features/home/presentation/components/offers_carousel.dart';
 import 'package:efashion_flutter/features/home/presentation/components/section_widget.dart';
+import 'package:efashion_flutter/features/home/presentation/components/brand_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -36,8 +37,11 @@ class HomeScreen extends StatelessWidget {
           sectionButtonTitle: 'See All',
           onTap: () {},
         ),
+        const BrandComponent(),
         SizedBox(height: 100.h),
       ],
     );
   }
 }
+
+
