@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/app_routes_observer.dart';
+import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/config/theme/theme_manager.dart';
 import 'package:efashion_flutter/injection_container.dart';
 import 'package:flutter/material.dart';
