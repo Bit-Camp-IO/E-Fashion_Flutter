@@ -15,7 +15,7 @@ class LoginScreenBody extends StatefulWidget {
 
 class _LoginScreenBodyState extends State<LoginScreenBody> {
   bool isChecked = false;
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey formKey = GlobalKey<FormState>();
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -30,6 +30,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
             Image.asset(
               AssetsManager.welcomeImage,
               width: MediaQuery.sizeOf(context).width,
+              height: 500.h,
               fit: BoxFit.cover,
             ),
             Column(
@@ -40,7 +41,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                 Image.asset(
                   AssetsManager.appLogo,
                   width: 180.w,
-                  height: 226.89.h,
+                  height: 226.h,
                 ),
                 SizedBox(
                   height: 10.h,
