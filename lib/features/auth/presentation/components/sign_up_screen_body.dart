@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:efashion_flutter/core/util/assets_manager.dart';
 import 'package:efashion_flutter/core/util/colors_manager.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/custom_button.dart';
@@ -28,11 +30,22 @@ class _SignupScreenBodyState extends State<SignupScreenBody> {
         key: formKey,
         child: Stack(
           children: [
-            Image.asset(
-              AssetsManager.welcomeImage,
-              width: MediaQuery.sizeOf(context).width,
-              height: 500.h,
-              fit: BoxFit.cover,
+            ImageFiltered(
+              imageFilter: ImageFilter.blur(
+                sigmaY: 15,
+                sigmaX: 15,
+              ),
+              child: Container(
+                color: Colors.transparent,
+                child: Image(
+                  image: const AssetImage(
+                    AssetsManager.welcomeImage,
+                  ),
+                  width: double.infinity,
+                  height: 500.h,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             Column(
               children: [
