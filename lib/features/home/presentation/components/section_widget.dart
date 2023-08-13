@@ -6,14 +6,15 @@ class SectionWidget extends StatelessWidget {
   const SectionWidget({
     super.key,
     required this.sectionTitle,
-    required this.sectionButtonTitle,
-    required this.onTap,
+    this.sectionButtonTitle,
+    this.onTextButtonTap,
+    this.enableTextButton = false,
   });
 
   final String sectionTitle;
-  final String sectionButtonTitle;
-  final void Function() onTap;
-
+  final String? sectionButtonTitle;
+  final void Function()? onTextButtonTap;
+  final bool? enableTextButton;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,12 +23,15 @@ class SectionWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(sectionTitle, style: Theme.of(context).textTheme.bodyMedium),
-          TextButton(
-            onPressed: onTap,
-            child: Text(
-              sectionButtonTitle,
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: ColorsManager.lightPrimaryColor,
+          Visibility(
+            visible: enableTextButton!,
+            child: TextButton(
+              onPressed: onTextButtonTap ?? (){},
+              child: Text(
+                sectionButtonTitle ?? 'See All',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: ColorsManager.lightPrimaryColor,
+                ),
               ),
             ),
           )
