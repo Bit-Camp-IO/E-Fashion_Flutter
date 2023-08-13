@@ -1,9 +1,6 @@
-import 'dart:ui';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/core/util/assets_manager.dart';
-import 'package:efashion_flutter/features/auth/presentation/components/welcome_screen_custom_clip_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -37,20 +34,14 @@ class WelcomeScreenBody extends StatelessWidget {
             Expanded(
               child: Stack(
                 children: [
-                  ClipPath(
-                    clipper: CustomClipPath(),
-                    child: ClipRect(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                        child: Container(
-                          color: const Color(0xFF001D34).withOpacity(.5),
-                        ),
-                      ),
-                    ),
+                  const Image(
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    image: AssetImage(AssetsManager.welcomeCurvedContainer),
                   ),
                   Positioned(
-                    top: 128.h,
                     left: 24.w,
+                    bottom: 90.h,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
