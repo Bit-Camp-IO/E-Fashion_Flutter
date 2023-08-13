@@ -30,4 +30,9 @@ List<CollectionMock> collectionItems = [
     collectionName: 'Autumn',
     offer: 50,
   ),
+  CollectionMock(
+    collectionPic: 'https://images.unsplash.com/photo-1552874869-5c39ec9288dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80',
+    collectionName: 'Hijab',
+    offer: 30,
+  ),
 ];
