@@ -6,4 +6,6 @@ class AssetsManager {
   static const String swipeUpImage = 'assets/images/swipe_up.png';
   static const String curvedContainer = 'assets/images/curved_container.png';
   static const String welcomeCurvedContainer = 'assets/images/welcome_curved_container.png';
+  static const String offersPic =
+      'https://images.unsplash.com/photo-1599309329365-0a9ed45a1da3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80';
 }
