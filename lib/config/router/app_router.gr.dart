@@ -75,28 +75,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeTab(),
       );
     },
-    LoginRoute.name: (routeData) {
+    SeeAllRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const LoginScreen(),
-      );
-    },
-    SignupRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const SignupScreen(),
+        child: const SeeAllScreen(),
       );
     },
     SplashRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SplashScreen(),
-      );
-    },
-    WelcomeRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: WrappedRoute(child: const WelcomeScreen()),
       );
     },
   };
@@ -243,29 +231,15 @@ class HomeTabRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [LoginScreen]
-class LoginRoute extends PageRouteInfo<void> {
-  const LoginRoute({List<PageRouteInfo>? children})
+/// [SeeAllScreen]
+class SeeAllRoute extends PageRouteInfo<void> {
+  const SeeAllRoute({List<PageRouteInfo>? children})
       : super(
-          LoginRoute.name,
+          SeeAllRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'LoginRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [SignupScreen]
-class SignupRoute extends PageRouteInfo<void> {
-  const SignupRoute({List<PageRouteInfo>? children})
-      : super(
-          SignupRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SignupRoute';
+  static const String name = 'SeeAllRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -280,20 +254,6 @@ class SplashRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SplashRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [WelcomeScreen]
-class WelcomeRoute extends PageRouteInfo<void> {
-  const WelcomeRoute({List<PageRouteInfo>? children})
-      : super(
-          WelcomeRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'WelcomeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

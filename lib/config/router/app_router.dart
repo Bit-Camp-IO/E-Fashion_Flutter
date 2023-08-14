@@ -1,13 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/features/account/presentation/screens/account_screen.dart';
-import 'package:efashion_flutter/features/auth/presentation/screens/login_screen.dart';
-import 'package:efashion_flutter/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/splash_screen.dart';
-import 'package:efashion_flutter/features/auth/presentation/screens/welcome_screen.dart';
-import 'package:efashion_flutter/features/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:efashion_flutter/features/cart/presentation/screens/cart_screen.dart';
 import 'package:efashion_flutter/features/favorite/presentation/screens/favorite_screen.dart';
 import 'package:efashion_flutter/features/home/presentation/screens/home_screen.dart';
+import 'package:efashion_flutter/features/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:efashion_flutter/features/home/presentation/screens/see_all_screen.dart';
 import 'package:injectable/injectable.dart';
 
 part 'app_router.gr.dart';
@@ -22,25 +20,16 @@ class AppRouter extends _$AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: AuthRoute.page,
-          initial: true,
           children: [
             AutoRoute(
               page: SplashRoute.page,
-            ),
-            AutoRoute(
-              page: WelcomeRoute.page,
               initial: true,
-            ),
-            AutoRoute(
-              page: LoginRoute.page,
-            ),
-            AutoRoute(
-              page: SignupRoute.page,
             ),
           ],
         ),
         AutoRoute(
           page: BottomNavBarRoute.page,
+          initial: true,
           children: [
             AutoRoute(
               page: HomeTabRoute.page,
@@ -48,7 +37,11 @@ class AppRouter extends _$AppRouter {
                 AutoRoute(
                   page: HomeRoute.page,
                   initial: true,
-                )
+                ),
+                CustomRoute(
+                  page: SeeAllRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                ),
               ],
             ),
             AutoRoute(
