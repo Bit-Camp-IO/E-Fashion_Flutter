@@ -29,13 +29,13 @@ class AppRouter extends _$AppRouter {
             ),
             AutoRoute(
               page: WelcomeRoute.page,
+              initial: true,
             ),
             AutoRoute(
               page: LoginRoute.page,
             ),
             AutoRoute(
               page: SignupRoute.page,
-              initial: true,
             ),
           ],
         ),
