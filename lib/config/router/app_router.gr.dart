@@ -75,6 +75,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeTab(),
       );
     },
+    SeeAllRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SeeAllScreen(),
+      );
+    },
     SplashRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -220,6 +226,20 @@ class HomeTabRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeTabRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SeeAllScreen]
+class SeeAllRoute extends PageRouteInfo<void> {
+  const SeeAllRoute({List<PageRouteInfo>? children})
+      : super(
+          SeeAllRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SeeAllRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

@@ -5,6 +5,7 @@ import 'package:efashion_flutter/features/cart/presentation/screens/cart_screen.
 import 'package:efashion_flutter/features/favorite/presentation/screens/favorite_screen.dart';
 import 'package:efashion_flutter/features/home/presentation/screens/home_screen.dart';
 import 'package:efashion_flutter/features/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:efashion_flutter/features/home/presentation/screens/see_all_screen.dart';
 import 'package:injectable/injectable.dart';
 
 part 'app_router.gr.dart';
@@ -12,7 +13,6 @@ part 'app_router.gr.dart';
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 @singleton
 class AppRouter extends _$AppRouter {
-
   @override
   RouteType get defaultRouteType => const RouteType.material();
 
@@ -37,7 +37,11 @@ class AppRouter extends _$AppRouter {
                 AutoRoute(
                   page: HomeRoute.page,
                   initial: true,
-                )
+                ),
+                CustomRoute(
+                  page: SeeAllRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                ),
               ],
             ),
             AutoRoute(
