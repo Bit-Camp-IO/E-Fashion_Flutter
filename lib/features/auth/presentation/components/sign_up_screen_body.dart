@@ -25,8 +25,8 @@ class _SignupScreenBodyState extends State<SignupScreenBody> {
           children: [
             ImageFiltered(
               imageFilter: ImageFilter.blur(
-                sigmaY: 10,
-                sigmaX: 10,
+                sigmaY: 15,
+                sigmaX: 15,
               ),
               child: Image(
                 image: const AssetImage(
