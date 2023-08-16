@@ -1,5 +1,3 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/animated_indicator.dart';
@@ -60,9 +58,7 @@ class _CollectionCarouselComponentState extends State<CollectionCarouselComponen
           right: 20,
           top: 60,
           child: IconButton(
-            onPressed: () {
-              context.pushRoute(const NotificationsRoute());
-            },
+            onPressed: () {},
             icon: const Icon(
               Iconsax.notification,
               color: Colors.white,

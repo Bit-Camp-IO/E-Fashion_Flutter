@@ -33,13 +33,14 @@ class AppRouter extends _$AppRouter {
           children: [
             AutoRoute(
               page: HomeTabRoute.page,
+              initial: true,
               children: [
                 AutoRoute(
                   page: HomeRoute.page,
-                  initial: true,
                 ),
                 CustomRoute(
                   page: SeeAllRoute.page,
+                  initial: true,
                   transitionsBuilder: TransitionsBuilders.fadeIn,
                 ),
               ],

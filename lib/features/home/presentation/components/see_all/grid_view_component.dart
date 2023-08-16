@@ -1,5 +1,3 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/core/widgets/cart_bottom_sheet.dart';
 import 'package:efashion_flutter/features/home/presentation/components/see_all/grid_card.dart';
 import 'package:efashion_flutter/features/home/presentation/components/see_all/top_grid_card.dart';
@@ -32,9 +30,6 @@ class _GridViewComponentState extends State<GridViewComponent> {
             productName: brandProducts[index].productName,
             productPrice: brandProducts[index].productPrice,
             isFavorite: brandProducts[index].isFavorite,
-            onTap: () {
-              context.pushRoute(DetailsRoute(productId: brandProducts[index].productId));
-            },
             onFavoriteTap: () {
               setState(() {
                 brandProducts[index].isFavorite =
@@ -67,9 +62,6 @@ class _GridViewComponentState extends State<GridViewComponent> {
             productName: brandProducts[index].productName,
             productPrice: brandProducts[index].productPrice,
             isFavorite: brandProducts[index].isFavorite,
-            onTap: () {
-              context.pushRoute(DetailsRoute(productId: brandProducts[index].productId));
-            },
             onFavoriteTap: () {
               setState(() {
                 brandProducts[index].isFavorite =
@@ -103,9 +95,6 @@ class _GridViewComponentState extends State<GridViewComponent> {
             productName: brandProducts[index].productName,
             productPrice: brandProducts[index].productPrice,
             isFavorite: brandProducts[index].isFavorite,
-            onTap: () {
-              context.pushRoute(DetailsRoute(productId: brandProducts[index].productId));
-            },
             onFavoriteTap: () {
               setState(() {
                 brandProducts[index].isFavorite =
@@ -138,9 +127,6 @@ class _GridViewComponentState extends State<GridViewComponent> {
             productName: brandProducts[index].productName,
             productPrice: brandProducts[index].productPrice,
             isFavorite: brandProducts[index].isFavorite,
-            onTap: () {
-              context.pushRoute(DetailsRoute(productId: brandProducts[index].productId));
-            },
             onFavoriteTap: () {
               setState(() {
                 brandProducts[index].isFavorite =

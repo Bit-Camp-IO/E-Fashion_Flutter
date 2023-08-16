@@ -1,5 +1,3 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/core/widgets/cart_bottom_sheet.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/brand_card.dart';
 import 'package:efashion_flutter/features/home/presentation/mock/product_mock.dart';
@@ -30,10 +28,6 @@ class _BrandComponentState extends State<BrandComponent> {
               productName: brandProducts[index].productName,
               productPrice: brandProducts[index].productPrice,
               isFavorite: brandProducts[index].isFavorite,
-              isCartActive: true,
-              onTap: () {
-                context.pushRoute(DetailsRoute(productId: brandProducts[index].productId));
-              },
               onCartTap: () {
                 showModalBottomSheet(
                   context: context,
