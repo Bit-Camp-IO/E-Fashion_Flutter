@@ -1,11 +1,11 @@
 import 'package:efashion_flutter/core/util/colors_manager.dart';
+import 'package:efashion_flutter/features/home/presentation/components/home/filter_button.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/section_widget.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/titled_avatar.dart';
 import 'package:efashion_flutter/features/home/presentation/mock/filter_mock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 
 class FilterComponent extends StatefulWidget {
   const FilterComponent({super.key});
@@ -17,7 +17,6 @@ class FilterComponent extends StatefulWidget {
 class _FilterComponentState extends State<FilterComponent> {
   late final ScrollController _filterController;
   double animatedFilterWidth = 145;
-  bool isFilterOn = false;
   List selectedFilters = [];
   List selectedGenders = [];
 
@@ -61,40 +60,9 @@ class _FilterComponentState extends State<FilterComponent> {
                 sectionTitle: 'Filters',
               ),
               const Spacer(flex: 1),
-              AnimatedOpacity(
-                opacity:  selectedGenders.isNotEmpty || selectedFilters.isNotEmpty ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      width: 80.w,
-                      height: 40.h,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF526070),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(20),
-                        ).r,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Iconsax.filter, color: Colors.white, size: 16),
-                          Text(
-                            'Apply',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .copyWith(color: Colors.white),
-                          ),
-
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+              FilterButton(
+                isVisible: selectedGenders.isNotEmpty || selectedFilters.isNotEmpty,
+                onTap: () {},
               )
             ],
           ),
@@ -138,7 +106,8 @@ class _FilterComponentState extends State<FilterComponent> {
                                       selectedGenders.removeWhere((element) =>
                                           element == genders[genderIndex].name);
                                     } else {
-                                      selectedGenders.add(genders[genderIndex].name);
+                                      selectedGenders
+                                          .add(genders[genderIndex].name);
                                     }
                                   });
                                 },
@@ -182,16 +151,19 @@ class _FilterComponentState extends State<FilterComponent> {
                                 (filterIndex) => TitledAvatar(
                                   onTap: () {
                                     setState(() {
-                                      if (selectedFilters.contains(filters[filterIndex].filterName)) {
+                                      if (selectedFilters.contains(
+                                          filters[filterIndex].filterName)) {
                                         selectedFilters.removeWhere((element) =>
-                                            element == filters[filterIndex].filterName);
+                                            element ==
+                                            filters[filterIndex].filterName);
                                       } else {
-                                        selectedFilters
-                                            .add(filters[filterIndex].filterName);
+                                        selectedFilters.add(
+                                            filters[filterIndex].filterName);
                                       }
                                     });
                                   },
-                                  imagePath: filters[filterIndex].filterImageUrl,
+                                  imagePath:
+                                      filters[filterIndex].filterImageUrl,
                                   title: filters[filterIndex].filterName,
                                 ),
                               ),
