@@ -10,8 +10,7 @@
 part of 'app_router.dart';
 
 abstract class _$AppRouter extends RootStackRouter {
-  // ignore: unused_element
-  _$AppRouter({super.navigatorKey});
+  _$AppRouter();
 
   @override
   final Map<String, PageFactory> pagesMap = {
@@ -75,16 +74,34 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeTab(),
       );
     },
+    LoginRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LoginScreen(),
+      );
+    },
     SeeAllRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SeeAllScreen(),
       );
     },
+    SignupRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SignupScreen(),
+      );
+    },
     SplashRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SplashScreen(),
+      );
+    },
+    WelcomeRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const WelcomeScreen()),
       );
     },
   };
@@ -231,6 +248,20 @@ class HomeTabRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [LoginScreen]
+class LoginRoute extends PageRouteInfo<void> {
+  const LoginRoute({List<PageRouteInfo>? children})
+      : super(
+          LoginRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [SeeAllScreen]
 class SeeAllRoute extends PageRouteInfo<void> {
   const SeeAllRoute({List<PageRouteInfo>? children})
@@ -245,6 +276,20 @@ class SeeAllRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SignupScreen]
+class SignupRoute extends PageRouteInfo<void> {
+  const SignupRoute({List<PageRouteInfo>? children})
+      : super(
+          SignupRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SignupRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [SplashScreen]
 class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute({List<PageRouteInfo>? children})
@@ -254,6 +299,20 @@ class SplashRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SplashRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [WelcomeScreen]
+class WelcomeRoute extends PageRouteInfo<void> {
+  const WelcomeRoute({List<PageRouteInfo>? children})
+      : super(
+          WelcomeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WelcomeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
