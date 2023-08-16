@@ -26,26 +26,16 @@ class AppRouter extends _$AppRouter {
           children: [
             AutoRoute(
               page: SplashRoute.page,
+            ),
+            AutoRoute(
+              page: WelcomeRoute.page,
               initial: true,
             ),
             AutoRoute(
-              page: AuthRoute.page,
-              initial: true,
-              children: [
-                AutoRoute(
-                  page: SplashRoute.page,
-                ),
-                AutoRoute(
-                  page: WelcomeRoute.page,
-                  initial: true,
-                ),
-                AutoRoute(
-                  page: LoginRoute.page,
-                ),
-                AutoRoute(
-                  page: SignupRoute.page,
-                ),
-              ],
+              page: LoginRoute.page,
+            ),
+            AutoRoute(
+              page: SignupRoute.page,
             ),
           ],
         ),
