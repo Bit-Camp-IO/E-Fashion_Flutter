@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:efashion_flutter/features/home/presentation/components/animated_indicator.dart';
-import 'package:efashion_flutter/features/home/presentation/components/collection_carousel_card.dart';
+import 'package:efashion_flutter/features/home/presentation/components/home/animated_indicator.dart';
+import 'package:efashion_flutter/features/home/presentation/components/home/collection_carousel_card.dart';
 import 'package:efashion_flutter/features/home/presentation/mock/collection_mock.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';

@@ -160,7 +160,7 @@ class ThemeManager{
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.black.withOpacity(0.8),
         selectedItemColor: ColorsManager.darkPrimaryColor,
-        unselectedItemColor: Colors.white.withOpacity(0.6),
+        unselectedItemColor: Colors.white,
       ),
     );
   }
