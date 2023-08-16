@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:efashion_flutter/core/util/colors_manager.dart';
+import 'package:efashion_flutter/core/widgets/favorite_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -25,12 +25,13 @@ class OffersCard extends StatelessWidget {
   final void Function() onAddToCart;
   final void Function() onOfferTap;
   final bool isFavorite;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onOfferTap,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16).r,
         child: Stack(
           children: [
             CachedNetworkImage(
@@ -86,8 +87,7 @@ class OffersCard extends StatelessWidget {
                                     .copyWith(
                                       color: const Color(0xFF99CBFF),
                                       decoration: TextDecoration.lineThrough,
-                                      decorationColor:
-                                          const Color(0xFF99CBFF),
+                                      decorationColor: const Color(0xFF99CBFF),
                                       decorationThickness: 2.0,
                                     ),
                               ),
@@ -110,9 +110,9 @@ class OffersCard extends StatelessWidget {
                         right: 10,
                         child: IconButton(
                           onPressed: onAddToCart,
-                          icon: const Icon(
+                          icon: Icon(
                             Iconsax.bag_2,
-                            color: ColorsManager.lightPrimaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                             size: 26,
                           ),
                         ),
@@ -125,19 +125,9 @@ class OffersCard extends StatelessWidget {
             Positioned(
               top: 3,
               right: 3,
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                switchInCurve: Curves.easeIn,
-                switchOutCurve: Curves.easeOut,
-                child: IconButton(
-                  key: ValueKey<bool>(isFavorite),
-                  onPressed: onFavorite,
-                  icon: Icon(
-                    isFavorite ? Iconsax.heart5 : Iconsax.heart,
-                    color: ColorsManager.lightPrimaryColor,
-                    size: 26,
-                  ),
-                ),
+              child: FavoriteIconButton(
+                isFavorite: isFavorite,
+                onFavoriteTap: onFavorite,
               ),
             ),
           ],

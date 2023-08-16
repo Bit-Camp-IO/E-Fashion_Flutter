@@ -1,5 +1,5 @@
-import 'package:efashion_flutter/features/home/presentation/components/brand_card.dart';
-import 'package:efashion_flutter/features/home/presentation/components/cart_bottom_sheet.dart';
+import 'package:efashion_flutter/core/widgets/cart_bottom_sheet.dart';
+import 'package:efashion_flutter/features/home/presentation/components/home/brand_card.dart';
 import 'package:efashion_flutter/features/home/presentation/mock/product_mock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

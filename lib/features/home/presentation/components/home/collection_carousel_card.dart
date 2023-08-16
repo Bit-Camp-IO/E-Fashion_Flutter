@@ -10,10 +10,12 @@ class CarouselCard extends StatelessWidget {
     required this.cardImageUrl,
     required this.onTap,
   });
+
   final int offerPercentage;
   final String collectionName;
   final String cardImageUrl;
   final void Function() onTap;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -22,7 +24,7 @@ class CarouselCard extends StatelessWidget {
           borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(30),
             bottomRight: Radius.circular(30),
-          ),
+          ).r,
           child: CachedNetworkImage(
             width: MediaQuery.sizeOf(context).width,
             height: 320.h,
@@ -74,14 +76,15 @@ class CarouselCard extends StatelessWidget {
             child: Container(
               width: 100.w,
               height: 48.h,
-              decoration: const BoxDecoration(
-                  color: Color(0xFF526070),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(50),
-                    bottomLeft: Radius.circular(50),
-                    topLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                  )),
+              decoration: BoxDecoration(
+                color: const Color(0xFF526070),
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(50),
+                  bottomLeft: Radius.circular(50),
+                  topLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ).r,
+              ),
               child: Center(
                 child: Text(
                   'Shop Now',
@@ -97,13 +100,14 @@ class CarouselCard extends StatelessWidget {
       ],
     );
   }
+
   double _getTextWidth(BuildContext context, String text) {
     final textPainter = TextPainter(
-      text: TextSpan(text: text, style: Theme.of(context).textTheme.titleMedium),
+      text:
+          TextSpan(text: text, style: Theme.of(context).textTheme.titleMedium),
       textDirection: TextDirection.ltr,
     )..layout();
 
     return textPainter.width;
   }
 }
-

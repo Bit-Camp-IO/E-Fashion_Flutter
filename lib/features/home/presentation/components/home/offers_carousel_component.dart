@@ -1,20 +1,20 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:efashion_flutter/features/home/presentation/components/cart_bottom_sheet.dart';
-import 'package:efashion_flutter/features/home/presentation/components/offers_card.dart';
+import 'package:efashion_flutter/core/widgets/cart_bottom_sheet.dart';
+import 'package:efashion_flutter/features/home/presentation/components/home/offers_card.dart';
 import 'package:efashion_flutter/features/home/presentation/mock/product_mock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class OffersCarousel extends StatefulWidget {
-  const OffersCarousel({
+class OffersCarouselComponent extends StatefulWidget {
+  const OffersCarouselComponent({
     super.key,
   });
 
   @override
-  State<OffersCarousel> createState() => _OffersCarouselState();
+  State<OffersCarouselComponent> createState() => _OffersCarouselComponentState();
 }
 
-class _OffersCarouselState extends State<OffersCarousel> {
+class _OffersCarouselComponentState extends State<OffersCarouselComponent> {
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
@@ -57,7 +57,3 @@ class _OffersCarouselState extends State<OffersCarousel> {
     );
   }
 }
-
-
-
-
