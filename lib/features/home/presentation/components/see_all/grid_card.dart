@@ -34,13 +34,19 @@ class GridCard extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Transform(
-                transform:
-                reverse ? Matrix4.skewY(-0.13) : Matrix4.skewY(0.13),
-                alignment: reverse ? Alignment.topLeft : Alignment.topRight,
-                child: CachedNetworkImage(
-                  imageUrl: productImage,
-                  fit: BoxFit.cover,
+              Positioned(
+                top: -10,
+                left: 0,
+                right: 0,
+                bottom: -20,
+                child: Transform(
+                  transform:
+                  reverse ? Matrix4.skewY(-0.13) : Matrix4.skewY(0.13),
+                  alignment: reverse ? Alignment.topLeft : Alignment.topRight,
+                  child: CachedNetworkImage(
+                    imageUrl: productImage,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Positioned(

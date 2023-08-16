@@ -35,9 +35,19 @@ class ListViewCard extends StatelessWidget {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                CachedNetworkImage(
-                  imageUrl: productImage,
-                  fit: BoxFit.cover,
+                Positioned(
+                  top: -10,
+                  left: 0,
+                  right: 0,
+                  bottom: -50,
+                  child: Transform(
+                    transform: Matrix4.skewY(-0.1),
+                    alignment: Alignment.topLeft,
+                    child: CachedNetworkImage(
+                      imageUrl: productImage,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
                 Positioned(
                   left: 0,
