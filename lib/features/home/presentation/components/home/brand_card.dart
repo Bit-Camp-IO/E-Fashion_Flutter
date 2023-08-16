@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:efashion_flutter/core/util/colors_manager.dart';
+import 'package:efashion_flutter/core/widgets/favorite_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -25,7 +25,7 @@ class BrandCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(20).r,
       child: Stack(
         children: [
           CachedNetworkImage(
@@ -97,18 +97,9 @@ class BrandCard extends StatelessWidget {
           Positioned(
             top: 2,
             right: -5,
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              switchInCurve: Curves.easeIn,
-              switchOutCurve: Curves.easeOut,
-              child: IconButton(
-                key: ValueKey<bool>(isFavorite),
-                onPressed: onFavoriteTap,
-                icon: Icon(
-                  isFavorite ? Iconsax.heart5 : Iconsax.heart,
-                  color: ColorsManager.lightPrimaryColor,
-                ),
-              ),
+            child: FavoriteIconButton(
+              isFavorite: isFavorite,
+              onFavoriteTap: onFavoriteTap,
             ),
           ),
         ],

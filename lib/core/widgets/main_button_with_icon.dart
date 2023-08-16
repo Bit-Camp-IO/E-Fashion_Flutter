@@ -25,7 +25,7 @@ class MainButtonWithIcon extends StatelessWidget {
         height: 46.h,
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          borderRadius: const BorderRadius.all(Radius.circular(12)).r,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

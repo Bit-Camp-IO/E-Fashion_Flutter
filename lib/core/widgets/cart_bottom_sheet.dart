@@ -1,6 +1,6 @@
-import 'package:efashion_flutter/features/home/presentation/components/main_button_with_icon.dart';
-import 'package:efashion_flutter/features/home/presentation/components/product_color.dart';
-import 'package:efashion_flutter/features/home/presentation/components/product_size.dart';
+import 'package:efashion_flutter/core/widgets/main_button_with_icon.dart';
+import 'package:efashion_flutter/core/widgets/product_color.dart';
+import 'package:efashion_flutter/core/widgets/product_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -35,12 +35,12 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
     if (widget.productColors.isEmpty && widget.productSizes.isEmpty) {
       return Container(
         height: 320.h,
-        decoration: const BoxDecoration(
-          color: Color(0xFFDEE3EB),
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: const Color(0xFFDEE3EB),
+          borderRadius: const BorderRadius.only(
             topRight: Radius.circular(30),
             topLeft: Radius.circular(30),
-          ),
+          ).r,
         ),
         child: Padding(
           padding: const EdgeInsets.all(24).r,
@@ -116,12 +116,12 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
     } else {
       return Container(
         height: 420.h,
-        decoration: const BoxDecoration(
-          color: Color(0xFFDEE3EB),
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: const Color(0xFFDEE3EB),
+          borderRadius: const BorderRadius.only(
             topRight: Radius.circular(30),
             topLeft: Radius.circular(30),
-          ),
+          ).r,
         ),
         child: Padding(
           padding: const EdgeInsets.all(24).r,
