@@ -1,6 +1,5 @@
 import 'package:efashion_flutter/core/widgets/main_button_with_icon.dart';
 import 'package:efashion_flutter/core/widgets/product_color.dart';
-import 'package:efashion_flutter/core/widgets/product_pieces_counter.dart';
 import 'package:efashion_flutter/core/widgets/product_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,8 +32,9 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.productColors.isEmpty && widget.productSizes.isEmpty) {
       return Container(
-        height: widget.productColors.isNotEmpty ? 420.h : 320.h,
+        height: 320.h,
         decoration: BoxDecoration(
           color: const Color(0xFFDEE3EB),
           borderRadius: const BorderRadius.only(
@@ -61,7 +61,88 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                 ],
               ),
               SizedBox(height: 30.h),
-              widget.productColors.isNotEmpty ? Row(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '${widget.productPieces} Pieces Available',
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
+                  SizedBox(width: 60.w),
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (productPieces != 0) productPieces--;
+                            });
+                          },
+                          icon: const Icon(Iconsax.minus_cirlce, size: 24),
+                          color: Colors.black),
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 200),
+                        child: Text(
+                          key: ValueKey<int>(productPieces),
+                          '$productPieces',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (productPieces != widget.productPieces) {
+                                productPieces++;
+                              }
+                            });
+                          },
+                          icon: const Icon(Iconsax.add_circle, size: 24),
+                          color: Colors.black),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(height: 30.h),
+              MainButtonWithIcon(
+                onTap: () {},
+                width: 230.w,
+                height: 46.h,
+                buttonTitle: 'Add To Bag',
+                buttonIcon: const Icon(Iconsax.bag_2, color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return Container(
+        height: 420.h,
+        decoration: BoxDecoration(
+          color: const Color(0xFFDEE3EB),
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(30),
+            topLeft: Radius.circular(30),
+          ).r,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(24).r,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.productName,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  SizedBox(width: 40.w),
+                  Text(
+                    '\$${widget.productPrice}',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ],
+              ),
+              SizedBox(height: 30.h),
+              Row(
                 children: [
                   Text(
                     'Colors : ',
@@ -89,9 +170,9 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                     ),
                   )
                 ],
-              ) : const SizedBox.shrink(),
-              widget.productColors.isNotEmpty ? SizedBox(height: 24.h) : const SizedBox.shrink(),
-              widget.productSizes.isNotEmpty ? Row(
+              ),
+              SizedBox(height: 24.h),
+              Row(
                 children: [
                   Text(
                     'Sizes : ',
@@ -119,8 +200,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                     ),
                   )
                 ],
-              ) : const SizedBox.shrink(),
-              widget.productSizes.isNotEmpty ? SizedBox(height: 24.h) : const SizedBox.shrink(),
+              ),
+              SizedBox(height: 24.h),
               Row(
                 children: [
                   Text(
@@ -128,23 +209,38 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                   SizedBox(width: 40.w),
-                  ProductPiecesCounter(
-                    onIncrementPress: () {
-                      setState(() {
-                        if (productPieces != widget.productPieces) {
-                          productPieces++;
-                        }
-                      });
-                    },
-                    onDecrementPress: () {
-                      setState(() {
-                        if (productPieces != 0) {
-                          productPieces--;
-                        }
-                      });
-                    },
-                    productPieces: productPieces,
-                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (productPieces != 0) {
+                                productPieces--;
+                              }
+                            });
+                          },
+                          icon: const Icon(Iconsax.minus_cirlce, size: 24),
+                          color: Colors.black),
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 200),
+                        child: Text(
+                          key: ValueKey<int>(productPieces),
+                          '$productPieces',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (productPieces != widget.productPieces) {
+                                productPieces++;
+                              }
+                            });
+                          },
+                          icon: const Icon(Iconsax.add_circle, size: 24),
+                          color: Colors.black),
+                    ],
+                  )
                 ],
               ),
               SizedBox(height: 30.h),
@@ -160,4 +256,5 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
         ),
       );
     }
+  }
 }
