@@ -6,5 +6,4 @@ class ColorsManager{
   static const Color textColorPrimary = Color(0xFF1A1C1E);
   static const Color textColorSecondary = Color(0xFF42474E);
   static const Color textColorTertiary = Color(0xFF72777F);
-  static const Color ratingStarColor = Color(0xFFF5EC00);
 }
