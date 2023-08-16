@@ -38,7 +38,7 @@ class AnimatedIndicator extends StatelessWidget {
             height: dotHeight,
             decoration: BoxDecoration(
               color: index == currentIndex ? selectedColor : unSelectedColor,
-              borderRadius: BorderRadius.circular(20).w,
+              borderRadius: BorderRadius.circular(20).r,
             ),
           ),
         ),

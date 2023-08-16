@@ -30,6 +30,7 @@ dependencies:
   carousel_slider: ^4.2.1
   bloc_concurrency: ^0.2.2
   lottie: ^2.6.0
+  flutter_svg: ^2.0.7
 
 dev_dependencies:
   flutter_test:

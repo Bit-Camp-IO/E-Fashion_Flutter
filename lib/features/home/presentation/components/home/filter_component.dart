@@ -1,6 +1,6 @@
 import 'package:efashion_flutter/core/util/colors_manager.dart';
-import 'package:efashion_flutter/features/home/presentation/components/section_widget.dart';
-import 'package:efashion_flutter/features/home/presentation/components/titled_avatar.dart';
+import 'package:efashion_flutter/features/home/presentation/components/home/section_widget.dart';
+import 'package:efashion_flutter/features/home/presentation/components/home/titled_avatar.dart';
 import 'package:efashion_flutter/features/home/presentation/mock/filter_mock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -72,11 +72,11 @@ class _FilterComponentState extends State<FilterComponent> {
                     child: Container(
                       width: 80.w,
                       height: 40.h,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF526070),
-                        borderRadius: BorderRadius.all(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF526070),
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(20),
-                        ),
+                        ).r,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -115,11 +115,11 @@ class _FilterComponentState extends State<FilterComponent> {
                       curve: Curves.easeInOut,
                       width: animatedFilterWidth.w,
                       height: 84.h,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFE8E8EB),
-                        borderRadius: BorderRadius.all(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE8E8EB),
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(15),
-                        ),
+                        ).r,
                       ),
                       child: SingleChildScrollView(
                         physics: const NeverScrollableScrollPhysics(),
@@ -165,12 +165,12 @@ class _FilterComponentState extends State<FilterComponent> {
                           Container(
                             width: 6.w,
                             height: 42.h,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               color: ColorsManager.lightPrimaryColor,
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(5),
                                 bottomRight: Radius.circular(5),
-                              ),
+                              ).r,
                             ),
                           ),
                           SizedBox(

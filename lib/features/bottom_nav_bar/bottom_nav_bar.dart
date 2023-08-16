@@ -45,59 +45,53 @@ class _BottomNavBarState extends State<BottomNavBar> {
               width: 328.h,
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.8),
-                borderRadius: BorderRadius.all(
-                  const Radius.circular(15.0).w,
-                ),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15.0),
+                ).r,
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.all(
-                  const Radius.circular(15.0).w,
-                ),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(
-                    sigmaX: 50,
-                    sigmaY: 50,
-                  ),
-                  child: BottomNavigationBar(
-                    currentIndex: tabsRouter.activeIndex,
-                    onTap: (value) {
-                      final timeNow = DateTime.now();
-                      if (_lastTapTime != null &&
-                          timeNow.difference(_lastTapTime!) <= const Duration(milliseconds: 300)) {
-                        switch (tabsRouter.activeIndex) {
-                          case 0:
-                            context.router.root.navigate(const HomeRoute());
-                          case 1:
-                            context.router.root.navigate(const CartRoute());
-                          case 2:
-                            context.router.root.navigate(const FavoriteRoute());
-                          case 3:
-                            context.router.root.navigate(const AccountRoute());
-                        }
-                      } else {
-                        tabsRouter.setActiveIndex(value);
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15.0),
+                ).r,
+                child: BottomNavigationBar(
+                  currentIndex: tabsRouter.activeIndex,
+                  onTap: (value) {
+                    final timeNow = DateTime.now();
+                    if (_lastTapTime != null &&
+                        timeNow.difference(_lastTapTime!) <= const Duration(milliseconds: 300)) {
+                      switch (tabsRouter.activeIndex) {
+                        case 0:
+                          context.router.root.navigate(const HomeRoute());
+                        case 1:
+                          context.router.root.navigate(const CartRoute());
+                        case 2:
+                          context.router.root.navigate(const FavoriteRoute());
+                        case 3:
+                          context.router.root.navigate(const AccountRoute());
                       }
-                      _lastTapTime = timeNow;
-                    },
-                    items: const [
-                      BottomNavigationBarItem(
-                        icon: Icon(Iconsax.home),
-                        label: StringsManager.homeTabLabel,
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Iconsax.bag_2),
-                        label: StringsManager.cartTabLabel,
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Iconsax.heart),
-                        label: StringsManager.favoriteTabLabel,
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Iconsax.user),
-                        label: StringsManager.accountTabLabel,
-                      ),
-                    ],
-                  ),
+                    } else {
+                      tabsRouter.setActiveIndex(value);
+                    }
+                    _lastTapTime = timeNow;
+                  },
+                  items: const [
+                    BottomNavigationBarItem(
+                      icon: Icon(Iconsax.home),
+                      label: StringsManager.homeTabLabel,
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Iconsax.bag_2),
+                      label: StringsManager.cartTabLabel,
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Iconsax.heart),
+                      label: StringsManager.favoriteTabLabel,
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Iconsax.user),
+                      label: StringsManager.accountTabLabel,
+                    ),
+                  ],
                 ),
               ),
             ),
