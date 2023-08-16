@@ -14,7 +14,7 @@ class WelcomeScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onVerticalDragEnd: (details) {
-        if (details.primaryVelocity! < 0) {
+        if (details.velocity.pixelsPerSecond.dy < 0) {
           context.pushRoute(const LoginRoute());
         }
       },
