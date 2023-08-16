@@ -11,6 +11,7 @@ class WelcomeCurvedClipper extends CustomClipper<Path> {
     path_0.lineTo(0, size.height * 1.000569);
     path_0.lineTo(0, size.height * 0.2908067);
     path_0.close();
+
     return path_0;
   }
 

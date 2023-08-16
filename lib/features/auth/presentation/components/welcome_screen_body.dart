@@ -12,91 +12,93 @@ class WelcomeScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        const Image(
-          fit: BoxFit.cover,
-          height: double.infinity,
-          image: AssetImage(
-            AssetsManager.welcomeImage,
+    return GestureDetector(
+      onVerticalDragEnd: (details) {
+        if (details.primaryVelocity! < 0) {
+          context.pushRoute(const LoginRoute());
+        }
+      },
+      child: Stack(
+        children: [
+          const Image(
+            fit: BoxFit.cover,
+            height: double.infinity,
+            image: AssetImage(
+              AssetsManager.welcomeImage,
+            ),
           ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 154.h,
-            ),
-            Image.asset(
-              AssetsManager.appLogo,
-            ),
-            SizedBox(
-              height: 50.h,
-            ),
-            Expanded(
-              child: Stack(
-                children: [
-                  ClipPath(
-                    clipper: WelcomeCurvedClipper(),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
-                      child: Container(
-                        width: double.infinity,
-                        color: const Color(0xFF001D34).withOpacity(0.5),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 154.h,
+              ),
+              Image.asset(
+                AssetsManager.appLogo,
+              ),
+              SizedBox(
+                height: 50.h,
+              ),
+              Expanded(
+                child: Stack(
+                  children: [
+                    ClipPath(
+                      clipper: WelcomeCurvedClipper(),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
+                        child: Container(
+                          width: double.infinity,
+                          color: const Color(0xFF001D34).withOpacity(0.5),
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    left: 24.w,
-                    bottom: 90.h,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Start your new",
-                          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                color: Colors.white,
-                              ),
-                        ),
-                        Text(
-                          "shopping experience",
-                          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                color: Colors.white,
-                              ),
-                        ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        Text(
-                          "For fancy clothes and accessories",
-                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                color: Colors.white,
-                              ),
-                        ),
-                      ],
+                    Positioned(
+                      left: 24.w,
+                      bottom: 90.h,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Start your new",
+                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.white,
+                                ),
+                          ),
+                          Text(
+                            "shopping experience",
+                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.white,
+                                ),
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          Text(
+                            "For fancy clothes and accessories",
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                  color: Colors.white,
+                                ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Positioned(
-                    left: 273.w,
-                    bottom: 142.h,
-                    child: InkWell(
-                      onTap: () {
-                        context.pushRoute(const LoginRoute());
-                      },
+                    Positioned(
+                      left: 273.w,
+                      bottom: 142.h,
                       child: const Image(
                         image: AssetImage(
                           AssetsManager.swipeUpImage,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
