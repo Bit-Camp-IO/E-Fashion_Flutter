@@ -6,4 +6,7 @@ class AssetsManager {
   static const String swipeUpImage = 'assets/images/swipe_up.png';
   static const String curvedContainer = 'assets/images/curved_container.png';
   static const String welcomeCurvedContainer = 'assets/images/welcome_curved_container.png';
+  static const String gridShape = 'assets/images/grid_shape.png';
+  static const String gridShapeReverse = 'assets/images/grid_shape_reverse.png';
+  static const String listViewShape = 'assets/images/listview_shape.png';
 }
