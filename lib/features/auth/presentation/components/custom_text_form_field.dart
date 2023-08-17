@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
-    required this.controller,
+    this.controller,
     required this.type,
     required this.prefixIcon,
     this.suffixIcon,
@@ -15,7 +15,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onSubmit,
   });
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final TextInputType type;
   final IconData prefixIcon;
   final IconData? suffixIcon;
