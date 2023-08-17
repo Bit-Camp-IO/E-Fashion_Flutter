@@ -9,4 +9,5 @@ class AssetsManager {
   static const String gridShape = 'assets/images/grid_shape.png';
   static const String gridShapeReverse = 'assets/images/grid_shape_reverse.png';
   static const String listViewShape = 'assets/images/listview_shape.png';
+  static const String defaultAccountPhoto = 'assets/images/default_account_photo.jpg';
 }
