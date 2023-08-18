@@ -9,16 +9,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 @RoutePage()
-class SeeAllScreen extends StatefulWidget {
-  const SeeAllScreen({Key? key}) : super(key: key);
+class AllProductsScreen extends StatefulWidget {
+  const AllProductsScreen({super.key});
 
   @override
-  State<SeeAllScreen> createState() => _SeeAllScreenState();
+  State<AllProductsScreen> createState() => _AllProductsScreenState();
 }
 
-class _SeeAllScreenState extends State<SeeAllScreen> {
-  bool isGrid = false;
-  List<bool> selectedButton = [true, false];
+class _AllProductsScreenState extends State<AllProductsScreen> {
+  int switchIndex = 0;
+
+  void _handleSwitchTap(int index) {
+    setState(() {
+      switchIndex = index;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,27 +48,25 @@ class _SeeAllScreenState extends State<SeeAllScreen> {
                 SquareButton(
                   onTap: () {
                     setState(() {
-                      isGrid = false;
-                      selectedButton = [true, false];
+                      _handleSwitchTap(0);
                     });
                   },
-                  isSelected: selectedButton[0],
+                  isSelected: switchIndex == 0,
                 ),
                 SizedBox(width: 4.w),
                 VerticalRectangleButton(
                   onTap: () {
                     setState(() {
-                      isGrid = true;
-                      selectedButton = [false, true];
+                      _handleSwitchTap(1);
                     });
                   },
-                  isSelected: selectedButton[1],
+                  isSelected: switchIndex == 1,
                 ),
               ],
             ),
             Expanded(
               child: SlideFadeAnimationSwitcher(
-                child: isGrid
+                child: switchIndex == 1
                     ? const GridViewComponent()
                     : const ListViewComponent(),
               ),
