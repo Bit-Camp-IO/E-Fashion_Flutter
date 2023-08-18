@@ -10,99 +10,106 @@ class BrandCard extends StatelessWidget {
     required this.productName,
     required this.productImage,
     required this.productPrice,
+    required this.onTap,
     required this.onFavoriteTap,
-    required this.onCartTap,
+    required this.isCartActive,
+    this.onCartTap,
     required this.isFavorite,
   });
 
   final String productName;
   final String productImage;
   final int productPrice;
+  final void Function() onTap;
   final void Function() onFavoriteTap;
-  final void Function() onCartTap;
+  final void Function()? onCartTap;
+  final bool isCartActive;
   final bool isFavorite;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20).r,
-      child: Stack(
-        children: [
-          CachedNetworkImage(
-            width: 150.w,
-            imageUrl: productImage,
-            fit: BoxFit.cover,
-          ),
-          Positioned(
-            bottom: -5,
-            child: ClipPath(
-              clipper: BrandClipper(),
-              child: SizedBox(
-                  width: 160.w,
-                  height: 65.h,
-                  child: Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.white.withOpacity(0.9),
-                              Colors.black.withOpacity(0.9),
+    return GestureDetector(
+      onTap: onTap,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20).r,
+        child: Stack(
+          children: [
+            CachedNetworkImage(
+              width: 150.w,
+              imageUrl: productImage,
+              fit: BoxFit.cover,
+            ),
+            Positioned(
+              bottom: -5,
+              child: ClipPath(
+                clipper: BrandClipper(),
+                child: SizedBox(
+                    width: 160.w,
+                    height: 65.h,
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.white.withOpacity(0.9),
+                                Colors.black.withOpacity(0.9),
+                              ],
+                              stops: const [0.0, 2.0],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          color: const Color(0xFF001D34).withOpacity(0.7),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16.0, top: 8.0).r,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                productName,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(color: Colors.white),
+                              ),
+                              SizedBox(height: 5.h),
+                              Text(
+                                '\$$productPrice',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(color: Colors.white),
+                              ),
                             ],
-                            stops: const [0.0, 2.0],
                           ),
                         ),
-                      ),
-                      Container(
-                        color: const Color(0xFF001D34).withOpacity(0.7),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0, top: 8.0).r,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              productName,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(color: Colors.white),
+                        isCartActive ? Positioned(
+                          bottom: 10,
+                          right: 10,
+                          child: IconButton(
+                            onPressed: onCartTap,
+                            icon: Icon(
+                              Iconsax.bag_2,
+                              color: Theme.of(context).primaryColor,
                             ),
-                            SizedBox(height: 5.h),
-                            Text(
-                              '\$$productPrice',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 10,
-                        right: 10,
-                        child: IconButton(
-                          onPressed: onCartTap,
-                          icon: Icon(
-                            Iconsax.bag_2,
-                            color: Theme.of(context).primaryColor,
                           ),
-                        ),
-                      ),
-                    ],
-                  )),
+                        ) : const SizedBox.shrink(),
+                      ],
+                    )),
+              ),
             ),
-          ),
-          Positioned(
-            top: 2,
-            right: -5,
-            child: FavoriteIconButton(
-              isFavorite: isFavorite,
-              onFavoriteTap: onFavoriteTap,
+            Positioned(
+              top: 2,
+              right: -5,
+              child: FavoriteIconButton(
+                isFavorite: isFavorite,
+                onFavoriteTap: onFavoriteTap,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
