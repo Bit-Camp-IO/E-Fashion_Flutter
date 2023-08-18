@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/core/widgets/cart_bottom_sheet.dart';
 import 'package:efashion_flutter/features/home/presentation/components/see_all/list_view_card.dart';
 import 'package:efashion_flutter/features/home/presentation/components/see_all/top_list_view_card.dart';
@@ -9,7 +11,7 @@ class ListViewComponent extends StatefulWidget {
   const ListViewComponent({Key? key}) : super(key: key);
 
   @override
-  _ListViewComponentState createState() => _ListViewComponentState();
+  State<ListViewComponent> createState() => _ListViewComponentState();
 }
 
 class _ListViewComponentState extends State<ListViewComponent> {
@@ -26,6 +28,9 @@ class _ListViewComponentState extends State<ListViewComponent> {
               productName: brandProducts[index].productName,
               productPrice: brandProducts[index].productPrice,
               isFavorite: brandProducts[index].isFavorite,
+              onTap: () {
+                context.pushRoute(DetailsRoute(productId: brandProducts[index].productId));
+              },
               onFavoriteTap: () {
                 setState(() {
                   brandProducts[index].isFavorite =
@@ -61,6 +66,9 @@ class _ListViewComponentState extends State<ListViewComponent> {
               productName: brandProducts[index].productName,
               productPrice: brandProducts[index].productPrice,
               isFavorite: brandProducts[index].isFavorite,
+              onTap: () {
+                context.pushRoute(DetailsRoute(productId: brandProducts[index].productId));
+              },
               onFavoriteTap: () {
                 setState(() {
                   brandProducts[index].isFavorite =
