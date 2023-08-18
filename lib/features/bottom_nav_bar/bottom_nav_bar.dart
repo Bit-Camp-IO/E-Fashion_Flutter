@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/core/util/strings_manager.dart';
