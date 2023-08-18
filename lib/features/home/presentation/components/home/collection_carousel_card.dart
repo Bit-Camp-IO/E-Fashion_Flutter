@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:efashion_flutter/core/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -71,30 +72,11 @@ class CarouselCard extends StatelessWidget {
         Positioned(
           right: 20,
           bottom: 30,
-          child: GestureDetector(
+          child: SecondaryButton(
+            width: 100.w,
+            height: 48.h,
+            buttonTitle: 'Shop Now',
             onTap: onTap,
-            child: Container(
-              width: 100.w,
-              height: 48.h,
-              decoration: BoxDecoration(
-                color: const Color(0xFF526070),
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(50),
-                  bottomLeft: Radius.circular(50),
-                  topLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                ).r,
-              ),
-              child: Center(
-                child: Text(
-                  'Shop Now',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium!
-                      .copyWith(color: Colors.white),
-                ),
-              ),
-            ),
           ),
         )
       ],
