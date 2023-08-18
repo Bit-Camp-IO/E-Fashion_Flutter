@@ -84,7 +84,7 @@ class _FilterComponentState extends State<FilterComponent> {
                       width: animatedFilterWidth.w,
                       height: 84.h,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFE8E8EB),
+                        color: Theme.of(context).colorScheme.surfaceVariant,
                         borderRadius: const BorderRadius.all(
                           Radius.circular(15),
                         ).r,
@@ -123,9 +123,9 @@ class _FilterComponentState extends State<FilterComponent> {
                     Container(
                       width: 430.w,
                       height: 84.h,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFE8E8EB),
-                        borderRadius: BorderRadius.all(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceVariant,
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(15),
                         ),
                       ),
