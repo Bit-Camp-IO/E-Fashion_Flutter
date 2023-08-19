@@ -49,7 +49,9 @@ class _CollectionCarouselComponentState extends State<CollectionCarouselComponen
           left: 20,
           top: 60,
           child: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.pushRoute(const SearchRoute());
+            },
             icon: const Icon(
               Iconsax.search_normal_1,
               color: Colors.white,
