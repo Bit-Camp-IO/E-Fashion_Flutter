@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/features/account/presentation/screens/account_screen.dart';
 import 'package:efashion_flutter/features/account/presentation/screens/edit_profile_screen.dart';
+import 'package:efashion_flutter/features/account/presentation/screens/location_screen.dart';
+import 'package:efashion_flutter/features/account/presentation/screens/order_status_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/login_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/splash_screen.dart';
@@ -76,6 +78,16 @@ class AppRouter extends _$AppRouter {
                 ),
                 CustomRoute(
                   page: EditProfileRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: LocationRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: OrderStatusRoute.page,
                   transitionsBuilder: TransitionsBuilders.fadeIn,
                   durationInMilliseconds: 300,
                 ),

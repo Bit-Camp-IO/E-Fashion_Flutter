@@ -65,7 +65,9 @@ class AccountClippedContainer extends StatelessWidget {
                   height: 24.h,
                 ),
                 AccountCustomRow(
-                  onTap: () {},
+                  onTap: () {
+                    context.pushRoute(const LocationRoute());
+                  },
                   text: "Location",
                   prefixIcon: Iconsax.location,
                 ),
@@ -73,7 +75,9 @@ class AccountClippedContainer extends StatelessWidget {
                   height: 24.h,
                 ),
                 AccountCustomRow(
-                  onTap: () {},
+                  onTap: () {
+                    context.pushRoute(const OrderStatusRoute());
+                  },
                   text: "Order Status",
                   prefixIcon: Iconsax.bag_2,
                 ),
@@ -99,8 +103,8 @@ class AccountClippedContainer extends StatelessWidget {
                 AccountCustomRow(
                   onTap: () {},
                   text: "Dark Theme",
-                  prefixIcon: Iconsax.moon,
-                  suffixIcon: Iconsax.moon,
+                  prefixIcon: Iconsax.sun_1,
+                  suffixIcon: Iconsax.moon5,
                 ),
               ],
             ),

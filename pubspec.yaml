@@ -32,6 +32,7 @@ dependencies:
   lottie: ^2.6.0
   percent_indicator: ^4.2.3
   flutter_rating_bar: ^4.0.1
+  easy_stepper: ^0.7.3
 
 dev_dependencies:
   flutter_test:
