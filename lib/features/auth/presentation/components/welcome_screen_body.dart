@@ -60,13 +60,8 @@ class WelcomeScreenBody extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Start your new",
-                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  color: Colors.white,
-                                ),
-                          ),
-                          Text(
-                            "shopping experience",
+                            "Start your new \n shopping experience",
+                            textAlign: TextAlign.start,
                             style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                   color: Colors.white,
                                 ),
