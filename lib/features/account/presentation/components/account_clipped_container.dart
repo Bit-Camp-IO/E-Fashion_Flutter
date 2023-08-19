@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/features/account/presentation/components/account_custom_row.dart';
 import 'package:efashion_flutter/features/account/presentation/components/account_skew_clipper.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +55,9 @@ class AccountClippedContainer extends StatelessWidget {
                   height: 32.h,
                 ),
                 AccountCustomRow(
-                  onTap: () {},
+                  onTap: () {
+                    context.pushRoute(const EditProfileRoute());
+                  },
                   text: "My Profile",
                   prefixIcon: Iconsax.user,
                 ),
