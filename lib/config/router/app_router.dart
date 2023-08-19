@@ -76,7 +76,7 @@ class AppRouter extends _$AppRouter {
               ],
             ),
           ],
-        )
+        ),
       ];
 }
 
