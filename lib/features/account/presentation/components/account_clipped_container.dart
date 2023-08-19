@@ -1,5 +1,3 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/features/account/presentation/components/account_custom_row.dart';
 import 'package:efashion_flutter/features/account/presentation/components/account_skew_clipper.dart';
 import 'package:flutter/material.dart';
@@ -55,9 +53,7 @@ class AccountClippedContainer extends StatelessWidget {
                   height: 32.h,
                 ),
                 AccountCustomRow(
-                  onTap: () {
-                    context.pushRoute(const EditProfileRoute());
-                  },
+                  onTap: () {},
                   text: "My Profile",
                   prefixIcon: Iconsax.user,
                 ),
@@ -65,9 +61,7 @@ class AccountClippedContainer extends StatelessWidget {
                   height: 24.h,
                 ),
                 AccountCustomRow(
-                  onTap: () {
-                    context.pushRoute(const LocationRoute());
-                  },
+                  onTap: () {},
                   text: "Location",
                   prefixIcon: Iconsax.location,
                 ),
@@ -75,9 +69,7 @@ class AccountClippedContainer extends StatelessWidget {
                   height: 24.h,
                 ),
                 AccountCustomRow(
-                  onTap: () {
-                    context.pushRoute(const OrderStatusRoute());
-                  },
+                  onTap: () {},
                   text: "Order Status",
                   prefixIcon: Iconsax.bag_2,
                 ),
@@ -85,9 +77,7 @@ class AccountClippedContainer extends StatelessWidget {
                   height: 24.h,
                 ),
                 AccountCustomRow(
-                  onTap: () {
-                    context.pushRoute(const ChatSupportRoute());
-                  },
+                  onTap: () {},
                   text: "Chat Support",
                   prefixIcon: Iconsax.message,
                 ),
@@ -105,8 +95,8 @@ class AccountClippedContainer extends StatelessWidget {
                 AccountCustomRow(
                   onTap: () {},
                   text: "Dark Theme",
-                  prefixIcon: Iconsax.sun_1,
-                  suffixIcon: Iconsax.moon5,
+                  prefixIcon: Iconsax.moon,
+                  suffixIcon: Iconsax.moon,
                 ),
               ],
             ),
