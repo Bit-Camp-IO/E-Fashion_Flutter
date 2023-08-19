@@ -33,6 +33,7 @@ dependencies:
   flutter_svg: ^2.0.7
   flutter_rating_bar: ^4.0.1
   percent_indicator: ^4.2.3
+  easy_stepper: ^0.7.3
 
 dev_dependencies:
   flutter_test:
