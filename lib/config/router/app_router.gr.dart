@@ -81,10 +81,22 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeTab(),
       );
     },
+    LocationRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LocationScreen(),
+      );
+    },
     LoginRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const LoginScreen(),
+      );
+    },
+    OrderStatusRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const OrderStatusScreen(),
       );
     },
     SignupRoute.name: (routeData) {
@@ -263,6 +275,20 @@ class HomeTabRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [LocationScreen]
+class LocationRoute extends PageRouteInfo<void> {
+  const LocationRoute({List<PageRouteInfo>? children})
+      : super(
+          LocationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LocationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [LoginScreen]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})
@@ -272,6 +298,20 @@ class LoginRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [OrderStatusScreen]
+class OrderStatusRoute extends PageRouteInfo<void> {
+  const OrderStatusRoute({List<PageRouteInfo>? children})
+      : super(
+          OrderStatusRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'OrderStatusRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
