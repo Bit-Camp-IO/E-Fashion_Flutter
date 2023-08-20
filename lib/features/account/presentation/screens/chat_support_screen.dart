@@ -68,23 +68,28 @@ class ChatSupportScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    color: Theme.of(context).colorScheme.surfaceVariant,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0).r,
+                      color: Theme.of(context).colorScheme.surfaceVariant,
+                    ),
                     child: const CustomTextFormField(
                       type: TextInputType.text,
                       label: "Message",
                       borderRadius: 12.0,
-                      suffixIcon: Iconsax.document_upload5,
+                      suffixIcon: Iconsax.attach_square5,
                     ),
                   ),
                 ),
                 SizedBox(
-                  width: 18.w,
+                  width: 5.w,
                 ),
                 IconButton(
+                  padding: EdgeInsets.zero,
                   onPressed: () {},
                   icon: Icon(
                     Iconsax.send_2,
                     color: Theme.of(context).colorScheme.primary,
+                    size: 32.0,
                   ),
                 ),
               ],

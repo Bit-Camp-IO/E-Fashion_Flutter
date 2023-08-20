@@ -20,6 +20,14 @@ class BuildMessageItem extends StatelessWidget {
                 topLeft: const Radius.circular(50).r,
                 bottomRight: const Radius.circular(50).r,
               ),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black38,
+                  spreadRadius: 2.0,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                ),
+              ],
             ),
             child: Text(
               "Lorem ipsum dolor",
