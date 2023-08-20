@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/features/account/presentation/screens/account_screen.dart';
+import 'package:efashion_flutter/features/account/presentation/screens/chat_support_screen.dart';
 import 'package:efashion_flutter/features/account/presentation/screens/edit_profile_screen.dart';
 import 'package:efashion_flutter/features/account/presentation/screens/location_screen.dart';
 import 'package:efashion_flutter/features/account/presentation/screens/order_status_screen.dart';
@@ -94,6 +95,11 @@ class AppRouter extends _$AppRouter {
               ],
             ),
           ],
+        ),
+        CustomRoute(
+          page: ChatSupportRoute.page,
+          transitionsBuilder: TransitionsBuilders.fadeIn,
+          durationInMilliseconds: 300,
         ),
       ];
 }

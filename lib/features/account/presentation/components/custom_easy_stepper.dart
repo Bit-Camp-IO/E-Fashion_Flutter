@@ -120,7 +120,6 @@ class _CustomEasyStepperState extends State<CustomEasyStepper> {
           height: 97.h,
         ),
         Image(
-          width: 134.w,
           fit: BoxFit.cover,
           image: AssetImage(orderStatusImages[activeIndex]),
         ),

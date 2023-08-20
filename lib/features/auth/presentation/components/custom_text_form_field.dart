@@ -6,7 +6,7 @@ class CustomTextFormField extends StatelessWidget {
     super.key,
     this.controller,
     required this.type,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.suffixIcon,
     this.obscureText,
     this.label,
@@ -18,7 +18,7 @@ class CustomTextFormField extends StatelessWidget {
 
   final TextEditingController? controller;
   final TextInputType type;
-  final IconData prefixIcon;
+  final IconData? prefixIcon;
   final IconData? suffixIcon;
   final bool? obscureText;
   final String? label;
@@ -36,9 +36,11 @@ class CustomTextFormField extends StatelessWidget {
       onFieldSubmitted: onSubmit,
       decoration: InputDecoration(
         hintText: hintText,
-        prefixIcon: Icon(
-          prefixIcon,
-        ),
+        prefixIcon: prefixIcon == null
+            ? null
+            : Icon(
+                prefixIcon,
+              ),
         suffixIcon: IconButton(
           icon: Icon(suffixIcon),
           onPressed: onPressedSuffix,
