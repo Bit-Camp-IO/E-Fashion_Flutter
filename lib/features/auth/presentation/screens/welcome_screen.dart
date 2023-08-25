@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class WelcomeScreen extends StatelessWidget with AutoRouteWrapper {
+class WelcomeScreen extends StatelessWidget implements AutoRouteWrapper {
   const WelcomeScreen({super.key});
 
   @override
