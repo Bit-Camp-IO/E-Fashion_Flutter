@@ -30,13 +30,14 @@ class AppRouter extends _$AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: AuthRoute.page,
+          initial: true,
           children: [
-            AutoRoute(
-              page: SplashRoute.page,
-            ),
             AutoRoute(
               page: WelcomeRoute.page,
               initial: true,
+            ),
+            AutoRoute(
+              page: SplashRoute.page,
             ),
             AutoRoute(
               page: LoginRoute.page,
@@ -48,7 +49,6 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: BottomNavBarRoute.page,
-          initial: true,
           children: [
             AutoRoute(
               page: HomeTabRoute.page,
