@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/core/util/enums.dart';
-import 'package:efashion_flutter/features/home/presentation/components/notifications/delivery_notification.dart';
-import 'package:efashion_flutter/features/home/presentation/components/notifications/message_notification.dart';
-import 'package:efashion_flutter/features/home/presentation/components/notifications/rating_bottom_sheet.dart';
+import 'package:efashion_flutter/features/home/presentation/components/home/notifications/delivery_notification.dart';
+import 'package:efashion_flutter/features/home/presentation/components/home/notifications/message_notification.dart';
+import 'package:efashion_flutter/features/home/presentation/components/home/notifications/rating_bottom_sheet.dart';
 import 'package:efashion_flutter/features/home/presentation/mock/notifications_mock.dart';
-import 'package:efashion_flutter/features/home/presentation/components/notifications/rate_notification.dart';
+import 'package:efashion_flutter/features/home/presentation/components/home/notifications/rate_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';

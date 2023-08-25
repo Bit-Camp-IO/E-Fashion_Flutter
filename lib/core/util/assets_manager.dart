@@ -9,6 +9,7 @@ class AssetsManager {
   static const String gridShape = 'assets/images/grid_shape.png';
   static const String gridShapeReverse = 'assets/images/grid_shape_reverse.png';
   static const String listViewShape = 'assets/images/listview_shape.png';
+  static const String largeCardShape = 'assets/images/large_card_shape.png';
   static const String badSvgIcon = 'assets/images/bad.svg';
   static const String notBadSvgIcon = 'assets/images/not_bad.svg';
   static const String greatSvgIcon = 'assets/images/great.svg';

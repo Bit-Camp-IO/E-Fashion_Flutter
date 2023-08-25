@@ -13,6 +13,7 @@ import 'package:efashion_flutter/features/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:efashion_flutter/features/home/presentation/screens/details_screen.dart';
 import 'package:efashion_flutter/features/home/presentation/screens/all_products_screen.dart';
 import 'package:efashion_flutter/features/home/presentation/screens/notifications_screen.dart';
+import 'package:efashion_flutter/features/home/presentation/screens/search_filter_screen.dart';
 import 'package:efashion_flutter/features/home/presentation/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -84,6 +85,11 @@ class AppRouter extends _$AppRouter {
                 ),
                 CustomRoute(
                   page: SearchRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: SearchFilterRoute.page,
                   transitionsBuilder: TransitionsBuilders.fadeIn,
                   durationInMilliseconds: 300,
                 ),

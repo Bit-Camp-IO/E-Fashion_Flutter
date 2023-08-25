@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/features/home/presentation/components/see_all/grid_view_component.dart';
-import 'package:efashion_flutter/features/home/presentation/components/see_all/list_view_component.dart';
-import 'package:efashion_flutter/features/home/presentation/components/see_all/square_button.dart';
-import 'package:efashion_flutter/features/home/presentation/components/see_all/vertical_rectangle_button.dart';
+import 'package:efashion_flutter/core/widgets/animated_switcher_button.dart';
 import 'package:efashion_flutter/core/animations/slide_fade_animation_switcher.dart';
+import 'package:efashion_flutter/features/home/presentation/components/see_all/skew_grid_view_component.dart';
+import 'package:efashion_flutter/features/home/presentation/components/see_all/skew_list_view_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -18,13 +17,6 @@ class AllProductsScreen extends StatefulWidget {
 
 class _AllProductsScreenState extends State<AllProductsScreen> {
   int switchIndex = 0;
-
-  void _handleSwitchTap(int index) {
-    setState(() {
-      switchIndex = index;
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -45,30 +37,20 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                 const Spacer(
                   flex: 1,
                 ),
-                SquareButton(
-                  onTap: () {
+                AnimatedSwitcherButton(
+                  onSwitchIndexChanged: (buttonIndex) {
                     setState(() {
-                      _handleSwitchTap(0);
+                      switchIndex = buttonIndex;
                     });
                   },
-                  isSelected: switchIndex == 0,
-                ),
-                SizedBox(width: 4.w),
-                VerticalRectangleButton(
-                  onTap: () {
-                    setState(() {
-                      _handleSwitchTap(1);
-                    });
-                  },
-                  isSelected: switchIndex == 1,
-                ),
+                )
               ],
             ),
             Expanded(
               child: SlideFadeAnimationSwitcher(
                 child: switchIndex == 1
-                    ? const GridViewComponent()
-                    : const ListViewComponent(),
+                    ? const SkewGridViewComponent()
+                    : const SkewListViewComponent(),
               ),
             ),
           ],
