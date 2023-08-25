@@ -61,9 +61,9 @@ class _FilterComponentState extends State<FilterComponent> {
               ),
               const Spacer(flex: 1),
               FilterButton(
-                isVisible: selectedGenders.isNotEmpty || selectedFilters.isNotEmpty,
+                isExpanded: selectedGenders.isNotEmpty || selectedFilters.isNotEmpty,
                 onTap: () {},
-              )
+              ),
             ],
           ),
         ),
@@ -147,7 +147,7 @@ class _FilterComponentState extends State<FilterComponent> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: List.generate(
-                                filters.length,
+                                6,
                                 (filterIndex) => TitledAvatar(
                                   onTap: () {
                                     setState(() {

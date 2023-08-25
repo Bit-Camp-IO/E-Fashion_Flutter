@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
-class BrandCard extends StatelessWidget {
-  const BrandCard({
+class SmallProductCard extends StatelessWidget {
+  const SmallProductCard({
     super.key,
     required this.productName,
     required this.productImage,
@@ -44,60 +44,63 @@ class BrandCard extends StatelessWidget {
               child: ClipPath(
                 clipper: BrandClipper(),
                 child: SizedBox(
-                    width: 160.w,
-                    height: 65.h,
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.white.withOpacity(0.9),
-                                Colors.black.withOpacity(0.9),
-                              ],
-                              stops: const [0.0, 2.0],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          color: const Color(0xFF001D34).withOpacity(0.7),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16.0, top: 8.0).r,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                productName,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(color: Colors.white),
-                              ),
-                              SizedBox(height: 5.h),
-                              Text(
-                                '\$$productPrice',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(color: Colors.white),
-                              ),
+                  width: 160.w,
+                  height: 65.h,
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.white.withOpacity(0.9),
+                              Colors.black.withOpacity(0.9),
                             ],
+                            stops: const [0.0, 2.0],
                           ),
                         ),
-                        isCartActive ? Positioned(
-                          bottom: 10,
-                          right: 10,
-                          child: IconButton(
-                            onPressed: onCartTap,
-                            icon: Icon(
-                              Iconsax.bag_2,
-                              color: Theme.of(context).primaryColor,
+                      ),
+                      Container(
+                        color: const Color(0xFF001D34).withOpacity(0.7),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, top: 8.0).r,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              productName,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(color: Colors.white),
                             ),
-                          ),
-                        ) : const SizedBox.shrink(),
-                      ],
-                    )),
+                            SizedBox(height: 5.h),
+                            Text(
+                              '\$$productPrice',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                      isCartActive
+                          ? Positioned(
+                              bottom: 10,
+                              right: 10,
+                              child: IconButton(
+                                onPressed: onCartTap,
+                                icon: Icon(
+                                  Iconsax.bag_2,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                    ],
+                  ),
+                ),
               ),
             ),
             Positioned(

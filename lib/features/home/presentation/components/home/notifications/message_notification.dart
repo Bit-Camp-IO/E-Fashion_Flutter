@@ -37,7 +37,7 @@ class MessageNotification extends StatelessWidget {
                 Row(
                   children: [
                     Icon(
-                      Iconsax.message,
+                      Iconsax.sun_1,
                       color: Theme.of(context).colorScheme.primary,
                       size: 14,
                     ),

@@ -1,6 +1,7 @@
 import 'package:efashion_flutter/core/util/assets_manager.dart';
 import 'package:efashion_flutter/core/widgets/secondary_button.dart';
-import 'package:efashion_flutter/features/home/presentation/components/notifications/animated_review_icon.dart';
+import 'package:efashion_flutter/features/home/presentation/components/home/notifications/animated_review_icon.dart';
+
 import 'package:efashion_flutter/features/home/presentation/components/shared/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -7,14 +7,13 @@ import 'package:efashion_flutter/features/home/presentation/mock/product_mock.da
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ListViewComponent extends StatefulWidget {
-  const ListViewComponent({Key? key}) : super(key: key);
-
+class SkewListViewComponent extends StatefulWidget {
+  const SkewListViewComponent({Key? key}) : super(key: key);
   @override
-  State<ListViewComponent> createState() => _ListViewComponentState();
+  State<SkewListViewComponent> createState() => _SkewListViewComponentState();
 }
 
-class _ListViewComponentState extends State<ListViewComponent> {
+class _SkewListViewComponentState extends State<SkewListViewComponent> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

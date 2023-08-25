@@ -1,6 +1,7 @@
 class Gender {
   final String name;
   final String picture;
+
   Gender({required this.name, required this.picture});
 }
 
@@ -53,5 +54,37 @@ List<Filter> filters = [
     filterName: 'Shoes',
     filterImageUrl:
         'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80',
+  ),
+  Filter(
+    filterName: 'Shorts',
+    filterImageUrl: '',
+  ),
+  Filter(
+    filterName: 'Socks',
+    filterImageUrl: '',
+  ),
+  Filter(
+    filterName: 'Sweatshirt',
+    filterImageUrl: '',
+  ),
+  Filter(
+    filterName: 'Vests',
+    filterImageUrl: '',
+  ),
+  Filter(
+    filterName: 'Suits',
+    filterImageUrl: '',
+  ),
+  Filter(
+    filterName: 'Sneakers',
+    filterImageUrl: '',
+  ),
+  Filter(
+    filterName: 'Jackets',
+    filterImageUrl: '',
+  ),
+  Filter(
+    filterName: 'Pants',
+    filterImageUrl: '',
   ),
 ];

@@ -123,6 +123,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const NotificationsScreen(),
       );
     },
+    SearchFilterRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SearchFilterScreen(),
+      );
+    },
     SearchRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -442,6 +448,20 @@ class NotificationsRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'NotificationsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SearchFilterScreen]
+class SearchFilterRoute extends PageRouteInfo<void> {
+  const SearchFilterRoute({List<PageRouteInfo>? children})
+      : super(
+          SearchFilterRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SearchFilterRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
