@@ -77,6 +77,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const CartTab(),
       );
     },
+    ChatSupportRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ChatSupportScreen(),
+      );
+    },
     DetailsRoute.name: (routeData) {
       final args = routeData.argsAs<DetailsRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -85,6 +91,12 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           productId: args.productId,
         ),
+      );
+    },
+    EditProfileRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const EditProfileScreen(),
       );
     },
     FavoriteRoute.name: (routeData) {
@@ -111,6 +123,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeTab(),
       );
     },
+    LocationRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LocationScreen(),
+      );
+    },
     LoginRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -121,6 +139,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const NotificationsScreen(),
+      );
+    },
+    OrderStatusRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const OrderStatusScreen(),
       );
     },
     SearchFilterRoute.name: (routeData) {
@@ -331,6 +355,20 @@ class CartTabRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ChatSupportScreen]
+class ChatSupportRoute extends PageRouteInfo<void> {
+  const ChatSupportRoute({List<PageRouteInfo>? children})
+      : super(
+          ChatSupportRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChatSupportRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [DetailsScreen]
 class DetailsRoute extends PageRouteInfo<DetailsRouteArgs> {
   DetailsRoute({
@@ -366,6 +404,20 @@ class DetailsRouteArgs {
   String toString() {
     return 'DetailsRouteArgs{key: $key, productId: $productId}';
   }
+}
+
+/// generated route for
+/// [EditProfileScreen]
+class EditProfileRoute extends PageRouteInfo<void> {
+  const EditProfileRoute({List<PageRouteInfo>? children})
+      : super(
+          EditProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EditProfileRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -425,6 +477,20 @@ class HomeTabRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [LocationScreen]
+class LocationRoute extends PageRouteInfo<void> {
+  const LocationRoute({List<PageRouteInfo>? children})
+      : super(
+          LocationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LocationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [LoginScreen]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})
@@ -448,6 +514,20 @@ class NotificationsRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'NotificationsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [OrderStatusScreen]
+class OrderStatusRoute extends PageRouteInfo<void> {
+  const OrderStatusRoute({List<PageRouteInfo>? children})
+      : super(
+          OrderStatusRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'OrderStatusRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
