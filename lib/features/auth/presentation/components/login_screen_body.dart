@@ -18,7 +18,6 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
       child: Form(
         key: formKey,
         child: Stack(

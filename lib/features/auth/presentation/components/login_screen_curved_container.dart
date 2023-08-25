@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/core/util/assets_manager.dart';
 import 'package:efashion_flutter/core/util/colors_manager.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/custom_button.dart';
@@ -95,7 +97,9 @@ class _LoginScreenCurvedContainerState extends State<LoginScreenCurvedContainer>
               SizedBox(
                 height: 48.h,
               ),
-              CustomButton(text: "Log in", onPressed: () {}),
+              CustomButton(text: "Log in", onPressed: () {
+                context.replaceRoute(const BottomNavBarRoute());
+              }),
               SizedBox(
                 height: 80.h,
               ),
