@@ -8,10 +8,18 @@ import 'package:efashion_flutter/features/auth/presentation/screens/login_screen
 import 'package:efashion_flutter/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/splash_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/welcome_screen.dart';
-import 'package:efashion_flutter/features/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:efashion_flutter/features/cart/presentation/screens/cart_screen.dart';
 import 'package:efashion_flutter/features/favorite/presentation/screens/favorite_screen.dart';
+import 'package:efashion_flutter/features/home/presentation/screens/add_review_screen.dart';
+import 'package:efashion_flutter/features/home/presentation/screens/all_reviews_screen.dart';
 import 'package:efashion_flutter/features/home/presentation/screens/home_screen.dart';
+import 'package:efashion_flutter/features/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:efashion_flutter/features/home/presentation/screens/details_screen.dart';
+import 'package:efashion_flutter/features/home/presentation/screens/all_products_screen.dart';
+import 'package:efashion_flutter/features/home/presentation/screens/notifications_screen.dart';
+import 'package:efashion_flutter/features/home/presentation/screens/search_filter_screen.dart';
+import 'package:efashion_flutter/features/home/presentation/screens/search_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 part 'app_router.gr.dart';
@@ -26,12 +34,14 @@ class AppRouter extends _$AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: AuthRoute.page,
+          initial: true,
           children: [
             AutoRoute(
-              page: SplashRoute.page,
+              page: WelcomeRoute.page,
+              initial: true,
             ),
             AutoRoute(
-              page: WelcomeRoute.page,
+              page: SplashRoute.page,
             ),
             AutoRoute(
               page: LoginRoute.page,
@@ -43,14 +53,50 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: BottomNavBarRoute.page,
-          initial: true,
           children: [
             AutoRoute(
               page: HomeTabRoute.page,
+              initial: true,
               children: [
                 AutoRoute(
                   page: HomeRoute.page,
-                )
+                  initial: true,
+                ),
+                CustomRoute(
+                  page: AllProductsRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: DetailsRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: AddReviewRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: AllReviewsRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: NotificationsRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: SearchRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: SearchFilterRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
               ],
             ),
             AutoRoute(
@@ -58,6 +104,7 @@ class AppRouter extends _$AppRouter {
               children: [
                 AutoRoute(
                   page: CartRoute.page,
+                  initial: true,
                 )
               ],
             ),
@@ -66,12 +113,12 @@ class AppRouter extends _$AppRouter {
               children: [
                 AutoRoute(
                   page: FavoriteRoute.page,
+                  initial: true,
                 )
               ],
             ),
             AutoRoute(
               page: AccountTabRoute.page,
-              initial: true,
               children: [
                 AutoRoute(
                   page: AccountRoute.page,

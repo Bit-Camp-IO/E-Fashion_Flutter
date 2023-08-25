@@ -36,7 +36,6 @@ dependencies:
   flutter_typeahead: ^4.6.2
   syncfusion_flutter_sliders: ^22.2.10
   syncfusion_flutter_core: ^22.2.10
-  easy_stepper: ^0.7.3
 
 dev_dependencies:
   flutter_test:

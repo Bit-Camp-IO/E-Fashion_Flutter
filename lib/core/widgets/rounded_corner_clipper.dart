@@ -26,3 +26,4 @@ class RoundedCornerClipper extends CustomClipper<Path> {
     return true;
   }
 }
+
