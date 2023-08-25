@@ -6,54 +6,58 @@ class CustomTextFormField extends StatelessWidget {
     super.key,
     this.controller,
     required this.type,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.suffixIcon,
-    required this.obscureText,
-    required this.label,
+    this.obscureText,
+    this.label,
     this.onPressedSuffix,
     this.hintText,
     this.onSubmit,
+    this.borderRadius,
   });
 
   final TextEditingController? controller;
   final TextInputType type;
-  final IconData prefixIcon;
+  final IconData? prefixIcon;
   final IconData? suffixIcon;
-  final bool obscureText;
-  final String label;
+  final bool? obscureText;
+  final String? label;
   final Function(String)? onSubmit;
   final VoidCallback? onPressedSuffix;
   final String? hintText;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       keyboardType: type,
-      obscureText: obscureText,
+      obscureText: obscureText ?? false,
       onFieldSubmitted: onSubmit,
       decoration: InputDecoration(
         hintText: hintText,
-        prefixIcon: Icon(
-          prefixIcon,
-        ),
+        prefixIcon: prefixIcon == null
+            ? null
+            : Icon(
+                prefixIcon,
+              ),
         suffixIcon: IconButton(
           icon: Icon(suffixIcon),
           onPressed: onPressedSuffix,
         ),
         label: Text(
-          label,
+          label ?? "",
           style: Theme.of(context).textTheme.bodySmall,
         ),
         contentPadding: const EdgeInsets.all(15.0).r,
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0).r,
+          borderRadius: BorderRadius.circular(borderRadius ?? 8.0).r,
           borderSide: BorderSide(
-            color: Theme.of(context).primaryColor,
+            color: Colors.grey[400]!,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0).r,
+          borderRadius: BorderRadius.circular(borderRadius ?? 8.0).r,
           borderSide: BorderSide(
             color: Theme.of(context).primaryColor,
           ),
