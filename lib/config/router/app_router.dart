@@ -142,6 +142,11 @@ class AppRouter extends _$AppRouter {
             ),
           ],
         ),
+        CustomRoute(
+          page: ChatSupportRoute.page,
+          transitionsBuilder: TransitionsBuilders.fadeIn,
+          durationInMilliseconds: 300,
+        ),
       ];
 }
 
