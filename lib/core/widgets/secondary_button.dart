@@ -7,12 +7,14 @@ class SecondaryButton extends StatelessWidget {
     required this.width,
     required this.height,
     required this.buttonTitle,
+    this.backgroundColor,
     required this.onTap,
   });
 
   final double width;
   final double height;
   final String buttonTitle;
+  final Color? backgroundColor;
   final void Function() onTap;
 
   @override
@@ -23,7 +25,7 @@ class SecondaryButton extends StatelessWidget {
         height: height,
         width: width,
         decoration: BoxDecoration(
-          color: const Color(0xFF526070),
+          color: backgroundColor ?? const Color(0xFF526070),
           borderRadius: const BorderRadius.only(
             topRight: Radius.circular(50),
             bottomLeft: Radius.circular(50),
