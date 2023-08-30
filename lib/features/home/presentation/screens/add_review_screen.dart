@@ -4,7 +4,7 @@ import 'package:efashion_flutter/features/home/presentation/components/details/a
 import 'package:efashion_flutter/features/home/presentation/components/details/add_reviews/reviewer_card.dart';
 import 'package:efashion_flutter/features/home/presentation/components/shared/custom_rating_bar.dart';
 import 'package:efashion_flutter/features/home/presentation/mock/product_mock.dart';
-import 'package:efashion_flutter/core/widgets/main_button.dart';
+import 'package:efashion_flutter/core/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -79,7 +79,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                     },
                   ),
                   SizedBox(height: 15.h),
-                  MainButton(
+                  PrimaryButton(
                     onTap: () {
                       if (formKey.currentState!.validate()) {
                         formKey.currentState!.save();

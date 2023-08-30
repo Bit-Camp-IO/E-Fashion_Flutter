@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/core/widgets/main_button.dart';
+import 'package:efashion_flutter/core/widgets/primary_button.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/search_filter/category_chips_component.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/search_filter/color_chips_component.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/search_filter/price_slider_component.dart';
@@ -89,7 +89,7 @@ class _SearchFilterScreenState extends State<SearchFilterScreen> {
                     },
                   ),
                   SizedBox(height: 24.h),
-                  MainButton(onTap: () {}, buttonTitle: 'Apply Filters'),
+                  PrimaryButton(onTap: () {}, buttonTitle: 'Apply Filters'),
                   SizedBox(height: 50.h),
                 ],
               ),

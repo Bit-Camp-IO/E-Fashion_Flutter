@@ -1,9 +1,8 @@
 import 'dart:ui';
-
 import 'package:auto_route/annotations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:efashion_flutter/core/widgets/secondary_button.dart';
 import 'package:efashion_flutter/features/account/presentation/components/account_skew_clipper.dart';
-import 'package:efashion_flutter/features/account/presentation/components/clipped_button.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -136,11 +135,14 @@ class EditProfileScreen extends StatelessWidget {
                         height: 32.h,
                       ),
                       Center(
-                        child: ClippedButton(
-                          onTap: () {},
-                          text: "Done",
-                          backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-                        ),
+                        child: SecondaryButton(
+                          buttonTitle: 'Done',
+                          width: 100.w,
+                          height: 42.h,
+                          onTap: () {
+
+                          },
+                        )
                       ),
                     ],
                   ),

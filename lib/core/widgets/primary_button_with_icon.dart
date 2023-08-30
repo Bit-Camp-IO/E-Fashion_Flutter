@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
-class MainButtonWithIcon extends StatelessWidget {
-  const MainButtonWithIcon({
+class PrimaryButtonWithIcon extends StatelessWidget {
+  const PrimaryButtonWithIcon({
     super.key,
     required this.buttonTitle,
     required this.buttonIcon,

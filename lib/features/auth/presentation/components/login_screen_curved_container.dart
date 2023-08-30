@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/core/util/colors_manager.dart';
+import 'package:efashion_flutter/core/widgets/primary_button.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/auth_container_clipper.dart';
-import 'package:efashion_flutter/features/auth/presentation/components/custom_button.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,15 +10,20 @@ import 'package:iconsax/iconsax.dart';
 
 class LoginScreenCurvedContainer extends StatefulWidget {
   const LoginScreenCurvedContainer({super.key, required this.scrollController});
+
   final ScrollController scrollController;
+
   @override
-  State<LoginScreenCurvedContainer> createState() => _LoginScreenCurvedContainerState();
+  State<LoginScreenCurvedContainer> createState() =>
+      _LoginScreenCurvedContainerState();
 }
 
-class _LoginScreenCurvedContainerState extends State<LoginScreenCurvedContainer> {
+class _LoginScreenCurvedContainerState
+    extends State<LoginScreenCurvedContainer> {
   bool isChecked = false;
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return ClipPath(
@@ -37,8 +42,8 @@ class _LoginScreenCurvedContainerState extends State<LoginScreenCurvedContainer>
                 child: Text(
                   "Log in",
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: ColorsManager.lightPrimaryColor,
-                  ),
+                        color: ColorsManager.lightPrimaryColor,
+                      ),
                 ),
               ),
               SizedBox(
@@ -93,9 +98,10 @@ class _LoginScreenCurvedContainerState extends State<LoginScreenCurvedContainer>
                           onPressed: () {},
                           child: Text(
                             "Forget Password",
-                            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                  color: ColorsManager.lightPrimaryColor,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: ColorsManager.lightPrimaryColor,
+                                    ),
                           ),
                         )
                       ],
@@ -103,9 +109,12 @@ class _LoginScreenCurvedContainerState extends State<LoginScreenCurvedContainer>
                     SizedBox(
                       height: 48.h,
                     ),
-                    CustomButton(text: "Log in", onPressed: () {
-                      context.replaceRoute(const BottomNavBarRoute());
-                    }),
+                    PrimaryButton(
+                      onTap: () {
+                        context.replaceRoute(const BottomNavBarRoute());
+                      },
+                      buttonTitle: 'Log in',
+                    ),
                     SizedBox(
                       height: 20.h,
                     ),
@@ -122,9 +131,10 @@ class _LoginScreenCurvedContainerState extends State<LoginScreenCurvedContainer>
                         TextButton(
                           child: Text(
                             "Sign up",
-                            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                  color: ColorsManager.lightPrimaryColor,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: ColorsManager.lightPrimaryColor,
+                                    ),
                           ),
                           onPressed: () {
                             context.pushRoute(const SignupRoute());

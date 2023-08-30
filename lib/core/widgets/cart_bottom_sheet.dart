@@ -1,4 +1,4 @@
-import 'package:efashion_flutter/core/widgets/main_button_with_icon.dart';
+import 'package:efashion_flutter/core/widgets/primary_button_with_icon.dart';
 import 'package:efashion_flutter/core/widgets/product_color.dart';
 import 'package:efashion_flutter/core/widgets/product_pieces_counter.dart';
 import 'package:efashion_flutter/core/widgets/product_size.dart';
@@ -148,7 +148,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                 ],
               ),
               SizedBox(height: 30.h),
-              MainButtonWithIcon(
+              PrimaryButtonWithIcon(
                 onTap: () {},
                 width: 230.w,
                 height: 46.h,

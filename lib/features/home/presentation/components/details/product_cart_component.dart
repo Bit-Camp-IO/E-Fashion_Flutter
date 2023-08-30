@@ -1,5 +1,5 @@
 import 'package:efashion_flutter/core/util/colors_manager.dart';
-import 'package:efashion_flutter/core/widgets/main_button_with_icon.dart';
+import 'package:efashion_flutter/core/widgets/primary_button_with_icon.dart';
 import 'package:efashion_flutter/core/widgets/product_color.dart';
 import 'package:efashion_flutter/core/widgets/product_pieces_counter.dart';
 import 'package:efashion_flutter/core/widgets/product_size.dart';
@@ -158,7 +158,7 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
           ),
           SizedBox(height: 20.h),
           Center(
-            child: MainButtonWithIcon(
+            child: PrimaryButtonWithIcon(
               onTap: () {},
               width: 312.w,
               height: 46.h,

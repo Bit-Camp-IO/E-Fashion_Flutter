@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/core/util/colors_manager.dart';
+import 'package:efashion_flutter/core/widgets/primary_button.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/auth_container_clipper.dart';
-import 'package:efashion_flutter/features/auth/presentation/components/custom_button.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -125,7 +126,12 @@ class _SignUpScreenCurvedContainerState
                     SizedBox(
                       height: 28.h,
                     ),
-                    CustomButton(text: "Sign up", onPressed: () {}),
+                    PrimaryButton(
+                      onTap: () {
+                        context.replaceRoute(const BottomNavBarRoute());
+                      },
+                      buttonTitle: 'Sign up',
+                    ),
                     SizedBox(
                       height: 20.h,
                     ),
