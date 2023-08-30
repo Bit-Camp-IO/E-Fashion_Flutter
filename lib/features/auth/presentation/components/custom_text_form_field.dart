@@ -14,6 +14,7 @@ class CustomTextFormField extends StatelessWidget {
     this.hintText,
     this.onSubmit,
     this.borderRadius,
+    this.enableBorderColor,
   });
 
   final TextEditingController? controller;
@@ -26,6 +27,7 @@ class CustomTextFormField extends StatelessWidget {
   final VoidCallback? onPressedSuffix;
   final String? hintText;
   final double? borderRadius;
+  final Color? enableBorderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class CustomTextFormField extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius ?? 8.0).r,
           borderSide: BorderSide(
-            color: Colors.grey[400]!,
+            color: enableBorderColor ?? Colors.grey[400]!,
           ),
         ),
         focusedBorder: OutlineInputBorder(

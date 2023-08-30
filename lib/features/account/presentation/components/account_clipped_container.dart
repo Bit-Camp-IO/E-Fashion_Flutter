@@ -55,7 +55,9 @@ class AccountClippedContainer extends StatelessWidget {
                   height: 32.h,
                 ),
                 AccountCustomRow(
-                  onTap: () {},
+                  onTap: () {
+                    context.pushRoute(const EditProfileRoute());
+                  },
                   text: "My Profile",
                   prefixIcon: Iconsax.user,
                 ),
@@ -83,7 +85,11 @@ class AccountClippedContainer extends StatelessWidget {
                   height: 24.h,
                 ),
                 AccountCustomRow(
-                  onTap: () {},
+                  onTap: () {
+                    context.pushRoute(
+                      const ChatSupportRoute(),
+                    );
+                  },
                   text: "Chat Support",
                   prefixIcon: Iconsax.message,
                 ),

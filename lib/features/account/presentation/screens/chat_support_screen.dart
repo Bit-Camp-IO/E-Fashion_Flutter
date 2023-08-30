@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/features/account/presentation/components/build_message_item.dart';
+import 'package:efashion_flutter/features/account/presentation/components/build_my_message_item.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +16,7 @@ class ChatSupportScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         titleSpacing: 0.0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         title: Text(
           "Chat Support",
           style: Theme.of(context).textTheme.titleMedium,
@@ -29,6 +30,7 @@ class ChatSupportScreen extends StatelessWidget {
               height: 16.h,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
                   Iconsax.lock,
@@ -47,23 +49,15 @@ class ChatSupportScreen extends StatelessWidget {
             SizedBox(
               height: 16.h,
             ),
-            Expanded(
-              child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  //return const BuildMyMessageItem();
-
-                  return const BuildMessageItem();
-                },
-                separatorBuilder: (context, index) => SizedBox(
-                  height: 16.h,
-                ),
-                itemCount: 10,
-              ),
-            ),
+            const BuildMyMessageItem(),
             SizedBox(
               height: 16.h,
             ),
+            const BuildMessageItem(),
+            SizedBox(
+              height: 16.h,
+            ),
+            const Spacer(),
             Row(
               children: [
                 Expanded(
@@ -77,6 +71,7 @@ class ChatSupportScreen extends StatelessWidget {
                       label: "Message",
                       borderRadius: 12.0,
                       suffixIcon: Iconsax.attach_square5,
+                      enableBorderColor: Colors.transparent,
                     ),
                   ),
                 ),
