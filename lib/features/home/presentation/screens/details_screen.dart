@@ -46,7 +46,7 @@ class _DetailsScreenState extends State<DetailsScreen> with TickerProviderStateM
           NotificationListener<DraggableScrollableNotification>(
             onNotification: (notification) {
               setState(() {
-                isSheetExpanded = notification.extent >= 0.75;
+                isSheetExpanded = notification.extent >= 0.85;
               });
               return false;
             },
