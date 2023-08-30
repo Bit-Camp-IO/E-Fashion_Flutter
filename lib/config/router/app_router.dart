@@ -36,17 +36,23 @@ class AppRouter extends _$AppRouter {
           initial: true,
           children: [
             AutoRoute(
-              page: WelcomeRoute.page,
-              initial: true,
-            ),
-            AutoRoute(
               page: SplashRoute.page,
             ),
-            AutoRoute(
-              page: LoginRoute.page,
+            CustomRoute(
+              page: WelcomeRoute.page,
+              initial: true,
+              transitionsBuilder: TransitionsBuilders.fadeIn,
+              durationInMilliseconds: 300,
             ),
-            AutoRoute(
+            CustomRoute(
+              page: LoginRoute.page,
+              transitionsBuilder: TransitionsBuilders.fadeIn,
+              durationInMilliseconds: 300,
+            ),
+            CustomRoute(
               page: SignupRoute.page,
+              transitionsBuilder: TransitionsBuilders.fadeIn,
+              durationInMilliseconds: 300,
             ),
           ],
         ),
@@ -57,9 +63,11 @@ class AppRouter extends _$AppRouter {
               page: HomeTabRoute.page,
               initial: true,
               children: [
-                AutoRoute(
+                CustomRoute(
                   page: HomeRoute.page,
                   initial: true,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
                 ),
                 CustomRoute(
                   page: AllProductsRoute.page,

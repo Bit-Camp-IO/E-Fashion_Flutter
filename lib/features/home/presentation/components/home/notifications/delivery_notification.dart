@@ -27,7 +27,7 @@ class DeliveryNotification extends StatelessWidget {
       children: [
         Container(
           width: 312.w,
-          height: 90.h,
+          height: 95.h,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surfaceVariant,
             borderRadius: BorderRadius.circular(10).r,
@@ -56,8 +56,6 @@ class DeliveryNotification extends StatelessWidget {
                         width: 140.w,
                         child: Text(
                           textAlign: TextAlign.center,
-                          overflow: TextOverflow.visible,
-                          maxLines: null,
                           notificationTitle,
                           style: Theme.of(context)
                               .textTheme
@@ -71,8 +69,6 @@ class DeliveryNotification extends StatelessWidget {
                         width: 120.w,
                         child: Text(
                           textAlign: TextAlign.center,
-                          overflow: TextOverflow.visible,
-                          maxLines: null,
                           notificationBody,
                           style: Theme.of(context)
                               .textTheme

@@ -39,7 +39,8 @@ class ReviewCard extends StatelessWidget {
                   backgroundImage: NetworkImage(reviewerImage),
                 ),
                 SizedBox(width: 16.w),
-                Text(reviewerName,
+                Text(
+                  reviewerName,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: ColorsManager.textColorPrimary,
                   ),
@@ -64,8 +65,10 @@ class ReviewCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             Text(reviewDescription,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: ColorsManager.textColorPrimary,
               ),

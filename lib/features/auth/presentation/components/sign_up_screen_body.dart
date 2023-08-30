@@ -17,43 +17,46 @@ class _SignupScreenBodyState extends State<SignupScreenBody> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Form(
-        key: formKey,
-        child: Stack(
-          children: [
-            ImageFiltered(
-              imageFilter: ImageFilter.blur(
-                sigmaY: 15,
-                sigmaX: 15,
+    return Form(
+      key: formKey,
+      child: Stack(
+        children: [
+          ImageFiltered(
+            imageFilter: ImageFilter.blur(
+              sigmaY: 15,
+              sigmaX: 15,
+            ),
+            child: Image(
+              image: const AssetImage(
+                AssetsManager.welcomeImage,
               ),
-              child: Image(
-                image: const AssetImage(
-                  AssetsManager.welcomeImage,
-                ),
-                width: double.infinity,
-                height: 500.h,
-                fit: BoxFit.cover,
+              width: double.infinity,
+              height: 500.h,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Positioned(
+            top: 60,
+            left: 0,
+            right: 0,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
+              child: Image.asset(
+                key: ValueKey<bool>(FocusScope.of(context).hasPrimaryFocus),
+                AssetsManager.appLogo,
+                width: FocusScope.of(context).hasPrimaryFocus ? 180.w : 90.w,
+                height: FocusScope.of(context).hasPrimaryFocus ? 226.h : 113.h,
               ),
             ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 62.h,
-                ),
-                Image(
-                  width: 180.w,
-                  height: 226.h,
-                  image: const AssetImage(
-                    AssetsManager.appLogo,
-                  ),
-                ),
-                const SignUpScreenCurvedContainer(),
-              ],
-            ),
-          ],
-        ),
+          ),
+          DraggableScrollableSheet(
+            initialChildSize: 0.70,
+            minChildSize: 0.70,
+            maxChildSize:0.70,
+            builder: (context, scrollController) =>
+                SignUpScreenCurvedContainer(scrollController: scrollController,),
+          ),
+        ],
       ),
     );
   }

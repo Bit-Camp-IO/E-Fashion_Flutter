@@ -13,45 +13,58 @@ class LoginScreenBody extends StatefulWidget {
 }
 
 class _LoginScreenBodyState extends State<LoginScreenBody> {
-  final GlobalKey formKey = GlobalKey<FormState>();
-
+  late GlobalKey formKey;
+  late DraggableScrollableController draggableScrollableController;
+  @override
+  void initState() {
+    formKey = GlobalKey<FormState>();
+    draggableScrollableController = DraggableScrollableController();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Form(
-        key: formKey,
-        child: Stack(
-          children: [
-            ImageFiltered(
-              imageFilter: ImageFilter.blur(
-                sigmaY: 15,
-                sigmaX: 15,
+    return Form(
+      key: formKey,
+      child: Stack(
+        children: [
+          ImageFiltered(
+            imageFilter: ImageFilter.blur(
+              sigmaY: 15,
+              sigmaX: 15,
+            ),
+            child: Image(
+              image: const AssetImage(
+                AssetsManager.welcomeImage,
               ),
-              child: Image(
-                image: const AssetImage(
-                  AssetsManager.welcomeImage,
-                ),
-                width: double.infinity,
-                height: 500.h,
-                fit: BoxFit.cover,
+              width: double.infinity,
+              height: 500.h,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Positioned(
+            top: 60,
+            left: 0,
+            right: 0,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
+              child: Image.asset(
+                key: ValueKey<bool>(FocusScope.of(context).hasPrimaryFocus),
+                AssetsManager.appLogo,
+                width: FocusScope.of(context).hasPrimaryFocus ? 180.w : 90.w,
+                height: FocusScope.of(context).hasPrimaryFocus ? 226.h : 113.h,
               ),
             ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 62.h,
-                ),
-                Image.asset(
-                  AssetsManager.appLogo,
-                  width: 180.w,
-                  height: 226.h,
-                ),
-                const LoginScreenCurvedContainer(),
-              ],
+          ),
+          DraggableScrollableSheet(
+            controller: draggableScrollableController,
+            initialChildSize: 0.70,
+            minChildSize: 0.70,
+            maxChildSize:0.70,
+            builder: (context, scrollController) => LoginScreenCurvedContainer(
+              scrollController: scrollController,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
