@@ -38,12 +38,9 @@ class RatingAndReviewsComponent extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           Center(
-            child: CustomRatingBar(
-              onRatingUpdate: (value) {
-
-              },
-            )
-          ),
+              child: CustomRatingBar(
+            onRatingUpdate: (value) {},
+          )),
           Center(
             child: TextButton(
               onPressed: () {
@@ -94,10 +91,9 @@ class RatingAndReviewsComponent extends StatelessWidget {
                 SizedBox(height: 8.h),
                 Text(
                   '${brandProducts[productId].reviews.length}   Reviews',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(color: ColorsManager.textColorPrimary),
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                 ),
                 SizedBox(height: 16.h),
               ],
@@ -114,12 +110,15 @@ class RatingAndReviewsComponent extends StatelessWidget {
                     Text(
                       '${5 - index}',
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: ColorsManager.textColorPrimary,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                     ),
                     const SizedBox(width: 4),
-                    const Icon(Icons.star,
-                        color: ColorsManager.ratingStarColor, size: 24),
+                    const Icon(
+                      Icons.star,
+                      color: ColorsManager.ratingStarColor,
+                      size: 24,
+                    ),
                     LinearPercentIndicator(
                       width: 220.w,
                       lineHeight: 8.h,

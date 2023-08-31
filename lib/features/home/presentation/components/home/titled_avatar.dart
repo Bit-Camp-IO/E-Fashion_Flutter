@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:efashion_flutter/core/util/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -52,8 +51,7 @@ class _TitledAvatarState extends State<TitledAvatar> {
           opacity: isSelected ? 0.0 : 1.0,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20).r,
+          child: ClipOval(
             child: CachedNetworkImage(
               width: 40.w,
               height: 40.h,
@@ -70,15 +68,14 @@ class _TitledAvatarState extends State<TitledAvatar> {
             alignment: Alignment.center,
             children: [
               Container(
-                width: 44.w,
-                height: 44.h,
+                width: 46.w,
+                height: 46.h,
                 decoration: BoxDecoration(
-                  color: ColorsManager.lightPrimaryColor,
-                  borderRadius: BorderRadius.circular(23).r,
+                  color: Theme.of(context).colorScheme.primary,
+                  shape: BoxShape.circle
                 ),
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20).r,
+              ClipOval(
                 child: CachedNetworkImage(
                   width: 40.w,
                   height: 40.h,

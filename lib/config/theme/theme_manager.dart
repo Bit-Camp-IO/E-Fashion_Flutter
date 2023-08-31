@@ -1,3 +1,4 @@
+import 'package:efashion_flutter/config/theme/color_scheme.dart';
 import 'package:efashion_flutter/core/util/assets_manager.dart';
 import 'package:efashion_flutter/core/util/colors_manager.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,7 @@ class ThemeManager {
     return ThemeData(
       fontFamily: AssetsManager.primaryFontFamily,
       scaffoldBackgroundColor: const Color(0xFFF1F0F4),
-      colorScheme:
-          ColorScheme.fromSeed(seedColor: ColorsManager.lightPrimaryColor),
+      colorScheme: lightColorScheme,
       useMaterial3: true,
       appBarTheme: AppBarTheme(
         backgroundColor: const Color(0xFFF1F0F4),
@@ -98,9 +98,19 @@ class ThemeManager {
 
   static ThemeData darkTheme() {
     return ThemeData(
+      scaffoldBackgroundColor: const Color(0xFF1A1C1E),
       fontFamily: AssetsManager.primaryFontFamily,
-      colorScheme:
-          ColorScheme.fromSeed(seedColor: ColorsManager.darkPrimaryColor),
+      colorScheme: darkColorScheme,
+      appBarTheme: AppBarTheme(
+          backgroundColor: const Color(0xFF1A1C1E),
+          scrolledUnderElevation: 0,
+          elevation: 0,
+          titleSpacing: 10.w,
+          titleTextStyle: TextStyle(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w500,
+            color: ColorsManager.textColorPrimary,
+          )),
       useMaterial3: true,
       textTheme: TextTheme(
         displayLarge: TextStyle(

@@ -1,6 +1,6 @@
 
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/features/auth/presentation/components/welcome_screen_body.dart';
+import 'package:efashion_flutter/features/auth/presentation/components/welcome/welcome_screen_body.dart';
 import 'package:efashion_flutter/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:efashion_flutter/injection_container.dart';
 import 'package:flutter/material.dart';

@@ -41,7 +41,7 @@ class ProductColor extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                     width: 2.0, // Adjust the border width as needed
                   ),
                 ),

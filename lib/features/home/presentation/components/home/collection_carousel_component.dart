@@ -35,7 +35,6 @@ class _CollectionCarouselComponentState extends State<CollectionCarouselComponen
             height: 320.h,
             viewportFraction: 1,
             aspectRatio: 16 / 9,
-            autoPlay: true,
             enlargeCenterPage: false,
             initialPage: 0,
             onPageChanged: (index, reason) {

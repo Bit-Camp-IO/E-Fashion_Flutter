@@ -54,7 +54,6 @@ class _OffersCarouselComponentState extends State<OffersCarouselComponent> {
       },
       options: CarouselOptions(
         height: 180.h,
-        autoPlay: true,
         viewportFraction: 0.65,
         enlargeCenterPage: true,
       ),

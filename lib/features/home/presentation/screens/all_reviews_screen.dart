@@ -15,7 +15,10 @@ class AllReviewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Review'),
+        title: Text('All Reviews',  style: Theme.of(context)
+        .textTheme
+        .titleMedium!
+        .copyWith(color: Theme.of(context).colorScheme.onSurface),),
         leading: IconButton(
           onPressed: () {
             context.popRoute();

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/core/animations/slide_fade_animation_switcher.dart';
-import 'package:efashion_flutter/core/widgets/animated_switcher_button.dart';
+import 'package:efashion_flutter/core/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/custom_type_ahead_field.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/search_grid_view_component.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/search_list_view_component.dart';
@@ -34,30 +34,17 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 24).r,
+          padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 26).r,
           child: Column(
             children: [
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      context.popRoute();
-                    },
-                    icon: const Icon(Iconsax.arrow_left),
-                  ),
-                  SizedBox(width: 8.w),
-                  const Text('Search'),
-                  const Spacer(
-                    flex: 1,
-                  ),
-                  AnimatedSwitcherButton(
-                    onSwitchIndexChanged: (buttonIndex) {
-                      setState(() {
-                        switchIndex = buttonIndex;
-                      });
-                    },
-                  ),
-                ],
+              CustomAppBar(
+                appBarTitle: 'Search',
+                appBarType: AppBarType.switcher,
+                onIndexChange: (currentIndex) {
+                  setState(() {
+                    switchIndex = currentIndex!;
+                  });
+                },
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16).r,
@@ -70,16 +57,18 @@ class _SearchScreenState extends State<SearchScreen> {
                         .toList();
                   },
                   onChanged: (value) {
-                    setState(() {
-                      searchList.clear();
-                      if(value.isNotEmpty){
-                        searchList = brandProducts
-                            .where((product) => product.productName
-                            .toLowerCase()
-                            .startsWith(value.toLowerCase()))
-                            .toList();
-                      }
-                    },);
+                    setState(
+                      () {
+                        searchList.clear();
+                        if (value.isNotEmpty) {
+                          searchList = brandProducts
+                              .where((product) => product.productName
+                                  .toLowerCase()
+                                  .startsWith(value.toLowerCase()))
+                              .toList();
+                        }
+                      },
+                    );
                   },
                 ),
               ),
@@ -114,12 +103,13 @@ class _SearchScreenState extends State<SearchScreen> {
                         );
                       } else {
                         return SlideFadeAnimationSwitcher(
-                          child: switchIndex == 1 ? GridViewComponent(
-                            products: searchList,
-                          ) : ListViewComponent(
-                            products: searchList,
-                          )
-                        );
+                            child: switchIndex == 1
+                                ? GridViewComponent(
+                                    products: searchList,
+                                  )
+                                : ListViewComponent(
+                                    products: searchList,
+                                  ));
                       }
                     },
                   ),

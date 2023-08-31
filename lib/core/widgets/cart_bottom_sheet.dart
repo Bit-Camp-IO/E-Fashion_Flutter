@@ -1,4 +1,4 @@
-import 'package:efashion_flutter/core/widgets/primary_button_with_icon.dart';
+import 'package:efashion_flutter/core/widgets/primary_button.dart';
 import 'package:efashion_flutter/core/widgets/product_color.dart';
 import 'package:efashion_flutter/core/widgets/product_pieces_counter.dart';
 import 'package:efashion_flutter/core/widgets/product_size.dart';
@@ -34,9 +34,9 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
   @override
   Widget build(BuildContext context) {
       return Container(
-        height: widget.productColors.isNotEmpty ? 420.h : 320.h,
+        height: widget.productColors.isNotEmpty ? 430.h : 320.h,
         decoration: BoxDecoration(
-          color: const Color(0xFFDEE3EB),
+          color: Theme.of(context).colorScheme.background,
           borderRadius: const BorderRadius.only(
             topRight: Radius.circular(30),
             topLeft: Radius.circular(30),
@@ -148,10 +148,9 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                 ],
               ),
               SizedBox(height: 30.h),
-              PrimaryButtonWithIcon(
-                onTap: () {},
+              PrimaryButton(
                 width: 230.w,
-                height: 46.h,
+                onTap: () {},
                 buttonTitle: 'Add To Bag',
                 buttonIcon: const Icon(Iconsax.bag_2, color: Colors.white),
               ),

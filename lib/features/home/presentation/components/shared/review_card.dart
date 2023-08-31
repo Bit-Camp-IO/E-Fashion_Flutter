@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/core/util/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -24,7 +25,7 @@ class ReviewCard extends StatelessWidget {
       width: 312.h,
       height: 164.w,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surfaceVariant,
         borderRadius: BorderRadius.circular(20).r,
       ),
       child: Padding(
@@ -35,14 +36,19 @@ class ReviewCard extends StatelessWidget {
             Row(
               children: [
                 SizedBox(width: 2.w),
-                CircleAvatar(
-                  backgroundImage: NetworkImage(reviewerImage),
+                ClipOval(
+                  child: CachedNetworkImage(
+                    height: 40.h,
+                    width: 40.h,
+                    imageUrl: reviewerImage,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 SizedBox(width: 16.w),
                 Text(
                   reviewerName,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: ColorsManager.textColorPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
@@ -55,12 +61,12 @@ class ReviewCard extends StatelessWidget {
                   itemPadding: const EdgeInsets.all(4).r,
                   rating: reviewRating,
                   itemBuilder: (context, index) =>
-                  const Icon(Icons.star, color: Color(0xFFF5EC00)),
+                  const Icon(Icons.star, color: ColorsManager.ratingStarColor),
                 ),
                 SizedBox(width: 11.w),
                 Text(reviewDate,
                   style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                    color: ColorsManager.textColorPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
@@ -70,7 +76,7 @@ class ReviewCard extends StatelessWidget {
               maxLines: 4,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: ColorsManager.textColorPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             )
           ],

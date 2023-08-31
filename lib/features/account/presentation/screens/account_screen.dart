@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:efashion_flutter/features/account/presentation/components/shared/account_clipped_container.dart';
+import 'package:efashion_flutter/core/util/assets_manager.dart';
+import 'package:efashion_flutter/features/account/presentation/components/account/account_body.dart';
 import 'package:efashion_flutter/core/widgets/blurred_background_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,8 +16,8 @@ class AccountScreen extends StatelessWidget {
       body: Stack(
         children: [
           const BlurredBackgroundImage(
-            imageUrl:
-                "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
+            isLocalImage: false,
+            imagePath: AssetsManager.userTestImage,
           ),
           Positioned(
             left: 0.0,
@@ -27,8 +28,7 @@ class AccountScreen extends StatelessWidget {
                 ClipOval(
                   child: CachedNetworkImage(
                     fit: BoxFit.cover,
-                    imageUrl:
-                        "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
+                    imageUrl:AssetsManager.userTestImage,
                     width: 120.w,
                     height: 120.h,
                   ),
@@ -45,7 +45,7 @@ class AccountScreen extends StatelessWidget {
               ],
             ),
           ),
-          const AccountClippedContainer(),
+          const AccountBody(),
         ],
       ),
     );

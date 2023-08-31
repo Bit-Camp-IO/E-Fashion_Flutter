@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:efashion_flutter/core/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/features/account/presentation/components/order_status/custom_easy_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,35 +11,36 @@ class OrderStatusScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Order Status",
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
-      body: Column(
-        children: [
-          const Spacer(flex: 1),
-           CustomEasyStepper(
-            activeStep: activeStep,
-          ),
-          const Spacer(flex: 4),
-          Center(
-            child: Image(
-              image: AssetImage(_buildStepImagePath(activeStep)),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 50.0, left: 24, right: 24).r,
+        child: Column(
+          children: [
+            const CustomAppBar(
+              appBarTitle: 'Order Status',
+              appBarType: AppBarType.normal,
             ),
-          ),
-          SizedBox(
-            height: 24.h,
-          ),
-          Text(
-            textAlign: TextAlign.center,
-            _buildStepText(activeStep),
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-         
-          const Spacer(flex: 8),
-        ],
+            const Spacer(flex: 1),
+             CustomEasyStepper(
+              activeStep: activeStep,
+            ),
+            const Spacer(flex: 4),
+            Center(
+              child: Image(
+                image: AssetImage(_buildStepImagePath(activeStep)),
+              ),
+            ),
+            SizedBox(
+              height: 24.h,
+            ),
+            Text(
+              textAlign: TextAlign.center,
+              _buildStepText(activeStep),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+
+            const Spacer(flex: 8),
+          ],
+        ),
       ),
     );
   }

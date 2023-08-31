@@ -1,7 +1,5 @@
-import 'package:efashion_flutter/core/util/assets_manager.dart';
 import 'package:efashion_flutter/core/widgets/secondary_button.dart';
-import 'package:efashion_flutter/features/home/presentation/components/home/notifications/animated_review_icon.dart';
-
+import 'package:efashion_flutter/features/home/presentation/components/home/notifications/animated_review_bar.dart';
 import 'package:efashion_flutter/features/home/presentation/components/shared/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,14 +12,6 @@ class RatingBottomSheet extends StatefulWidget {
 }
 
 class _RatingBottomSheetState extends State<RatingBottomSheet> {
-  int selectedIconIndex = -1;
-
-  void _handleIconTap(int index) {
-    setState(() {
-      selectedIconIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,40 +39,10 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
               onRatingUpdate: (value) {},
             ),
             SizedBox(height: 32.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AnimatedReviewIcon(
-                  isSelected: selectedIconIndex == 0,
-                  label: 'Great',
-                  svgIconPath: AssetsManager.greatSvgIcon,
-                  onTap: () {
-                    _handleIconTap(0);
-                  },
-                ),
-                SizedBox(width: 24.w),
-                AnimatedReviewIcon(
-                  isSelected: selectedIconIndex == 1,
-                  label: 'Not Bad',
-                  svgIconPath: AssetsManager.notBadSvgIcon,
-                  onTap: () {
-                    setState(() {
-                      _handleIconTap(1);
-                    });
-                  },
-                ),
-                SizedBox(width: 24.w),
-                AnimatedReviewIcon(
-                  isSelected: selectedIconIndex == 2,
-                  label: 'Bad',
-                  svgIconPath: AssetsManager.badSvgIcon,
-                  onTap: () {
-                    setState(() {
-                      _handleIconTap(2);
-                    });
-                  },
-                )
-              ],
+            AnimatedReviewBar(
+              selectedIndex: (int selectedIndex) {
+                debugPrint(selectedIndex.toString());
+              },
             ),
             SizedBox(height: 32.h),
             SecondaryButton(

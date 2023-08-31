@@ -93,7 +93,7 @@ class SmallProductCard extends StatelessWidget {
                                 onPressed: onCartTap,
                                 icon: Icon(
                                   Iconsax.bag_2,
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                             )

@@ -39,7 +39,7 @@ class ProductSize extends StatelessWidget {
                 width: 24.w,
                 height: 24.h,
                 decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                     shape: BoxShape.circle
                 ),
                 child: Center(

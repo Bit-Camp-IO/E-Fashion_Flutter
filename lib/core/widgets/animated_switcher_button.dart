@@ -34,7 +34,7 @@ class _AnimatedSwitcherButtonState extends State<AnimatedSwitcherButton> {
           },
           isSquareSelected: _switchIndex == 0,
         ),
-        SizedBox(width: 4.w),
+        SizedBox(width: 6.w),
         _buildRectangleIconButton(
           onTap: () {
             setState(() {

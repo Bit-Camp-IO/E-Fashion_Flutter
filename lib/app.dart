@@ -19,7 +19,7 @@ class EfashionApp extends StatelessWidget {
         routerConfig: getIt<AppRouter>().config(
           navigatorObservers: () => [AppRoutesObserver(), AutoRouteObserver()],
         ),
-        theme: ThemeManager.lightTheme(),
+        theme: ThemeManager.darkTheme(),
       ),
     );
   }

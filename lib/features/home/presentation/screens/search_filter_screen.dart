@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/core/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/core/widgets/primary_button.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/search_filter/category_chips_component.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/search_filter/color_chips_component.dart';
@@ -8,7 +9,6 @@ import 'package:efashion_flutter/features/home/presentation/mock/filter_mock.dar
 import 'package:efashion_flutter/features/home/presentation/mock/search_mock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 @RoutePage()
@@ -33,22 +33,14 @@ class _SearchFilterScreenState extends State<SearchFilterScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    context.popRoute();
-                  },
-                  icon: const Icon(Iconsax.arrow_left),
-                ),
-                SizedBox(width: 8.w),
-                const Text('Filters'),
-              ],
+            const CustomAppBar(
+              appBarTitle: 'Filters',
+              appBarType: AppBarType.normal,
             ),
             SizedBox(height: 16.h),
             Expanded(
               child: ListView(
-                padding: EdgeInsets.zero,
+                padding: const EdgeInsets.only(top: 30),
                 children: [
                   CategoryChipsComponent(
                     categories: filters,

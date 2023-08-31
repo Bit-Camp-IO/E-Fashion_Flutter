@@ -1,5 +1,5 @@
 import 'package:auto_route/annotations.dart';
-import 'package:efashion_flutter/features/auth/presentation/components/login_screen_body.dart';
+import 'package:efashion_flutter/features/auth/presentation/components/login/login_screen_body.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -9,6 +9,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      resizeToAvoidBottomInset: false,
       body: LoginScreenBody(),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/core/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/features/account/presentation/components/chat_support/build_message_item.dart';
 import 'package:efashion_flutter/features/account/presentation/components/chat_support/build_my_message_item.dart';
 import 'package:efashion_flutter/core/widgets/custom_text_form_field.dart';
@@ -13,19 +14,14 @@ class ChatSupportScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        titleSpacing: 0.0,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          "Chat Support",
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 50).r,
         child: Column(
           children: [
+            const CustomAppBar(
+              appBarTitle: 'Order Status',
+              appBarType: AppBarType.normal,
+            ),
             SizedBox(
               height: 16.h,
             ),
@@ -91,9 +87,6 @@ class ChatSupportScreen extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-            SizedBox(
-              height: 48.h,
             ),
           ],
         ),

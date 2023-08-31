@@ -1,4 +1,3 @@
-import 'package:efashion_flutter/core/util/colors_manager.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/filter_button.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/section_widget.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/titled_avatar.dart';
@@ -135,7 +134,7 @@ class _FilterComponentState extends State<FilterComponent> {
                             width: 6.w,
                             height: 42.h,
                             decoration: BoxDecoration(
-                              color: ColorsManager.lightPrimaryColor,
+                              color: Theme.of(context).colorScheme.primary,
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(5),
                                 bottomRight: Radius.circular(5),

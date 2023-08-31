@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:efashion_flutter/core/util/colors_manager.dart';
 import 'package:efashion_flutter/core/util/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -85,7 +86,7 @@ class DeliveryNotification extends StatelessWidget {
                 Icon(
                   Iconsax.verify,
                   color: deliveryStatus == DeliverStatus.delivered
-                      ? const Color(0xFF07D803)
+                      ? ColorsManager.successColor
                       : Theme.of(context).colorScheme.primary,
                 ),
               ],

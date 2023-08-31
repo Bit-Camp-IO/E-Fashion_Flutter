@@ -1,4 +1,3 @@
-import 'package:efashion_flutter/core/util/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -30,7 +29,7 @@ class SectionWidget extends StatelessWidget {
               child: Text(
                 sectionButtonTitle ?? 'See All',
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: ColorsManager.lightPrimaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),

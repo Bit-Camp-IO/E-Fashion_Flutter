@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/core/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/features/home/presentation/components/details/add_reviews/review_product_card.dart';
 import 'package:efashion_flutter/features/home/presentation/components/details/add_reviews/review_text_field.dart';
 import 'package:efashion_flutter/features/home/presentation/components/details/add_reviews/reviewer_card.dart';
@@ -7,7 +8,6 @@ import 'package:efashion_flutter/features/home/presentation/mock/product_mock.da
 import 'package:efashion_flutter/core/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 
 @RoutePage()
 class AddReviewScreen extends StatefulWidget {
@@ -32,20 +32,16 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Review'),
-        leading: IconButton(
-          onPressed: () {
-            context.popRoute();
-          },
-          icon: const Icon(Iconsax.arrow_left),
-        ),
-      ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 24, right: 24, top: 10).r,
+        padding: const EdgeInsets.only(left: 24, right: 24, top: 50).r,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
+            const CustomAppBar(
+              appBarTitle: 'Add Review',
+              appBarType: AppBarType.normal,
+            ),
+            SizedBox(height: 30.h),
             ReviewProductCard(
               productImage: brandProducts[widget.productId].productImage,
               productName: brandProducts[widget.productId].productName,
