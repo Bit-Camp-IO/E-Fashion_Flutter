@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/features/account/presentation/components/build_message_item.dart';
-import 'package:efashion_flutter/features/account/presentation/components/build_my_message_item.dart';
-import 'package:efashion_flutter/features/auth/presentation/components/custom_text_form_field.dart';
+import 'package:efashion_flutter/features/account/presentation/components/chat_support/build_message_item.dart';
+import 'package:efashion_flutter/features/account/presentation/components/chat_support/build_my_message_item.dart';
+import 'package:efashion_flutter/core/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -66,12 +66,15 @@ class ChatSupportScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12.0).r,
                       color: Theme.of(context).colorScheme.surfaceVariant,
                     ),
-                    child: const CustomTextFormField(
+                    child: CustomTextFormField(
+                      hintText: 'Message',
                       type: TextInputType.text,
-                      label: "Message",
                       borderRadius: 12.0,
                       suffixIcon: Iconsax.attach_square5,
                       enableBorderColor: Colors.transparent,
+                      onSuffixPress: () {
+                        debugPrint('Test');
+                      },
                     ),
                   ),
                 ),
