@@ -7,19 +7,21 @@ class AccountCustomRow extends StatelessWidget {
     super.key,
     required this.prefixIcon,
     required this.text,
-    required this.onTap,
-    this.suffixIcon,
+    this.onTap,
+    this.enableOnTap = true,
+    this.suffixWidget,
   });
 
   final IconData prefixIcon;
-  final IconData? suffixIcon;
+  final Widget? suffixWidget;
   final String text;
-  final void Function() onTap;
+  final bool enableOnTap;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: enableOnTap ? onTap : null,
       child: Row(
         children: [
           Icon(
@@ -33,8 +35,8 @@ class AccountCustomRow extends StatelessWidget {
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const Spacer(),
-          Icon(
-            suffixIcon ?? Iconsax.arrow_right_3,
+          suffixWidget ?? const Icon(
+             Iconsax.arrow_right_3,
           ),
         ],
       ),

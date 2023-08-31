@@ -9,7 +9,7 @@ class LocationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text("Lcation Screen"),
+        child: Text("Location Screen"),
       ),
     );
   }

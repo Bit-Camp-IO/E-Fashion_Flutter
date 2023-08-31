@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/config/router/app_router.dart';
-import 'package:efashion_flutter/features/account/presentation/components/account_custom_row.dart';
-import 'package:efashion_flutter/features/account/presentation/components/account_skew_clipper.dart';
+import 'package:efashion_flutter/features/account/presentation/components/account/account_custom_row.dart';
+import 'package:efashion_flutter/features/account/presentation/components/shared/account_skew_clipper.dart';
+import 'package:efashion_flutter/features/account/presentation/components/shared/icon_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -42,7 +43,7 @@ class AccountClippedContainer extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 64.h,
+                  height: 50.h,
                 ),
                 Text(
                   "Profile Settings",
@@ -97,18 +98,49 @@ class AccountClippedContainer extends StatelessWidget {
                   height: 24.h,
                 ),
                 AccountCustomRow(
-                  onTap: () {},
-                  text: "Notifications",
-                  prefixIcon: Iconsax.notification,
+                  onTap: () {
+                    context.pushRoute(
+                      const ChangePasswordRoute(),
+                    );
+                  },
+                  text: "Change Password",
+                  prefixIcon: Iconsax.lock,
                 ),
                 SizedBox(
-                  height: 32.h,
+                  height: 14.h,
                 ),
                 AccountCustomRow(
-                  onTap: () {},
-                  text: "Dark Theme",
+                  enableOnTap: false,
+                  text: "Notifications",
+                  prefixIcon: Iconsax.notification,
+                  suffixWidget: IconSwitcher(
+                    initialSwitcherValue: true,
+                    activeTrackColor: Theme.of(context).colorScheme.error,
+                    activeIconColor: Colors.white,
+                    activeThumbColor: Colors.white,
+                    disabledTrackColor: Colors.green,
+                    onChanged: (switched) {
+                      debugPrint(switched.toString());
+                    },
+                    activeIcon: Icons.notifications_off_outlined,
+                    disabledIcon: Icons.notifications_active_outlined,
+                  ),
+                ),
+                SizedBox(
+                  height: 7.h,
+                ),
+                AccountCustomRow(
+                  enableOnTap: false,
+                  text: "App Theme",
                   prefixIcon: Iconsax.sun_1,
-                  suffixIcon: Iconsax.moon5,
+                  suffixWidget: IconSwitcher(
+                    initialSwitcherValue: false,
+                    onChanged: (switched) {
+                      debugPrint(switched.toString());
+                    },
+                    activeIcon: Iconsax.sun_1,
+                    disabledIcon: Iconsax.moon5,
+                  ),
                 ),
               ],
             ),
