@@ -11,18 +11,17 @@ import 'package:efashion_flutter/features/auth/presentation/components/shared/bl
 
 
 @RoutePage()
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class ResetPasswordScreen extends StatefulWidget {
+  const ResetPasswordScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  bool _isChecked = false;
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   late GlobalKey<FormState> _formKey;
-  late String username;
   late String password;
+  late String confirmPassword;
 
   @override
   void initState() {
@@ -41,29 +40,37 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 50.h,
+                    height: 60.h,
                   ),
                   Text(
-                    "Log in",
+                    "Reset Password",
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "Your new password must be different\n from previous used password.",
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: Theme.of(context).colorScheme.outline,
                     ),
                   ),
                   SizedBox(
                     height: 40.h,
                   ),
                   CustomTextFormField(
-                    label: "user name",
-                    obscureText: false,
-                    prefixIcon: Iconsax.user,
-                    type: TextInputType.text,
-                    hintText: "Username",
+                    label: "Password",
+                    obscureText: true,
+                    prefixIcon: Iconsax.lock,
+                    type: TextInputType.visiblePassword,
+                    hintText: "Password",
                     onSaved: (value) {
                       if (value != null) {
-                        username = value;
+                        password = value;
                       }
                     },
                   ),
@@ -71,10 +78,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 16.h,
                   ),
                   CustomTextFormField(
-                    label: "Password",
+                    label: "Confirm Password",
                     obscureText: true,
-                    type: TextInputType.visiblePassword,
                     prefixIcon: Iconsax.lock,
+                    type: TextInputType.visiblePassword,
                     hintText: "Password",
                     onSaved: (value) {
                       if (value != null) {
@@ -85,36 +92,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 24.h,
                   ),
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: _isChecked,
-                        onChanged: (newBool) {
-                          setState(() {
-                            _isChecked = newBool!;
-                          });
-                        },
-                      ),
-                      Text(
-                        "Remember me",
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      const Spacer(),
-                      TextButton(
-                        onPressed: () {
-                          context.pushRoute(const ForgetPasswordRoute());
-                        },
-                        child: Text(
-                          "Forget Password",
-                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
                   SizedBox(
-                    height: 48.h,
+                    height: 35.h,
                   ),
                   PrimaryButton(
                     onTap: () {
@@ -123,40 +102,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                       context.replaceRoute(const BottomNavBarRoute());
                     },
-                    buttonTitle: 'Log in',
+                    buttonTitle: 'Continue',
                   ),
                   SizedBox(
                     height: 20.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have an account ?",
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      SizedBox(
-                        width: 2.w,
-                      ),
-                      TextButton(
-                        child: Text(
-                          "Sign up",
-                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        onPressed: () {
-                          context.pushRoute(const SignupRoute());
-                        },
-                      ),
-                    ],
                   ),
                 ],
               ),
             ),
           ),
         ),
-      )
+      ),
     );
   }
 

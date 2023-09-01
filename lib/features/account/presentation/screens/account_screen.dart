@@ -45,7 +45,7 @@ class AccountScreen extends StatelessWidget {
               ],
             ),
           ),
-          const AccountBody(),
+          const AccountContainerComponent(),
         ],
       ),
     );

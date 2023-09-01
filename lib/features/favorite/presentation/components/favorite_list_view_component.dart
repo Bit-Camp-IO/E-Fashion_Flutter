@@ -3,37 +3,37 @@ import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/core/widgets/cart_bottom_sheet.dart';
 import 'package:efashion_flutter/core/widgets/list_view_card.dart';
 import 'package:efashion_flutter/core/widgets/top_list_view_card.dart';
-import 'package:efashion_flutter/features/home/presentation/mock/product_mock.dart';
+import 'package:efashion_flutter/features/favorite/presentation/mock/favorites_mock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SkewListViewComponent extends StatefulWidget {
-  const SkewListViewComponent({Key? key}) : super(key: key);
+class FavoriteListViewComponent extends StatefulWidget {
+  const FavoriteListViewComponent({Key? key}) : super(key: key);
   @override
-  State<SkewListViewComponent> createState() => _SkewListViewComponentState();
+  State<FavoriteListViewComponent> createState() => _FavoriteListViewComponentState();
 }
 
-class _SkewListViewComponentState extends State<SkewListViewComponent> {
+class _FavoriteListViewComponentState extends State<FavoriteListViewComponent> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: brandProducts.length,
+      itemCount: favoriteList.length,
       itemBuilder: (context, index) {
         if (index == 0) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: TopListViewCard(
-              productImage: brandProducts[index].productImage,
-              productName: brandProducts[index].productName,
-              productPrice: brandProducts[index].productPrice,
-              isFavorite: brandProducts[index].isFavorite,
+              productImage: favoriteList[index].productImage,
+              productName: favoriteList[index].productName,
+              productPrice: favoriteList[index].productPrice,
+              isFavorite: favoriteList[index].isFavorite,
               onTap: () {
-                context.pushRoute(DetailsRoute(productId: brandProducts[index].productId));
+                context.pushRoute(DetailsRoute(productId: favoriteList[index].productId));
               },
               onFavoriteTap: () {
                 setState(() {
-                  brandProducts[index].isFavorite =
-                  !brandProducts[index].isFavorite;
+                  favoriteList[index].isFavorite =
+                  !favoriteList[index].isFavorite;
                 });
               },
               onCartTap: () {
@@ -42,15 +42,15 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
                   builder: (context) {
                     return CartBottomSheet(
                       productName:
-                      brandProducts[index].productName,
+                      favoriteList[index].productName,
                       productPrice:
-                      brandProducts[index].productPrice,
+                      favoriteList[index].productPrice,
                       productColors:
-                      brandProducts[index].productColors,
+                      favoriteList[index].productColors,
                       productSizes:
-                      brandProducts[index].productSizes,
+                      favoriteList[index].productSizes,
                       productPieces:
-                      brandProducts[index].avaliblePieces,
+                      favoriteList[index].avaliblePieces,
                     );
                   },
                 );
@@ -61,17 +61,17 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
           return Padding(
             padding: const EdgeInsets.only(bottom: 8.0).r,
             child: ListViewCard(
-              productImage: brandProducts[index].productImage,
-              productName: brandProducts[index].productName,
-              productPrice: brandProducts[index].productPrice,
-              isFavorite: brandProducts[index].isFavorite,
+              productImage: favoriteList[index].productImage,
+              productName: favoriteList[index].productName,
+              productPrice: favoriteList[index].productPrice,
+              isFavorite: favoriteList[index].isFavorite,
               onTap: () {
-                context.pushRoute(DetailsRoute(productId: brandProducts[index].productId));
+                context.pushRoute(DetailsRoute(productId: favoriteList[index].productId));
               },
               onFavoriteTap: () {
                 setState(() {
-                  brandProducts[index].isFavorite =
-                  !brandProducts[index].isFavorite;
+                  favoriteList[index].isFavorite =
+                  !favoriteList[index].isFavorite;
                 });
               },
               onCartTap: () {
@@ -80,15 +80,15 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
                   builder: (context) {
                     return CartBottomSheet(
                       productName:
-                      brandProducts[index].productName,
+                      favoriteList[index].productName,
                       productPrice:
-                      brandProducts[index].productPrice,
+                      favoriteList[index].productPrice,
                       productColors:
-                      brandProducts[index].productColors,
+                      favoriteList[index].productColors,
                       productSizes:
-                      brandProducts[index].productSizes,
+                      favoriteList[index].productSizes,
                       productPieces:
-                      brandProducts[index].avaliblePieces,
+                      favoriteList[index].avaliblePieces,
                     );
                   },
                 );

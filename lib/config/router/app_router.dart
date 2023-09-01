@@ -5,7 +5,10 @@ import 'package:efashion_flutter/features/account/presentation/screens/chat_supp
 import 'package:efashion_flutter/features/account/presentation/screens/edit_profile_screen.dart';
 import 'package:efashion_flutter/features/account/presentation/screens/location_screen.dart';
 import 'package:efashion_flutter/features/account/presentation/screens/order_status_screen.dart';
+import 'package:efashion_flutter/features/auth/presentation/screens/email_verification_screen.dart';
+import 'package:efashion_flutter/features/auth/presentation/screens/forget_password_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/login_screen.dart';
+import 'package:efashion_flutter/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/splash_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/welcome_screen.dart';
@@ -53,6 +56,21 @@ class AppRouter extends _$AppRouter {
             ),
             CustomRoute(
               page: SignupRoute.page,
+              transitionsBuilder: TransitionsBuilders.fadeIn,
+              durationInMilliseconds: 300,
+            ),
+            CustomRoute(
+              page: ForgetPasswordRoute.page,
+              transitionsBuilder: TransitionsBuilders.fadeIn,
+              durationInMilliseconds: 300,
+            ),
+            CustomRoute(
+              page: EmailVerificationRoute.page,
+              transitionsBuilder: TransitionsBuilders.fadeIn,
+              durationInMilliseconds: 300,
+            ),
+            CustomRoute(
+              page: ResetPasswordRoute.page,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               durationInMilliseconds: 300,
             ),
@@ -111,19 +129,36 @@ class AppRouter extends _$AppRouter {
             AutoRoute(
               page: CartRoute.page,
               children: [
-                AutoRoute(
+                CustomRoute(
                   page: CartRoute.page,
                   initial: true,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
                 )
               ],
             ),
             AutoRoute(
               page: FavoriteTabRoute.page,
               children: [
-                AutoRoute(
+                CustomRoute(
                   page: FavoriteRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
                   initial: true,
-                )
+                ),
+                CustomRoute(
+                  page: DetailsRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: AddReviewRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: AllReviewsRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
               ],
             ),
             AutoRoute(

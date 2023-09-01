@@ -25,8 +25,8 @@ class ProfilePictureEdit extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: 140.0,
-            top: 9.0,
+            right: 4.0,
+            top: 8.0,
             child: CircleAvatar(
               radius: 12.0,
               backgroundColor: Theme.of(context).colorScheme.primary,

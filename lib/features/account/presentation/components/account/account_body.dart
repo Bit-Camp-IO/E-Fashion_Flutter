@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/config/router/app_router.dart';
 import 'package:efashion_flutter/core/util/colors_manager.dart';
+import 'package:efashion_flutter/core/util/size_manager.dart';
 import 'package:efashion_flutter/core/widgets/container_button.dart';
 import 'package:efashion_flutter/features/account/presentation/components/account/account_custom_row.dart';
 import 'package:efashion_flutter/features/account/presentation/components/shared/account_clipped_container.dart';
@@ -9,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
-class AccountBody extends StatelessWidget {
-  const AccountBody({super.key});
+class AccountContainerComponent extends StatelessWidget {
+  const AccountContainerComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class AccountBody extends StatelessWidget {
       right: 0.0,
       bottom: -5,
       child: AccountClippedContainer(
-        height: MediaQuery.sizeOf(context).height * 0.75,
+        height: SizeManager.screenHeight * 0.75,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
           child: Column(
