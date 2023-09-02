@@ -70,9 +70,9 @@ class AccountContainerComponent extends StatelessWidget {
               ),
               AccountCustomRow(
                 onTap: () {
-                  context.pushRoute(const OrderStatusRoute());
+                  context.pushRoute(const OrdersStatusRoute());
                 },
-                text: "Order Status",
+                text: "Orders Status",
                 prefixIcon: Iconsax.bag_2,
               ),
               SizedBox(

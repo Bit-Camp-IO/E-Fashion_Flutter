@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
-class OrderStatusScreen extends StatelessWidget {
-  const OrderStatusScreen({super.key});
-  final int activeStep = 1;
+class DeliveryStatusScreen extends StatelessWidget {
+  const DeliveryStatusScreen({super.key, required this.activeStep});
+  final int activeStep;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +16,7 @@ class OrderStatusScreen extends StatelessWidget {
         child: Column(
           children: [
             const CustomAppBar(
-              appBarTitle: 'Order Status',
+              appBarTitle: 'Delivery Status',
               appBarType: AppBarType.normal,
             ),
             const Spacer(flex: 1),

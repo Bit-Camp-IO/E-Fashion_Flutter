@@ -89,6 +89,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ChatSupportScreen(),
       );
     },
+    DeliveryStatusRoute.name: (routeData) {
+      final args = routeData.argsAs<DeliveryStatusRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: DeliveryStatusScreen(
+          key: args.key,
+          activeStep: args.activeStep,
+        ),
+      );
+    },
     DetailsRoute.name: (routeData) {
       final args = routeData.argsAs<DetailsRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -159,10 +169,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const NotificationsScreen(),
       );
     },
-    OrderStatusRoute.name: (routeData) {
+    OrdersStatusRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const OrderStatusScreen(),
+        child: const OrdersStatusScreen(),
       );
     },
     ResetPasswordRoute.name: (routeData) {
@@ -407,6 +417,44 @@ class ChatSupportRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [DeliveryStatusScreen]
+class DeliveryStatusRoute extends PageRouteInfo<DeliveryStatusRouteArgs> {
+  DeliveryStatusRoute({
+    Key? key,
+    required int activeStep,
+    List<PageRouteInfo>? children,
+  }) : super(
+          DeliveryStatusRoute.name,
+          args: DeliveryStatusRouteArgs(
+            key: key,
+            activeStep: activeStep,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'DeliveryStatusRoute';
+
+  static const PageInfo<DeliveryStatusRouteArgs> page =
+      PageInfo<DeliveryStatusRouteArgs>(name);
+}
+
+class DeliveryStatusRouteArgs {
+  const DeliveryStatusRouteArgs({
+    this.key,
+    required this.activeStep,
+  });
+
+  final Key? key;
+
+  final int activeStep;
+
+  @override
+  String toString() {
+    return 'DeliveryStatusRouteArgs{key: $key, activeStep: $activeStep}';
+  }
+}
+
+/// generated route for
 /// [DetailsScreen]
 class DetailsRoute extends PageRouteInfo<DetailsRouteArgs> {
   DetailsRoute({
@@ -585,15 +633,15 @@ class NotificationsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [OrderStatusScreen]
-class OrderStatusRoute extends PageRouteInfo<void> {
-  const OrderStatusRoute({List<PageRouteInfo>? children})
+/// [OrdersStatusScreen]
+class OrdersStatusRoute extends PageRouteInfo<void> {
+  const OrdersStatusRoute({List<PageRouteInfo>? children})
       : super(
-          OrderStatusRoute.name,
+          OrdersStatusRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'OrderStatusRoute';
+  static const String name = 'OrdersStatusRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

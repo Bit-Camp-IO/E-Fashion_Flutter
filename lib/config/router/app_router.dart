@@ -4,7 +4,8 @@ import 'package:efashion_flutter/features/account/presentation/screens/change_pa
 import 'package:efashion_flutter/features/account/presentation/screens/chat_support_screen.dart';
 import 'package:efashion_flutter/features/account/presentation/screens/edit_profile_screen.dart';
 import 'package:efashion_flutter/features/account/presentation/screens/location_screen.dart';
-import 'package:efashion_flutter/features/account/presentation/screens/order_status_screen.dart';
+import 'package:efashion_flutter/features/account/presentation/screens/delivery_status_screen.dart';
+import 'package:efashion_flutter/features/account/presentation/screens/orders_status_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/email_verification_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/forget_password_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/login_screen.dart';
@@ -181,7 +182,12 @@ class AppRouter extends _$AppRouter {
                   durationInMilliseconds: 300,
                 ),
                 CustomRoute(
-                  page: OrderStatusRoute.page,
+                  page: OrdersStatusRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: DeliveryStatusRoute.page,
                   transitionsBuilder: TransitionsBuilders.fadeIn,
                   durationInMilliseconds: 300,
                 ),
