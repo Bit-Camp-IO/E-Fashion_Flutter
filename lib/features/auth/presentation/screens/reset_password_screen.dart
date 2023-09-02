@@ -74,9 +74,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       }
                     },
                   ),
-                  SizedBox(
-                    height: 16.h,
-                  ),
                   CustomTextFormField(
                     label: "Confirm Password",
                     obscureText: true,
@@ -88,9 +85,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         password = value;
                       }
                     },
-                  ),
-                  SizedBox(
-                    height: 24.h,
                   ),
                   SizedBox(
                     height: 35.h,

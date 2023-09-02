@@ -128,11 +128,13 @@ class AppRouter extends _$AppRouter {
             ),
             AutoRoute(
               page: CartRoute.page,
+              maintainState: false,
               children: [
                 CustomRoute(
                   page: CartRoute.page,
                   initial: true,
                   transitionsBuilder: TransitionsBuilders.fadeIn,
+                  maintainState: false
                 )
               ],
             ),

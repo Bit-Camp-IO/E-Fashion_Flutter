@@ -5,13 +5,16 @@ class Product {
   final int productPrice;
   final int avaliblePieces;
   final String? selectedSize;
-
-  Product({
+  final int cartPieces;
+  final int cartPrice;
+  Product(  {
     required this.productId,
     required this.productName,
     required this.productImage,
     required this.productPrice,
     required this.avaliblePieces,
+    required this.cartPieces,
+    required this.cartPrice,
     this.selectedSize,
   });
 }
@@ -25,6 +28,8 @@ List<Product> cartList = [
     productPrice: 150,
     avaliblePieces: 5,
     selectedSize: 'L',
+    cartPieces: 1,
+    cartPrice: 150,
   ),
   Product(
     productId: 1,
@@ -33,6 +38,8 @@ List<Product> cartList = [
         'https://images.unsplash.com/photo-1606659639419-8e5374a18522?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fHphcmF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60',
     productPrice: 100,
     avaliblePieces: 20,
+    cartPieces: 2,
+    cartPrice: 200,
   ),
   Product(
     productId: 2,
@@ -42,13 +49,7 @@ List<Product> cartList = [
     productPrice: 200,
     avaliblePieces: 15,
     selectedSize: 'XL',
-  ),
-  Product(
-    productId: 3,
-    productName: 'Ice Watch',
-    productImage:
-        'https://images.unsplash.com/photo-1560024479-f513a5279041?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTQyfHx6YXJhfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
-    productPrice: 120,
-    avaliblePieces: 25,
+    cartPieces: 2,
+    cartPrice: 400,
   ),
 ];

@@ -36,7 +36,7 @@ class _ChangePasswordContainerComponentState
       child: AccountClippedContainer(
         height: FocusScope.of(context).hasPrimaryFocus ||
                 !FocusScope.of(context).hasFocus
-            ? SizeManager.screenHeight * 0.65
+            ? SizeManager.screenHeight * 0.67
             : SizeManager.screenHeight * 0.55,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
@@ -77,9 +77,6 @@ class _ChangePasswordContainerComponentState
                   }
                 },
               ),
-              SizedBox(
-                height: 16.h,
-              ),
               CustomTextFormField(
                 type: TextInputType.text,
                 prefixIcon: Iconsax.lock_1,
@@ -93,9 +90,6 @@ class _ChangePasswordContainerComponentState
                   }
                 },
               ),
-              SizedBox(
-                height: 16.h,
-              ),
               CustomTextFormField(
                 type: TextInputType.text,
                 prefixIcon: Iconsax.lock_1,
@@ -108,9 +102,6 @@ class _ChangePasswordContainerComponentState
                     debugPrint(confirmPassword);
                   }
                 },
-              ),
-              SizedBox(
-                height: 32.h,
               ),
               Center(
                 child: SecondaryButton(

@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Form(
           key: _formKey,
           child: AuthClippedContainer(
-            height: SizeManager.screenHeight * 0.60,
+            height: SizeManager.screenHeight * 0.58,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
               child: Column(
@@ -67,9 +67,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                   ),
-                  SizedBox(
-                    height: 16.h,
-                  ),
                   CustomTextFormField(
                     label: "Password",
                     obscureText: true,
@@ -81,9 +78,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         password = value;
                       }
                     },
-                  ),
-                  SizedBox(
-                    height: 24.h,
                   ),
                   Row(
                     children: [
@@ -114,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   SizedBox(
-                    height: 48.h,
+                    height: 28.h,
                   ),
                   PrimaryButton(
                     onTap: () {
@@ -126,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     buttonTitle: 'Log in',
                   ),
                   SizedBox(
-                    height: 20.h,
+                    height: 10.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

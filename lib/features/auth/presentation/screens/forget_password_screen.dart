@@ -73,7 +73,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     },
                   ),
                   SizedBox(
-                    height: 75.h,
+                    height: 50.h,
                   ),
                   PrimaryButton(
                     onTap: () {

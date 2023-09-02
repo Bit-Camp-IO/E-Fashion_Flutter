@@ -31,133 +31,134 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       body: BlurredAuthBody(
-        child: AuthClippedContainer(
-          height: SizeManager.screenHeight * 0.62,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 50.h,
-                ),
-                Text(
-                  "Sign up",
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                SizedBox(
-                  height: 30.h,
-                ),
-                CustomTextFormField(
-                  label: "user name",
-                  obscureText: false,
-                  prefixIcon: Iconsax.user,
-                  type: TextInputType.name,
-                  hintText: "Username",
-                  onSaved: (value) {},
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                CustomTextFormField(
-                  label: "Email",
-                  obscureText: false,
-                  prefixIcon: Icons.email_outlined,
-                  type: TextInputType.emailAddress,
-                  hintText: "Email",
-                  onSaved: (value) {},
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                CustomTextFormField(
-                  label: "Password",
-                  obscureText: true,
-                  prefixIcon: Iconsax.lock,
-                  type: TextInputType.visiblePassword,
-                  hintText: "Password",
-                  onSaved: (value) {},
-                ),
-                SizedBox(
-                  height: 14.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Checkbox(
-                      value: _isChecked,
-                      onChanged: (newBool) {
-                        setState(() {
-                          _isChecked = newBool!;
-                        });
-                      },
-                    ),
-                    Text.rich(
-                      TextSpan(
-                        text: "I Agree with",
-                        style: Theme.of(context).textTheme.bodyMedium,
+        child: Form(
+          key: _formKey,
+          child: AuthClippedContainer(
+            height: SizeManager.screenHeight * 0.65,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
+              child: Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 50.h,
+                      ),
+                      Text(
+                        "Sign up",
+                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 25.h,
+                      ),
+                      CustomTextFormField(
+                        label: "user name",
+                        obscureText: false,
+                        prefixIcon: Iconsax.user,
+                        type: TextInputType.name,
+                        hintText: "Username",
+                        onSaved: (value) {},
+                      ),
+                      CustomTextFormField(
+                        label: "Email",
+                        obscureText: false,
+                        prefixIcon: Icons.email_outlined,
+                        type: TextInputType.emailAddress,
+                        hintText: "Email",
+                        onSaved: (value) {},
+                      ),
+                      CustomTextFormField(
+                        label: "Password",
+                        obscureText: true,
+                        prefixIcon: Iconsax.lock,
+                        type: TextInputType.visiblePassword,
+                        hintText: "Password",
+                        onSaved: (value) {},
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextSpan(
-                            text: " Privacy",
-                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                          Checkbox(
+                            value: _isChecked,
+                            onChanged: (newBool) {
+                              setState(() {
+                                _isChecked = newBool!;
+                              });
+                            },
                           ),
-                          TextSpan(
-                            text: " and",
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          TextSpan(
-                            text: " policy",
-                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
+                          Center(
+                            child: Text.rich(
+                              TextSpan(
+                                text: "I Agree with",
+                                style: Theme.of(context).textTheme.bodyMedium,
+                                children: [
+                                  TextSpan(
+                                    text: " Privacy",
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                      color: Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: " and",
+                                    style: Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  TextSpan(
+                                    text: " policy",
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                      color: Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 28.h,
-                ),
-                PrimaryButton(
-                  width: 312.w,
-                  height: 46.h,
-                  onTap: () {
-                    context.replaceRoute(const BottomNavBarRoute());
-                  },
-                  buttonTitle: 'Sign up',
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Already have an account ?",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    SizedBox(
-                      width: 2.w,
-                    ),
-                    TextButton(
-                      child: Text(
-                        "Log in",
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                      SizedBox(
+                        height: 20.h,
                       ),
-                      onPressed: () {
-                        context.popRoute();
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                      PrimaryButton(
+                        width: 312.w,
+                        height: 46.h,
+                        onTap: () {
+                          if(_formKey.currentState!.validate()){
+                            _formKey.currentState!.save();
+                          }
+                          context.replaceRoute(const BottomNavBarRoute());
+                        },
+                        buttonTitle: 'Sign up',
+                      ),
+                      SizedBox(height: 10.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Already have an account ?",
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          SizedBox(
+                            width: 2.w,
+                          ),
+                          TextButton(
+                            child: Text(
+                              "Log in",
+                              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            onPressed: () {
+                              context.popRoute();
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

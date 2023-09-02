@@ -82,9 +82,6 @@ class _EditProfileContainerComponentState
                   }
                 },
               ),
-              SizedBox(
-                height: 16.h,
-              ),
               CustomTextFormField(
                 controller: phoneController,
                 type: TextInputType.number,
@@ -98,9 +95,6 @@ class _EditProfileContainerComponentState
                   }
                 },
               ),
-              SizedBox(
-                height: 16.h,
-              ),
               CustomTextFormField(
                 controller: emailController,
                 type: TextInputType.emailAddress,
@@ -113,9 +107,6 @@ class _EditProfileContainerComponentState
                     debugPrint(email);
                   }
                 },
-              ),
-              SizedBox(
-                height: 32.h,
               ),
               Center(
                 child: SecondaryButton(
