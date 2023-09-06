@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/core/widgets/custom_appbar.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/features/home/presentation/components/details/add_reviews/review_product_card.dart';
 import 'package:efashion_flutter/features/home/presentation/components/details/add_reviews/review_text_field.dart';
 import 'package:efashion_flutter/features/home/presentation/components/details/add_reviews/reviewer_card.dart';
 import 'package:efashion_flutter/features/home/presentation/components/shared/custom_rating_bar.dart';
 import 'package:efashion_flutter/features/home/presentation/mock/product_mock.dart';
-import 'package:efashion_flutter/core/widgets/primary_button.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

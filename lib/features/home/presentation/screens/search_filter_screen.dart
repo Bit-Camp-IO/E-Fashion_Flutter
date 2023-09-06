@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/core/widgets/custom_appbar.dart';
-import 'package:efashion_flutter/core/widgets/primary_button.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/custom_appbar.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/primary_button.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/search_filter/category_chips_component.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/search_filter/color_chips_component.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/search_filter/price_slider_component.dart';

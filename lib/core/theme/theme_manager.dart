@@ -1,4 +1,4 @@
-import 'package:efashion_flutter/config/theme/color_scheme.dart';
+import 'package:efashion_flutter/core/theme/color_scheme.dart';
 import 'package:efashion_flutter/core/util/assets_manager.dart';
 import 'package:efashion_flutter/core/util/colors_manager.dart';
 import 'package:flutter/material.dart';

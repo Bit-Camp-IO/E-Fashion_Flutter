@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/config/router/app_router.dart';
-import 'package:efashion_flutter/core/widgets/cart_bottom_sheet.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/cart_bottom_sheet.dart';
 import 'package:efashion_flutter/features/home/presentation/components/shared/large_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

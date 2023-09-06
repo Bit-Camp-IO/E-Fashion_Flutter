@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/config/router/app_router.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/core/util/colors_manager.dart';
 import 'package:efashion_flutter/features/home/presentation/components/shared/review_card.dart';
 import 'package:efashion_flutter/features/home/presentation/components/shared/custom_rating_bar.dart';

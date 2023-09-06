@@ -4,7 +4,7 @@ import 'package:efashion_flutter/features/auth/presentation/cubit/auth_cubit.dar
 import 'package:efashion_flutter/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:efashion_flutter/config/router/app_router.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/core/util/assets_manager.dart';
 
 @RoutePage()

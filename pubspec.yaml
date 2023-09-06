@@ -18,12 +18,11 @@ dependencies:
   auto_route: ^7.8.3
   flutter_screenutil: ^5.9.0
   flutter_animate: ^4.2.0+1
-  get_it: ^7.6.2
+  get_it: ^7.6.4
   injectable: ^2.3.0
   iconsax: ^0.0.8
   cached_network_image: ^3.2.3
   hive_flutter: ^1.1.0
-  flutter_secure_storage: ^9.0.0
   rxdart: ^0.27.7
   flutter_cache_manager: ^3.3.1
   hive: ^2.2.3
@@ -34,10 +33,12 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   percent_indicator: ^4.2.3
   flutter_typeahead: ^4.6.2
-  syncfusion_flutter_sliders: ^22.2.11
-  syncfusion_flutter_core: ^22.2.11
+  syncfusion_flutter_sliders: ^22.2.12
+  syncfusion_flutter_core: ^22.2.12
   easy_stepper: ^0.7.3
   pinput: ^3.0.1
+  dartz: ^0.10.1
+
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +46,7 @@ dev_dependencies:
   flutter_lints: ^2.0.3
   auto_route_generator: ^7.3.1
   injectable_generator: ^2.4.0
+  hive_generator: ^2.0.1
   build_runner: ^2.4.6
  
 flutter:

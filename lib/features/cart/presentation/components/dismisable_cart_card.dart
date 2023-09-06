@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:efashion_flutter/core/widgets/product_pieces_counter.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/product_pieces_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';

@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:efashion_flutter/core/widgets/secondary_button.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

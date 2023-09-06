@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/core/animations/slide_fade_animation_switcher.dart';
-import 'package:efashion_flutter/core/widgets/custom_appbar.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/features/home/presentation/components/see_all/skew_grid_view_component.dart';
 import 'package:efashion_flutter/features/home/presentation/components/see_all/skew_list_view_component.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/core/util/enums.dart';
-import 'package:efashion_flutter/core/widgets/custom_appbar.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/notifications/delivery_notification.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/notifications/message_notification.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/notifications/rating_bottom_sheet.dart';

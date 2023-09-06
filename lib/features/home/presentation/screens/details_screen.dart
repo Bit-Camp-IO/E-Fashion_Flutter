@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:efashion_flutter/core/widgets/container_button.dart';
-import 'package:efashion_flutter/core/widgets/rounded_corner_clipper.dart';
-import 'package:efashion_flutter/core/widgets/rounded_skew_clipper.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/container_button.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/rounded_corner_clipper.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/rounded_skew_clipper.dart';
 import 'package:efashion_flutter/features/home/presentation/components/details/product_cart_component.dart';
 import 'package:efashion_flutter/features/home/presentation/components/details/rating_and_reviews_component.dart';
 import 'package:efashion_flutter/features/home/presentation/components/details/similar_component.dart';

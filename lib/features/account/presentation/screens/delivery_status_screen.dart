@@ -1,5 +1,5 @@
 import 'package:auto_route/annotations.dart';
-import 'package:efashion_flutter/core/widgets/custom_appbar.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/features/account/presentation/components/order_status/custom_easy_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

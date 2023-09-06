@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:efashion_flutter/config/router/app_router.dart';
-import 'package:efashion_flutter/core/widgets/cart_bottom_sheet.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/cart_bottom_sheet.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/offers_card.dart';
 import 'package:efashion_flutter/features/home/presentation/mock/product_mock.dart';
 import 'package:flutter/material.dart';

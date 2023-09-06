@@ -1,5 +1,5 @@
 import 'package:efashion_flutter/core/util/assets_manager.dart';
-import 'package:efashion_flutter/core/widgets/blurred_background_image.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/blurred_background_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

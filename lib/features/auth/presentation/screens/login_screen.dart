@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/config/router/app_router.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/core/util/size_manager.dart';
-import 'package:efashion_flutter/core/widgets/primary_button.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/primary_button.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/shared/auth_clipped_container.dart';
-import 'package:efashion_flutter/core/widgets/custom_text_form_field.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';

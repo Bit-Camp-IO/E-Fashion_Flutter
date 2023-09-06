@@ -1,12 +1,14 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/config/router/app_router.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/core/util/colors_manager.dart';
 import 'package:efashion_flutter/core/util/size_manager.dart';
-import 'package:efashion_flutter/core/widgets/container_button.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/container_button.dart';
 import 'package:efashion_flutter/features/account/presentation/components/account/account_custom_row.dart';
 import 'package:efashion_flutter/features/account/presentation/components/shared/account_clipped_container.dart';
 import 'package:efashion_flutter/features/account/presentation/components/shared/icon_switcher.dart';
+import 'package:efashion_flutter/shared/presentation/bloc/theme_cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -126,13 +128,17 @@ class AccountContainerComponent extends StatelessWidget {
                 enableOnTap: false,
                 text: "App Theme",
                 prefixIcon: Iconsax.sun_1,
-                suffixWidget: IconSwitcher(
-                  initialSwitcherValue: false,
-                  onChanged: (switched) {
-                    debugPrint(switched.toString());
+                suffixWidget: BlocBuilder<ThemeCubit, ThemeState>(
+                  builder: (context, state) {
+                    return IconSwitcher(
+                      initialSwitcherValue: state.appTheme.isDarkTheme,
+                      onChanged: (switched) {
+                        context.read<ThemeCubit>().changeAppTheme(switched);
+                      },
+                      activeIcon: Iconsax.sun_1,
+                      disabledIcon: Iconsax.moon5,
+                    );
                   },
-                  activeIcon: Iconsax.sun_1,
-                  disabledIcon: Iconsax.moon5,
                 ),
               ),
             ],

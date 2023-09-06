@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/config/router/app_router.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/features/home/presentation/components/shared/small_brand_card.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/section_widget.dart';
 import 'package:efashion_flutter/features/home/presentation/mock/product_mock.dart';

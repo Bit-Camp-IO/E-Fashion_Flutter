@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/core/animations/slide_fade_animation_switcher.dart';
-import 'package:efashion_flutter/core/widgets/custom_appbar.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/custom_type_ahead_field.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/search_grid_view_component.dart';
 import 'package:efashion_flutter/features/home/presentation/components/home/search/search_list_view_component.dart';

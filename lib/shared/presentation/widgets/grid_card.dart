@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/core/util/assets_manager.dart';
-import 'package:efashion_flutter/core/widgets/favorite_icon_button.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/favorite_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/core/animations/slide_fade_animation_switcher.dart';
-import 'package:efashion_flutter/core/widgets/custom_appbar.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/features/favorite/presentation/components/favorite_grid_view_component.dart';
 import 'package:efashion_flutter/features/favorite/presentation/components/favorite_list_view_component.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/core/widgets/custom_appbar.dart';
-import 'package:efashion_flutter/core/widgets/primary_button.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/custom_appbar.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/primary_button.dart';
 import 'package:efashion_flutter/features/cart/presentation/mock/cart_mock.dart';
 import 'package:efashion_flutter/features/cart/presentation/components/dismisable_cart_card.dart';
 import 'package:flutter/material.dart';

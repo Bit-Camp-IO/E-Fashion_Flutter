@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/core/util/assets_manager.dart';
 import 'package:efashion_flutter/features/account/presentation/components/edit_profile/edit_profile_container_component.dart';
 import 'package:efashion_flutter/features/account/presentation/components/edit_profile/profile_picture_edit.dart';
-import 'package:efashion_flutter/core/widgets/blurred_background_image.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/blurred_background_image.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
