@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/core/animations/custom_fade_animation.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/welcome/welcome_container_component.dart';
 import 'package:efashion_flutter/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:efashion_flutter/injection_container.dart';
@@ -40,8 +41,11 @@ class WelcomeScreen extends StatelessWidget implements AutoRouteWrapper {
             Positioned(
               left: 0,
               right: 0,
-              child: Image.asset(
-                AssetsManager.appLogo,
+              top: 55,
+              child: CustomFadeAnimation(
+                child: Image.asset(
+                  AssetsManager.appLogo,
+                ),
               ),
             ),
             const Positioned(

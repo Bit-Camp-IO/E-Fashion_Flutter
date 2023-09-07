@@ -46,12 +46,12 @@ class AppRouter extends _$AppRouter {
             ),
             CustomRoute(
               page: WelcomeRoute.page,
+              initial: true,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               durationInMilliseconds: 300,
             ),
             CustomRoute(
               page: LoginRoute.page,
-              initial: true,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               durationInMilliseconds: 300,
             ),
