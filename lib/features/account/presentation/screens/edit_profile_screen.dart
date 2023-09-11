@@ -4,6 +4,7 @@ import 'package:efashion_flutter/features/account/presentation/components/edit_p
 import 'package:efashion_flutter/features/account/presentation/components/edit_profile/profile_picture_edit.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/blurred_background_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
 class EditProfileScreen extends StatelessWidget {
@@ -21,7 +22,7 @@ class EditProfileScreen extends StatelessWidget {
           Positioned(
             left: 0,
             right: 0,
-            top: 120,
+            top: 90.h,
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               child: Visibility(
@@ -37,7 +38,7 @@ class EditProfileScreen extends StatelessWidget {
           const Positioned(
             left: 0,
             right: 0,
-            bottom: -5,
+            bottom: 0,
             child: EditProfileContainerComponent()
           ),
         ],

@@ -61,4 +61,20 @@ class CacheException extends Equatable implements Exception {
   String toString() {
     return '$message';
   }
+
+}
+
+class TokensException extends Equatable implements Exception {
+  final String? message;
+
+  const TokensException([this.message]);
+
+  @override
+  List<Object?> get props => [message];
+
+  @override
+  String toString() {
+    return '$message';
+  }
+
 }

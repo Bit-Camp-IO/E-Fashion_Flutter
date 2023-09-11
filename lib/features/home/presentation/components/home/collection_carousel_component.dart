@@ -32,9 +32,8 @@ class _CollectionCarouselComponentState extends State<CollectionCarouselComponen
             );
           },
           options: CarouselOptions(
-            height: 320.h,
+            height:  320.h,
             viewportFraction: 1,
-            aspectRatio: 16 / 9,
             enlargeCenterPage: false,
             initialPage: 0,
             onPageChanged: (index, reason) {
@@ -45,34 +44,36 @@ class _CollectionCarouselComponentState extends State<CollectionCarouselComponen
           ),
         ),
         Positioned(
-          left: 20,
-          top: 60,
+          left: 20.w,
+          top: 40.h,
           child: IconButton(
             onPressed: () {
               context.pushRoute(const SearchRoute());
             },
-            icon: const Icon(
+            icon: Icon(
               Iconsax.search_normal_1,
               color: Colors.white,
+              size: 24.sp,
             ),
           ),
         ),
         Positioned(
-          right: 20,
-          top: 60,
+          right: 20.w,
+          top: 40.h,
           child: IconButton(
             onPressed: () {
               context.pushRoute(const NotificationsRoute());
             },
-            icon: const Icon(
+            icon: Icon(
               Iconsax.notification,
               color: Colors.white,
+              size: 24.sp,
             ),
           ),
         ),
         Positioned(
-          left: 10,
-          bottom: 30,
+          left: 10.w,
+          bottom: 25.h,
           child: AnimatedIndicator(
             dotWidth: 30.w,
             dotHeight: 4.h,

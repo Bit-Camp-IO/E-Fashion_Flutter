@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BlurredAuthBody extends StatelessWidget {
-  const BlurredAuthBody({super.key, required this.child});
-
+  const BlurredAuthBody({super.key, required this.child,this.logoPosition = 80});
+  final double logoPosition;
   final Widget child;
 
   @override
@@ -18,7 +18,7 @@ class BlurredAuthBody extends StatelessWidget {
           isLocalImage: true,
         ),
         Positioned(
-          top: 80,
+          top: logoPosition,
           left: 0,
           right: 0,
           child: AnimatedSwitcher(
@@ -38,8 +38,8 @@ class BlurredAuthBody extends StatelessWidget {
         ),
         Positioned(
           left: 0,
-          right: -1,
-          bottom: -5,
+          right: 0,
+          bottom: 0,
           child: child,
         ),
       ],

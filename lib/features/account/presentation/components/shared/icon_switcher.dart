@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class IconSwitcher extends StatefulWidget {
   const IconSwitcher({
@@ -9,7 +10,7 @@ class IconSwitcher extends StatefulWidget {
     required this.initialSwitcherValue,
     this.activeIconColor = const Color(0xFF1A1C1E),
     this.activeTrackColor = const Color(0xFFFFFFFF),
-    this.activeThumbColor =  const Color(0xFF1A1C1E),
+    this.activeThumbColor = const Color(0xFF1A1C1E),
     this.disabledIconColor = const Color(0xFFFFFFFF),
     this.disabledTrackColor = const Color(0xFF1A1C1E),
     this.disabledThumbColor = const Color(0xFFFFFFFF),
@@ -42,36 +43,45 @@ class _IconSwitcherState extends State<IconSwitcher> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Switch(
-          activeColor: widget.activeThumbColor,
-          activeTrackColor: widget.activeTrackColor,
-          inactiveTrackColor: widget.disabledTrackColor,
-          inactiveThumbColor: widget.disabledThumbColor,
-          onChanged: (value) {
-            setState(() {
-              switcherValue = value;
-              widget.onChanged(value);
-            });
-          },
-          value: switcherValue
+        SizedBox(
+          width: 52.w,
+          height: 32.h,
+          child: Transform.scale(
+            scale: 0.9,
+            child: Switch(
+              activeColor: widget.activeThumbColor,
+              activeTrackColor: widget.activeTrackColor,
+              inactiveTrackColor: widget.disabledTrackColor,
+              inactiveThumbColor: widget.disabledThumbColor,
+              onChanged: (value) {
+                setState(() {
+                  switcherValue = value;
+                  widget.onChanged(value);
+                });
+              },
+              value: switcherValue,
+            ),
+          ),
         ),
         switcherValue
             ? Positioned(
-                top: 17,
-                left: 11,
+                top: 0,
+                bottom: 0,
+                left: 7.w,
                 child: Icon(
                   widget.activeIcon,
                   color: widget.activeIconColor,
-                  size: 14,
+                  size: 14.sp,
                 ),
               )
             : Positioned(
-                top: 17,
-                right: 11,
+                top: 0,
+                bottom: 0,
+                right: 7.w,
                 child: Icon(
                   widget.disabledIcon,
                   color: widget.disabledIconColor,
-                  size: 14,
+                  size: 14.sp,
                 ),
               ),
       ],

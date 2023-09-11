@@ -1,27 +1,39 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/core/router/app_router.dart';
-import 'package:efashion_flutter/core/util/size_manager.dart';
+import 'package:efashion_flutter/core/util/strings_manager.dart';
+import 'package:efashion_flutter/features/auth/presentation/cubits/login/login_cubit.dart';
+import 'package:efashion_flutter/injection_container.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/dots_loading_indicator.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/primary_button.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/shared/auth_clipped_container.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/shared/blurred_auth_body.dart';
 
-
 @RoutePage()
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget implements AutoRouteWrapper {
   const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<LoginCubit>(),
+      child: this,
+    );
+  }
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isChecked = false;
+  bool _isLoading = false;
   late GlobalKey<FormState> _formKey;
-  late String username;
+  late String email;
   late String password;
 
   @override
@@ -33,124 +45,150 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlurredAuthBody(
-        child: Form(
-          key: _formKey,
-          child: AuthClippedContainer(
-            height: SizeManager.screenHeight * 0.58,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 50.h,
-                  ),
-                  Text(
-                    "Log in",
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
+      body: BlocListener<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state is LoginLoadingState) {
+            _isLoading = true;
+          } else if (state is LoginSuccessState) {
+            context.replaceRoute(const BottomNavBarRoute());
+            _isLoading = false;
+          } else {
+            _isLoading = false;
+          }
+        },
+        child: BlurredAuthBody(
+          child: Form(
+            key: _formKey,
+            child: AuthClippedContainer(
+              height: 450.h,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    SizedBox(height: 40.h),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        StringsManager.loginTitle,
+                        style:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 40.h,
-                  ),
-                  CustomTextFormField(
-                    label: "user name",
-                    obscureText: false,
-                    prefixIcon: Iconsax.user,
-                    type: TextInputType.text,
-                    hintText: "Username",
-                    onSaved: (value) {
-                      if (value != null) {
-                        username = value;
-                      }
-                    },
-                  ),
-                  CustomTextFormField(
-                    label: "Password",
-                    obscureText: true,
-                    type: TextInputType.visiblePassword,
-                    prefixIcon: Iconsax.lock,
-                    hintText: "Password",
-                    onSaved: (value) {
-                      if (value != null) {
-                        password = value;
-                      }
-                    },
-                  ),
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: _isChecked,
-                        onChanged: (newBool) {
-                          setState(() {
-                            _isChecked = newBool!;
-                          });
-                        },
-                      ),
-                      Text(
-                        "Remember me",
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      const Spacer(),
-                      TextButton(
-                        onPressed: () {
-                          context.pushRoute(const ForgetPasswordRoute());
-                        },
-                        child: Text(
-                          "Forget Password",
-                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                    SizedBox(height: 40.h),
+                    CustomTextFormField(
+                      label: StringsManager.email,
+                      obscureText: false,
+                      prefixIcon: Icons.email_outlined,
+                      keyboardType: TextInputType.emailAddress,
+                      hintText: StringsManager.email,
+                      onSaved: (value) {
+                        if (value != null) {
+                          email = value;
+                        }
+                      },
+                    ),
+                    CustomTextFormField(
+                      label: StringsManager.password,
+                      obscureText: true,
+                      keyboardType: TextInputType.visiblePassword,
+                      prefixIcon: Iconsax.lock,
+                      hintText: StringsManager.password,
+                      onSaved: (value) {
+                        if (value != null) {
+                          password = value;
+                        }
+                      },
+                    ),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: _isChecked,
+                          onChanged: (newBool) {
+                            setState(() {
+                              _isChecked = newBool!;
+                            });
+                          },
                         ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 28.h,
-                  ),
-                  PrimaryButton(
-                    onTap: () {
-                      if(_formKey.currentState!.validate()){
-                        _formKey.currentState!.save();
-                      }
-                      context.replaceRoute(const BottomNavBarRoute());
-                    },
-                    buttonTitle: 'Log in',
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have an account ?",
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      SizedBox(
-                        width: 2.w,
-                      ),
-                      TextButton(
-                        child: Text(
-                          "Sign up",
-                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                        Text(
+                          StringsManager.rememberMe,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                        onPressed: () {
-                          context.pushRoute(const SignupRoute());
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+                        const Spacer(),
+                        TextButton(
+                          onPressed: () {
+                            context.pushRoute(const ForgetPasswordRoute());
+                          },
+                          child: Text(
+                            StringsManager.forgetPasswordTitle,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    BlocBuilder<LoginCubit, LoginState>(
+                      builder: (context, state) {
+                        return PrimaryButton(
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              context.read<LoginCubit>().userLogin(
+                                    email: email,
+                                    password: password,
+                                  );
+                            }
+                          },
+                          buttonTitle: StringsManager.loginTitle,
+                          child:
+                              _isLoading ? const DotsLoadingIndicator() : null,
+                        );
+                      },
+                    ),
+                    SizedBox(height: 10.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          StringsManager.noAccount,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        SizedBox(
+                          width: 2.w,
+                        ),
+                        TextButton(
+                          child: Text(
+                            StringsManager.signupTitle,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                          ),
+                          onPressed: () {
+                            context.pushRoute(const SignupRoute());
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      )
+      ),
     );
   }
 

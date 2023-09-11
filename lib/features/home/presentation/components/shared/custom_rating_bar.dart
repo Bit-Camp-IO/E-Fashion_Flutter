@@ -17,7 +17,7 @@ class CustomRatingBar extends StatelessWidget {
       itemCount: 5,
       allowHalfRating: true,
       glowColor: Theme.of(context).colorScheme.outline,
-      itemSize: 35,
+      itemSize: 35.sp,
       itemPadding: const EdgeInsets.symmetric(horizontal: 12.0).r,
       ratingWidget: RatingWidget(
         full: const Icon(

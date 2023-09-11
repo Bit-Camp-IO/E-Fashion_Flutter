@@ -16,14 +16,14 @@ class SizeManager {
     orientation = _mediaQueryData.orientation;
     brightness = _mediaQueryData.platformBrightness;
   }
-}
+  static double getProportionateScreenHeight(double inputHeight) {
+    double screenHeight = SizeManager.screenHeight;
+    return (inputHeight / 800.0) * screenHeight;
+  }
 
-double getProportionateScreenHeight(double inputHeight) {
-  double screenHeight = SizeManager.screenHeight;
-  return (inputHeight / 812.0) * screenHeight;
-}
+  static double getProportionateScreenWidth(double inputHeight) {
+    double screenWidth = SizeManager.screenWidth;
+    return (inputHeight / 360.0) * screenWidth;
+  }
 
-double getProportionateScreenWidth(double inputHeight) {
-  double screenWidth = SizeManager.screenWidth;
-  return (inputHeight / 375.0) * screenWidth;
 }

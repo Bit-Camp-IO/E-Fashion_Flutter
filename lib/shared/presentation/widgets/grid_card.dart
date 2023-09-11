@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/core/util/assets_manager.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/cart_icon_button.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/favorite_icon_button.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GridCard extends StatelessWidget {
   const GridCard({
@@ -39,10 +40,10 @@ class GridCard extends StatelessWidget {
               fit: StackFit.expand,
               children: [
                 Positioned(
-                  top: -10,
+                  top: -10.h,
                   left: 0,
                   right: 0,
-                  bottom: -20,
+                  bottom: -20.h,
                   child: Transform(
                     transform:
                     reverse ? Matrix4.skewY(-0.13) : Matrix4.skewY(0.13),
@@ -56,7 +57,7 @@ class GridCard extends StatelessWidget {
                 Positioned(
                   left: 0,
                   right: 0,
-                  bottom: -5,
+                  bottom: -5.h,
                   child: Transform(
                     transform:
                     reverse ? Matrix4.skewY(-0.13) : Matrix4.skewY(0.13),
@@ -73,27 +74,21 @@ class GridCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: reverse ? null : 2,
-            right: reverse ? 2 : null,
+            left: reverse ? null : 2.w,
+            right: reverse ? 2.w : null,
             child: FavoriteIconButton(
               isFavorite: isFavorite,
               onFavoriteTap: onFavoriteTap,
             ),
           ),
           Positioned(
-            bottom: 10,
-            right: reverse ? 1 : null,
-            left: reverse ? null : 1,
-            child: IconButton(
-              onPressed: onCartTap,
-              icon: Icon(
-                Iconsax.bag_2,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
+            bottom: 5.h,
+            right: reverse ? 1.w : null,
+            left: reverse ? null : 1.w,
+            child: CartIconButton(onCartTap: onCartTap),
           ),
           Positioned(
-            bottom: 28,
+            bottom: 28.h,
             left: 0,
             right: 0,
             child: Column(

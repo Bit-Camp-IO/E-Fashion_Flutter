@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:efashion_flutter/core/util/size_manager.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/container_button.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/rounded_corner_clipper.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/rounded_skew_clipper.dart';
@@ -41,8 +42,8 @@ class _DetailsScreenState extends State<DetailsScreen>
       body: Stack(
         children: [
           CachedNetworkImage(
-            width: MediaQuery.sizeOf(context).width,
-            height: 450.h,
+            width: SizeManager.screenWidth,
+            height: SizeManager.screenHeight * 0.6,
             imageUrl: brandProducts[widget.productId].productImage,
             fit: BoxFit.cover,
           ),

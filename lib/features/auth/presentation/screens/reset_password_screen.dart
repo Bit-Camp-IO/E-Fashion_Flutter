@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/core/router/app_router.dart';
-import 'package:efashion_flutter/core/util/size_manager.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/primary_button.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/shared/auth_clipped_container.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/custom_text_form_field.dart';
@@ -36,7 +35,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         child: Form(
           key: _formKey,
           child: AuthClippedContainer(
-            height: SizeManager.screenHeight * 0.60,
+            height: 440.h,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
               child: Column(
@@ -66,7 +65,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     label: "Password",
                     obscureText: true,
                     prefixIcon: Iconsax.lock,
-                    type: TextInputType.visiblePassword,
+                    keyboardType: TextInputType.visiblePassword,
                     hintText: "Password",
                     onSaved: (value) {
                       if (value != null) {
@@ -78,7 +77,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     label: "Confirm Password",
                     obscureText: true,
                     prefixIcon: Iconsax.lock,
-                    type: TextInputType.visiblePassword,
+                    keyboardType: TextInputType.visiblePassword,
                     hintText: "Password",
                     onSaved: (value) {
                       if (value != null) {

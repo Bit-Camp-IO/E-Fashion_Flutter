@@ -64,7 +64,7 @@ class ChatSupportScreen extends StatelessWidget {
                     ),
                     child: CustomTextFormField(
                       hintText: 'Message',
-                      type: TextInputType.text,
+                      keyboardType: TextInputType.text,
                       borderRadius: 12.0,
                       suffixIcon: Iconsax.attach_square5,
                       enableBorderColor: Colors.transparent,

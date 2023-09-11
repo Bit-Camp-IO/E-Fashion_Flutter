@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/cart_icon_button.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/favorite_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 
 class SmallProductCard extends StatelessWidget {
   const SmallProductCard({
@@ -33,14 +33,16 @@ class SmallProductCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20).r,
         child: Stack(
+          fit: StackFit.expand,
           children: [
             CachedNetworkImage(
               width: 150.w,
+              height: 180.h,
               imageUrl: productImage,
               fit: BoxFit.cover,
             ),
             Positioned(
-              bottom: -5,
+              bottom: -5.h,
               child: ClipPath(
                 clipper: BrandClipper(),
                 child: SizedBox(
@@ -87,15 +89,9 @@ class SmallProductCard extends StatelessWidget {
                       ),
                       isCartActive
                           ? Positioned(
-                              bottom: 10,
-                              right: 10,
-                              child: IconButton(
-                                onPressed: onCartTap,
-                                icon: Icon(
-                                  Iconsax.bag_2,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
+                              bottom: 5.h,
+                              right: 5.w,
+                              child: CartIconButton(onCartTap: onCartTap),
                             )
                           : const SizedBox.shrink(),
                     ],
@@ -104,8 +100,8 @@ class SmallProductCard extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 2,
-              right: -5,
+              top: 2.h,
+              right: -5.w,
               child: FavoriteIconButton(
                 isFavorite: isFavorite,
                 onFavoriteTap: onFavoriteTap,

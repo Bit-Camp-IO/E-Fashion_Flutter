@@ -34,39 +34,43 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        widget.disableBackButton ? const SizedBox.shrink() :  GestureDetector(
-          onTap: () {
-            context.popRoute();
-          },
-          child: Icon(
-            Iconsax.arrow_left,
-            color: Theme.of(context).colorScheme.onSurface,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0).r,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          widget.disableBackButton ? const SizedBox.shrink() :  GestureDetector(
+            onTap: () {
+              context.popRoute();
+            },
+            child: Icon(
+              Iconsax.arrow_left,
+              color: Theme.of(context).colorScheme.onSurface,
+              size: 24.sp,
+            ),
           ),
-        ),
-        SizedBox(width: 8.w),
-        Text(
-          widget.appBarTitle,
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-        ),
-        const Spacer(
-          flex: 1,
-        ),
-        widget.appBarType == AppBarType.switcher
-            ? AnimatedSwitcherButton(
-                onSwitchIndexChanged: (buttonIndex) {
-                  setState(() {
-                    switchIndex = buttonIndex;
-                    widget.onIndexChange!(buttonIndex);
-                  });
-                },
-              )
-            : const SizedBox.shrink(),
-      ],
+          SizedBox(width: 8.w),
+          Text(
+            widget.appBarTitle,
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+          ),
+          const Spacer(
+            flex: 1,
+          ),
+          widget.appBarType == AppBarType.switcher
+              ? AnimatedSwitcherButton(
+                  onSwitchIndexChanged: (buttonIndex) {
+                    setState(() {
+                      switchIndex = buttonIndex;
+                      widget.onIndexChange!(buttonIndex);
+                    });
+                  },
+                )
+              : const SizedBox.shrink(),
+        ],
+      ),
     );
   }
 }

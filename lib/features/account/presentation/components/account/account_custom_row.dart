@@ -22,23 +22,28 @@ class AccountCustomRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: enableOnTap ? onTap : null,
-      child: Row(
-        children: [
-          Icon(
-            prefixIcon,
-          ),
-          SizedBox(
-            width: 16.w,
-          ),
-          Text(
-            text,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const Spacer(),
-          suffixWidget ?? const Icon(
-             Iconsax.arrow_right_3,
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 10).r,
+        child: Row(
+          children: [
+            Icon(
+              prefixIcon,
+              size: 24.sp,
+            ),
+            SizedBox(
+              width: 16.w,
+            ),
+            Text(
+              text,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const Spacer(),
+            suffixWidget ?? Icon(
+               Iconsax.arrow_right_3,
+              size: 24.sp,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -22,7 +22,7 @@ class ChangePasswordScreen extends StatelessWidget {
           Positioned(
             left: 0.0,
             right: 0.0,
-            top: 120.0,
+            top: 90.h,
             child: Column(
               children: [
                 AnimatedSwitcher(
@@ -43,11 +43,11 @@ class ChangePasswordScreen extends StatelessWidget {
               ],
             ),
           ),
-          const Positioned(
+          Positioned(
             left: 0,
             right: 0,
-            bottom: -5,
-            child: ChangePasswordContainerComponent()
+            bottom: -5.h,
+            child: const ChangePasswordContainerComponent()
           ),
         ],
       ),

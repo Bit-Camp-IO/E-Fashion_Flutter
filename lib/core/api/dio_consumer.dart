@@ -29,7 +29,6 @@ class DioApiConsumer extends ApiConsumer {
     dioClient.options
       ..baseUrl = ApiConstants.baseUrl
       ..responseType = ResponseType.plain
-      // ..queryParameters = {ApiConstants.apiKeyQuery: ApiConstants.apiKey}
       ..followRedirects = false
       ..validateStatus = (status) {
         return status! < ApiStatusCodes.internalServerError;
@@ -42,10 +41,12 @@ class DioApiConsumer extends ApiConsumer {
   }
 
   @override
-  Future get(String endPointPath, {Map<String, dynamic>? queryParameters}) async {
+  Future get(String endPointPath, {Map<String, dynamic>? queryParameters, Map<String, dynamic>? headers}) async {
     try {
-      final Response response = await dioClient.get(endPointPath, queryParameters: queryParameters);
-      return _handleResponseAsJson(response);
+      final Response response = await dioClient.get(endPointPath, queryParameters: queryParameters, options: Options(
+        headers: headers
+      ));
+        return _handleResponseAsJson(response);
     } on DioException catch (error) {
       _handelDioError(error);
     }
@@ -82,7 +83,7 @@ class DioApiConsumer extends ApiConsumer {
       _handelDioError(error);
     }
   }
-  
+
   dynamic _handleResponseAsJson(Response<dynamic> response) {
     final responseJson = jsonDecode(response.data.toString());
     return responseJson;

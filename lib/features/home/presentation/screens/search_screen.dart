@@ -84,7 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               Icon(
                                 Iconsax.search_normal_1,
                                 color: Theme.of(context).colorScheme.primary,
-                                size: 80,
+                                size: 80.sp,
                               ),
                               SizedBox(height: 16.h),
                               Text(

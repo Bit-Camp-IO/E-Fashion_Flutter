@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/core/router/app_router.dart';
-import 'package:efashion_flutter/core/util/size_manager.dart';
+import 'package:efashion_flutter/core/util/strings_manager.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/primary_button.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/shared/auth_clipped_container.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/custom_text_form_field.dart';
@@ -34,7 +34,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         child: Form(
           key: _formKey,
           child: AuthClippedContainer(
-            height: SizeManager.screenHeight * 0.55,
+            height: 400.h,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
               child: Column(
@@ -44,7 +44,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     height: 50.h,
                   ),
                   Text(
-                    "Forget Password",
+                    StringsManager.forgetPasswordTitle,
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                     ),
@@ -52,7 +52,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   const SizedBox(height: 8),
                   Text(
                     textAlign: TextAlign.center,
-                    "Enter the email address associated\n with your account",
+                    StringsManager.forgetPasswordSubtitle,
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: Theme.of(context).colorScheme.outline,
                     ),
@@ -61,11 +61,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     height: 40.h,
                   ),
                   CustomTextFormField(
-                    label: "Email",
+                    label: StringsManager.email,
                     obscureText: false,
                     prefixIcon: Icons.mail_outline,
-                    type: TextInputType.text,
-                    hintText: "Email",
+                    keyboardType: TextInputType.text,
+                    hintText: StringsManager.email,
                     onSaved: (value) {
                       if (value != null) {
                         email = value;
@@ -79,7 +79,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     onTap: () {
                       context.pushRoute(const EmailVerificationRoute());
                     },
-                    buttonTitle: 'Recover password',
+                    buttonTitle: StringsManager.recoverPasswordButtonTitle,
                   ),
                   SizedBox(
                     height: 20.h,

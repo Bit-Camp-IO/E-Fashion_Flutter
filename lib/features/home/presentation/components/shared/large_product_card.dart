@@ -39,17 +39,17 @@ class LargeProductCard extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   Positioned(
-                    top: -10,
+                    top: -10.h,
                     left: 0,
                     right: 0,
-                    bottom: -50,
+                    bottom: -50.h,
                     child: CachedNetworkImage(
                       imageUrl: productImage,
                       fit: BoxFit.cover,
                     ),
                   ),
                   Positioned(
-                    left: -10,
+                    left: -10.w,
                     right: 0,
                     bottom: 0,
                     child: Image.asset(
@@ -60,16 +60,16 @@ class LargeProductCard extends StatelessWidget {
                 ],
               ),
               Positioned(
-                top: 5,
-                right: 5,
+                top: 5.h,
+                right: 5.w,
                 child: FavoriteIconButton(
                   isFavorite: isFavorite,
                   onFavoriteTap: onFavoriteTap,
                 ),
               ),
               Positioned(
-                right: 5,
-                bottom: 20,
+                right: 5.w,
+                bottom: 20.h,
                 child: IconButton(
                   onPressed: onCartTap,
                   icon: Icon(
@@ -80,7 +80,7 @@ class LargeProductCard extends StatelessWidget {
                 ),
               ),
               Positioned(
-                bottom: 25,
+                bottom: 25.h,
                 left: 0,
                 right: 0,
                 child: Column(

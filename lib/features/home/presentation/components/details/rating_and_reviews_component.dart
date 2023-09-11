@@ -38,9 +38,10 @@ class RatingAndReviewsComponent extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           Center(
-              child: CustomRatingBar(
-            onRatingUpdate: (value) {},
-          )),
+            child: CustomRatingBar(
+              onRatingUpdate: (value) {},
+            ),
+          ),
           Center(
             child: TextButton(
               onPressed: () {
@@ -80,7 +81,7 @@ class RatingAndReviewsComponent extends StatelessWidget {
                 ),
                 RatingBarIndicator(
                   unratedColor: Theme.of(context).colorScheme.outline,
-                  itemSize: 24,
+                  itemSize: 24.sp,
                   itemPadding: const EdgeInsets.all(8).r,
                   rating: brandProducts[productId].productRating.toDouble(),
                   itemBuilder: (context, index) => const Icon(

@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/core/util/assets_manager.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/cart_icon_button.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/favorite_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 
 class ListViewCard extends StatelessWidget {
   const ListViewCard({
@@ -40,10 +40,10 @@ class ListViewCard extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   Positioned(
-                    top: -10,
+                    top: -10.h,
                     left: 0,
                     right: 0,
-                    bottom: -50,
+                    bottom: -50.h,
                     child: Transform(
                       transform: Matrix4.skewY(-0.1),
                       alignment: Alignment.topLeft,
@@ -56,7 +56,7 @@ class ListViewCard extends StatelessWidget {
                   Positioned(
                     left: 0,
                     right: 0,
-                    bottom: -50,
+                    bottom: -60.h,
                     child: Transform(
                       transform: Matrix4.skewY(-0.1),
                       alignment: Alignment.topLeft,
@@ -70,27 +70,20 @@ class ListViewCard extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 5,
-              right: 5,
+              top: 5.h,
+              right: 5.w,
               child: FavoriteIconButton(
                 isFavorite: isFavorite,
                 onFavoriteTap: onFavoriteTap,
               ),
             ),
             Positioned(
-              right: 5,
-              bottom: 45,
-              child: IconButton(
-                onPressed: onCartTap,
-                icon: Icon(
-                  Iconsax.bag_2,
-                  color: Theme.of(context).colorScheme.primary,
-                  size: 26,
-                ),
-              ),
+              right: 5.w,
+              bottom: 35.h,
+              child: CartIconButton(onCartTap: onCartTap),
             ),
             Positioned(
-              bottom: 50,
+              bottom: 40.h,
               left: 0,
               right: 0,
               child: Column(

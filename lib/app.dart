@@ -5,6 +5,7 @@ import 'package:efashion_flutter/core/theme/theme_manager.dart';
 import 'package:efashion_flutter/core/util/size_manager.dart';
 import 'package:efashion_flutter/shared/presentation/bloc/theme_cubit/theme_cubit.dart';
 import 'package:efashion_flutter/injection_container.dart';
+import 'package:efashion_flutter/shared/presentation/bloc/tokens_cubit/tokens_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,8 +17,11 @@ class EfashionApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     SizeManager().init(context);
-    return BlocProvider(
-      create: (context) => getIt<ThemeCubit>()..getAppTheme(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<ThemeCubit>()..getAppTheme()),
+        BlocProvider(create: (context) => getIt<TokensCubit>()..checkIfUserExist()),
+      ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
           return ScreenUtilInit(

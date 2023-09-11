@@ -1,6 +1,6 @@
 import 'package:efashion_flutter/shared/domain/entities/app_theme.dart';
-import 'package:efashion_flutter/shared/domain/usecases/change_app_theme_usecase.dart';
-import 'package:efashion_flutter/shared/domain/usecases/get_app_theme_usecase.dart';
+import 'package:efashion_flutter/shared/domain/usecases/theme/change_app_theme_usecase.dart';
+import 'package:efashion_flutter/shared/domain/usecases/theme/get_app_theme_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';

@@ -11,7 +11,6 @@ import 'package:efashion_flutter/features/auth/presentation/screens/forget_passw
 import 'package:efashion_flutter/features/auth/presentation/screens/login_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/sign_up_screen.dart';
-import 'package:efashion_flutter/features/auth/presentation/screens/splash_screen.dart';
 import 'package:efashion_flutter/features/auth/presentation/screens/welcome_screen.dart';
 import 'package:efashion_flutter/features/cart/presentation/screens/cart_screen.dart';
 import 'package:efashion_flutter/features/favorite/presentation/screens/favorite_screen.dart';
@@ -41,9 +40,6 @@ class AppRouter extends _$AppRouter {
           page: AuthRoute.page,
           initial: true,
           children: [
-            AutoRoute(
-              page: SplashRoute.page,
-            ),
             CustomRoute(
               page: WelcomeRoute.page,
               initial: true,
@@ -77,8 +73,10 @@ class AppRouter extends _$AppRouter {
             ),
           ],
         ),
-        AutoRoute(
+        CustomRoute(
           page: BottomNavBarRoute.page,
+          transitionsBuilder: TransitionsBuilders.fadeIn,
+          durationInMilliseconds: 300,
           children: [
             AutoRoute(
               page: HomeTabRoute.page,

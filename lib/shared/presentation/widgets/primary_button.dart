@@ -9,12 +9,16 @@ class PrimaryButton extends StatelessWidget {
     required this.onTap,
     this.width,
     this.height,
+    this.child,
   });
+
   final String buttonTitle;
+  final Widget? child;
   final Icon? buttonIcon;
   final double? width;
   final double? height;
   final void Function() onTap;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -30,14 +34,17 @@ class PrimaryButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             buttonIcon ?? const SizedBox.shrink(),
-            buttonIcon != null ? const SizedBox(width: 10) : const SizedBox.shrink(),
-            Text(
-              buttonTitle,
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge!
-                  .copyWith(color: Colors.white),
-            ),
+            buttonIcon != null
+                ? const SizedBox(width: 10)
+                : const SizedBox.shrink(),
+            child ??
+                Text(
+                  buttonTitle,
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelLarge!
+                      .copyWith(color: Colors.white),
+                ),
           ],
         ),
       ),

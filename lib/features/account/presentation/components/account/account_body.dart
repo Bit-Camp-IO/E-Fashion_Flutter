@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/core/util/colors_manager.dart';
-import 'package:efashion_flutter/core/util/size_manager.dart';
+import 'package:efashion_flutter/shared/presentation/bloc/tokens_cubit/tokens_cubit.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/container_button.dart';
 import 'package:efashion_flutter/features/account/presentation/components/account/account_custom_row.dart';
 import 'package:efashion_flutter/features/account/presentation/components/shared/account_clipped_container.dart';
@@ -20,35 +20,36 @@ class AccountContainerComponent extends StatelessWidget {
     return Positioned(
       left: 0.0,
       right: 0.0,
-      bottom: -5,
+      bottom: 0.0,
       child: AccountClippedContainer(
-        height: SizeManager.screenHeight * 0.75,
+        height: 560.h,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 20.h,
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 12).r,
+                  child: ClippedContainerButton(
+                    onTap: () {
+                     context.read<TokensCubit>().deleteUserToken();
+                    },
+                    icon: Iconsax.logout5,
+                  ),
+                ),
               ),
-              ClippedContainerButton(
-                onTap: () {
-                  context.replaceRoute(const AuthRoute());
-                },
-                icon: Iconsax.logout5,
-              ),
               SizedBox(
-                height: 50.h,
+                height: 30.h,
               ),
               Text(
                 "Profile Settings",
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      fontSize: 18.0,
-                    ),
+                style: Theme.of(context).textTheme.titleMedium
               ),
               SizedBox(
-                height: 32.h,
+                height: 10.h,
               ),
               AccountCustomRow(
                 onTap: () {
@@ -57,18 +58,12 @@ class AccountContainerComponent extends StatelessWidget {
                 text: "My Profile",
                 prefixIcon: Iconsax.user,
               ),
-              SizedBox(
-                height: 24.h,
-              ),
               AccountCustomRow(
                 onTap: () {
                   context.pushRoute(const LocationRoute());
                 },
                 text: "Location",
                 prefixIcon: Iconsax.location,
-              ),
-              SizedBox(
-                height: 24.h,
               ),
               AccountCustomRow(
                 onTap: () {
@@ -77,9 +72,7 @@ class AccountContainerComponent extends StatelessWidget {
                 text: "Orders Status",
                 prefixIcon: Iconsax.bag_2,
               ),
-              SizedBox(
-                height: 24.h,
-              ),
+
               AccountCustomRow(
                 onTap: () {
                   context.pushRoute(
@@ -89,9 +82,6 @@ class AccountContainerComponent extends StatelessWidget {
                 text: "Chat Support",
                 prefixIcon: Iconsax.message,
               ),
-              SizedBox(
-                height: 24.h,
-              ),
               AccountCustomRow(
                 onTap: () {
                   context.pushRoute(
@@ -100,9 +90,6 @@ class AccountContainerComponent extends StatelessWidget {
                 },
                 text: "Change Password",
                 prefixIcon: Iconsax.lock,
-              ),
-              SizedBox(
-                height: 14.h,
               ),
               AccountCustomRow(
                 enableOnTap: false,
@@ -120,9 +107,6 @@ class AccountContainerComponent extends StatelessWidget {
                   activeIcon: Icons.notifications_off_outlined,
                   disabledIcon: Icons.notifications_active_outlined,
                 ),
-              ),
-              SizedBox(
-                height: 7.h,
               ),
               AccountCustomRow(
                 enableOnTap: false,

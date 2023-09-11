@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/core/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/card_bottom_skew_clipper.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/cart_icon_button.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/favorite_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 
 class TopGridCard extends StatelessWidget {
   const TopGridCard({
@@ -56,7 +56,7 @@ class TopGridCard extends StatelessWidget {
                   Positioned(
                     left: 0,
                     right: 0,
-                    bottom: -1,
+                    bottom: 0,
                     child: Image.asset(
                       reverse
                           ? AssetsManager.gridShapeReverse
@@ -65,19 +65,13 @@ class TopGridCard extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: 10,
-                    right: reverse ? 2 : null,
-                    left: reverse ? null : 2,
-                    child: IconButton(
-                      onPressed: onCartTap,
-                      icon: Icon(
-                        Iconsax.bag_2,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
+                    bottom: 5.h,
+                    right: reverse ? -5.w : null,
+                    left: reverse ? null : -5.w,
+                    child: CartIconButton(onCartTap: onCartTap),
                   ),
                   Positioned(
-                    bottom: 28,
+                    bottom: 28.h,
                     left: 0,
                     right: 0,
                     child: Column(
@@ -103,9 +97,9 @@ class TopGridCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 1,
-            right: reverse ? 1 : null,
-            left: reverse ? null : 1,
+            top: 1.h,
+            right: reverse ? 1.w : null,
+            left: reverse ? null : 1.w,
             child: FavoriteIconButton(
               isFavorite: isFavorite,
               onFavoriteTap: onFavoriteTap,

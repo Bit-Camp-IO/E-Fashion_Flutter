@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:efashion_flutter/shared/presentation/widgets/cart_icon_button.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/favorite_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 
 class OffersCard extends StatelessWidget {
   const OffersCard({
@@ -33,16 +33,18 @@ class OffersCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16).r,
         child: Stack(
+          fit: StackFit.expand,
           children: [
             CachedNetworkImage(
-              width: 250.h,
+              width: 180.w,
+              height: 250.h,
               imageUrl: productImage,
               fit: BoxFit.cover,
             ),
             Positioned(
-              left: -10,
-              right: -10,
-              bottom: -5,
+              left: -10.w,
+              right: -10.w,
+              bottom: -5.h,
               child: ClipPath(
                 clipper: OffersClipper(),
                 child: SizedBox(
@@ -71,10 +73,10 @@ class OffersCard extends StatelessWidget {
                         children: [
                           Text(
                             productName,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(color: Colors.white),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      color: Colors.white,
+                                    ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -106,16 +108,9 @@ class OffersCard extends StatelessWidget {
                         ],
                       ),
                       Positioned(
-                        bottom: 10,
-                        right: 10,
-                        child: IconButton(
-                          onPressed: onAddToCart,
-                          icon: Icon(
-                            Iconsax.bag_2,
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 26,
-                          ),
-                        ),
+                        bottom: 5.h,
+                        right: 10.w,
+                        child: CartIconButton(onCartTap: onAddToCart),
                       ),
                     ],
                   ),
@@ -123,8 +118,8 @@ class OffersCard extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 3,
-              right: 3,
+              top: 3.h,
+              right: -3.w,
               child: FavoriteIconButton(
                 isFavorite: isFavorite,
                 onFavoriteTap: onFavorite,

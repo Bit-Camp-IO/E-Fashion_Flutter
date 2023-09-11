@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:efashion_flutter/core/util/size_manager.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +21,7 @@ class CarouselCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      fit: StackFit.expand,
       children: [
         ClipRRect(
           borderRadius: const BorderRadius.only(
@@ -27,15 +29,14 @@ class CarouselCard extends StatelessWidget {
             bottomRight: Radius.circular(30),
           ).r,
           child: CachedNetworkImage(
-            width: MediaQuery.sizeOf(context).width,
             height: 320.h,
             imageUrl: cardImageUrl,
             fit: BoxFit.cover,
           ),
         ),
         Positioned(
-          left: 20,
-          top: 140,
+          left: 20.h,
+          bottom: 80.h,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -54,10 +55,15 @@ class CarouselCard extends StatelessWidget {
               ),
               Text(
                 '$offerPercentage%OFF',
-                style: Theme.of(context)
-                    .textTheme
-                    .displayLarge!
-                    .copyWith(color: Colors.white),
+                style: SizeManager.screenWidth <= 400
+                    ? Theme.of(context)
+                        .textTheme
+                        .displayMedium!
+                        .copyWith(color: Colors.white)
+                    : Theme.of(context)
+                        .textTheme
+                        .displayLarge!
+                        .copyWith(color: Colors.white),
               ),
               Text(
                 'For Selected collection',
@@ -70,13 +76,13 @@ class CarouselCard extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: 20,
-          bottom: 30,
+          right: 10.w,
+          bottom: 30.h,
           child: SecondaryButton(
             width: 100.w,
             height: 48.h,
             buttonTitle: 'Shop Now',
-            onTap: onTap,
+            onTap: () async {},
           ),
         )
       ],

@@ -24,7 +24,7 @@ class _BrandComponentState extends State<BrandComponent> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.only(left: 8.0).r,
+            padding: const EdgeInsets.only(left: 10.0).r,
             child: SizedBox(
               width: 150.w,
               child: SmallProductCard(

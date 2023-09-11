@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/core/util/size_manager.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/container_button.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/custom_text_form_field.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/secondary_button.dart';
@@ -36,8 +35,8 @@ class _ChangePasswordContainerComponentState
       child: AccountClippedContainer(
         height: FocusScope.of(context).hasPrimaryFocus ||
                 !FocusScope.of(context).hasFocus
-            ? SizeManager.screenHeight * 0.67
-            : SizeManager.screenHeight * 0.55,
+            ? 520.h
+            : 430.h,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
           child: Column(
@@ -65,10 +64,9 @@ class _ChangePasswordContainerComponentState
                 height: 32.h,
               ),
               CustomTextFormField(
-                type: TextInputType.text,
+                keyboardType: TextInputType.text,
                 prefixIcon: Iconsax.lock,
                 label: "Current Password",
-                borderRadius: (12.0).r,
                 obscureText: true,
                 onSaved: (value) {
                   if (value != null) {
@@ -78,10 +76,9 @@ class _ChangePasswordContainerComponentState
                 },
               ),
               CustomTextFormField(
-                type: TextInputType.text,
+                keyboardType: TextInputType.text,
                 prefixIcon: Iconsax.lock_1,
                 label: "New Password",
-                borderRadius: (12.0).r,
                 obscureText: true,
                 onSaved: (value) {
                   if (value != null) {
@@ -91,10 +88,9 @@ class _ChangePasswordContainerComponentState
                 },
               ),
               CustomTextFormField(
-                type: TextInputType.text,
+                keyboardType: TextInputType.text,
                 prefixIcon: Iconsax.lock_1,
                 label: "Confirm Password",
-                borderRadius: (12.0).r,
                 obscureText: true,
                 onSaved: (value) {
                   if (value != null) {

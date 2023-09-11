@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/core/router/app_router.dart';
-import 'package:efashion_flutter/core/util/size_manager.dart';
+import 'package:efashion_flutter/core/util/strings_manager.dart';
 import 'package:efashion_flutter/shared/presentation/widgets/primary_button.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/shared/auth_clipped_container.dart';
 import 'package:efashion_flutter/features/auth/presentation/components/shared/blurred_auth_body.dart';
@@ -24,7 +24,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     return Scaffold(
       body: BlurredAuthBody(
         child: AuthClippedContainer(
-          height: SizeManager.screenHeight * 0.55,
+          height: 400.h,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
             child: Column(
@@ -34,7 +34,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   height: 50.h,
                 ),
                 Text(
-                  "Email verification",
+                  StringsManager.emailVerifyTitle,
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -42,7 +42,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 const SizedBox(height: 8),
                 Text(
                   textAlign: TextAlign.center,
-                  "Enter the 6 digital code the sent to\n your email address",
+                  StringsManager.emailVerifySubTitle,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.outline,
                   ),
@@ -81,9 +81,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 PrimaryButton(
                   onTap: () {
                     context.pushRoute(const ResetPasswordRoute());
-                    debugPrint(verifyCode);
                   },
-                  buttonTitle: 'Verify and proceed',
+                  buttonTitle: StringsManager.emailVerifyButtonTitle,
                 ),
                 SizedBox(
                   height: 20.h,

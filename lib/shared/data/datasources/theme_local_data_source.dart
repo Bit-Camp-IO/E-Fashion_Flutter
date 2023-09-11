@@ -1,16 +1,17 @@
 import 'package:efashion_flutter/core/constants/app_constants.dart';
-import 'package:efashion_flutter/shared/data/models/app_theme_model.dart';
+import 'package:efashion_flutter/shared/data/models/theme/app_theme_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 
-abstract class LocalDataSource{
+abstract class ThemeLocalDataSource{
   AppThemeModel getAppTheme();
   Future<AppThemeModel> changeAppTheme(bool isDarkMode);
 }
 
-@LazySingleton(as: LocalDataSource)
-class LocalDataSourceImpl extends LocalDataSource{
+@LazySingleton(as: ThemeLocalDataSource)
+class ThemeLocalDataSourceImpl extends ThemeLocalDataSource{
 
+  List favorites = [1,2,3,4,5,6,7,8,9];
   final Box<AppThemeModel> themeDatabase = Hive.box(AppConstants.themeBox);
 
   @override

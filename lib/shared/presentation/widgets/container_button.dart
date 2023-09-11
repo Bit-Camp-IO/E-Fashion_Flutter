@@ -29,9 +29,12 @@ class ClippedContainerButton extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
           shape: BoxShape.circle,
         ),
-        child: Icon(
-          icon,
-          color: iconColor ?? Colors.white,
+        child: Center(
+          child: Icon(
+            icon,
+            color: iconColor ?? Colors.white,
+            size: 24.sp,
+          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class FavoriteIconButton extends StatelessWidget {
@@ -22,7 +23,7 @@ class FavoriteIconButton extends StatelessWidget {
         icon: Icon(
           isFavorite ? Iconsax.heart5 : Iconsax.heart,
           color: Theme.of(context).colorScheme.primary,
-          size: 26,
+          size: 26.sp,
         ),
       ),
     );
