@@ -1,28 +1,28 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/features/account/presentation/screens/account_screen.dart';
-import 'package:efashion_flutter/features/account/presentation/screens/change_password_screen.dart';
-import 'package:efashion_flutter/features/account/presentation/screens/chat_support_screen.dart';
-import 'package:efashion_flutter/features/account/presentation/screens/edit_profile_screen.dart';
-import 'package:efashion_flutter/features/account/presentation/screens/location_screen.dart';
-import 'package:efashion_flutter/features/account/presentation/screens/delivery_status_screen.dart';
-import 'package:efashion_flutter/features/account/presentation/screens/orders_status_screen.dart';
-import 'package:efashion_flutter/features/auth/presentation/screens/email_verification_screen.dart';
-import 'package:efashion_flutter/features/auth/presentation/screens/forget_password_screen.dart';
-import 'package:efashion_flutter/features/auth/presentation/screens/login_screen.dart';
-import 'package:efashion_flutter/features/auth/presentation/screens/reset_password_screen.dart';
-import 'package:efashion_flutter/features/auth/presentation/screens/sign_up_screen.dart';
-import 'package:efashion_flutter/features/auth/presentation/screens/welcome_screen.dart';
-import 'package:efashion_flutter/features/cart/presentation/screens/cart_screen.dart';
-import 'package:efashion_flutter/features/favorite/presentation/screens/favorite_screen.dart';
-import 'package:efashion_flutter/features/home/presentation/screens/add_review_screen.dart';
-import 'package:efashion_flutter/features/home/presentation/screens/all_reviews_screen.dart';
-import 'package:efashion_flutter/features/home/presentation/screens/home_screen.dart';
-import 'package:efashion_flutter/features/bottom_nav_bar/bottom_nav_bar.dart';
-import 'package:efashion_flutter/features/home/presentation/screens/details_screen.dart';
-import 'package:efashion_flutter/features/home/presentation/screens/all_products_screen.dart';
-import 'package:efashion_flutter/features/home/presentation/screens/notifications_screen.dart';
-import 'package:efashion_flutter/features/home/presentation/screens/search_filter_screen.dart';
-import 'package:efashion_flutter/features/home/presentation/screens/search_screen.dart';
+import 'package:efashion_flutter/presentation/account/screens/account_screen.dart';
+import 'package:efashion_flutter/presentation/account/screens/change_password_screen.dart';
+import 'package:efashion_flutter/presentation/account/screens/chat_support_screen.dart';
+import 'package:efashion_flutter/presentation/account/screens/edit_profile_screen.dart';
+import 'package:efashion_flutter/presentation/account/screens/location_screen.dart';
+import 'package:efashion_flutter/presentation/account/screens/delivery_status_screen.dart';
+import 'package:efashion_flutter/presentation/account/screens/orders_status_screen.dart';
+import 'package:efashion_flutter/presentation/auth/screens/email_verification_screen.dart';
+import 'package:efashion_flutter/presentation/auth/screens/forget_password_screen.dart';
+import 'package:efashion_flutter/presentation/auth/screens/login_screen.dart';
+import 'package:efashion_flutter/presentation/auth/screens/reset_password_screen.dart';
+import 'package:efashion_flutter/presentation/auth/screens/sign_up_screen.dart';
+import 'package:efashion_flutter/presentation/auth/screens/welcome_screen.dart';
+import 'package:efashion_flutter/presentation/product/screens/cart_screen.dart';
+import 'package:efashion_flutter/presentation/product/screens/favorite_screen.dart';
+import 'package:efashion_flutter/presentation/product/screens/add_review_screen.dart';
+import 'package:efashion_flutter/presentation/product/screens/all_reviews_screen.dart';
+import 'package:efashion_flutter/presentation/product/screens/home_screen.dart';
+import 'package:efashion_flutter/presentation/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:efashion_flutter/presentation/product/screens/details_screen.dart';
+import 'package:efashion_flutter/presentation/product/screens/discover_products_screen.dart';
+import 'package:efashion_flutter/presentation/product/screens/notifications_screen.dart';
+import 'package:efashion_flutter/presentation/product/screens/search_filter_screen.dart';
+import 'package:efashion_flutter/presentation/product/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -89,7 +89,7 @@ class AppRouter extends _$AppRouter {
                   durationInMilliseconds: 300,
                 ),
                 CustomRoute(
-                  page: AllProductsRoute.page,
+                  page:DiscoverProductsRoute.page,
                   transitionsBuilder: TransitionsBuilders.fadeIn,
                   durationInMilliseconds: 300,
                 ),

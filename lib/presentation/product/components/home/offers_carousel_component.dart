@@ -1,0 +1,105 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
+import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
+import 'package:efashion_flutter/presentation/product/bloc/home_bloc/home_bloc.dart';
+import 'package:efashion_flutter/presentation/product/components/home/section_widget.dart';
+import 'package:efashion_flutter/injection_container.dart';
+import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart';
+import 'package:efashion_flutter/presentation/product/screens/discover_products_screen.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/cart_bottom_sheet.dart';
+import 'package:efashion_flutter/presentation/product/components/home/offers_card.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class OffersCarouselComponent extends StatefulWidget {
+  const OffersCarouselComponent({
+    super.key,
+  });
+
+  @override
+  State<OffersCarouselComponent> createState() =>
+      _OffersCarouselComponentState();
+}
+
+class _OffersCarouselComponentState extends State<OffersCarouselComponent> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SectionWidget(
+          sectionTitle: 'Offers',
+          sectionButtonTitle: 'See All',
+          enableTextButton: true,
+          onTextButtonTap: () {
+            context.pushRoute(DiscoverProductsRoute(
+              categories: context.read<HomeBloc>().categories,
+              discoverScreenType: DiscoverScreenType.offers,
+            ));
+          },
+        ),
+        BlocBuilder<HomeBloc, HomeState>(
+          buildWhen: (previous, current) => previous.productsOffers != current.productsOffers,
+          builder: (context, state) {
+            return CarouselSlider.builder(
+              itemCount: state.productsOffers.length,
+              itemBuilder: (context, index, realIndex) {
+                final productId = state.productsOffers[index].id;
+                final productImage = state.productsOffers[index].imageUrl;
+                final productName = state.productsOffers[index].title;
+                final newPrice = state.productsOffers[index].price.toInt();
+                final oldPrice = state.productsOffers[index].oldPrice.toInt();
+                return BlocBuilder<FavoriteCubit, FavoriteState>(
+                  buildWhen: (previous, current) => previous != current,
+                  builder: (context, state) {
+                    return OffersCard(
+                      productImage: productImage,
+                      productName: productName,
+                      newPrice: newPrice,
+                      oldPrice: oldPrice,
+                      isFavorite: state.favoriteList.contains(productId),
+                      onAddToCart: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return BlocProvider(
+                              create: (context) => getIt<DetailsCubit>()..getProductDetails(productId: productId),
+                              child: BlocBuilder<DetailsCubit, DetailsState>(
+                                buildWhen: (previous, current) => previous.productDetailsState != current.productDetailsState,
+                                builder: (context, state) {
+                                  return CartBottomSheet(
+                                    productName: state.productDetails.title,
+                                    productPrice: state.productDetails.price.toInt(),
+                                    productColors: state.productDetails.colors,
+                                    productSizes: state.productDetails.sizes,
+                                    productPieces: 10,
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      onFavorite: () {
+                        context.read<FavoriteCubit>().addOrRemoveProductFromFavoriteListEvent(productId: productId);
+                      },
+                      onOfferTap: () {
+                        // context.pushRoute(DetailsRoute(productId: offersList[index].productId));
+                      },
+                    );
+                  },
+                );
+              },
+              options: CarouselOptions(
+                height: 180.h,
+                viewportFraction: 0.65,
+                enlargeCenterPage: true,
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+}

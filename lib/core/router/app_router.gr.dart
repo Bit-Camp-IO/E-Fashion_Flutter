@@ -37,12 +37,6 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    AllProductsRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const AllProductsScreen(),
-      );
-    },
     AllReviewsRoute.name: (routeData) {
       final args = routeData.argsAs<AllReviewsRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -109,6 +103,20 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    DiscoverProductsRoute.name: (routeData) {
+      final args = routeData.argsAs<DiscoverProductsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: DiscoverProductsScreen(
+          key: args.key,
+          brandName: args.brandName,
+          brandId: args.brandId,
+          categories: args.categories,
+          discoverScreenType: args.discoverScreenType,
+        )),
+      );
+    },
     EditProfileRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -124,7 +132,7 @@ abstract class _$AppRouter extends RootStackRouter {
     FavoriteRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const FavoriteScreen(),
+        child: WrappedRoute(child: const FavoriteScreen()),
       );
     },
     FavoriteTabRoute.name: (routeData) {
@@ -142,7 +150,7 @@ abstract class _$AppRouter extends RootStackRouter {
     HomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const HomeScreen(),
+        child: WrappedRoute(child: const HomeScreen()),
       );
     },
     HomeTabRoute.name: (routeData) {
@@ -272,20 +280,6 @@ class AddReviewRouteArgs {
   String toString() {
     return 'AddReviewRouteArgs{key: $key, productId: $productId}';
   }
-}
-
-/// generated route for
-/// [AllProductsScreen]
-class AllProductsRoute extends PageRouteInfo<void> {
-  const AllProductsRoute({List<PageRouteInfo>? children})
-      : super(
-          AllProductsRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'AllProductsRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -483,6 +477,59 @@ class DetailsRouteArgs {
   @override
   String toString() {
     return 'DetailsRouteArgs{key: $key, productId: $productId}';
+  }
+}
+
+/// generated route for
+/// [DiscoverProductsScreen]
+class DiscoverProductsRoute extends PageRouteInfo<DiscoverProductsRouteArgs> {
+  DiscoverProductsRoute({
+    Key? key,
+    String brandName = '',
+    String brandId = '',
+    required String? categories,
+    required DiscoverScreenType discoverScreenType,
+    List<PageRouteInfo>? children,
+  }) : super(
+          DiscoverProductsRoute.name,
+          args: DiscoverProductsRouteArgs(
+            key: key,
+            brandName: brandName,
+            brandId: brandId,
+            categories: categories,
+            discoverScreenType: discoverScreenType,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'DiscoverProductsRoute';
+
+  static const PageInfo<DiscoverProductsRouteArgs> page =
+      PageInfo<DiscoverProductsRouteArgs>(name);
+}
+
+class DiscoverProductsRouteArgs {
+  const DiscoverProductsRouteArgs({
+    this.key,
+    this.brandName = '',
+    this.brandId = '',
+    required this.categories,
+    required this.discoverScreenType,
+  });
+
+  final Key? key;
+
+  final String brandName;
+
+  final String brandId;
+
+  final String? categories;
+
+  final DiscoverScreenType discoverScreenType;
+
+  @override
+  String toString() {
+    return 'DiscoverProductsRouteArgs{key: $key, brandName: $brandName, brandId: $brandId, categories: $categories, discoverScreenType: $discoverScreenType}';
   }
 }
 

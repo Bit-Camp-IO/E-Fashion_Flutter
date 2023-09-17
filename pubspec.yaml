@@ -17,7 +17,6 @@ dependencies:
   image_picker: ^1.0.4
   auto_route: ^7.8.3
   flutter_screenutil: ^5.9.0
-  flutter_animate: ^4.2.0+1
   get_it: ^7.6.4
   injectable: ^2.3.0
   iconsax: ^0.0.8
@@ -32,9 +31,9 @@ dependencies:
   flutter_svg: ^2.0.7
   flutter_rating_bar: ^4.0.1
   percent_indicator: ^4.2.3
-  flutter_typeahead: ^4.6.2
-  syncfusion_flutter_sliders: ^22.2.12
-  syncfusion_flutter_core: ^22.2.12
+  flutter_typeahead: ^4.7.0
+  syncfusion_flutter_sliders: ^23.1.36
+  syncfusion_flutter_core: ^23.1.36
   easy_stepper: ^0.7.3
   pinput: ^3.0.1
   dartz: ^0.10.1

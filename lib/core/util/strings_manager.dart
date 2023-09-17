@@ -20,6 +20,11 @@ class StringsManager{
   static const String emailVerifyTitle = 'Email verification';
   static const String emailVerifySubTitle = 'Enter the 6 digital code the sent to\n your email address';
   static const String emailVerifyButtonTitle = 'Verify and proceed';
+
+  //! Home Strings
+  static const String womanCategory = 'Woman';
+  static const String menCategory = 'Men';
+
   //! TextFields Text
   static const String email = 'Email';
   static const String currentPassword = 'Current Password';

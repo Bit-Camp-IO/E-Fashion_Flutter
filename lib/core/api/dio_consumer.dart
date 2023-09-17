@@ -41,7 +41,7 @@ class DioApiConsumer extends ApiConsumer {
   }
 
   @override
-  Future get(String endPointPath, {Map<String, dynamic>? queryParameters, Map<String, dynamic>? headers}) async {
+  Future get(String endPointPath, {Map<String, dynamic>? body, Map<String, dynamic>? queryParameters, Map<String, dynamic>? headers, }) async {
     try {
       final Response response = await dioClient.get(endPointPath, queryParameters: queryParameters, options: Options(
         headers: headers
@@ -54,9 +54,11 @@ class DioApiConsumer extends ApiConsumer {
 
   @override
   Future post(String endPointPath,
-      {Map<String, dynamic>? body, Map<String, dynamic>? queryParameters}) async {
+      {Map<String, dynamic>? body, Map<String, dynamic>? queryParameters, Map<String, dynamic>? headers}) async {
     try {
-      final Response response = await dioClient.post(endPointPath, queryParameters: queryParameters, data: body);
+      final Response response = await dioClient.post(endPointPath, queryParameters: queryParameters, data: body, options: Options(
+        headers: headers,
+      ));
       return _handleResponseAsJson(response);
     } on DioException catch (error) {
       _handelDioError(error);
@@ -65,9 +67,9 @@ class DioApiConsumer extends ApiConsumer {
 
   @override
   Future put(String endPointPath,
-      {Map<String, dynamic>? body, bool formDataIsEnabled = false, Map<String, dynamic>? queryParameters}) async {
+      {Map<String, dynamic>? body, bool formDataIsEnabled = false, Map<String, dynamic>? queryParameters, Map<String, dynamic>? headers}) async {
     try {
-      final Response response = await dioClient.put(endPointPath,queryParameters: queryParameters, data: formDataIsEnabled ? FormData.fromMap(body!) : body);
+      final Response response = await dioClient.put(endPointPath,queryParameters: queryParameters, data: formDataIsEnabled ? FormData.fromMap(body!) : body, options: Options(headers: headers));
       return _handleResponseAsJson(response);
     } on DioException catch (error) {
       _handelDioError(error);
@@ -75,9 +77,9 @@ class DioApiConsumer extends ApiConsumer {
   }
 
   @override
-  Future delete(String endPointPath, {Map<String, dynamic>? body, Map<String, dynamic>? queryParameters}) async{
+  Future delete(String endPointPath, {Map<String, dynamic>? body, Map<String, dynamic>? queryParameters, Map<String, dynamic>? headers}) async{
     try{
-      final Response response = await dioClient.delete(endPointPath, queryParameters: queryParameters, data: body);
+      final Response response = await dioClient.delete(endPointPath, queryParameters: queryParameters, data: body, options: Options(headers: headers));
       return _handleResponseAsJson(response);
     } on DioException catch(error){
       _handelDioError(error);
@@ -85,8 +87,10 @@ class DioApiConsumer extends ApiConsumer {
   }
 
   dynamic _handleResponseAsJson(Response<dynamic> response) {
-    final responseJson = jsonDecode(response.data.toString());
-    return responseJson;
+    if(response.data.toString().isNotEmpty){
+      final responseJson = jsonDecode(response.data.toString());
+      return responseJson;
+    }
   }
 
   dynamic _handelDioError(DioException error) {

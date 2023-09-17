@@ -9,3 +9,17 @@ enum DeliverStatus{
   onTheWay,
   delivered;
 }
+
+enum BlocState{
+  initial,
+  loading,
+  failure,
+  success,
+}
+
+enum CubitState{
+  initial,
+  loading,
+  failure,
+  success,
+}

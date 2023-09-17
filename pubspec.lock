@@ -358,14 +358,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_animate:
-    dependency: "direct main"
-    description:
-      name: flutter_animate
-      sha256: "62f346340a96192070e31e3f2a1bd30a28530f1fe8be978821e06cd56b74d6d2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.0+1"
   flutter_bloc:
     dependency: "direct main"
     description:
@@ -487,10 +479,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_typeahead
-      sha256: a3539f7a90246b152f569029dedcf0b842532d3f2a440701b520e0bf2acbcf42
+      sha256: f3a5f79d9a056e5108452dbec31d12bbd7f6d25e9097bf0f956e3f8d024e1747
       url: "https://pub.dev"
     source: hosted
-    version: "4.6.2"
+    version: "4.7.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -1049,18 +1041,18 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_core
-      sha256: "9f0a4593f7642b2f106e329734d0e5fc746baf8d0a59495eec586cd0d9ba7d02"
+      sha256: aea119c8117953fa5decf4a313b431e556b0959cd35ff88f8fbdc0eda9bedb06
       url: "https://pub.dev"
     source: hosted
-    version: "22.2.12"
+    version: "23.1.36"
   syncfusion_flutter_sliders:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_sliders
-      sha256: "826e2a6ab71c87ecc33f6c19e4064ed9910980b5ad171a3e2888fe782a324a6c"
+      sha256: "03efbc624ca881873b6bfb67048741c03a093c73729cbe83bee7007fc7897c8f"
       url: "https://pub.dev"
     source: hosted
-    version: "22.2.12"
+    version: "23.1.36"
   synchronized:
     dependency: transitive
     description:

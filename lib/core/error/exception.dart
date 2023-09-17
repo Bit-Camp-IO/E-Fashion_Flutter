@@ -15,7 +15,7 @@ class ServerException extends Equatable implements Exception {
 }
 
 class FetchDataException extends ServerException {
-  const FetchDataException([message]) : super("Error During Communication");
+  const FetchDataException([message]) : super("There was an error, try again later.");
 }
 
 class BadRequestException extends ServerException {
