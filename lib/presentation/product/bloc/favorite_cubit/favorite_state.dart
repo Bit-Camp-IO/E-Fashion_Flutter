@@ -1,21 +1,38 @@
 part of 'favorite_cubit.dart';
 
-class FavoriteState extends Equatable{
-  final Set<String> favoriteList;
+class FavoriteState extends Equatable {
+  final Set<String> favoritesIds;
+  final List<ProductDetails> favoriteList;
+  final CubitState favoriteListState;
+  final String favoriteListFailMessage;
+
   const FavoriteState({
-    this.favoriteList = const <String>{},
+    this.favoritesIds = const <String>{},
+    this.favoriteList = const <ProductDetails>[],
+    this.favoriteListState = CubitState.failure,
+    this.favoriteListFailMessage = '',
   });
 
-
-
   @override
-  List<Object?> get props => [favoriteList];
+  List<Object?> get props => [
+        favoritesIds,
+        favoriteList,
+        favoriteListState,
+        favoriteListFailMessage,
+      ];
 
   FavoriteState copyWith({
-    Set<String>? favoriteList,
+    Set<String>? favoritesIds,
+    List<ProductDetails>? favoriteList,
+    CubitState? favoriteListState,
+    String? favoriteListFailMessage,
   }) {
     return FavoriteState(
+      favoritesIds: favoritesIds ?? this.favoritesIds,
       favoriteList: favoriteList ?? this.favoriteList,
+      favoriteListState: favoriteListState ?? this.favoriteListState,
+      favoriteListFailMessage:
+          favoriteListFailMessage ?? this.favoriteListFailMessage,
     );
   }
 }
