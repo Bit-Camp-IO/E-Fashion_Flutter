@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/injection_container.dart';
-import 'package:efashion_flutter/presentation/product/bloc/discover_cubit/discover_cubit.dart';
+import 'package:efashion_flutter/presentation/product/bloc/discover_cubit/discover_bloc.dart';
 import 'package:efashion_flutter/presentation/product/components/discover/skew_grid_view_component.dart';
 import 'package:efashion_flutter/presentation/product/components/discover/skew_list_view_component.dart';
 import 'package:efashion_flutter/presentation/shared/animations/slide_fade_animation_switcher.dart';
@@ -30,7 +30,7 @@ class DiscoverProductsScreen extends StatefulWidget
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<DiscoverCubit>(),
+      create: (context) => getIt<DiscoverBloc>(),
       child: this,
     );
   }
@@ -44,15 +44,15 @@ class _DiscoverProductsScreenState extends State<DiscoverProductsScreen> {
 
   @override
   void initState() {
+    final DiscoverBloc discoverBloc = context.read<DiscoverBloc>();
     switch (widget.discoverScreenType) {
       case DiscoverScreenType.brand:
-        screenTitle = 'Discover $widget.name';
-        context.read<DiscoverCubit>().getBrandProducts(
-            brandId: widget.brandId, categories: widget.categories);
+        screenTitle = 'Discover ${widget.brandName}';
+        discoverBloc.add(GetBrandProductsEvent(
+            brandId: widget.brandId, categories: widget.categories));
       case DiscoverScreenType.offers:
-        screenTitle = 'Discover All offers';
-        context.read<DiscoverCubit>()
-            .getOffersProducts(categories: widget.categories);
+        screenTitle = 'Discover Offers';
+        discoverBloc.add(GetOffersProductsEvent(categories: widget.categories));
     }
     super.initState();
   }
@@ -65,7 +65,7 @@ class _DiscoverProductsScreenState extends State<DiscoverProductsScreen> {
         child: Column(
           children: [
             CustomAppBar(
-              appBarTitle: widget.brandName,
+              appBarTitle: screenTitle,
               appBarType: AppBarType.switcher,
               onIndexChange: (currentIndex) {
                 switchIndex.value = currentIndex!;
@@ -75,9 +75,17 @@ class _DiscoverProductsScreenState extends State<DiscoverProductsScreen> {
               valueListenable: switchIndex,
               builder: (context, index, child) => Expanded(
                 child: SlideFadeAnimationSwitcher(
-                  child: index == 1
-                      ? const SkewGridViewComponent()
-                      : const SkewListViewComponent(),
+                  child: index == 0
+                      ? SkewListViewComponent(
+                          discoverScreenType: widget.discoverScreenType,
+                          categories: widget.categories,
+                          brandId: widget.brandId,
+                        )
+                      : SkewGridViewComponent(
+                          discoverScreenType: widget.discoverScreenType,
+                          categories: widget.categories,
+                          brandId: widget.brandId,
+                        ),
                 ),
               ),
             ),

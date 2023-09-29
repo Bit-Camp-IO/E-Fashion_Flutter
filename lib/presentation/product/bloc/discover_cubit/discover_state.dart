@@ -1,21 +1,21 @@
-part of 'discover_cubit.dart';
+part of 'discover_bloc.dart';
 
 class DiscoverState extends Equatable {
   final List<Product> products;
-  final CubitState discoverState;
+  final BlocState discoverState;
   final String discoverFailureMessage;
   final bool hasProductsListReachedMax;
 
   const DiscoverState({
     this.products = const [],
-    this.discoverState = CubitState.initial,
+    this.discoverState = BlocState.initial,
     this.discoverFailureMessage = '',
     this.hasProductsListReachedMax = false,
   });
 
   DiscoverState copyWith({
     List<Product>? products,
-    CubitState? discoverState,
+    BlocState? discoverState,
     String? discoverFailureMessage,
     bool? hasProductsListReachedMax,
   }) {

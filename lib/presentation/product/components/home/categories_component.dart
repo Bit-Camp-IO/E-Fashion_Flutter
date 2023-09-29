@@ -1,37 +1,38 @@
 import 'package:efashion_flutter/presentation/product/bloc/home_bloc/home_bloc.dart';
-import 'package:efashion_flutter/presentation/product/components/home/filter_button.dart';
-import 'package:efashion_flutter/presentation/product/components/home/filters/genders_filter.dart';
+import 'package:efashion_flutter/presentation/product/components/home/categories/categories_button.dart';
+import 'package:efashion_flutter/presentation/product/components/home/categories/genders_categories.dart';
 import 'package:efashion_flutter/presentation/product/components/home/section_widget.dart';
 import 'package:efashion_flutter/presentation/product/components/home/titled_avatar.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class FilterComponent extends StatefulWidget {
-  const FilterComponent({super.key});
+class CategoriesComponent extends StatefulWidget {
+  const CategoriesComponent({super.key});
 
   @override
-  State<FilterComponent> createState() => _FilterComponentState();
+  State<CategoriesComponent> createState() => _CategoriesComponentState();
 }
 
-class _FilterComponentState extends State<FilterComponent> {
-  late final ScrollController _filterController;
+class _CategoriesComponentState extends State<CategoriesComponent> {
+  late final ScrollController _categoriesController;
   double animatedGendersWidth = 145;
-  List selectedFilters = [];
+  List selectedCategories = [];
   ValueNotifier<bool> isApplyButtonActiveNotifier = ValueNotifier<bool>(false);
 
   @override
   void initState() {
-    _filterController = ScrollController()..addListener(_onSwipeListener);
+    _categoriesController = ScrollController()..addListener(_onSwipeListener);
     super.initState();
   }
 
   void _onSwipeListener() {
-    final maxScroll = _filterController.position.maxScrollExtent;
-    final currentScroll = _filterController.offset;
-    final scrollDirection = _filterController.position.userScrollDirection;
-    if (_filterController.position.userScrollDirection ==
+    final maxScroll = _categoriesController.position.maxScrollExtent;
+    final currentScroll = _categoriesController.offset;
+    final scrollDirection = _categoriesController.position.userScrollDirection;
+    if (_categoriesController.position.userScrollDirection ==
         ScrollDirection.reverse) {
       if (animatedGendersWidth != 0) {
         setState(() {
@@ -51,6 +52,19 @@ class _FilterComponentState extends State<FilterComponent> {
     }
   }
 
+  void _handelCategories({required String categoryId}){
+    if (selectedCategories.contains(categoryId)) {
+      selectedCategories.removeWhere((element) => element == categoryId);
+    } else {
+      selectedCategories.add(categoryId);
+    }
+    if(selectedCategories.isNotEmpty){
+      isApplyButtonActiveNotifier.value = selectedCategories.isNotEmpty;
+    }else{
+      isApplyButtonActiveNotifier.value = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -60,19 +74,19 @@ class _FilterComponentState extends State<FilterComponent> {
           child: Row(
             children: [
               const SectionWidget(
-                sectionTitle: 'Filters',
+                sectionTitle: StringsManager.categorySectionTitle,
               ),
               const Spacer(flex: 1),
               ValueListenableBuilder(
                 valueListenable: isApplyButtonActiveNotifier,
-                builder: (context, isApplyButtonActive, child) => FilterButton(
+                builder: (context, isApplyButtonActive, child) => CategoriesButton(
                   isActive: isApplyButtonActive,
                   onTap: () {
                     isApplyButtonActiveNotifier.value = false;
-                    final selectedCategories = selectedFilters.join(',');
+                    final categories = selectedCategories.join(',');
                     context.read<HomeBloc>()
-                      ..add(GetProductOffersEvent(categories: selectedCategories))
-                      ..add(GetBrandsProductsEvent(categories: selectedCategories));
+                      ..add(GetProductOffersEvent(categories: categories))
+                      ..add(GetBrandsProductsEvent(categories: categories));
                   },
                 ),
               ),
@@ -84,16 +98,15 @@ class _FilterComponentState extends State<FilterComponent> {
           height: 84.h,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            controller: _filterController,
+            controller: _categoriesController,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16).r,
               child: Row(
                 children: [
-                  GendersFilter(
+                  GendersCategories(
                     width: animatedGendersWidth.w,
                     selectedGenders: (genderId) {
-                      context
-                          .read<HomeBloc>()
+                      context.read<HomeBloc>()
                           .add(GetCategoriesEvent(genderId: genderId));
                     },
                   ),
@@ -121,8 +134,7 @@ class _FilterComponentState extends State<FilterComponent> {
                         ),
                         SizedBox(width: 10.w),
                         BlocBuilder<HomeBloc, HomeState>(
-                          buildWhen: (previous, current) =>
-                              previous.categories != current.categories,
+                          buildWhen: (previous, current) => previous.categories != current.categories,
                           builder: (context, state) {
                             return ListView.builder(
                               itemCount: state.categories.length,
@@ -133,20 +145,8 @@ class _FilterComponentState extends State<FilterComponent> {
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 10.0).r,
                                   child: TitledAvatar(
-                                    onTap: () {
-                                      if (selectedFilters.contains(state.categories[index].id)) {
-                                        selectedFilters.removeWhere((element) =>
-                                            element ==
-                                            state.categories[index].id);
-                                      } else {
-                                        selectedFilters
-                                            .add(state.categories[index].id);
-                                      }
-                                      if(selectedFilters.isNotEmpty){
-                                        isApplyButtonActiveNotifier.value = selectedFilters.isNotEmpty;
-                                      }else{
-                                        isApplyButtonActiveNotifier.value = true;
-                                      }
+                                    onTap:() {
+                                      _handelCategories(categoryId: state.categories[index].id);
                                     },
                                     imagePath: state.categories[index].imageUrl,
                                     title: state.categories[index].name,
@@ -170,7 +170,7 @@ class _FilterComponentState extends State<FilterComponent> {
 
   @override
   void dispose() {
-    _filterController
+    _categoriesController
       ..dispose()
       ..removeListener(_onSwipeListener);
     isApplyButtonActiveNotifier.dispose();
