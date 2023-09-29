@@ -1,53 +1,21 @@
-import 'package:efashion_flutter/core/api/api_consumer.dart';
-import 'package:efashion_flutter/core/constants/api_constants.dart';
-import 'package:efashion_flutter/core/error/exception.dart';
+import 'package:efashion_flutter/components/productComponent/data/datasources/product_remote_data_source.dart';
+import 'package:efashion_flutter/components/productComponent/data/models/review_model.dart';
+import 'package:efashion_flutter/components/productComponent/data/models/reviews_and_rating_model.dart';
+import 'package:efashion_flutter/components/productComponent/domain/entities/brand.dart';
+import 'package:efashion_flutter/shared/api/api_consumer.dart';
+import 'package:efashion_flutter/shared/constants/api_constants.dart';
+import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:efashion_flutter/components/productComponent/data/models/brand_model.dart';
 import 'package:efashion_flutter/components/productComponent/data/models/category_model.dart';
 import 'package:efashion_flutter/components/productComponent/data/models/product_details_model.dart';
 import 'package:efashion_flutter/components/productComponent/data/models/product_model.dart';
-import 'package:efashion_flutter/components/productComponent/domain/entities/brand.dart';
 import 'package:injectable/injectable.dart';
 
-abstract class HomeRemoteDataSource {
-  Future<List<CategoryModel>> getCategories({required int genderId});
-
-  Future<List<ProductModel>> getProductsOffers(
-      {String? categories, int pageNumber});
-
-  Future<List<BrandModel>> getBrands();
-
-  Future<Map<String, List<ProductModel>>> getAllBrandsProducts({
-    required List<Brand> brands,
-    String? categories,
-  });
-
-  Future<ProductDetailsModel> geProductDetails({
-    required String productId,
-  });
-
-  Future<Set<String>> getUserFavoriteList({required String userAccessToken});
-
-  Future<Set<String>> addProductToFavoriteList({
-    required String productId,
-    required String userAccessToken,
-  });
-
-  Future<String> removeProductFromFavoriteList({
-    required String productId,
-    required String userAccessToken,
-  });
-
-  Future<List<ProductModel>> getBrandProducts(
-      {required String brandId,
-      required int pageNumber,
-      required String? categories});
-}
-
-@LazySingleton(as: HomeRemoteDataSource)
-class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
+@LazySingleton(as: ProductRemoteDataSource)
+class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   final ApiConsumer _apiConsumer;
 
-  HomeRemoteDataSourceImpl(this._apiConsumer);
+  ProductRemoteDataSourceImpl(@Named(ApiConstants.mainConsumerName) this._apiConsumer);
 
   @override
   Future<List<CategoryModel>> getCategories({required int genderId}) async {
@@ -124,10 +92,10 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
   }
 
   @override
-  Future<ProductDetailsModel> geProductDetails(
+  Future<ProductDetailsModel> getProductDetails(
       {required String productId}) async {
     final Map<String, dynamic> response = await _apiConsumer.get(
-      '${ApiConstants.productDetailsEndPoint}$productId',
+      ApiConstants.productDetailsEndPoint(productId: productId),
     );
     ProductDetailsModel productDetails =
         ProductDetailsModel.fromJson(response['data']);
@@ -135,7 +103,7 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
   }
 
   @override
-  Future<Set<String>> getUserFavoriteList(
+  Future<Set<String>> getUserFavoriteProductsIds(
       {required String userAccessToken}) async {
     final Map<String, dynamic> response =
         await _apiConsumer.get(ApiConstants.userFavoriteListEndPoint, headers: {
@@ -167,10 +135,10 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
         ApiConstants.userFavoriteListEndPoint,
         body: {'id': productId},
         headers: {'Authorization': 'Bearer $userAccessToken'});
-    if (response.toString().isEmpty ) {
-        throw const FetchDataException();
-    } else {
+    if (response['status'] == ApiCallStatus.success.value) {
       return productId;
+    } else {
+      throw const FetchDataException();
     }
   }
 
@@ -194,5 +162,93 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
     } else {
       throw const FetchDataException();
     }
+  }
+
+  @override
+  Future<List<ProductDetailsModel>> getFavoriteProducts(
+      {required Set<String> favoriteIds}) async {
+    final productsLists = await Future.wait(
+      favoriteIds.map(
+        (productId) => _apiConsumer.get(
+          ApiConstants.productDetailsEndPoint(productId: productId),
+        ),
+      ),
+    );
+    return List<ProductDetailsModel>.from(productsLists.map((productDetails) =>
+        ProductDetailsModel.fromJson(productDetails['data'])));
+  }
+
+  @override
+  Future<ReviewsAndRatingsModel> getProductReviewsAndRatings(
+      {required String productId}) async {
+    final reviewsAndRatings = await _apiConsumer
+        .get(ApiConstants.productReviewsEndPoint(productId: productId));
+    if (reviewsAndRatings['status'] == ApiCallStatus.success.value) {
+      return ReviewsAndRatingsModel.fromJson(reviewsAndRatings['data']);
+    } else {
+      throw const FetchDataException();
+    }
+  }
+
+  @override
+  Future<ReviewModel> addOrEditProductReview({
+    required String userAccessToken,
+    required String productId,
+    required double rate,
+    required String? review,
+  }) async {
+    final response = await _apiConsumer
+        .post(ApiConstants.productReviewsEndPoint(productId: productId), body:
+    review != null ? {
+      'rate': rate,
+      'comment': review,
+    } : {
+      'rate': rate,
+    }, headers: {
+      'Authorization': 'Bearer $userAccessToken'
+    });
+    if (response['status'] == ApiCallStatus.success.value) {
+      return ReviewModel.fromJson(response['data']);
+    } else {
+      throw const FetchDataException();
+    }
+  }
+
+  @override
+  Future<ReviewModel> getUserProductReview(
+      {required String userAccessToken, required String productId}) async {
+    final response = await _apiConsumer.get(
+        ApiConstants.userReviewEndPoint(productId: productId),
+        headers: {'Authorization': 'Bearer $userAccessToken'});
+    if (response['status'] == ApiCallStatus.success.value) {
+      return ReviewModel.fromJson(response['data']);
+    } else {
+      throw const FetchDataException();
+    }
+  }
+
+  @override
+  Future<List<ProductModel>> searchForProducts(
+      {required String searchQuery,
+      required int pageNumber,
+      String? categories,
+      String? brands,
+      int? gender}) async {
+    final Map<String, dynamic> response = await _apiConsumer.get(
+      ApiConstants.productsEndPoint,
+      queryParameters: {
+        'page': pageNumber,
+        'search': searchQuery,
+        'categories': categories,
+        'brands': brands,
+        'gender': gender,
+      },
+    );
+    List<ProductModel> searchList = List.from(
+      (response['data']['products'] as List).map(
+        (category) => ProductModel.fromJson(category),
+      ),
+    );
+    return searchList;
   }
 }

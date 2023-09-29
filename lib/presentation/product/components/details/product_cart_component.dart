@@ -2,6 +2,7 @@ import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart
 import 'package:efashion_flutter/presentation/shared/widgets/product_color.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/product_pieces_counter.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/product_size.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -13,23 +14,25 @@ class ProductCartComponent extends StatefulWidget {
     required this.productColors,
     required this.productSizes,
     required this.productDescription,
-    required this.productPieces,
+    required this.productStock,
     required this.productPrice,
+    required this.addToBag,
   });
 
   final String productName;
   final List productColors;
   final List productSizes;
   final String productDescription;
-  final int productPieces;
+  final int productStock;
   final int productPrice;
+  final void Function() addToBag;
 
   @override
   State<ProductCartComponent> createState() => _ProductCartComponentState();
 }
 
 class _ProductCartComponentState extends State<ProductCartComponent> {
-  int _productPieces = 0;
+  final ValueNotifier<int> _productPieces = ValueNotifier(0);
   int _selectedColorIndex = 0;
   int _selectedSizeIndex = 0;
 
@@ -42,6 +45,7 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
         children: [
           Text(
             widget.productName,
+            overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
@@ -52,12 +56,12 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
           ),
-           SizedBox(height: 20.h),
+          SizedBox(height: 20.h),
           widget.productColors.isNotEmpty
               ? Row(
                   children: [
                     Text(
-                      'Colors : ',
+                      StringsManager.colorSection,
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
@@ -70,7 +74,7 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
                         children: List.generate(
                           widget.productColors.length,
                           (colorIndex) => ProductColor(
-                            color: widget.productColors[colorIndex],
+                            color: widget.productColors[colorIndex].hex,
                             onTap: () {
                               setState(() {
                                 _selectedColorIndex = colorIndex;
@@ -85,11 +89,11 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
                 )
               : const SizedBox.shrink(),
           SizedBox(height: 10.h),
-          widget.productColors.isNotEmpty
+          widget.productSizes.isNotEmpty
               ? Row(
                   children: [
                     Text(
-                      'Sizes : ',
+                      StringsManager.sizeSection,
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
@@ -120,27 +124,26 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
           Row(
             children: [
               Text(
-                '${widget.productPieces} Pieces available : ',
+                StringsManager.productStock(widget.productStock),
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: Theme.of(context).colorScheme.onSurface,
                     ),
               ),
-              ProductPiecesCounter(
-                onIncrementPress: () {
-                  if (_productPieces != widget.productPieces) {
-                    setState(() {
-                      _productPieces++;
-                    });
-                  }
-                },
-                onDecrementPress: () {
-                  if (_productPieces != 0) {
-                    setState(() {
-                      _productPieces--;
-                    });
-                  }
-                },
-                productPieces: _productPieces,
+              ValueListenableBuilder(
+                valueListenable: _productPieces,
+                builder: (context, value, child) => ProductPiecesCounter(
+                  onIncrementPress: () {
+                    if (_productPieces.value != widget.productStock) {
+                      _productPieces.value++;
+                    }
+                  },
+                  onDecrementPress: () {
+                    if (_productPieces.value != 0) {
+                      _productPieces.value--;
+                    }
+                  },
+                  productPieces: value,
+                ),
               ),
             ],
           ),
@@ -149,19 +152,17 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
             child: Text(
               textAlign: TextAlign.center,
               widget.productDescription,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall!
-                  .copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           ),
           SizedBox(height: 20.h),
           Center(
             child: PrimaryButton(
-              onTap: () {},
+              onTap: widget.addToBag,
               width: 312.w,
               height: 46.h,
-              buttonTitle: 'Add To Bag',
+              buttonTitle: StringsManager.addToBag,
               buttonIcon: const Icon(Iconsax.bag_2, color: Colors.white),
             ),
           ),

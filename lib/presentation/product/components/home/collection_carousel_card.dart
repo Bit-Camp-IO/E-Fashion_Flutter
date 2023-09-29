@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:efashion_flutter/core/util/size_manager.dart';
+import 'package:efashion_flutter/shared/util/size_manager.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

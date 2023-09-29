@@ -1,6 +1,6 @@
 import 'package:efashion_flutter/app.dart';
 import 'package:efashion_flutter/bloc_observer.dart';
-import 'package:efashion_flutter/core/constants/app_constants.dart';
+import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/components/userComponent/data/models/app_theme_model.dart';
 import 'package:efashion_flutter/components/authComponent/data/models/tokens_model.dart';

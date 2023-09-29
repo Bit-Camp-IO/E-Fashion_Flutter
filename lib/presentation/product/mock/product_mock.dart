@@ -576,7 +576,7 @@ List<Product> brandProducts = [
   ),
   Product(
     productId: 7,
-    productName: 'Spring Dress',
+    productName: 'Angles',
     productDescription:
         'Lorem ipsum dolor sit amet consectetur. Elit neque integer enim diam rhoncus rhoncus eu ut. Porttitor elementum arcu gravida adipiscing in. Consequat.',
     productImage:
@@ -614,7 +614,7 @@ List<Product> brandProducts = [
   ),
   Product(
     productId: 8,
-    productName: 'Modern Suit',
+    productName: 'Alaska',
     productDescription:
         'Lorem ipsum dolor sit amet consectetur. Elit neque integer enim diam rhoncus rhoncus eu ut. Porttitor elementum arcu gravida adipiscing in. Consequat.',
     productImage:
@@ -652,7 +652,7 @@ List<Product> brandProducts = [
   ),
   Product(
     productId: 9,
-    productName: 'Air Jorden',
+    productName: 'Alexandria',
     productDescription:
         'Lorem ipsum dolor sit amet consectetur. Elit neque integer enim diam rhoncus rhoncus eu ut. Porttitor elementum arcu gravida adipiscing in. Consequat.',
     productImage:

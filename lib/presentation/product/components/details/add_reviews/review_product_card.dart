@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:efashion_flutter/core/util/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -39,14 +38,14 @@ class ReviewProductCard extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
-                  .copyWith(color: ColorsManager.textColorPrimary),
+                  .copyWith(color: Theme.of(context).colorScheme.onSurface,),
             ),
             Text(
               '\$$productPrice',
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium!
-                  .copyWith(color: ColorsManager.textColorPrimary),
+                  .copyWith(color: Theme.of(context).colorScheme.onSurface),
             )
           ],
         ),

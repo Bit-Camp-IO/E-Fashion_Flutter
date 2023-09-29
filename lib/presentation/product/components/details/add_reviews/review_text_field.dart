@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReviewTextField extends StatelessWidget {
-  const ReviewTextField({super.key, required this.onSaved});
-  final FormFieldSetter onSaved;
-
+  const ReviewTextField({super.key, required this.onSaved, required this.reviewController});
+  final void Function(String? value) onSaved;
+  final TextEditingController reviewController;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       onSaved: onSaved,
+      controller: reviewController,
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
       keyboardType: TextInputType.multiline,
       textAlign: TextAlign.start,

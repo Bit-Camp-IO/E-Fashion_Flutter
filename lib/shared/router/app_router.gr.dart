@@ -27,13 +27,14 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AccountTab(),
       );
     },
-    AddReviewRoute.name: (routeData) {
-      final args = routeData.argsAs<AddReviewRouteArgs>();
+    AddOrEditReviewRoute.name: (routeData) {
+      final args = routeData.argsAs<AddOrEditReviewRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: AddReviewScreen(
+        child: AddOrEditReviewScreen(
           key: args.key,
           productId: args.productId,
+          rating: args.rating,
         ),
       );
     },
@@ -94,13 +95,9 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     DetailsRoute.name: (routeData) {
-      final args = routeData.argsAs<DetailsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: DetailsScreen(
-          key: args.key,
-          productId: args.productId,
-        ),
+        child: WrappedRoute(child: const Details()),
       );
     },
     DiscoverProductsRoute.name: (routeData) {
@@ -123,12 +120,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const EditProfileScreen(),
       );
     },
-    EmailVerificationRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const EmailVerificationScreen(),
-      );
-    },
     FavoriteRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -139,6 +130,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const FavoriteTab(),
+      );
+    },
+    ForgetPasswordRoutes.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const ForgetPassword()),
       );
     },
     ForgetPasswordRoute.name: (routeData) {
@@ -162,7 +159,7 @@ abstract class _$AppRouter extends RootStackRouter {
     LocationRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const LocationScreen(),
+        child: WrappedRoute(child: const LocationScreen()),
       );
     },
     LoginRoute.name: (routeData) {
@@ -183,22 +180,32 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const OrdersStatusScreen(),
       );
     },
+    OtpVerificationRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const OtpVerificationScreen(),
+      );
+    },
+    ProductDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<ProductDetailsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ProductDetailsScreen(
+          key: args.key,
+          productId: args.productId,
+        ),
+      );
+    },
     ResetPasswordRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const ResetPasswordScreen(),
       );
     },
-    SearchFilterRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const SearchFilterScreen(),
-      );
-    },
     SearchRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SearchScreen(),
+        child: WrappedRoute(child: const SearchScreen()),
       );
     },
     SignupRoute.name: (routeData) {
@@ -245,40 +252,45 @@ class AccountTabRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [AddReviewScreen]
-class AddReviewRoute extends PageRouteInfo<AddReviewRouteArgs> {
-  AddReviewRoute({
+/// [AddOrEditReviewScreen]
+class AddOrEditReviewRoute extends PageRouteInfo<AddOrEditReviewRouteArgs> {
+  AddOrEditReviewRoute({
     Key? key,
-    required int productId,
+    required String productId,
+    int rating = 0,
     List<PageRouteInfo>? children,
   }) : super(
-          AddReviewRoute.name,
-          args: AddReviewRouteArgs(
+          AddOrEditReviewRoute.name,
+          args: AddOrEditReviewRouteArgs(
             key: key,
             productId: productId,
+            rating: rating,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'AddReviewRoute';
+  static const String name = 'AddOrEditReviewRoute';
 
-  static const PageInfo<AddReviewRouteArgs> page =
-      PageInfo<AddReviewRouteArgs>(name);
+  static const PageInfo<AddOrEditReviewRouteArgs> page =
+      PageInfo<AddOrEditReviewRouteArgs>(name);
 }
 
-class AddReviewRouteArgs {
-  const AddReviewRouteArgs({
+class AddOrEditReviewRouteArgs {
+  const AddOrEditReviewRouteArgs({
     this.key,
     required this.productId,
+    this.rating = 0,
   });
 
   final Key? key;
 
-  final int productId;
+  final String productId;
+
+  final int rating;
 
   @override
   String toString() {
-    return 'AddReviewRouteArgs{key: $key, productId: $productId}';
+    return 'AddOrEditReviewRouteArgs{key: $key, productId: $productId, rating: $rating}';
   }
 }
 
@@ -287,7 +299,7 @@ class AddReviewRouteArgs {
 class AllReviewsRoute extends PageRouteInfo<AllReviewsRouteArgs> {
   AllReviewsRoute({
     Key? key,
-    required int productId,
+    required String productId,
     List<PageRouteInfo>? children,
   }) : super(
           AllReviewsRoute.name,
@@ -312,7 +324,7 @@ class AllReviewsRouteArgs {
 
   final Key? key;
 
-  final int productId;
+  final String productId;
 
   @override
   String toString() {
@@ -443,41 +455,17 @@ class DeliveryStatusRouteArgs {
 }
 
 /// generated route for
-/// [DetailsScreen]
-class DetailsRoute extends PageRouteInfo<DetailsRouteArgs> {
-  DetailsRoute({
-    Key? key,
-    required int productId,
-    List<PageRouteInfo>? children,
-  }) : super(
+/// [Details]
+class DetailsRoute extends PageRouteInfo<void> {
+  const DetailsRoute({List<PageRouteInfo>? children})
+      : super(
           DetailsRoute.name,
-          args: DetailsRouteArgs(
-            key: key,
-            productId: productId,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'DetailsRoute';
 
-  static const PageInfo<DetailsRouteArgs> page =
-      PageInfo<DetailsRouteArgs>(name);
-}
-
-class DetailsRouteArgs {
-  const DetailsRouteArgs({
-    this.key,
-    required this.productId,
-  });
-
-  final Key? key;
-
-  final int productId;
-
-  @override
-  String toString() {
-    return 'DetailsRouteArgs{key: $key, productId: $productId}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -548,20 +536,6 @@ class EditProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [EmailVerificationScreen]
-class EmailVerificationRoute extends PageRouteInfo<void> {
-  const EmailVerificationRoute({List<PageRouteInfo>? children})
-      : super(
-          EmailVerificationRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'EmailVerificationRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [FavoriteScreen]
 class FavoriteRoute extends PageRouteInfo<void> {
   const FavoriteRoute({List<PageRouteInfo>? children})
@@ -585,6 +559,20 @@ class FavoriteTabRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'FavoriteTabRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ForgetPassword]
+class ForgetPasswordRoutes extends PageRouteInfo<void> {
+  const ForgetPasswordRoutes({List<PageRouteInfo>? children})
+      : super(
+          ForgetPasswordRoutes.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ForgetPasswordRoutes';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -688,6 +676,58 @@ class OrdersStatusRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [OtpVerificationScreen]
+class OtpVerificationRoute extends PageRouteInfo<void> {
+  const OtpVerificationRoute({List<PageRouteInfo>? children})
+      : super(
+          OtpVerificationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'OtpVerificationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProductDetailsScreen]
+class ProductDetailsRoute extends PageRouteInfo<ProductDetailsRouteArgs> {
+  ProductDetailsRoute({
+    Key? key,
+    required String productId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ProductDetailsRoute.name,
+          args: ProductDetailsRouteArgs(
+            key: key,
+            productId: productId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ProductDetailsRoute';
+
+  static const PageInfo<ProductDetailsRouteArgs> page =
+      PageInfo<ProductDetailsRouteArgs>(name);
+}
+
+class ProductDetailsRouteArgs {
+  const ProductDetailsRouteArgs({
+    this.key,
+    required this.productId,
+  });
+
+  final Key? key;
+
+  final String productId;
+
+  @override
+  String toString() {
+    return 'ProductDetailsRouteArgs{key: $key, productId: $productId}';
+  }
+}
+
+/// generated route for
 /// [ResetPasswordScreen]
 class ResetPasswordRoute extends PageRouteInfo<void> {
   const ResetPasswordRoute({List<PageRouteInfo>? children})
@@ -697,20 +737,6 @@ class ResetPasswordRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ResetPasswordRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [SearchFilterScreen]
-class SearchFilterRoute extends PageRouteInfo<void> {
-  const SearchFilterRoute({List<PageRouteInfo>? children})
-      : super(
-          SearchFilterRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SearchFilterRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

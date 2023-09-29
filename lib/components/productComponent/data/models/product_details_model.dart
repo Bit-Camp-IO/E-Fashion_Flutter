@@ -10,6 +10,7 @@ class ProductDetailsModel extends ProductDetails {
     required super.price,
     required super.colors,
     required super.sizes,
+    required super.stock,
   });
 
   factory ProductDetailsModel.fromJson(Map<String, dynamic> jsonData) {
@@ -25,6 +26,7 @@ class ProductDetailsModel extends ProductDetails {
         ),
       ),
       sizes: List<String>.from(jsonData['sizes']),
+      stock: jsonData['stock'],
     );
   }
 }

@@ -119,7 +119,6 @@ import 'package:efashion_flutter/register_module.dart' as _i61;
 import 'package:efashion_flutter/shared/api/api_consumer.dart' as _i3;
 import 'package:efashion_flutter/shared/api/dio_interceptor.dart' as _i12;
 import 'package:efashion_flutter/shared/api/dio_logger.dart' as _i13;
-import 'package:efashion_flutter/shared/api/dio_map_interceptor.dart' as _i11;
 import 'package:efashion_flutter/shared/router/app_router.dart' as _i4;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
@@ -157,7 +156,6 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i9.CheckIfTokensExistUseCase(gh<_i7.AuthRepository>()));
     gh.lazySingleton<_i10.DeleteTokensUseCase>(
         () => _i10.DeleteTokensUseCase(gh<_i7.AuthRepository>()));
-    gh.lazySingleton<_i11.DioInterceptor>(() => _i11.DioInterceptor());
     gh.lazySingleton<_i12.DioInterceptor>(() => _i12.DioInterceptor());
     gh.lazySingleton<_i13.DioLogInterceptor>(() => _i13.DioLogInterceptor());
     gh.lazySingleton<_i14.ForgetPasswordUseCase>(

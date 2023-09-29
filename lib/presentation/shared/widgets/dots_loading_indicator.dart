@@ -10,7 +10,6 @@ class DotsLoadingIndicator extends StatefulWidget {
 class _DotsLoadingIndicatorState extends State<DotsLoadingIndicator> {
   int _currentDotIndex = 0;
 
-
   @override
   void initState() {
     super.initState();
@@ -24,10 +23,12 @@ class _DotsLoadingIndicatorState extends State<DotsLoadingIndicator> {
   }
 
   void _startAnimationLoop() {
-    Future.delayed(const Duration(milliseconds: 300), () {
-      _updateDotAnimation();
-      _startAnimationLoop();
-    });
+      Future.delayed(const Duration(milliseconds: 300), () {
+        if(mounted) {
+          _updateDotAnimation();
+          _startAnimationLoop();
+        }
+      });
   }
 
   @override

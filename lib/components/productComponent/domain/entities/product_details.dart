@@ -9,6 +9,7 @@ class ProductDetails extends Equatable {
   final num price;
   final List<ProductColor> colors;
   final List<String> sizes;
+  final int stock;
 
   const ProductDetails({
     required this.id,
@@ -18,6 +19,7 @@ class ProductDetails extends Equatable {
     required this.price,
     required this.colors,
     required this.sizes,
+    required this.stock,
   });
 
   @override
@@ -29,5 +31,6 @@ class ProductDetails extends Equatable {
         price,
         colors,
         sizes,
+        stock,
       ];
 }

@@ -1,4 +1,4 @@
-import 'package:efashion_flutter/core/constants/app_constants.dart';
+import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:efashion_flutter/components/userComponent/data/models/app_theme_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';

@@ -1,6 +1,7 @@
 class AssetsManager {
   static const String primaryFontFamily = 'Montserrat';
   static const String secondaryFontFamily = 'DM Serif Display';
+  static const String mapDarkModeJson = 'assets/json/map_dark_mode.json';
   static const String appLogo = 'assets/images/app_logo.png';
   static const String welcomeImage = 'assets/images/welcome_image.jpeg';
   static const String swipeToStartImage= 'assets/images/swipe_to_start.png';

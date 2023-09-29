@@ -1,4 +1,5 @@
 abstract class ApiConsumer {
+
   Future<dynamic> get(
     String endPointPath, {
     Map<String, dynamic>? queryParameters,

@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/core/router/app_router.dart';
+import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:efashion_flutter/presentation/product/components/home/animated_indicator.dart';
