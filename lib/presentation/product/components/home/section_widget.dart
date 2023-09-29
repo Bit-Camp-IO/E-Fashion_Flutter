@@ -5,15 +5,15 @@ class SectionWidget extends StatelessWidget {
   const SectionWidget({
     super.key,
     required this.sectionTitle,
-    this.sectionButtonTitle,
+    this.sectionButtonTitle = 'Discover',
     this.onTextButtonTap,
-    this.enableTextButton = false,
+    this.sectionType = SectionType.normal,
   });
 
   final String sectionTitle;
-  final String? sectionButtonTitle;
+  final String sectionButtonTitle;
   final void Function()? onTextButtonTap;
-  final bool? enableTextButton;
+  final SectionType sectionType;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,11 +23,11 @@ class SectionWidget extends StatelessWidget {
         children: [
           Text(sectionTitle, style: Theme.of(context).textTheme.bodyMedium),
           Visibility(
-            visible: enableTextButton!,
+            visible: sectionType == SectionType.withTextButton,
             child: TextButton(
               onPressed: onTextButtonTap ?? (){},
               child: Text(
-                sectionButtonTitle ?? 'See All',
+                sectionButtonTitle,
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                 ),
@@ -38,4 +38,9 @@ class SectionWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+enum SectionType{
+  normal,
+  withTextButton;
 }

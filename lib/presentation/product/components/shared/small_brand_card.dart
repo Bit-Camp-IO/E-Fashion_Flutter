@@ -38,7 +38,7 @@ class SmallProductCard extends StatelessWidget {
             CachedNetworkImage(
               width: 150.w,
               height: 180.h,
-              imageUrl: productImage.startsWith('https') ?  productImage : 'https://fastly.picsum.photos/id/309/200/300.jpg?hmac=gmsts4-400Ihde9dfkfZtd2pQnbZorV4nBKlLOhbuMs',
+              imageUrl:productImage,
               fit: BoxFit.cover,
             ),
             Positioned(
@@ -70,8 +70,10 @@ class SmallProductCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              productName,
+                             productName.length > 13 ? '${productName.substring(0, 13)}..'
+                                  : productName,
                               overflow: TextOverflow.ellipsis,
+                              softWrap: true,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!

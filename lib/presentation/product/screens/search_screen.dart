@@ -1,36 +1,56 @@
+
+
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/injection_container.dart';
+import 'package:efashion_flutter/presentation/product/bloc/search_bloc/search_bloc.dart';
+import 'package:efashion_flutter/presentation/product/components/search/custom_search_field.dart';
+import 'package:efashion_flutter/presentation/product/components/search/filter/search_filter_sheet.dart';
+import 'package:efashion_flutter/presentation/product/components/search/search_grid_view_component.dart';
+import 'package:efashion_flutter/presentation/product/components/search/search_list_view_component.dart';
+import 'package:efashion_flutter/presentation/product/components/search/no_search_yet.dart';
 import 'package:efashion_flutter/presentation/shared/animations/slide_fade_animation_switcher.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
-import 'package:efashion_flutter/presentation/product/components/home/search/custom_type_ahead_field.dart';
-import 'package:efashion_flutter/presentation/product/components/home/search/search_grid_view_component.dart';
-import 'package:efashion_flutter/presentation/product/components/home/search/search_list_view_component.dart';
-import 'package:efashion_flutter/presentation/product/mock/product_mock.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 
 @RoutePage()
-class SearchScreen extends StatefulWidget {
+class SearchScreen extends StatefulWidget implements AutoRouteWrapper {
   const SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<SearchBloc>(),
+      child: this,
+    );
+  }
 }
+
 
 class _SearchScreenState extends State<SearchScreen> {
   late GlobalKey<FormState> _formKey;
-  List<Product> searchList = [];
-  int switchIndex = 0;
-
+  ValueNotifier switchIndex = ValueNotifier(0);
+  String searchQuery = '';
+  late String categories;
+  late String sizes;
+  late String minPrice;
+  late String maxPrice;
+  late SearchBloc searchBloc;
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
+    searchBloc = context.read<SearchBloc>();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Form(
         key: _formKey,
         child: Padding(
@@ -41,78 +61,61 @@ class _SearchScreenState extends State<SearchScreen> {
                 appBarTitle: 'Search',
                 appBarType: AppBarType.switcher,
                 onIndexChange: (currentIndex) {
-                  setState(() {
-                    switchIndex = currentIndex!;
-                  });
+                  switchIndex.value = currentIndex;
                 },
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16).r,
-                child: CustomTypeAheadField(
-                  suggestionCallback: (pattern) {
-                    return brandProducts
-                        .where((product) => product.productName
-                            .toLowerCase()
-                            .startsWith(pattern.toLowerCase()))
-                        .toList();
+                child: CustomSearchField(
+                  onFilterTap: () {
+                    showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      isScrollControlled: true,
+                      isDismissible: false,
+                      builder: (context) =>
+                          BlocProvider.value(
+                            value: searchBloc,
+                            child: SearchFilterSheet(
+                              searchQuery: searchQuery,
+                            ),
+                          ),
+                    );
                   },
                   onChanged: (value) {
-                    setState(
-                      () {
-                        searchList.clear();
-                        if (value.isNotEmpty) {
-                          searchList = brandProducts
-                              .where((product) => product.productName
-                                  .toLowerCase()
-                                  .startsWith(value.toLowerCase()))
-                              .toList();
-                        }
-                      },
-                    );
+                    searchQuery = value;
+                    debugPrint(value.toString());
+                    context
+                        .read<SearchBloc>()
+                        .add(SearchForProductsEvent(searchQuery: value));
                   },
                 ),
               ),
               Expanded(
-                child: SlideFadeAnimationSwitcher(
-                  child: Builder(
-                    builder: (context) {
-                      if (searchList.isEmpty) {
-                        return Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Iconsax.search_normal_1,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 80.sp,
-                              ),
-                              SizedBox(height: 16.h),
-                              Text(
-                                textAlign: TextAlign.center,
-                                'No results yet\n try to type something.',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium!
-                                    .copyWith(
-                                      color:
-                                          Theme.of(context).colorScheme.outline,
-                                    ),
-                              )
-                            ],
-                          ),
-                        );
-                      } else {
-                        return SlideFadeAnimationSwitcher(
-                            child: switchIndex == 1
-                                ? GridViewComponent(
-                                    products: searchList,
-                                  )
-                                : ListViewComponent(
-                                    products: searchList,
-                                  ));
-                      }
-                    },
-                  ),
+                child: BlocBuilder<SearchBloc, SearchState>(
+                  buildWhen: (previous, current) =>
+                  previous.searchProducts != current.searchProducts,
+                  builder: (context, state) {
+                    return SlideFadeAnimationSwitcher(
+                      child: Builder(
+                        builder: (context) {
+                          if (state.searchProducts.isEmpty) {
+                            return const NoSearchYet();
+                          } else {
+                            return ValueListenableBuilder(
+                              valueListenable: switchIndex,
+                              builder: (context, currentSwitchIndex, child) =>
+                                  SlideFadeAnimationSwitcher(
+                                    child: currentSwitchIndex == 0
+                                        ? const ListViewComponent()
+                                        : const GridViewComponent(),
+                                  ),
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
