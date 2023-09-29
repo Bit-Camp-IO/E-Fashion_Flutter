@@ -1,3 +1,4 @@
+import 'package:efashion_flutter/presentation/shared/widgets/dots_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,15 +10,15 @@ class PrimaryButton extends StatelessWidget {
     required this.onTap,
     this.width,
     this.height,
-    this.child,
+    this.isLoading = false,
   });
 
   final String buttonTitle;
-  final Widget? child;
   final Icon? buttonIcon;
   final double? width;
   final double? height;
   final void Function() onTap;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class PrimaryButton extends StatelessWidget {
             buttonIcon != null
                 ? const SizedBox(width: 10)
                 : const SizedBox.shrink(),
-            child ??
+            isLoading ?  const DotsLoadingIndicator() :
                 Text(
                   buttonTitle,
                   style: Theme.of(context)

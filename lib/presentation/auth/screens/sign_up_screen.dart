@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/core/router/app_router.dart';
-import 'package:efashion_flutter/core/util/strings_manager.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/snack_bar.dart';
+import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:efashion_flutter/presentation/auth/components/sign_up/privacy_and_policy.dart';
 import 'package:efashion_flutter/presentation/auth/cubits/signup/signup_cubit.dart';
 import 'package:efashion_flutter/injection_container.dart';
-import 'package:efashion_flutter/presentation/shared/widgets/dots_loading_indicator.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/auth/components/shared/auth_clipped_container.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_text_form_field.dart';
@@ -39,6 +39,8 @@ class _SignupScreenState extends State<SignupScreen> {
   late String _password;
   late String _confirmPassword;
   bool _isLoading = false;
+  bool isChecked = false;
+  ValueNotifier<bool> checkBoxError = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -57,6 +59,15 @@ class _SignupScreenState extends State<SignupScreen> {
             _isLoading = true;
           } else if (state is SignupSuccessState) {
             context.replaceRoute(const BottomNavBarRoute());
+            _isLoading = false;
+          } else if (state is SignupFailState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              customSnackBar(
+                customSnackBarType: CustomSnackBarType.error,
+                message: state.failMessage,
+                context: context,
+              ),
+            );
             _isLoading = false;
           } else {
             _isLoading = false;
@@ -166,7 +177,15 @@ class _SignupScreenState extends State<SignupScreen> {
                         }
                       },
                     ),
-                    const PrivacyAndPolicy(),
+                    ValueListenableBuilder(
+                      valueListenable: checkBoxError,
+                      builder: (context, value, child) => PrivacyAndPolicy(
+                        isChecked: (isChecked) {
+                          this.isChecked = isChecked;
+                        },
+                        isError: value,
+                      ),
+                    ),
                     SizedBox(
                       height: 8.h,
                     ),
@@ -176,19 +195,23 @@ class _SignupScreenState extends State<SignupScreen> {
                           width: 312.w,
                           height: 46.h,
                           onTap: () {
-                            if (_formKey.currentState!.validate()) {
+                            if (_formKey.currentState!.validate() && isChecked) {
                               _formKey.currentState!.save();
+                              checkBoxError.value = false;
                               context.read<SignupCubit>().signUp(
                                     fullName: _fullName,
                                     email: _email,
                                     password: _password,
                                     confirmPassword: _confirmPassword,
                                   );
+                            }else{
+                              debugPrint(isChecked.toString());
+                              _formKey.currentState!.validate();
+                              checkBoxError.value = true;
                             }
                           },
                           buttonTitle: StringsManager.signupTitle,
-                          child:
-                              _isLoading ? const DotsLoadingIndicator() : null,
+                          isLoading: _isLoading,
                         );
                       },
                     ),

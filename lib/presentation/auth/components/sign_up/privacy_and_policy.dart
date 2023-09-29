@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
 
 class PrivacyAndPolicy extends StatefulWidget {
-  const PrivacyAndPolicy({Key? key}) : super(key: key);
-
+  const PrivacyAndPolicy({super.key, this.isError = false, required this.isChecked});
+  final bool isError;
+  final void Function(bool isChecked) isChecked;
   @override
   State <PrivacyAndPolicy> createState() => _PrivacyAndPolicyState();
 }
 
 class _PrivacyAndPolicyState extends State<PrivacyAndPolicy> {
-  bool _isChecked = false;
+ ValueNotifier<bool> isChecked = ValueNotifier<bool>(false);
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Checkbox(
-          value: _isChecked,
-          onChanged: (newBool) {
-            setState(() {
-              _isChecked = newBool!;
-            });
-          },
+        ValueListenableBuilder(
+          valueListenable: isChecked,
+          builder: (context, value, child) => Checkbox(
+            value: value,
+            isError: widget.isError,
+            onChanged: (newBool) {
+                isChecked.value = newBool!;
+                widget.isChecked(newBool);
+            },
+          ),
         ),
         Center(
           child: Text.rich(

@@ -1,18 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
-import 'package:efashion_flutter/core/util/size_manager.dart';
+import 'package:efashion_flutter/shared/util/size_manager.dart';
 import 'package:efashion_flutter/presentation/auth/components/welcome/welcome_container_component.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/tokens_cubit/tokens_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:efashion_flutter/core/router/app_router.dart';
-import 'package:efashion_flutter/core/util/assets_manager.dart';
+import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

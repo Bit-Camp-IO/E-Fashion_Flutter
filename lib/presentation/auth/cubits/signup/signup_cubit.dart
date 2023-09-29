@@ -26,7 +26,7 @@ class SignupCubit extends Cubit<SignupState> {
       confirmPassword: confirmPassword,
     );
     response.fold(
-      (fail) => emit(const SignupFailState(failMessage: 'There was an error, try again later.')),
+      (fail) => emit(SignupFailState(failMessage: fail.message)),
       (success) => emit(
         SignupSuccessState(authTokens: success),
       ),

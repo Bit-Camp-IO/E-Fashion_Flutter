@@ -1,10 +1,10 @@
-import 'package:efashion_flutter/core/api/api_consumer.dart';
-import 'package:efashion_flutter/core/constants/api_constants.dart';
-import 'package:efashion_flutter/core/error/exception.dart';
+import 'package:efashion_flutter/shared/api/api_consumer.dart';
+import 'package:efashion_flutter/shared/constants/api_constants.dart';
+import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:efashion_flutter/components/authComponent/data/models/tokens_model.dart';
 import 'package:injectable/injectable.dart';
 
-abstract class AuthDataSource {
+abstract class AuthRemoteDataSource {
   Future<TokensModel> userLogin({
     required String email,
     required String password,
@@ -18,13 +18,16 @@ abstract class AuthDataSource {
   });
 
   Future<String> updateAccessToken({required String refreshToken});
+  Future<String> forgetPassword({required String email});
+  Future<void> verifyOtp({required String email, required String otpCode});
+  Future<String> resetPassword({required String email, required String otpCode, required newPassword});
 }
 
-@LazySingleton(as: AuthDataSource)
-class AuthDataSourceImpl extends AuthDataSource {
+@LazySingleton(as: AuthRemoteDataSource)
+class AuthDataSourceImpl extends AuthRemoteDataSource {
   final ApiConsumer _apiConsumer;
 
-  AuthDataSourceImpl(this._apiConsumer);
+  AuthDataSourceImpl(@Named(ApiConstants.mainConsumerName) this._apiConsumer);
 
   @override
   Future<TokensModel> userLogin({
@@ -41,7 +44,7 @@ class AuthDataSourceImpl extends AuthDataSource {
     if(response['status'] == 'success'){
       return TokensModel.fromJson(response);
     }else{
-      throw const ServerException('Check Your Email And Password');
+      throw const ServerException('Error! Wrong email or password.');
     }
   }
 
@@ -64,7 +67,7 @@ class AuthDataSourceImpl extends AuthDataSource {
     if(response['status'] == 'success'){
       return TokensModel.fromJson(response);
     }else{
-      throw const ServerException('Error: check your internet connection.');
+      throw const ServerException('Error! Invalid email address.');
     }
   }
   @override
@@ -76,6 +79,43 @@ class AuthDataSourceImpl extends AuthDataSource {
       return newAccessToken['data']['accessToken'];
     }else{
       throw TokensException(newAccessToken['error']['message']);
+    }
+  }
+
+  @override
+  Future<String> forgetPassword({required String email}) async{
+    final forgetPasswordRequest = await _apiConsumer.post(ApiConstants.forgetPasswordEndPoint, body: {
+      'email' : email,
+    });
+    if(forgetPasswordRequest['status'] == ApiCallStatus.success.value){
+      return "Success! OTP Code sent to your email.";
+    }else{
+      throw const NotFoundException("Error! check your email and try again.");
+    }
+  }
+
+  @override
+  Future<void> verifyOtp({required String email, required String otpCode}) async{
+    final verifyOtpRequest = await _apiConsumer.post(ApiConstants.verifyPasswordOtpEndPoint, body: {
+      'email' : email,
+      'otp': otpCode,
+    });
+    if(verifyOtpRequest['status'] == ApiCallStatus.error.value || verifyOtpRequest['data']['ok'] == false){
+      throw const NotFoundException("Error! Wrong OTP Code.");
+    }
+  }
+
+  @override
+  Future<String> resetPassword({required String email, required String otpCode, required newPassword}) async{
+    final resetPasswordRequest = await _apiConsumer.post(ApiConstants.resetPasswordEndPoint, body: {
+      'email' : email,
+      'newPassword': newPassword,
+      'otp': otpCode,
+    });
+    if(resetPasswordRequest['status'] == ApiCallStatus.success.value  && resetPasswordRequest['message'] == "OK"){
+      return "Password changed successfully! ";
+    }else{
+      throw const NotFoundException("Please choose a new password!");
     }
   }
 }
