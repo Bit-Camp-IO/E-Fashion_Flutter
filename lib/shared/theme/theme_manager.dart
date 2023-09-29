@@ -1,6 +1,6 @@
-import 'package:efashion_flutter/core/theme/color_scheme.dart';
-import 'package:efashion_flutter/core/util/assets_manager.dart';
-import 'package:efashion_flutter/core/util/colors_manager.dart';
+import 'package:efashion_flutter/shared/theme/color_scheme.dart';
+import 'package:efashion_flutter/shared/util/assets_manager.dart';
+import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -92,6 +92,7 @@ class ThemeManager {
         backgroundColor: Colors.black.withOpacity(0.8),
         selectedItemColor: ColorsManager.lightPrimaryColor,
         unselectedItemColor: Colors.white.withOpacity(0.6),
+
       ),
     );
   }

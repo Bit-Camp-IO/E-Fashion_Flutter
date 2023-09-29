@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
-class FilterButton extends StatelessWidget {
-  const FilterButton({super.key, this.isActive = false, required this.onTap});
+class CategoriesButton extends StatelessWidget {
+  const CategoriesButton({super.key, this.isActive = false, required this.onTap});
 
   final bool isActive;
   final void Function() onTap;

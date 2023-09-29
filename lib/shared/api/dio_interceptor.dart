@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:efashion_flutter/core/constants/api_constants.dart';
+import 'package:efashion_flutter/shared/constants/api_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 

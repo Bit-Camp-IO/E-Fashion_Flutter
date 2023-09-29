@@ -1,8 +1,8 @@
-import 'package:efashion_flutter/presentation/product/components/home/search/search_filter/filter_section.dart';
+import 'package:efashion_flutter/presentation/product/components/search/filter/filter_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class PriceSliderComponent extends StatelessWidget {
   const PriceSliderComponent({super.key, required this.values, required this.onChanged});
@@ -17,19 +17,14 @@ class PriceSliderComponent extends StatelessWidget {
         const FilterSection(title: 'Price'),
         SizedBox(height: 46.h),
         SfRangeSliderTheme(
-          data: SfRangeSliderThemeData(
-            tooltipTextStyle: Theme
-                .of(context)
-                .textTheme
-                .labelSmall!
-                .copyWith(
+          data: SfRangeSliderTheme.of(context)!.copyWith(
+            tooltipTextStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
               color: Colors.white,
             ),
-            tooltipBackgroundColor: Theme
-                .of(context)
-                .colorScheme
-                .primary,
+            tooltipBackgroundColor: Theme.of(context).colorScheme.primary,
+
             thumbRadius: 10,
+            activeDividerColor: Colors.transparent
           ),
           child: SfRangeSlider(
               values: values,
@@ -39,7 +34,7 @@ class PriceSliderComponent extends StatelessWidget {
               interval: 50,
               enableTooltip: true,
               shouldAlwaysShowTooltip: true,
-              tooltipShape: const SfPaddleTooltipShape(),
+              tooltipShape: const SfRectangularTooltipShape(),
               showDividers: true,
               onChanged: onChanged,
           ),

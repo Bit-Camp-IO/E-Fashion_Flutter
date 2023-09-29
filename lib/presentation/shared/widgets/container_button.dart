@@ -22,7 +22,6 @@ class ClippedContainerButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(12.0).r,
         width: width ?? 48.w,
         height: height ?? 48.h,
         decoration: BoxDecoration(

@@ -1,17 +1,17 @@
-import 'package:efashion_flutter/core/util/colors_manager.dart';
+import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomRatingBar extends StatelessWidget {
-  const CustomRatingBar({super.key, required this.onRatingUpdate});
+  const CustomRatingBar({super.key, required this.onRatingUpdate, required this.initialRating});
   final ValueChanged<double> onRatingUpdate;
-
+  final double initialRating;
 
   @override
   Widget build(BuildContext context) {
     return RatingBar(
-      initialRating: 0,
+      initialRating: initialRating,
       minRating: 0,
       direction: Axis.horizontal,
       itemCount: 5,

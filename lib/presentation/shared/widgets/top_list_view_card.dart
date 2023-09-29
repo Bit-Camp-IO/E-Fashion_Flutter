@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:efashion_flutter/core/util/assets_manager.dart';
+import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/card_bottom_skew_clipper.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/cart_icon_button.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/favorite_icon_button.dart';

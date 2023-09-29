@@ -1,4 +1,4 @@
-import 'package:efashion_flutter/core/util/size_manager.dart';
+import 'package:efashion_flutter/shared/util/size_manager.dart';
 import 'package:efashion_flutter/presentation/auth/components/shared/auth_container_clipper.dart';
 import 'package:flutter/material.dart';
 

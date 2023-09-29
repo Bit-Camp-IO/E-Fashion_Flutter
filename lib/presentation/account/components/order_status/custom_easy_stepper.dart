@@ -11,11 +11,6 @@ class CustomEasyStepper extends StatelessWidget {
   Widget build(BuildContext context) {
     return EasyStepper(
       activeStep: activeStep,
-      lineLength: 100,
-      lineSpace: 10,
-      lineType: LineType.normal,
-      defaultLineColor: Theme.of(context).colorScheme.outlineVariant,
-      finishedLineColor: Theme.of(context).colorScheme.outlineVariant,
       finishedStepBackgroundColor:
           Theme.of(context).colorScheme.onInverseSurface,
       activeStepTextColor: Colors.black87,
@@ -24,7 +19,14 @@ class CustomEasyStepper extends StatelessWidget {
       showLoadingAnimation: false,
       stepRadius: 20,
       showStepBorder: false,
-      lineThickness: 1,
+      lineStyle: LineStyle(
+        lineThickness: 1,
+        lineLength: 100,
+        lineSpace: 10,
+        lineType: LineType.normal,
+        defaultLineColor: Theme.of(context).colorScheme.outlineVariant,
+        finishedLineColor: Theme.of(context).colorScheme.outlineVariant,
+      ),
       steps: [
         EasyStep(
           customStep: _buildCustomStep(context: context, activeIndex: 0),

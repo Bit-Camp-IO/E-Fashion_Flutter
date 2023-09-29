@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/core/router/app_router.dart';
-import 'package:efashion_flutter/core/util/strings_manager.dart';
+import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -59,14 +59,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     if (_lastTapTime != null &&
                         timeNow.difference(_lastTapTime!) <= const Duration(milliseconds: 300)) {
                       switch (tabsRouter.activeIndex) {
-                        case 0:
-                          context.router.root.navigate(const HomeRoute());
-                        case 1:
-                          context.router.root.navigate(const CartRoute());
-                        case 2:
-                          context.router.root.navigate(const FavoriteRoute());
-                        case 3:
-                          context.router.root.navigate(const AccountRoute());
+                        case 0:context.router.root.navigate(const HomeRoute());
+                        case 1:context.router.root.navigate(const CartRoute());
+                        case 2:context.router.root.navigate(const FavoriteRoute());
+                        case 3:context.router.root.navigate(const AccountRoute());
                       }
                     } else {
                       tabsRouter.setActiveIndex(value);

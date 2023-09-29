@@ -1,22 +1,22 @@
-import 'package:efashion_flutter/core/constants/app_constants.dart';
-import 'package:efashion_flutter/core/util/assets_manager.dart';
-import 'package:efashion_flutter/core/util/strings_manager.dart';
+import 'package:efashion_flutter/shared/constants/app_constants.dart';
+import 'package:efashion_flutter/shared/util/assets_manager.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:efashion_flutter/presentation/product/components/home/titled_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class GendersFilter extends StatefulWidget {
-  const GendersFilter(
+class GendersCategories extends StatefulWidget {
+  const GendersCategories(
       {super.key, required this.width, required this.selectedGenders});
 
   final double width;
   final void Function(int genderId) selectedGenders;
 
   @override
-  State<GendersFilter> createState() => _GendersFilterState();
+  State<GendersCategories> createState() => _GendersCategoriesState();
 }
 
-class _GendersFilterState extends State<GendersFilter> {
+class _GendersCategoriesState extends State<GendersCategories> {
   List selectedGenders = [];
 
   _handelSelectedGender(int gender) {

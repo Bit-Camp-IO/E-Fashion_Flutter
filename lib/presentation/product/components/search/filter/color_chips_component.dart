@@ -1,4 +1,4 @@
-import 'package:efashion_flutter/presentation/product/components/home/search/search_filter/filter_section.dart';
+import 'package:efashion_flutter/presentation/product/components/search/filter/filter_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

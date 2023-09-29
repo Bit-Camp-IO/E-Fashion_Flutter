@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/core/router/app_router.dart';
+import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/home_bloc/home_bloc.dart';
@@ -35,14 +35,13 @@ class _BrandComponentState extends State<BrandComponent> {
                     SectionWidget(
                       key: ValueKey<String>(state.brands[index].id),
                       sectionTitle: state.brands[index].name,
-                      sectionButtonTitle: 'See All',
-                      enableTextButton: true,
+                      sectionType: SectionType.withTextButton,
                       onTextButtonTap: () {
                         context.pushRoute(
                           DiscoverProductsRoute(
                             brandId: state.brands[index].id,
                             discoverScreenType: DiscoverScreenType.brand,
-                            brandName: 'Discover ${state.brands[index].name}',
+                            brandName: state.brands[index].name,
                             categories: context.read<HomeBloc>().categories,
                           ),
                         );
@@ -52,8 +51,7 @@ class _BrandComponentState extends State<BrandComponent> {
                       height: 200.h,
                       child: ListView.builder(
                         key: ValueKey(state.brands[index].id),
-                        itemCount: state
-                            .brandsProducts[state.brands[index].id]!.length,
+                        itemCount: state.brandsProducts[state.brands[index].id]!.length,
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, itemIndex) {
@@ -73,11 +71,10 @@ class _BrandComponentState extends State<BrandComponent> {
                                     productName: productName,
                                     productPrice: productPrice,
                                     isFavorite:
-                                        state.favoriteList.contains(productId),
+                                        state.favoritesIds.contains(productId),
                                     isCartActive: true,
                                     onTap: () {
-                                      // context.pushRoute(DetailsRoute(
-                                      //     productId: brandProducts[index].productId));
+                                      context.pushRoute(ProductDetailsRoute(productId: productId));
                                     },
                                     onCartTap: () {
                                       showModalBottomSheet(
@@ -93,7 +90,7 @@ class _BrandComponentState extends State<BrandComponent> {
                                                   productPrice: state.productDetails.price.toInt(),
                                                   productColors: state.productDetails.colors,
                                                   productSizes: state.productDetails.sizes,
-                                                  productPieces: 10,
+                                                  productStock: state.productDetails.stock,
                                                 );
                                               },
                                             ),

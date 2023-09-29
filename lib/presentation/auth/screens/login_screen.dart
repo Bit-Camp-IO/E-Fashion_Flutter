@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/core/router/app_router.dart';
-import 'package:efashion_flutter/core/util/strings_manager.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/snack_bar.dart';
+import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:efashion_flutter/presentation/auth/cubits/login/login_cubit.dart';
 import 'package:efashion_flutter/injection_container.dart';
-import 'package:efashion_flutter/presentation/shared/widgets/dots_loading_indicator.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/auth/components/shared/auth_clipped_container.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_text_form_field.dart';
@@ -52,7 +52,16 @@ class _LoginScreenState extends State<LoginScreen> {
           } else if (state is LoginSuccessState) {
             context.replaceRoute(const BottomNavBarRoute());
             _isLoading = false;
-          } else {
+          } else if(state is LoginFailState){
+            ScaffoldMessenger.of(context).showSnackBar(
+              customSnackBar(
+                customSnackBarType: CustomSnackBarType.error,
+                message: state.failMessage,
+                context: context,
+              ),
+            );
+            _isLoading = false;
+          }else{
             _isLoading = false;
           }
         },
@@ -150,8 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                           },
                           buttonTitle: StringsManager.loginTitle,
-                          child:
-                              _isLoading ? const DotsLoadingIndicator() : null,
+                          isLoading: _isLoading
                         );
                       },
                     ),
@@ -169,10 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         TextButton(
                           child: Text(
                             StringsManager.signupTitle,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                           ),

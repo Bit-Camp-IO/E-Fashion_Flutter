@@ -1,23 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/io.dart';
-import 'package:efashion_flutter/core/api/api_consumer.dart';
-import 'package:efashion_flutter/core/api/api_status_code.dart';
-import 'package:efashion_flutter/core/api/dio_interceptor.dart';
-import 'package:efashion_flutter/core/api/dio_logger.dart';
-import 'package:efashion_flutter/core/constants/api_constants.dart';
-import 'package:efashion_flutter/core/error/exception.dart';
+import 'package:efashion_flutter/shared/api/api_consumer.dart';
+import 'package:efashion_flutter/shared/api/api_status_code.dart';
+import 'package:efashion_flutter/shared/api/dio_interceptor.dart';
+import 'package:efashion_flutter/shared/api/dio_logger.dart';
+import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:efashion_flutter/injection_container.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
-import 'package:injectable/injectable.dart';
 
-
-@LazySingleton(as: ApiConsumer)
 class DioApiConsumer extends ApiConsumer {
   final Dio dioClient;
-
-  DioApiConsumer({required this.dioClient}) {
+  final String baseUrl;
+  DioApiConsumer( {required this.dioClient, required this.baseUrl,}) {
     // Fix for dio handshake error
     (dioClient.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
       final dioClient = HttpClient();
@@ -27,7 +23,7 @@ class DioApiConsumer extends ApiConsumer {
     };
     // dio validation
     dioClient.options
-      ..baseUrl = ApiConstants.baseUrl
+      ..baseUrl = baseUrl
       ..responseType = ResponseType.plain
       ..followRedirects = false
       ..validateStatus = (status) {
@@ -44,7 +40,7 @@ class DioApiConsumer extends ApiConsumer {
   Future get(String endPointPath, {Map<String, dynamic>? body, Map<String, dynamic>? queryParameters, Map<String, dynamic>? headers, }) async {
     try {
       final Response response = await dioClient.get(endPointPath, queryParameters: queryParameters, options: Options(
-        headers: headers
+        headers: headers,
       ));
         return _handleResponseAsJson(response);
     } on DioException catch (error) {

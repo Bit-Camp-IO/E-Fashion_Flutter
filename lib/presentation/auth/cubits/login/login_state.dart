@@ -1,4 +1,4 @@
-part of '../../../../../presentation/auth/cubits/login/login_cubit.dart';
+part of 'login_cubit.dart';
 
 abstract class LoginState extends Equatable {
   const LoginState();

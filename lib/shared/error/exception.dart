@@ -15,38 +15,38 @@ class ServerException extends Equatable implements Exception {
 }
 
 class FetchDataException extends ServerException {
-  const FetchDataException([message]) : super("There was an error, try again later.");
+  const FetchDataException([message]) : super(message ?? "There was an error, try again later.");
 }
 
 class BadRequestException extends ServerException {
-  const BadRequestException([message]) : super("Bad Request");
+  const BadRequestException([message]) : super(message ?? "Bad Request");
 }
 
 class UnauthorizedException extends ServerException {
-  const UnauthorizedException([message]) : super("Unauthorized");
+  const UnauthorizedException([message]) : super(message ?? "Unauthorized");
 }
 
 class NotFoundException extends ServerException {
-  const NotFoundException([message]) : super("Requested Info Not Found");
+  const NotFoundException([message]) : super(message ?? "Requested Info Not Found");
 }
 
 class ConflictException extends ServerException {
-  const ConflictException([message]) : super("Conflict Occurred");
+  const ConflictException([message]) : super(message ?? "Conflict Occurred");
 }
 
 class InternalServerErrorException extends ServerException {
   const InternalServerErrorException([message])
-      : super("Internal Server Error");
+      : super(message ?? "Internal Server Error");
 }
 
 class NoInternetConnectionException extends ServerException {
   const NoInternetConnectionException([message])
-      : super("Please Check Your Internet Connection");
+      : super(message ?? "Please Check Your Internet Connection");
 }
 
 class LaunchUrlException extends ServerException {
   const LaunchUrlException([message])
-      : super("No Internet Connection");
+      : super(message ?? "No Internet Connection");
 }
 
 class CacheException extends Equatable implements Exception {

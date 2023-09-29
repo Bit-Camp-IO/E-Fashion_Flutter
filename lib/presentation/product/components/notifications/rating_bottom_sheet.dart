@@ -1,5 +1,5 @@
 import 'package:efashion_flutter/presentation/shared/widgets/secondary_button.dart';
-import 'package:efashion_flutter/presentation/product/components/home/notifications/animated_review_bar.dart';
+import 'package:efashion_flutter/presentation/product/components/notifications/animated_review_bar.dart';
 import 'package:efashion_flutter/presentation/product/components/shared/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,6 +36,7 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
             ),
             SizedBox(height: 22.h),
             CustomRatingBar(
+              initialRating: 0,
               onRatingUpdate: (value) {},
             ),
             SizedBox(height: 32.h),

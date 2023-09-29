@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:efashion_flutter/core/router/app_router.dart';
+import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/home_bloc/home_bloc.dart';
 import 'package:efashion_flutter/presentation/product/components/home/section_widget.dart';
@@ -9,18 +9,16 @@ import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favori
 import 'package:efashion_flutter/presentation/product/screens/discover_products_screen.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/cart_bottom_sheet.dart';
 import 'package:efashion_flutter/presentation/product/components/home/offers_card.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OffersCarouselComponent extends StatefulWidget {
-  const OffersCarouselComponent({
-    super.key,
-  });
+  const OffersCarouselComponent({super.key});
 
   @override
-  State<OffersCarouselComponent> createState() =>
-      _OffersCarouselComponentState();
+  State<OffersCarouselComponent> createState() => _OffersCarouselComponentState();
 }
 
 class _OffersCarouselComponentState extends State<OffersCarouselComponent> {
@@ -29,9 +27,8 @@ class _OffersCarouselComponentState extends State<OffersCarouselComponent> {
     return Column(
       children: [
         SectionWidget(
-          sectionTitle: 'Offers',
-          sectionButtonTitle: 'See All',
-          enableTextButton: true,
+          sectionTitle: StringsManager.offersSectionTitle,
+          sectionType: SectionType.withTextButton,
           onTextButtonTap: () {
             context.pushRoute(DiscoverProductsRoute(
               categories: context.read<HomeBloc>().categories,
@@ -58,7 +55,7 @@ class _OffersCarouselComponentState extends State<OffersCarouselComponent> {
                       productName: productName,
                       newPrice: newPrice,
                       oldPrice: oldPrice,
-                      isFavorite: state.favoriteList.contains(productId),
+                      isFavorite: state.favoritesIds.contains(productId),
                       onAddToCart: () {
                         showModalBottomSheet(
                           context: context,
@@ -73,7 +70,7 @@ class _OffersCarouselComponentState extends State<OffersCarouselComponent> {
                                     productPrice: state.productDetails.price.toInt(),
                                     productColors: state.productDetails.colors,
                                     productSizes: state.productDetails.sizes,
-                                    productPieces: 10,
+                                    productStock: state.productDetails.stock,
                                   );
                                 },
                               ),
@@ -85,7 +82,7 @@ class _OffersCarouselComponentState extends State<OffersCarouselComponent> {
                         context.read<FavoriteCubit>().addOrRemoveProductFromFavoriteListEvent(productId: productId);
                       },
                       onOfferTap: () {
-                        // context.pushRoute(DetailsRoute(productId: offersList[index].productId));
+                        context.pushRoute(ProductDetailsRoute(productId: productId));
                       },
                     );
                   },

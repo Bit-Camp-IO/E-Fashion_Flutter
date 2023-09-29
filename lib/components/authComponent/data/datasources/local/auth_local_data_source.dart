@@ -1,5 +1,5 @@
-import 'package:efashion_flutter/core/constants/app_constants.dart';
-import 'package:efashion_flutter/core/error/exception.dart';
+import 'package:efashion_flutter/shared/constants/app_constants.dart';
+import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:efashion_flutter/components/authComponent/data/models/tokens_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
@@ -33,7 +33,7 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource{
 
   @override
   String getAccessToken() {
-     final accessTokenExpireTime = authDatabase.get(AppConstants.authBox)!.accessTokenTimeStamp.add(const Duration(minutes: 15));
+     final accessTokenExpireTime = authDatabase.get(AppConstants.authBox)!.accessTokenTimeStamp.add(const Duration(minutes: 10));
      final currentTime = DateTime.now();
       if(currentTime.isBefore(accessTokenExpireTime)){
         return authDatabase.get(AppConstants.authBox)!.accessToken;
