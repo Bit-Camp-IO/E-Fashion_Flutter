@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:efashion_flutter/core/error/failure.dart';
-import 'package:efashion_flutter/core/util/enums.dart';
+import 'package:efashion_flutter/shared/error/failure.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/components/productComponent/data/models/brand_model.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/brand.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/category.dart';

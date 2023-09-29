@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/core/constants/app_constants.dart';
+import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:efashion_flutter/presentation/product/bloc/home_bloc/home_bloc.dart';
 import 'package:efashion_flutter/presentation/product/components/home/collection_carousel_component.dart';
-import 'package:efashion_flutter/presentation/product/components/home/filter_component.dart';
+import 'package:efashion_flutter/presentation/product/components/home/categories_component.dart';
 import 'package:efashion_flutter/presentation/product/components/home/offers_carousel_component.dart';
 import 'package:efashion_flutter/presentation/product/components/home/brand_component.dart';
 import 'package:efashion_flutter/injection_container.dart';
@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
         children: [
           const CollectionCarouselComponent(),
           SizedBox(height: 10.h),
-          const FilterComponent(),
+          const CategoriesComponent(),
           SizedBox(height: 20.h),
           const OffersCarouselComponent(),
           SizedBox(height: 20.h),

@@ -1,4 +1,4 @@
-part of '../../../../../presentation/product/bloc/home_bloc/home_bloc.dart';
+part of 'home_bloc.dart';
 
 abstract class HomeEvent extends Equatable {
   const HomeEvent();

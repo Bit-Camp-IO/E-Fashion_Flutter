@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:efashion_flutter/core/util/assets_manager.dart';
+import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/blurred_background_image.dart';
 import 'package:efashion_flutter/presentation/account/components/change_password/change_password_container_component.dart';
 import 'package:flutter/material.dart';

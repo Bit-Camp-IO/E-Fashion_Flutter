@@ -1,4 +1,4 @@
-part of '../../../../../presentation/product/bloc/home_bloc/home_bloc.dart';
+part of 'home_bloc.dart';
 
 class HomeState extends Equatable {
   final List<Category> categories;
@@ -58,8 +58,7 @@ class HomeState extends Equatable {
     return HomeState(
       categories: categories ?? this.categories,
       categoriesState: categoriesState ?? this.categoriesState,
-      categoriesFailureMessage:
-          categoriesFailureMessage ?? this.categoriesFailureMessage,
+      categoriesFailureMessage: categoriesFailureMessage ?? this.categoriesFailureMessage,
       productsOffers: productsOffers ?? this.productsOffers,
       offersState: offersState ?? this.offersState,
       offersFailureMessage: offersFailureMessage ?? this.offersFailureMessage,
@@ -67,8 +66,7 @@ class HomeState extends Equatable {
       brandsFailureMessage: brandsFailureMessage ?? this.brandsFailureMessage,
       brandsProducts: brandsProducts ?? this.brandsProducts,
       brandsProductsState: brandsProductsState ?? this.brandsProductsState,
-      brandsProductsFailureMessage:
-          brandsProductsFailureMessage ?? this.brandsProductsFailureMessage,
+      brandsProductsFailureMessage: brandsProductsFailureMessage ?? this.brandsProductsFailureMessage,
     );
   }
 }

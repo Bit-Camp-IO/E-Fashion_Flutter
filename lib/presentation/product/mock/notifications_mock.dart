@@ -1,4 +1,4 @@
-import 'package:efashion_flutter/core/util/enums.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 
 class AppNotification {
   final String? notificationPic;
