@@ -3,7 +3,6 @@ import 'package:efashion_flutter/app_routes_observer.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/theme/theme_manager.dart';
 import 'package:efashion_flutter/shared/util/size_manager.dart';
-import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/theme_cubit/theme_cubit.dart';
 import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/tokens_cubit/tokens_cubit.dart';
@@ -22,7 +21,6 @@ class EfashionApp extends StatelessWidget{
       providers: [
         BlocProvider(create: (context) => getIt<ThemeCubit>()..getAppTheme()),
         BlocProvider(create: (context) => getIt<TokensCubit>()..checkIfUserExist()),
-        BlocProvider(create: (context) => getIt<FavoriteCubit>()..getUserFavoriteIdListEvent()..getFavoriteProductsList())
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {

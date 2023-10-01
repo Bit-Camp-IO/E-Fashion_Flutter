@@ -5,8 +5,8 @@ class PlaceDataModel extends PlaceData {
 
   factory PlaceDataModel.fromJson(Map<String, dynamic> jsonData) {
     return PlaceDataModel(
-      latitude: jsonData['lat'],
-      longitude: jsonData['lng'],
+      latitude: jsonData['lat'] ?? jsonData['latitude'],
+      longitude: jsonData['lng'] ?? jsonData['longitude'],
     );
   }
 }

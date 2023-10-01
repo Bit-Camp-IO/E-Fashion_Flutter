@@ -5,7 +5,7 @@ import 'package:efashion_flutter/presentation/account/bloc/maps_bloc/map_bloc.da
 import 'package:efashion_flutter/presentation/account/components/map/map_search_field.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/theme_cubit/theme_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
-import 'package:efashion_flutter/shared/constants/app_constants.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/snack_bar.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +33,13 @@ class LocationScreen extends StatefulWidget implements AutoRouteWrapper {
 class _LocationScreenState extends State<LocationScreen> {
   late GoogleMapController _mapController;
   late final String _darkMapStyle;
-  static const CameraPosition _initialPosition = CameraPosition(
-    target: LatLng(31.205753, 29.924526),
-    zoom: 13.151926040649414
-  );
+
+  CameraPosition _setInitialPosition() {
+    return const CameraPosition(
+      target: LatLng(31.205753, 29.924526),
+      zoom: 13.151926040649414,
+    );
+  }
 
   Future _loadMapStyles() async {
     _darkMapStyle = await rootBundle.loadString(AssetsManager.mapDarkModeJson);
@@ -44,22 +47,23 @@ class _LocationScreenState extends State<LocationScreen> {
 
   @override
   void initState() {
+    context.read<MapBloc>().add(const GetUserLocationEvent());
     _loadMapStyles();
     super.initState();
   }
 
-  Future<void> _moveCamera(
-      {required double latitude, required double longitude}) async {
+  Future<void> _moveCamera({
+    required double latitude,
+    required double longitude,
+  }) async {
     final CameraPosition newPosition = CameraPosition(
-      target: LatLng(
-        latitude,
-        longitude,
-      ),
+      target: LatLng(latitude, longitude),
       tilt: 59.440717697143555,
-      zoom: 20
+      zoom: 20,
     );
-    await _mapController
-        .animateCamera(CameraUpdate.newCameraPosition(newPosition));
+    await _mapController.animateCamera(
+      CameraUpdate.newCameraPosition(newPosition),
+    );
   }
 
   @override
@@ -68,37 +72,59 @@ class _LocationScreenState extends State<LocationScreen> {
       resizeToAvoidBottomInset: false,
       body: BlocListener<MapBloc, MapState>(
         listener: (context, state) async {
-          if (state.placeDetailsState == BlocState.success) {
+          if (state.locationUpdateState == BlocState.failure || state.locationUpdateState == BlocState.success) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              customSnackBar(
+                customSnackBarType:
+                state.locationUpdateState == BlocState.failure
+                    ? CustomSnackBarType.error
+                    : CustomSnackBarType.success,
+                message: state.locationUpdateMessage,
+                context: context,
+              ),
+            );
+            context.popRoute();
+          } else if (state.placeDataState == BlocState.success &&
+              state.setMarkerState == BlocState.success) {
             await _moveCamera(
               latitude: state.placeData.latitude,
               longitude: state.placeData.longitude,
+            );
+          }else if (state.userLocationState == BlocState.success) {
+            Future.delayed(const Duration(milliseconds: 300));
+            await _moveCamera(
+              latitude: state.userLocation.latitude,
+              longitude: state.userLocation.longitude,
+            );
+          } else if (state.setMarkerState == BlocState.success) {
+            await _moveCamera(
+              latitude: state.markers.first.position.latitude,
+              longitude: state.markers.first.position.longitude,
             );
           }
         },
         child: Stack(
           children: [
             BlocBuilder<MapBloc, MapState>(
-              buildWhen: (previous, current) =>
-                  previous.markers != current.markers,
               builder: (context, state) {
                 return GoogleMap(
                   mapType: MapType.normal,
                   markers: state.markers,
                   compassEnabled: false,
                   zoomControlsEnabled: false,
-                  onTap: (argument) {
+                  onTap: (argument) async {
                     context.read<MapBloc>().add(
-                          AddPlaceMarkerEvent(
-                            marker: Marker(
-                                markerId: const MarkerId(AppConstants.userLocationMarkerId),
-                                position: argument),
-                          ),
-                        );
+                      AddPlaceMarkerEvent(
+                        latitude: argument.latitude,
+                        longitude: argument.longitude,
+                      ),
+                    );
                   },
-                  initialCameraPosition: _initialPosition,
+                  initialCameraPosition: _setInitialPosition(),
                   onMapCreated: (GoogleMapController controller) async {
                     _mapController = controller;
-                    if (context.read<ThemeCubit>().state.appTheme.isDarkTheme) {
+                    if (context.read<ThemeCubit>().state.appTheme
+                        .isDarkTheme) {
                       _mapController.setMapStyle(_darkMapStyle);
                     }
                   },
@@ -129,12 +155,16 @@ class _LocationScreenState extends State<LocationScreen> {
             Positioned(
               left: 0,
               right: 0,
-              bottom: 50.h,
+              bottom: 60.h,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
                 child: PrimaryButton(
                   buttonTitle: 'Confirm Location',
-                  onTap: () {},
+                  onTap: () {
+                    context
+                        .read<MapBloc>()
+                        .add(const UpdateUserLocationEvent());
+                  },
                 ),
               ),
             )

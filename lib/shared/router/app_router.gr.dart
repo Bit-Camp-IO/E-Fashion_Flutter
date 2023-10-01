@@ -57,7 +57,7 @@ abstract class _$AppRouter extends RootStackRouter {
     BottomNavBarRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const BottomNavBar(),
+        child: WrappedRoute(child: const BottomNavBar()),
       );
     },
     CartRoute.name: (routeData) {
@@ -203,9 +203,15 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     SearchRoute.name: (routeData) {
+      final args = routeData.argsAs<SearchRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const SearchScreen()),
+        child: WrappedRoute(
+            child: SearchScreen(
+          key: args.key,
+          categories: args.categories,
+          brands: args.brands,
+        )),
       );
     },
     SignupRoute.name: (routeData) {
@@ -743,16 +749,44 @@ class ResetPasswordRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [SearchScreen]
-class SearchRoute extends PageRouteInfo<void> {
-  const SearchRoute({List<PageRouteInfo>? children})
-      : super(
+class SearchRoute extends PageRouteInfo<SearchRouteArgs> {
+  SearchRoute({
+    Key? key,
+    required List<Category> categories,
+    required List<Brand> brands,
+    List<PageRouteInfo>? children,
+  }) : super(
           SearchRoute.name,
+          args: SearchRouteArgs(
+            key: key,
+            categories: categories,
+            brands: brands,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'SearchRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<SearchRouteArgs> page = PageInfo<SearchRouteArgs>(name);
+}
+
+class SearchRouteArgs {
+  const SearchRouteArgs({
+    this.key,
+    required this.categories,
+    required this.brands,
+  });
+
+  final Key? key;
+
+  final List<Category> categories;
+
+  final List<Brand> brands;
+
+  @override
+  String toString() {
+    return 'SearchRouteArgs{key: $key, categories: $categories, brands: $brands}';
+  }
 }
 
 /// generated route for

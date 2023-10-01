@@ -5,9 +5,13 @@ class MapState extends Equatable {
   final BlocState placesState;
   final String placesRetriveFailMessage;
   final PlaceData placeData;
-  final BlocState placeDetailsState;
+  final BlocState placeDataState;
   final Set<Marker> markers;
   final BlocState setMarkerState;
+  final PlaceData userLocation;
+  final BlocState userLocationState;
+  final String locationUpdateMessage;
+  final BlocState locationUpdateState;
 
   const MapState({
     this.places = const [],
@@ -17,9 +21,16 @@ class MapState extends Equatable {
       latitude: 0,
       longitude: 0,
     ),
-    this.placeDetailsState = BlocState.initial,
+    this.placeDataState = BlocState.initial,
     this.markers = const <Marker>{},
     this.setMarkerState = BlocState.initial,
+    this.userLocation = const PlaceData(
+      latitude: 0,
+      longitude: 0,
+    ),
+    this.userLocationState = BlocState.initial,
+    this.locationUpdateMessage = '',
+    this.locationUpdateState = BlocState.initial,
   });
 
   @override
@@ -28,28 +39,42 @@ class MapState extends Equatable {
         placesState,
         placesRetriveFailMessage,
         placeData,
-        placeDetailsState,
+        placeDataState,
         markers,
         setMarkerState,
+        userLocation,
+        userLocationState,
+        locationUpdateState,
+        locationUpdateMessage
       ];
 
-  MapState copyWith(
-      {List<Place>? places,
-      BlocState? placesState,
-      String? placesRetriveFailMessage,
-      PlaceData? placeData,
-      BlocState? placeDetailsState,
-      Set<Marker>? markers,
-      BlocState? setMarkerState}) {
+  MapState copyWith({
+    List<Place>? places,
+    BlocState? placesState,
+    String? placesRetriveFailMessage,
+    PlaceData? placeData,
+    BlocState? placeDataState,
+    Set<Marker>? markers,
+    BlocState? setMarkerState,
+    PlaceData? userLocation,
+    BlocState? userLocationState,
+    String? locationUpdateMessage,
+    BlocState? locationUpdateState,
+  }) {
     return MapState(
       places: places ?? this.places,
       placesState: placesState ?? this.placesState,
       placesRetriveFailMessage:
           placesRetriveFailMessage ?? this.placesRetriveFailMessage,
       placeData: placeData ?? this.placeData,
-      placeDetailsState: placeDetailsState ?? this.placeDetailsState,
+      placeDataState: placeDataState ?? this.placeDataState,
       markers: markers ?? this.markers,
       setMarkerState: setMarkerState ?? this.setMarkerState,
+      userLocation: userLocation ?? this.userLocation,
+      userLocationState: userLocationState ?? this.userLocationState,
+      locationUpdateMessage:
+          locationUpdateMessage ?? this.locationUpdateMessage,
+      locationUpdateState: locationUpdateState ?? this.locationUpdateState,
     );
   }
 }

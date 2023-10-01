@@ -6,4 +6,6 @@ import 'package:efashion_flutter/shared/error/failure.dart';
 abstract class MapRepository{
   Future<Either<Failure, List<Place>>> getPlacesSuggestions({required String searchQuery});
   Future<Either<Failure, PlaceData>> getPlaceLatitudeAndLongitude({required String placeId});
+  Future<Either<Failure, String>> updateUserLocationUseCase({required String userAccessToken, required double latitude, required double longitude});
+  Future<Either<Failure, PlaceData>> getUserLocationUseCase({required String userAccessToken});
 }

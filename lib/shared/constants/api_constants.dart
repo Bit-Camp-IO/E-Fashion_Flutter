@@ -34,9 +34,10 @@ final class ApiConstants {
   //! User EndPoints
   static const String userDataEndPoint = '/user/me';
 
-  //! Google Maps EndPoints
+  //! Maps EndPoints
   static const String mapPlaceAutoComplete = '/place/autocomplete/json';
   static const String mapPlaceDetails = '/place/details/json';
+  static const String addressEndPoint = '/user/address';
 }
 enum ApiCallStatus{
   success('success'),
