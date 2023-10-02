@@ -257,6 +257,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _formKey.currentState?.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    checkBoxError.dispose();
     super.dispose();
   }
 }

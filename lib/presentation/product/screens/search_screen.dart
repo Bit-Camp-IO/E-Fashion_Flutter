@@ -1,6 +1,6 @@
-
-
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/components/productComponent/domain/entities/brand.dart';
+import 'package:efashion_flutter/components/productComponent/domain/entities/category.dart';
 import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/product/bloc/search_bloc/search_bloc.dart';
 import 'package:efashion_flutter/presentation/product/components/search/custom_search_field.dart';
@@ -16,7 +16,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
 class SearchScreen extends StatefulWidget implements AutoRouteWrapper {
-  const SearchScreen({super.key});
+  const SearchScreen(
+      {super.key, required this.categories, required this.brands});
+
+  final List<Category> categories;
+  final List<Brand> brands;
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -30,7 +34,6 @@ class SearchScreen extends StatefulWidget implements AutoRouteWrapper {
   }
 }
 
-
 class _SearchScreenState extends State<SearchScreen> {
   late GlobalKey<FormState> _formKey;
   ValueNotifier switchIndex = ValueNotifier(0);
@@ -40,6 +43,7 @@ class _SearchScreenState extends State<SearchScreen> {
   late String minPrice;
   late String maxPrice;
   late SearchBloc searchBloc;
+
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
@@ -73,13 +77,13 @@ class _SearchScreenState extends State<SearchScreen> {
                       context: context,
                       isScrollControlled: true,
                       isDismissible: false,
-                      builder: (context) =>
-                          BlocProvider.value(
-                            value: searchBloc,
-                            child: SearchFilterSheet(
-                              searchQuery: searchQuery,
-                            ),
-                          ),
+                      builder: (context) => BlocProvider.value(
+                        value: searchBloc,
+                        child: SearchFilterSheet(
+                          brands: widget.brands,
+                          categories: widget.categories,
+                        ),
+                      ),
                     );
                   },
                   onChanged: (value) {
@@ -94,27 +98,21 @@ class _SearchScreenState extends State<SearchScreen> {
               Expanded(
                 child: BlocBuilder<SearchBloc, SearchState>(
                   buildWhen: (previous, current) =>
-                  previous.searchProducts != current.searchProducts,
+                      previous.searchProducts != current.searchProducts,
                   builder: (context, state) {
-                    return SlideFadeAnimationSwitcher(
-                      child: Builder(
-                        builder: (context) {
-                          if (state.searchProducts.isEmpty) {
-                            return const NoSearchYet();
-                          } else {
-                            return ValueListenableBuilder(
-                              valueListenable: switchIndex,
-                              builder: (context, currentSwitchIndex, child) =>
-                                  SlideFadeAnimationSwitcher(
-                                    child: currentSwitchIndex == 0
-                                        ? const ListViewComponent()
-                                        : const GridViewComponent(),
-                                  ),
-                            );
-                          }
-                        },
-                      ),
-                    );
+                    if (state.searchProducts.isEmpty) {
+                      return const NoSearchYet();
+                    } else {
+                      return ValueListenableBuilder(
+                        valueListenable: switchIndex,
+                        builder: (context, currentSwitchIndex, child) =>
+                            SlideFadeAnimationSwitcher(
+                          child: currentSwitchIndex == 0
+                              ? const ListViewComponent()
+                              : const GridViewComponent(),
+                        ),
+                      );
+                    }
                   },
                 ),
               ),
@@ -123,5 +121,11 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    _formKey.currentState?.dispose();
+    switchIndex.dispose();
+    super.dispose();
   }
 }

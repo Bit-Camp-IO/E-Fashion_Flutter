@@ -44,6 +44,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
   @override
   void dispose() {
     draggableScrollableController.dispose();
+    isSheetExpanded.dispose();
     super.dispose();
   }
 

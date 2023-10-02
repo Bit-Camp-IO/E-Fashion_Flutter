@@ -6,11 +6,13 @@ class SearchState extends Equatable {
   final BlocState searchState;
   final String searchFailMessage;
 
+  final BlocState loadMoreProductsState;
   const SearchState({
     this.searchProducts = const [],
     this.hasSearchProductsListReachedMax = false,
     this.searchState = BlocState.initial,
     this.searchFailMessage = '',
+    this.loadMoreProductsState = BlocState.initial
   });
 
   @override
@@ -19,6 +21,7 @@ class SearchState extends Equatable {
         hasSearchProductsListReachedMax,
         searchState,
         searchFailMessage,
+        loadMoreProductsState,
       ];
 
   SearchState copyWith({
@@ -26,6 +29,7 @@ class SearchState extends Equatable {
     bool? hasSearchProductsListReachedMax,
     BlocState? searchState,
     String? searchFailMessage,
+    BlocState? loadMoreProductsState,
   }) {
     return SearchState(
       searchProducts: searchProducts ?? this.searchProducts,
@@ -33,6 +37,7 @@ class SearchState extends Equatable {
           hasSearchProductsListReachedMax ?? this.hasSearchProductsListReachedMax,
       searchState: searchState ?? this.searchState,
       searchFailMessage: searchFailMessage ?? this.searchFailMessage,
+      loadMoreProductsState: loadMoreProductsState ?? this.loadMoreProductsState,
     );
   }
 }

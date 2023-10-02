@@ -22,5 +22,5 @@ abstract class ProductRepository{
   Future<Either<Failure, ReviewsAndRatings>> getProductReviewsAndRatings({required productId});
   Future<Either<Failure, Review>> addOrEditProductReview({required String userAccessToken, required String productId, required double rate, String? review});
   Future<Either<Failure, Review>> getUserProductReview({required String userAccessToken, required String productId});
-  Future<Either<Failure, List<Product>>> searchForProducts({required String searchQuery, required int pageNumber, String? categories, String? brands, int? gender});
+  Future<Either<Failure, List<Product>>> searchForProducts({required String searchQuery, required int pageNumber, String? categories, String? brands,int? minPrice, int? maxPrice});
 }

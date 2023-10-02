@@ -55,4 +55,9 @@ class _PrivacyAndPolicyState extends State<PrivacyAndPolicy> {
       ],
     );
   }
+  @override
+  void dispose() {
+    isChecked.dispose();
+    super.dispose();
+  }
 }

@@ -171,4 +171,9 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
       ),
     );
   }
+  @override
+  void dispose() {
+    _productPieces.dispose();
+    super.dispose();
+  }
 }

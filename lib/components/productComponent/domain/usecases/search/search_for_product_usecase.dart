@@ -5,11 +5,26 @@ import 'package:efashion_flutter/shared/error/failure.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class SearchForProductsUseCase{
+class SearchForProductsUseCase {
   final ProductRepository _productRepository;
+
   const SearchForProductsUseCase(this._productRepository);
 
-  Future<Either<Failure, List<Product>>> call({required String searchQuery, required int pageNumber, String? categories, String? brands, int? gender}) async{
-    return await _productRepository.searchForProducts(searchQuery: searchQuery, pageNumber: pageNumber, categories: categories, brands: brands, gender: gender);
+  Future<Either<Failure, List<Product>>> call({
+    required String searchQuery,
+    required int pageNumber,
+    String? categories,
+    String? brands,
+    int? minPrice,
+    int? maxPrice,
+  }) async {
+    return await _productRepository.searchForProducts(
+      searchQuery: searchQuery,
+      pageNumber: pageNumber,
+      categories: categories,
+      brands: brands,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+    );
   }
 }

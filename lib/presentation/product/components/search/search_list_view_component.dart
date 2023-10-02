@@ -28,6 +28,15 @@ void _onScroll() {
     searchBloc.add(const LoadMoreSearchProductEvent());
   }
 }
+
+  void _scrollBackUp() {
+    _scrollController.animateTo(
+      0.0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+
   @override
   void initState() {
     _scrollController = ScrollController()..addListener(_onScroll);
@@ -36,7 +45,12 @@ void _onScroll() {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchBloc, SearchState>(
+    return BlocConsumer<SearchBloc, SearchState>(
+      listener: (context, state) {
+        if(state.searchState == BlocState.loading){
+          _scrollBackUp();
+        }
+      },
       buildWhen: (previous, current) =>
           previous.searchProducts != current.searchProducts,
       builder: (context, state) {

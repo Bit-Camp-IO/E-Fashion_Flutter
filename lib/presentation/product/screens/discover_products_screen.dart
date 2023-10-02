@@ -94,6 +94,13 @@ class _DiscoverProductsScreenState extends State<DiscoverProductsScreen> {
       ),
     );
   }
+  @override
+  void dispose() {
+    switchIndex.dispose();
+    listViewController.dispose();
+    gridViewController.dispose();
+    super.dispose();
+  }
 }
 
 enum DiscoverScreenType {

@@ -15,146 +15,215 @@ import 'package:efashion_flutter/components/productComponent/domain/repositories
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: ProductRepository)
-class ProductRepositoryImpl extends ProductRepository{
+class ProductRepositoryImpl extends ProductRepository {
   final ProductRemoteDataSource _productRemoteDataSource;
+
   const ProductRepositoryImpl(this._productRemoteDataSource);
 
   @override
-  Future<Either<Failure, List<CategoryModel>>> getCategories({required int genderId}) async{
-    try{
-      final List<CategoryModel> categoriesList = await _productRemoteDataSource.getCategories(genderId: genderId);
+  Future<Either<Failure, List<CategoryModel>>> getCategories(
+      {required int genderId}) async {
+    try {
+      final List<CategoryModel> categoriesList =
+          await _productRemoteDataSource.getCategories(genderId: genderId);
       return right(categoriesList);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, List<ProductModel>>> getProductsOffers({String? categories, int? pageNumber}) async{
-    try{
-      final List<ProductModel> productList = await _productRemoteDataSource.getProductsOffers(categories: categories);
+  Future<Either<Failure, List<ProductModel>>> getProductsOffers(
+      {String? categories, int? pageNumber}) async {
+    try {
+      final List<ProductModel> productList = await _productRemoteDataSource
+          .getProductsOffers(categories: categories);
       return right(productList);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, List<BrandModel>>> getBrands() async{
-    try{
-      final List<BrandModel> brandsList = await _productRemoteDataSource.getBrands();
+  Future<Either<Failure, List<BrandModel>>> getBrands() async {
+    try {
+      final List<BrandModel> brandsList =
+          await _productRemoteDataSource.getBrands();
       return right(brandsList);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, Map<String, List<ProductModel>>>> getAllBrandsProducts({required List<Brand> brandsList, String? categories}) async{
-    try{
-      final Map<String, List<ProductModel>> brandsProducts = await _productRemoteDataSource.getAllBrandsProducts(brands: brandsList, categories: categories);
+  Future<Either<Failure, Map<String, List<ProductModel>>>> getAllBrandsProducts(
+      {required List<Brand> brandsList, String? categories}) async {
+    try {
+      final Map<String, List<ProductModel>> brandsProducts =
+          await _productRemoteDataSource.getAllBrandsProducts(
+              brands: brandsList, categories: categories);
       return right(brandsProducts);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, ProductDetails>> getProductDetails({required String productId}) async{
-    try{
-      final ProductDetailsModel allBrandsProducts = await _productRemoteDataSource.getProductDetails(productId: productId);
+  Future<Either<Failure, ProductDetails>> getProductDetails(
+      {required String productId}) async {
+    try {
+      final ProductDetailsModel allBrandsProducts =
+          await _productRemoteDataSource.getProductDetails(
+              productId: productId);
       return right(allBrandsProducts);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, Set<String>>> getUserFavoriteProductIds({required String userAccessToken}) async{
-    try{
-      final Set<String> favoriteSet = await _productRemoteDataSource.getUserFavoriteProductsIds(userAccessToken: userAccessToken);
+  Future<Either<Failure, Set<String>>> getUserFavoriteProductIds(
+      {required String userAccessToken}) async {
+    try {
+      final Set<String> favoriteSet = await _productRemoteDataSource
+          .getUserFavoriteProductsIds(userAccessToken: userAccessToken);
       return right(favoriteSet);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, Set<String>>> addProductToFavoriteList({required String productId, required String userAccessToken}) async{
-    try{
-      final Set<String> favoriteList = await _productRemoteDataSource.addProductToFavoriteList(productId: productId, userAccessToken: userAccessToken);
+  Future<Either<Failure, Set<String>>> addProductToFavoriteList({
+    required String productId,
+    required String userAccessToken,
+  }) async {
+    try {
+      final Set<String> favoriteList = await _productRemoteDataSource.addProductToFavoriteList(
+        productId: productId,
+        userAccessToken: userAccessToken,
+      );
       return right(favoriteList);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, String>> removeProductFromFavoriteList({required String productId, required String userAccessToken}) async {
-    try{
-      final String removedProductId = await _productRemoteDataSource.removeProductFromFavoriteList(productId: productId, userAccessToken: userAccessToken);
+  Future<Either<Failure, String>> removeProductFromFavoriteList({
+    required String productId,
+    required String userAccessToken,
+  }) async {
+    try {
+      final String removedProductId = await _productRemoteDataSource.removeProductFromFavoriteList(
+        productId: productId,
+        userAccessToken: userAccessToken,
+      );
       return right(removedProductId);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, List<ProductModel>>> getBrandProducts({required String brandId, required int pageNumber, required String? categories}) async{
-    try{
-      final List<ProductModel> brandsProducts = await _productRemoteDataSource.getBrandProducts(brandId: brandId, pageNumber: pageNumber, categories: categories);
+  Future<Either<Failure, List<ProductModel>>> getBrandProducts({
+    required String brandId,
+    required int pageNumber,
+    required String? categories,
+  }) async {
+    try {
+      final List<ProductModel> brandsProducts = await _productRemoteDataSource.getBrandProducts(
+        brandId: brandId,
+        pageNumber: pageNumber,
+        categories: categories,
+      );
       return right(brandsProducts);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, List<ProductDetailsModel>>> getFavoriteProducts({required Set<String> favoriteIds}) async{
-    try{
-      final List<ProductDetailsModel> brandsProducts = await _productRemoteDataSource.getFavoriteProducts(favoriteIds: favoriteIds);
+  Future<Either<Failure, List<ProductDetailsModel>>> getFavoriteProducts(
+      {required Set<String> favoriteIds}) async {
+    try {
+      final List<ProductDetailsModel> brandsProducts = await _productRemoteDataSource.getFavoriteProducts(
+              favoriteIds: favoriteIds,
+      );
       return right(brandsProducts);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, ReviewsAndRatings>> getProductReviewsAndRatings({required productId}) async{
-    try{
-      final ReviewsAndRatings reviewsAndRatings = await _productRemoteDataSource.getProductReviewsAndRatings(productId: productId);
+  Future<Either<Failure, ReviewsAndRatings>> getProductReviewsAndRatings(
+      {required productId}) async {
+    try {
+      final ReviewsAndRatings reviewsAndRatings = await _productRemoteDataSource
+          .getProductReviewsAndRatings(productId: productId);
       return right(reviewsAndRatings);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, ReviewModel>> addOrEditProductReview({required String userAccessToken, required String productId, required double rate, String? review}) async{
-    try{
-      final ReviewModel productReview = await _productRemoteDataSource.addOrEditProductReview(userAccessToken: userAccessToken, productId: productId, rate: rate, review: review);
+  Future<Either<Failure, ReviewModel>> addOrEditProductReview({
+    required String userAccessToken,
+    required String productId,
+    required double rate,
+    String? review,
+  }) async {
+    try {
+      final ReviewModel productReview = await _productRemoteDataSource.addOrEditProductReview(
+        userAccessToken: userAccessToken,
+        productId: productId,
+        rate: rate,
+        review: review,
+      );
       return right(productReview);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, ReviewModel>> getUserProductReview({required String userAccessToken, required String productId}) async{
-    try{
-      final ReviewModel review = await _productRemoteDataSource.getUserProductReview(userAccessToken: userAccessToken, productId: productId);
+  Future<Either<Failure, ReviewModel>> getUserProductReview({
+    required String userAccessToken,
+    required String productId,
+  }) async {
+    try {
+      final ReviewModel review = await _productRemoteDataSource.getUserProductReview(
+        userAccessToken: userAccessToken,
+        productId: productId,
+      );
       return right(review);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, List<Product>>> searchForProducts({required String searchQuery, required int pageNumber, String? categories, String? brands, int? gender}) async{
-    try{
-      final List<ProductModel> searchList = await _productRemoteDataSource.searchForProducts(searchQuery: searchQuery, pageNumber: pageNumber, gender: gender, brands: brands, categories: categories);
+  Future<Either<Failure, List<Product>>> searchForProducts({
+    required String searchQuery,
+    required int pageNumber,
+    String? categories,
+    String? brands,
+    int? minPrice,
+    int? maxPrice,
+  }) async {
+    try {
+      final List<ProductModel> searchList = await _productRemoteDataSource.searchForProducts(
+        searchQuery: searchQuery,
+        pageNumber: pageNumber,
+        categories: categories,
+        brands: brands,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+      );
       return right(searchList);
-    }on ServerException catch(exception){
+    } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
     }
   }

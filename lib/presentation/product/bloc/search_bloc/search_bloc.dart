@@ -17,8 +17,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   String searchQuery = '';
   int searchPageNumber = 1;
   String? brands;
-  int? genders;
   String? categories;
+  int? minPrice;
+  int? maxPrice;
+
   SearchBloc(this._searchForProductsUseCase) : super(const SearchState()) {
     on<SearchForProductsEvent>(
       _searchForProductsEvent,
@@ -27,24 +29,64 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           .distinct()
           .switchMap(mapper),
     );
+    on<FilterSearchProductsEvent>(_filterSearchProducts, transformer: (events, mapper) => events
+        .distinct()
+        .switchMap(mapper),);
     on<LoadMoreSearchProductEvent>(_loadMoreProducts, transformer: droppable());
   }
 
   Future<void> _searchForProductsEvent(
       SearchForProductsEvent event, Emitter<SearchState> emit) async {
-    emit(state.copyWith(searchState: BlocState.loading));
-    if (event.searchQuery != searchQuery || event.genders != genders || event.categories != categories) {
+    if (event.searchQuery.isNotEmpty && event.searchQuery != searchQuery ) {
+      emit(state.copyWith(searchState: BlocState.loading));
       searchQuery = event.searchQuery;
-      brands = event.brands;
-      genders = event.genders;
-      categories = event.categories;
       searchPageNumber = 1;
       final response = await _searchForProductsUseCase(
         pageNumber: searchPageNumber,
-        searchQuery: event.searchQuery,
-        brands: event.brands,
-        gender: event.genders,
-        categories: event.categories,
+        searchQuery: searchQuery,
+        brands: brands,
+        categories: categories,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+      );
+      response.fold(
+        (failure) => emit(
+          state.copyWith(
+            searchState: BlocState.failure,
+            searchFailMessage: failure.message,
+          ),
+        ),
+        (searchProducts) {
+          searchPageNumber++;
+          emit(
+            state.copyWith(
+              hasSearchProductsListReachedMax:
+                  searchProducts.length < 20 ? true : false,
+              searchProducts: searchProducts,
+              searchState: BlocState.success,
+            ),
+          );
+        },
+      );
+    }
+  }
+
+  Future<void> _filterSearchProducts(
+      FilterSearchProductsEvent event, Emitter<SearchState> emit) async {
+    categories = event.categories;
+    brands = event.brands;
+    minPrice = event.minPrice;
+    maxPrice = event.maxPrice;
+    searchPageNumber = 1;
+    if (searchQuery.isNotEmpty) {
+      emit(state.copyWith(searchState: BlocState.loading));
+      final response = await _searchForProductsUseCase(
+        pageNumber: searchPageNumber,
+        searchQuery: searchQuery,
+        brands: brands,
+        categories: categories,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
       );
       response.fold(
         (failure) => emit(
@@ -70,19 +112,20 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   Future<void> _loadMoreProducts(
       LoadMoreSearchProductEvent event, Emitter<SearchState> emit) async {
-    emit(state.copyWith(searchState: BlocState.loading));
+    emit(state.copyWith(loadMoreProductsState: BlocState.loading));
     if (!state.hasSearchProductsListReachedMax) {
       final response = await _searchForProductsUseCase(
         pageNumber: searchPageNumber,
         searchQuery: searchQuery,
         brands: brands,
-        gender: genders,
         categories: categories,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
       );
       response.fold(
         (failure) => emit(
           state.copyWith(
-            searchState: BlocState.failure,
+            loadMoreProductsState: BlocState.failure,
             searchFailMessage: failure.message,
           ),
         ),
@@ -90,8 +133,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           if (searchProducts.isNotEmpty) {
             emit(
               state.copyWith(
-                searchProducts: List.of(state.searchProducts)..addAll(searchProducts),
-                searchState: BlocState.success,
+                searchProducts: List.of(state.searchProducts)
+                  ..addAll(searchProducts),
+                loadMoreProductsState: BlocState.success,
               ),
             );
             searchPageNumber++;
@@ -99,7 +143,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             emit(
               state.copyWith(
                 hasSearchProductsListReachedMax: true,
-                searchState: BlocState.success,
+                loadMoreProductsState: BlocState.success,
               ),
             );
           }

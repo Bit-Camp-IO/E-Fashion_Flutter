@@ -15,7 +15,8 @@ import 'package:injectable/injectable.dart';
 class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   final ApiConsumer _apiConsumer;
 
-  ProductRemoteDataSourceImpl(@Named(ApiConstants.mainConsumerName) this._apiConsumer);
+  ProductRemoteDataSourceImpl(
+      @Named(ApiConstants.mainConsumerName) this._apiConsumer);
 
   @override
   Future<List<CategoryModel>> getCategories({required int genderId}) async {
@@ -198,15 +199,16 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
     required String? review,
   }) async {
     final response = await _apiConsumer
-        .post(ApiConstants.productReviewsEndPoint(productId: productId), body:
-    review != null ? {
-      'rate': rate,
-      'comment': review,
-    } : {
-      'rate': rate,
-    }, headers: {
-      'Authorization': 'Bearer $userAccessToken'
-    });
+        .post(ApiConstants.productReviewsEndPoint(productId: productId),
+            body: review != null
+                ? {
+                    'rate': rate,
+                    'comment': review,
+                  }
+                : {
+                    'rate': rate,
+                  },
+            headers: {'Authorization': 'Bearer $userAccessToken'});
     if (response['status'] == ApiCallStatus.success.value) {
       return ReviewModel.fromJson(response['data']);
     } else {
@@ -228,20 +230,24 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   }
 
   @override
-  Future<List<ProductModel>> searchForProducts(
-      {required String searchQuery,
-      required int pageNumber,
-      String? categories,
-      String? brands,
-      int? gender}) async {
+  Future<List<ProductModel>> searchForProducts({
+    required String searchQuery,
+    required int pageNumber,
+    String? categories,
+    String? brands,
+    int? minPrice,
+    int? maxPrice,
+  }) async {
+
     final Map<String, dynamic> response = await _apiConsumer.get(
       ApiConstants.productsEndPoint,
       queryParameters: {
         'page': pageNumber,
         'search': searchQuery,
+        'min-price': minPrice,
+        'max-price': maxPrice,
         'categories': categories,
         'brands': brands,
-        'gender': gender,
       },
     );
     List<ProductModel> searchList = List.from(

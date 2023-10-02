@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/core/util/assets_manager.dart';
+import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/presentation/account/components/edit_profile/edit_profile_container_component.dart';
 import 'package:efashion_flutter/presentation/account/components/edit_profile/profile_picture_edit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/blurred_background_image.dart';

@@ -6,6 +6,7 @@ import 'package:efashion_flutter/presentation/product/bloc/search_bloc/search_bl
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/cart_bottom_sheet.dart';
 import 'package:efashion_flutter/presentation/product/components/shared/small_brand_card.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,6 +28,14 @@ class _GridViewComponentState extends State<GridViewComponent> {
       searchBloc.add(const LoadMoreSearchProductEvent());
     }
   }
+
+  void _scrollBackUp() {
+    _scrollController.animateTo(
+      0.0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
   @override
   void initState() {
     _scrollController = ScrollController()..addListener(_onScroll);
@@ -35,7 +44,12 @@ class _GridViewComponentState extends State<GridViewComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchBloc, SearchState>(
+    return BlocConsumer<SearchBloc, SearchState>(
+      listener: (context, state) {
+        if(state.searchState == BlocState.loading){
+          _scrollBackUp();
+        }
+      },
       buildWhen: (previous, current) => previous.searchProducts != current.searchProducts,
       builder: (context, state) {
         return GridView.builder(

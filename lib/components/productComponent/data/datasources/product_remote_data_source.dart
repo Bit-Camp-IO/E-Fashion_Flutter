@@ -67,6 +67,7 @@ abstract class ProductRemoteDataSource {
     required int pageNumber,
     String? categories,
     String? brands,
-    int? gender,
+    int? minPrice,
+    int? maxPrice,
   });
 }
