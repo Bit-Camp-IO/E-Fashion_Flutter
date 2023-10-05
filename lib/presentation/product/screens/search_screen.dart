@@ -10,6 +10,7 @@ import 'package:efashion_flutter/presentation/product/components/search/search_l
 import 'package:efashion_flutter/presentation/product/components/search/no_search_yet.dart';
 import 'package:efashion_flutter/presentation/shared/animations/slide_fade_animation_switcher.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,9 +35,10 @@ class SearchScreen extends StatefulWidget implements AutoRouteWrapper {
   }
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMixin{
   late GlobalKey<FormState> _formKey;
   ValueNotifier switchIndex = ValueNotifier(0);
+
   String searchQuery = '';
   late String categories;
   late String sizes;
@@ -48,7 +50,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     _formKey = GlobalKey<FormState>();
     searchBloc = context.read<SearchBloc>();
-    super.initState();
+      super.initState();
   }
 
   @override
@@ -62,7 +64,7 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Column(
             children: [
               CustomAppBar(
-                appBarTitle: 'Search',
+                appBarTitle: StringsManager.searchScreenTitle,
                 appBarType: AppBarType.switcher,
                 onIndexChange: (currentIndex) {
                   switchIndex.value = currentIndex;
@@ -73,6 +75,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: CustomSearchField(
                   onFilterTap: () {
                     showModalBottomSheet(
+                      elevation: 0,
                       backgroundColor: Colors.transparent,
                       context: context,
                       isScrollControlled: true,

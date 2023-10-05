@@ -173,4 +173,9 @@ class _LocationScreenState extends State<LocationScreen> {
       ),
     );
   }
+  @override
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
+  }
 }

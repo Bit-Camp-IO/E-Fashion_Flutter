@@ -1,6 +1,7 @@
 import 'package:efashion_flutter/components/productComponent/domain/entities/category.dart';
 import 'package:efashion_flutter/presentation/product/bloc/search_bloc/search_bloc.dart';
 import 'package:efashion_flutter/presentation/product/components/search/filter/filter_section.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,7 +39,7 @@ class _CategoryChipsComponentState extends State<CategoryChipsComponent> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const FilterSection(title: 'Categories'),
+        const FilterSection(title: StringsManager.categoriesFilterTitle),
         Align(
           alignment: Alignment.topLeft,
           child: Wrap(

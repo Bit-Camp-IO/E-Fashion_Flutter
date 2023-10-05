@@ -123,4 +123,9 @@ class _MapSearchFieldState extends State<MapSearchField> {
       ),
     );
   }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 }

@@ -167,4 +167,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       return Iconsax.eye_slash;
     }
   }
+  @override
+  void dispose() {
+    widget.controller?.dispose();
+    super.dispose();
+  }
 }

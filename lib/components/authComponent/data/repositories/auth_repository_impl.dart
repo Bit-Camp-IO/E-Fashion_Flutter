@@ -73,10 +73,14 @@ class AuthRepositoryImpl extends AuthRepository {
       if(accessToken.isNotEmpty){
         return right(accessToken);
       }else {
-        final refreshToken = await _authLocalDataSource.getRefreshToken();
-        final newAccessToken = await _authRemoteDataSource.updateAccessToken(refreshToken: refreshToken);
-        await _authLocalDataSource.updateAccessToken(accessToken: newAccessToken);
-        return right(newAccessToken);
+        try{
+          final refreshToken = await _authLocalDataSource.getRefreshToken();
+          final newAccessToken = await _authRemoteDataSource.updateAccessToken(refreshToken: refreshToken);
+          await _authLocalDataSource.updateAccessToken(accessToken: newAccessToken);
+          return right(newAccessToken);
+        }on ServerException catch(exception){
+          return left(Failure(exception.message!));
+        }
       }
     }on TokensException catch(exception){
       return left(Failure(exception.message!));

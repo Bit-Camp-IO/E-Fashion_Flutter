@@ -281,14 +281,14 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i40.GetBrandProductsUseCase>(),
           gh<_i48.GetProductsOffersUseCase>(),
         ));
-    gh.singleton<_i61.FavoriteCubit>(_i61.FavoriteCubit(
-      gh<_i14.GetAccessTokenUseCase>(),
-      gh<_i50.GetUserFavoriteProductsIdsUseCase>(),
-      gh<_i35.AddProductToFavoriteListUseCase>(),
-      gh<_i22.RemoveProductFromFavoriteListUseCase>(),
-      gh<_i46.GetProductDetailsUseCase>(),
-      gh<_i43.GetFavoriteProductsUseCase>(),
-    ));
+    gh.factory<_i61.FavoriteCubit>(() => _i61.FavoriteCubit(
+          gh<_i14.GetAccessTokenUseCase>(),
+          gh<_i50.GetUserFavoriteProductsIdsUseCase>(),
+          gh<_i35.AddProductToFavoriteListUseCase>(),
+          gh<_i22.RemoveProductFromFavoriteListUseCase>(),
+          gh<_i46.GetProductDetailsUseCase>(),
+          gh<_i43.GetFavoriteProductsUseCase>(),
+        ));
     return this;
   }
 }

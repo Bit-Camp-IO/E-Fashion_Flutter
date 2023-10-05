@@ -1,5 +1,4 @@
 abstract class ApiConsumer {
-
   Future<dynamic> get(
     String endPointPath, {
     Map<String, dynamic>? queryParameters,
@@ -14,6 +13,13 @@ abstract class ApiConsumer {
   });
 
   Future<dynamic> put(
+    String endPointPath, {
+    Map<String, dynamic>? body,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? queryParameters,
+  });
+
+  Future<dynamic> patch(
     String endPointPath, {
     Map<String, dynamic>? body,
     Map<String, dynamic>? headers,

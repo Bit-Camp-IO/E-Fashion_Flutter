@@ -1,12 +1,12 @@
 final class ApiConstants {
   //! Core
-  static const String baseUrl = 'https://e-fashionbackend-production.up.railway.app/api';
+  // static const String baseUrl = 'https://e-fashionbackend-production.up.railway.app/api';
+  static const String baseUrl = 'http://192.168.1.20:8080/api';
   static const String mapsBaseUrl = 'https://maps.googleapis.com/maps/api';
   static const String mainConsumerName = 'mainApiConsumer';
   static const String mapsConsumerName = 'mapsApiConsumer';
   static const String headerContentType = 'Content-Type';
   static const String headerContentTypeValue = 'application/json';
-  static const String googleMapsKey = 'AIzaSyCelOnypwIGXwBeeuXKoxO4fpBbZNxowWI';
 
   //! Auth EndPoints
   static const String authLoginEndPoint = '/auth/login';

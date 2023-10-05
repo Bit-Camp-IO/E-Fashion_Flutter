@@ -43,6 +43,13 @@ class StringsManager {
   static String reviewsCount(int reviewsCount) => '$reviewsCount  Reviews';
   static const String allReviewsScreenTitle = 'All Reviews';
 
+  //! Search Text
+  static const String searchScreenTitle = 'Search';
+  static const String searchFiltersTitle = 'Search Filters';
+  static const String applyFiltersButtonTitle = 'Apply Filters';
+  static const String brandsFilterTitle = 'Brands';
+  static const String categoriesFilterTitle = 'Categories';
+  static const String priceFilterTitle = 'Price';
   //! TextFields Text
   static const String email = 'Email';
   static const String currentPassword = 'Current Password';

@@ -2,6 +2,7 @@ import 'package:efashion_flutter/components/mapComponent/datasource/models/place
 import 'package:efashion_flutter/components/mapComponent/datasource/models/place_model.dart';
 import 'package:efashion_flutter/shared/api/api_consumer.dart';
 import 'package:efashion_flutter/shared/constants/api_constants.dart';
+import 'package:efashion_flutter/shared/constants/map_secrets.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:injectable/injectable.dart';
 
@@ -27,7 +28,7 @@ class MapDataSourceImpl extends MapDataSource {
     final response = await _mapApiConsumer.get(ApiConstants.mapPlaceAutoComplete, queryParameters: {
       'input' : searchQuery,
       'radius' : 500,
-      'key' : ApiConstants.googleMapsKey,
+      'key' : MapSecrets.googleMapsKey,
     });
     return List<PlaceModel>.from((response['predictions'] as List).map((place) => PlaceModel.fromJson(place)));
   }
@@ -37,7 +38,7 @@ class MapDataSourceImpl extends MapDataSource {
     final response = await _mapApiConsumer.get(ApiConstants.mapPlaceDetails, queryParameters: {
       'place_id' : placeId,
       'radius' : 500,
-      'key' : ApiConstants.googleMapsKey,
+      'key' : MapSecrets.googleMapsKey,
     });
     return PlaceDataModel.fromJson(response['result']['geometry']['location']);
   }

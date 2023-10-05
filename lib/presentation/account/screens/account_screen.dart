@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:efashion_flutter/core/router/app_router.dart';
-import 'package:efashion_flutter/core/util/assets_manager.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/no_profile_picture.dart';
+import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/presentation/account/components/account/account_body.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/tokens_cubit/tokens_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/blurred_background_image.dart';
@@ -17,7 +17,7 @@ class AccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<TokensCubit, TokensState>(
       listener: (context, state) {
-        if(state is TokensUnAuthenticatedState){
+        if (state is TokensUnAuthenticatedState) {
           context.replaceRoute(const AuthRoute());
         }
       },
@@ -25,8 +25,8 @@ class AccountScreen extends StatelessWidget {
         body: Stack(
           children: [
             const BlurredBackgroundImage(
-              isLocalImage: false,
-              imagePath: AssetsManager.userTestImage,
+              isLocalImage: true,
+              imagePath: AssetsManager.welcomeImage,
             ),
             Positioned(
               left: 0.0,
@@ -34,13 +34,11 @@ class AccountScreen extends StatelessWidget {
               top: 90.h,
               child: Column(
                 children: [
-                  ClipOval(
-                    child: CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      imageUrl: AssetsManager.userTestImage,
-                      width: 120.w,
-                      height: 120.h,
-                    ),
+                  NoProfilePicture(
+                    name: 'Tara',
+                    width: 120.w,
+                    height: 120.h,
+                    isLarge: true,
                   ),
                   SizedBox(
                     height: 8.h,

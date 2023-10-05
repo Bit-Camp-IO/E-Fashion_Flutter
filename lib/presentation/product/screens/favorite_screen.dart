@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart';
 import 'package:efashion_flutter/presentation/product/components/favorite/favorite_card.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/cart_bottom_sheet.dart';
@@ -18,8 +17,8 @@ class FavoriteScreen extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<FavoriteCubit>()..getFavoriteProductsList(),
+    return BlocProvider.value(
+      value:  context.read<FavoriteCubit>()..getFavoriteProductsList(),
       child: this,
     );
   }
@@ -78,23 +77,17 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                           showModalBottomSheet(
                             context: context,
                             builder: (context) {
-                              return BlocProvider(
-                                create: (context) => getIt<FavoriteCubit>(),
+                              return BlocProvider.value(
+                                value: context.read<FavoriteCubit>(),
                                 child:
                                     BlocBuilder<FavoriteCubit, FavoriteState>(
-                                  builder: (context, state) {
+                                    builder: (context, state) {
                                     return CartBottomSheet(
-                                      productName:
-                                          state.favoriteList[index].title,
-                                      productPrice: state
-                                          .favoriteList[index].price
-                                          .toInt(),
-                                      productColors:
-                                          state.favoriteList[index].colors,
-                                      productSizes:
-                                          state.favoriteList[index].sizes,
-                                      productStock:
-                                          state.favoriteList[index].stock,
+                                      productName: state.favoriteList[index].title,
+                                      productPrice: state.favoriteList[index].price.toInt(),
+                                      productColors: state.favoriteList[index].colors,
+                                      productSizes: state.favoriteList[index].sizes,
+                                      productStock: state.favoriteList[index].stock,
                                     );
                                   },
                                 ),

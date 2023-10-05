@@ -7,6 +7,7 @@ import 'package:efashion_flutter/presentation/shared/animations/custom_fade_anim
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/product/components/search/filter/category_chips_component.dart';
 import 'package:efashion_flutter/presentation/product/components/search/filter/price_slider_component.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -77,7 +78,7 @@ class _SearchFilterSheetState extends State<SearchFilterSheet> {
                   padding: const EdgeInsets.only(bottom: 16.0).r,
                   child: Center(
                     child: Text(
-                      'Search Filters',
+                      StringsManager.searchFiltersTitle,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
@@ -94,7 +95,7 @@ class _SearchFilterSheetState extends State<SearchFilterSheet> {
                         selectedBrands: (listOfBrands) {
                           if (listOfBrands.isNotEmpty) {
                             brands = listOfBrands.join(',');
-                          }else{
+                          } else {
                             brands = '';
                           }
                         },
@@ -105,7 +106,7 @@ class _SearchFilterSheetState extends State<SearchFilterSheet> {
                         selectedCategories: (listOfCategories) {
                           if (listOfCategories.isNotEmpty) {
                             categories = listOfCategories.join(',');
-                          }else{
+                          } else {
                             categories = '';
                           }
                         },
@@ -125,18 +126,19 @@ class _SearchFilterSheetState extends State<SearchFilterSheet> {
                       ),
                       SizedBox(height: 24.h),
                       PrimaryButton(
-                          onTap: () {
-                            context.read<SearchBloc>().add(
-                                  FilterSearchProductsEvent(
-                                    categories: categories,
-                                    brands: brands,
-                                    minPrice: minPrice,
-                                    maxPrice: maxPrice,
-                                  ),
-                                );
-                            context.popRoute();
-                          },
-                          buttonTitle: 'Apply Filters'),
+                        onTap: () {
+                          context.read<SearchBloc>().add(
+                                FilterSearchProductsEvent(
+                                  categories: categories,
+                                  brands: brands,
+                                  minPrice: minPrice,
+                                  maxPrice: maxPrice,
+                                ),
+                              );
+                          context.popRoute();
+                        },
+                        buttonTitle: StringsManager.applyFiltersButtonTitle,
+                      ),
                       SizedBox(height: 50.h),
                     ],
                   ),

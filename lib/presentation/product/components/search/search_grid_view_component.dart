@@ -132,4 +132,11 @@ class _GridViewComponentState extends State<GridViewComponent> {
       },
     );
   }
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
+  }
 }

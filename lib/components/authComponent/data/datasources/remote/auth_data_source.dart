@@ -90,7 +90,7 @@ class AuthDataSourceImpl extends AuthRemoteDataSource {
     if(forgetPasswordRequest['status'] == ApiCallStatus.success.value){
       return "Success! OTP Code sent to your email.";
     }else{
-      throw const NotFoundException("Error! check your email and try again.");
+      throw const NotFoundException("Error! Wrong Email Address.");
     }
   }
 

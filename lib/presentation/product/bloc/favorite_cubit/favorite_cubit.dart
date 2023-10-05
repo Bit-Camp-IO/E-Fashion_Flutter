@@ -16,7 +16,7 @@ import 'package:injectable/injectable.dart';
 
 part 'favorite_state.dart';
 
-@singleton
+@injectable
 class FavoriteCubit extends Cubit<FavoriteState> {
   final GetAccessTokenUseCase _getAccessTokenUseCase;
   final GetUserFavoriteProductsIdsUseCase _getUserFavoriteProductsIdsUseCase;
