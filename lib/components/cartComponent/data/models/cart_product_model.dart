@@ -1,4 +1,4 @@
-import 'package:efashion_flutter/components/cartComponent/domain/entities/order.dart';
+import 'package:efashion_flutter/components/cartComponent/domain/entities/cart_product.dart';
 
 class CartProductModel extends CartProduct {
   const CartProductModel(

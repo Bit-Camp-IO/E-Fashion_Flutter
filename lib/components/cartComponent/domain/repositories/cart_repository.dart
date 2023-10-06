@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:efashion_flutter/components/cartComponent/domain/entities/order.dart';
+import 'package:efashion_flutter/components/cartComponent/domain/entities/cart_product.dart';
 import 'package:efashion_flutter/shared/error/failure.dart';
 
 abstract class CartRepository {
