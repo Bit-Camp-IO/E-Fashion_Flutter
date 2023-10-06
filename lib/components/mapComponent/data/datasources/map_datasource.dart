@@ -1,5 +1,5 @@
-import 'package:efashion_flutter/components/mapComponent/datasource/models/place_data_model.dart';
-import 'package:efashion_flutter/components/mapComponent/datasource/models/place_model.dart';
+import 'package:efashion_flutter/components/mapComponent/data/models/place_data_model.dart';
+import 'package:efashion_flutter/components/mapComponent/data/models/place_model.dart';
 import 'package:efashion_flutter/shared/api/api_consumer.dart';
 import 'package:efashion_flutter/shared/constants/api_constants.dart';
 import 'package:efashion_flutter/shared/constants/map_secrets.dart';

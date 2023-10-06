@@ -31,9 +31,11 @@ final class ApiConstants {
   static String userReviewEndPoint({required String productId}) =>
       '/product/$productId/rate/my-rating';
 
+
   //! User EndPoints
   static const String userDataEndPoint = '/user/me';
-
+  //! Cart
+  static String cartEndPoint = '/user/cart';
   //! Maps EndPoints
   static const String mapPlaceAutoComplete = '/place/autocomplete/json';
   static const String mapPlaceDetails = '/place/details/json';

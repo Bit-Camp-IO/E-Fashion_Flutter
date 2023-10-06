@@ -13,8 +13,10 @@ void main() async{
   await Hive.initFlutter();
   Hive.registerAdapter(AppThemeModelAdapter());
   Hive.registerAdapter(TokensModelAdapter());
-  await Hive.openBox<AppThemeModel>(AppConstants.themeBox);
-  await Hive.openBox<TokensModel>(AppConstants.authBox);
+  await Future.wait([
+  Hive.openBox<AppThemeModel>(AppConstants.themeBox),
+  Hive.openBox<TokensModel>(AppConstants.authBox),
+  ]);
   configureDependencies();
   Bloc.observer = MyBlocObserver();
   runApp(const EfashionApp());

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:efashion_flutter/components/mapComponent/datasource/datasources/map_datasource.dart';
-import 'package:efashion_flutter/components/mapComponent/datasource/models/place_data_model.dart';
-import 'package:efashion_flutter/components/mapComponent/datasource/models/place_model.dart';
+import 'package:efashion_flutter/components/mapComponent/data/datasources/map_datasource.dart';
+import 'package:efashion_flutter/components/mapComponent/data/models/place_data_model.dart';
+import 'package:efashion_flutter/components/mapComponent/data/models/place_model.dart';
 import 'package:efashion_flutter/components/mapComponent/domain/entities/place_data.dart';
 import 'package:efashion_flutter/components/mapComponent/domain/repositories/map_repository.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
