@@ -9,7 +9,6 @@ import 'package:efashion_flutter/components/productComponent/domain/usecases/hom
 import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_product_reviews_and_ratings_usecase.dart';
 import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_user_review_usecase.dart';
 import 'package:efashion_flutter/components/userComponent/domain/entities/user.dart';
-import 'package:efashion_flutter/components/userComponent/domain/usecases/get_user_data_usecase.dart';
 import 'package:efashion_flutter/shared/error/failure.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:equatable/equatable.dart';
@@ -25,7 +24,6 @@ class DetailsCubit extends Cubit<DetailsState> {
   final AddOrEditProductReviewUseCase _addOrEditProductReviewUseCase;
   final GetUserProductReviewUseCase _getUserProductReviewUseCase;
   final GetAccessTokenUseCase _getAccessTokenUseCase;
-  final GetUserDataUseCase _getUserDataUseCase;
   late String userAccessToken;
 
   DetailsCubit(
@@ -34,7 +32,6 @@ class DetailsCubit extends Cubit<DetailsState> {
     this._addOrEditProductReviewUseCase,
     this._getUserProductReviewUseCase,
     this._getAccessTokenUseCase,
-    this._getUserDataUseCase,
   ) : super(const DetailsState());
 
   Future<void> getProductDetails({required String productId}) async {
@@ -155,18 +152,5 @@ class DetailsCubit extends Cubit<DetailsState> {
         },
       );
     }
-  }
-
-  Future<void> getUserData() async {
-    final getAccessToken = await _getAccessTokenUseCase();
-    userAccessToken = getAccessToken.getOrElse(() => '');
-    final userData =
-        await _getUserDataUseCase(userAccessToken: userAccessToken);
-    userData.fold(
-      (l) => null,
-      (currentUserData) => emit(
-        state.copyWith(userData: currentUserData),
-      ),
-    );
   }
 }

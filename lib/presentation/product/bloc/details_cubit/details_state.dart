@@ -8,7 +8,6 @@ class DetailsState extends Equatable {
   final CubitState reviewState;
   final String reviewFailMessage;
   final Review userReview;
-  final User userData;
 
   const DetailsState({
     this.productDetails = const ProductDetails(
@@ -39,11 +38,6 @@ class DetailsState extends Equatable {
       ),
       updatedAt: '',
     ),
-    this.userData = const User(
-      profileImage: '',
-      fullName: '',
-      email: '',
-    )
   });
 
   @override
@@ -55,7 +49,6 @@ class DetailsState extends Equatable {
         reviewState,
         reviewFailMessage,
         userReview,
-        userData,
       ];
 
   DetailsState copyWith({
@@ -77,7 +70,6 @@ class DetailsState extends Equatable {
       reviewState: reviewState ?? this.reviewState,
       reviewFailMessage: reviewFailMessage ?? this.reviewFailMessage,
       userReview: userReview ?? this.userReview,
-      userData: userData ?? this.userData,
     );
   }
 }

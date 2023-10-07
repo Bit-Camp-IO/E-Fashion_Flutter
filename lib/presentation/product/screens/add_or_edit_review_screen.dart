@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/presentation/account/bloc/account_cubit/account_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
 import 'package:efashion_flutter/presentation/product/components/details/add_reviews/reviewer_card.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
@@ -12,10 +13,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
-class AddOrEditReviewScreen extends StatefulWidget  {
-  const AddOrEditReviewScreen({super.key, required this.productId, this.rating = 0});
+class AddOrEditReviewScreen extends StatefulWidget {
+  const AddOrEditReviewScreen(
+      {super.key, required this.productId, this.rating = 0});
+
   final String productId;
   final int rating;
+
   @override
   State<AddOrEditReviewScreen> createState() => _AddOrEditReviewScreenState();
 }
@@ -44,7 +48,8 @@ class _AddOrEditReviewScreenState extends State<AddOrEditReviewScreen> {
               padding: EdgeInsets.zero,
               children: [
                 CustomAppBar(
-                  appBarTitle: StringsManager.addOrEditReviewScreen(state.userReview.createdAt.isEmpty),
+                  appBarTitle: StringsManager.addOrEditReviewScreen(
+                      state.userReview.createdAt.isEmpty),
                   appBarType: AppBarType.normal,
                 ),
                 SizedBox(height: 30.h),
@@ -54,9 +59,13 @@ class _AddOrEditReviewScreenState extends State<AddOrEditReviewScreen> {
                   productPrice: state.productDetails.price.toInt(),
                 ),
                 const SizedBox(height: 30),
-                ReviewerCard(
-                  reviewerImage: state.userData.profileImage,
-                  reviewerName: state.userData.fullName,
+                BlocBuilder<AccountCubit, AccountState>(
+                  builder: (context, state) {
+                    return ReviewerCard(
+                      reviewerImage: state.userData.profileImage,
+                      reviewerName: state.userData.fullName,
+                    );
+                  },
                 ),
                 SizedBox(height: 40.h),
                 Form(
@@ -72,9 +81,10 @@ class _AddOrEditReviewScreenState extends State<AddOrEditReviewScreen> {
                       ),
                       SizedBox(height: 40.h),
                       ReviewTextField(
-                        reviewController: TextEditingController(text: state.userReview.comment),
+                        reviewController: TextEditingController(
+                            text: state.userReview.comment),
                         onSaved: (value) {
-                          if(value != null){
+                          if (value != null) {
                             _review = value;
                           }
                         },
@@ -84,11 +94,15 @@ class _AddOrEditReviewScreenState extends State<AddOrEditReviewScreen> {
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
-                            context.read<DetailsCubit>().addOrEditProductReview(productId: widget.productId, rate: _rate, review: _review);
+                            context.read<DetailsCubit>().addOrEditProductReview(
+                                productId: widget.productId,
+                                rate: _rate,
+                                review: _review);
                             context.popRoute();
                           }
                         },
-                        buttonTitle: StringsManager.addOrEditReviewButton( state.userReview.createdAt.isEmpty),
+                        buttonTitle: StringsManager.addOrEditReviewButton(
+                            state.userReview.createdAt.isEmpty),
                       )
                     ],
                   ),
@@ -100,6 +114,7 @@ class _AddOrEditReviewScreenState extends State<AddOrEditReviewScreen> {
       },
     );
   }
+
   @override
   void dispose() {
     _formKey.currentState?.dispose();

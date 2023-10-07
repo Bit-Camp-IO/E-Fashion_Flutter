@@ -35,8 +35,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
     context.read<DetailsCubit>()
       ..getProductDetails(productId: widget.productId)
       ..getProductReviewsAndRatings(productId: widget.productId)
-      ..getUserProductReview(productId: widget.productId)
-      ..getUserData();
+      ..getUserProductReview(productId: widget.productId);
     draggableScrollableController = DraggableScrollableController();
     super.initState();
   }

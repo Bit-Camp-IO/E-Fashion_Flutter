@@ -27,13 +27,14 @@ class NoProfilePicture extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          name[0],
-          style: isLarge ? Theme.of(context).textTheme.displayLarge!.copyWith(
-            color: Colors.white,
-              fontFamily: AssetsManager.primaryFontFamily
-          ) :Theme.of(context).textTheme.bodyLarge!.copyWith(
-                color: Colors.white,
-              ),
+          name.isNotEmpty ? name[0] : name,
+          style: isLarge
+              ? Theme.of(context).textTheme.displayLarge!.copyWith(
+                  color: Colors.white,
+                  fontFamily: AssetsManager.primaryFontFamily)
+              : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: Colors.white,
+                  ),
         ),
       ),
     );

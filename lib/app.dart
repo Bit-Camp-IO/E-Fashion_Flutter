@@ -10,8 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-class EfashionApp extends StatelessWidget{
+class EfashionApp extends StatelessWidget {
   const EfashionApp({super.key});
 
   @override
@@ -28,17 +27,16 @@ class EfashionApp extends StatelessWidget{
             designSize: const Size(360, 800),
             minTextAdapt: true,
             splitScreenMode: true,
-            builder: (context, child) =>
-                MaterialApp.router(
-                  debugShowCheckedModeBanner: false,
-                  routerConfig: getIt<AppRouter>().config(
-                    navigatorObservers: () =>
+            builder: (context, child) => MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              routerConfig: getIt<AppRouter>().config(
+                navigatorObservers: () =>
                     [AppRoutesObserver(), AutoRouteObserver()],
-                  ),
-                  theme: state.appTheme.isDarkTheme
-                      ? ThemeManager.darkTheme()
-                      : ThemeManager.lightTheme(),
-                ),
+              ),
+              theme: state.appTheme.isDarkTheme
+                  ? ThemeManager.darkTheme()
+                  : ThemeManager.lightTheme(),
+            ),
           );
         },
       ),

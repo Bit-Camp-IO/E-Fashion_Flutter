@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/injection_container.dart';
+import 'package:efashion_flutter/presentation/account/bloc/account_cubit/account_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
@@ -17,10 +18,11 @@ class BottomNavBar extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-        create: (context) => getIt<FavoriteCubit>()
-          ..getUserFavoriteIdListEvent()
-          ..getFavoriteProductsList(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<FavoriteCubit>()..getUserFavoriteIdListEvent()..getFavoriteProductsList()),
+        BlocProvider(create: (context) => getIt<AccountCubit>()..getUserData()),
+      ],
       child: this,
     );
   }

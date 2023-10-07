@@ -111,6 +111,8 @@ import 'package:efashion_flutter/components/userComponent/domain/usecases/get_ap
     as _i46;
 import 'package:efashion_flutter/components/userComponent/domain/usecases/get_user_data_usecase.dart'
     as _i56;
+import 'package:efashion_flutter/presentation/account/bloc/account_cubit/account_cubit.dart'
+    as _i66;
 import 'package:efashion_flutter/presentation/account/bloc/maps_bloc/map_bloc.dart'
     as _i62;
 import 'package:efashion_flutter/presentation/auth/cubits/forget_password/forget_password_cubit.dart'
@@ -120,11 +122,11 @@ import 'package:efashion_flutter/presentation/auth/cubits/login/login_cubit.dart
 import 'package:efashion_flutter/presentation/auth/cubits/signup/signup_cubit.dart'
     as _i64;
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart'
-    as _i66;
-import 'package:efashion_flutter/presentation/product/bloc/discover_cubit/discover_bloc.dart'
     as _i67;
-import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart'
+import 'package:efashion_flutter/presentation/product/bloc/discover_cubit/discover_bloc.dart'
     as _i68;
+import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart'
+    as _i69;
 import 'package:efashion_flutter/presentation/product/bloc/home_bloc/home_bloc.dart'
     as _i60;
 import 'package:efashion_flutter/presentation/product/bloc/search_bloc/search_bloc.dart'
@@ -133,7 +135,7 @@ import 'package:efashion_flutter/presentation/shared/bloc/theme_cubit/theme_cubi
     as _i65;
 import 'package:efashion_flutter/presentation/shared/bloc/tokens_cubit/tokens_cubit.dart'
     as _i31;
-import 'package:efashion_flutter/register_module.dart' as _i69;
+import 'package:efashion_flutter/register_module.dart' as _i70;
 import 'package:efashion_flutter/shared/api/api_consumer.dart' as _i3;
 import 'package:efashion_flutter/shared/api/dio_interceptor.dart' as _i14;
 import 'package:efashion_flutter/shared/api/dio_logger.dart' as _i15;
@@ -295,19 +297,22 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i46.GetAppThemeUseCase>(),
           gh<_i43.ChangeAppThemeUseCase>(),
         ));
-    gh.factory<_i66.DetailsCubit>(() => _i66.DetailsCubit(
+    gh.factory<_i66.AccountCubit>(() => _i66.AccountCubit(
+          gh<_i56.GetUserDataUseCase>(),
+          gh<_i18.GetAccessTokenUseCase>(),
+        ));
+    gh.factory<_i67.DetailsCubit>(() => _i67.DetailsCubit(
           gh<_i53.GetProductDetailsUseCase>(),
           gh<_i54.GetProductReviewsAndRatingsUseCase>(),
           gh<_i40.AddOrEditProductReviewUseCase>(),
           gh<_i59.GetUserProductReviewUseCase>(),
           gh<_i18.GetAccessTokenUseCase>(),
-          gh<_i56.GetUserDataUseCase>(),
         ));
-    gh.factory<_i67.DiscoverBloc>(() => _i67.DiscoverBloc(
+    gh.factory<_i68.DiscoverBloc>(() => _i68.DiscoverBloc(
           gh<_i47.GetBrandProductsUseCase>(),
           gh<_i55.GetProductsOffersUseCase>(),
         ));
-    gh.factory<_i68.FavoriteCubit>(() => _i68.FavoriteCubit(
+    gh.factory<_i69.FavoriteCubit>(() => _i69.FavoriteCubit(
           gh<_i18.GetAccessTokenUseCase>(),
           gh<_i57.GetUserFavoriteProductsIdsUseCase>(),
           gh<_i42.AddProductToFavoriteListUseCase>(),
@@ -319,4 +324,4 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$RegisterModule extends _i69.RegisterModule {}
+class _$RegisterModule extends _i70.RegisterModule {}

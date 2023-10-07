@@ -10,7 +10,9 @@ abstract class RegisterModule {
   @lazySingleton
   ApiConsumer get mainApiConsumer => DioApiConsumer(
         dioClient: Dio(),
+
         baseUrl: ApiConstants.baseUrl,
+
       );
 
   @Named(ApiConstants.mapsConsumerName)

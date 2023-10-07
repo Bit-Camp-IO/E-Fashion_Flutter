@@ -96,6 +96,8 @@ class DioApiConsumer extends ApiConsumer {
     if(response.data.toString().isNotEmpty){
       final responseJson = jsonDecode(response.data.toString());
       return responseJson;
+    }else{
+      return response;
     }
   }
 
