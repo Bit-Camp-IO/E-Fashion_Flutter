@@ -27,8 +27,6 @@ class StringsManager {
   static const String menCategory = 'Men';
   static const String categorySectionTitle = 'Categories';
   static const String offersSectionTitle = 'Offers';
-  static const String colorSection = 'Color :';
-  static const String sizeSection = 'Size : ';
   static String productStock(int stock) => '$stock Pieces Available : ';
   static const String rateSuggestionTitle = 'Rate this product';
   static const String rateSuggestionSubTitle = 'Tell others what you think';
@@ -50,6 +48,15 @@ class StringsManager {
   static const String brandsFilterTitle = 'Brands';
   static const String categoriesFilterTitle = 'Categories';
   static const String priceFilterTitle = 'Price';
+
+  //! Cart
+  static const String cartScreenTitle = 'Shopping Bag';
+  static const String emptyCartTitle = 'Empty Shopping Bag';
+  static const String emptyCartSubTitle = 'Select the product you\n want to purchase.';
+
+  static const String cartSubTotal = 'Sub total :';
+
+  static const String cartCheckOutButtonTitle = 'Check Out';
   //! TextFields Text
   static const String email = 'Email';
   static const String currentPassword = 'Current Password';
@@ -62,4 +69,9 @@ class StringsManager {
 
   //! Shared
   static const String addToBag = 'Add To Bag';
+  static const String colorSection = 'Color :';
+  static const String sizeSection = 'Size : ';
+
+  static const String emptyFavoriteTitle = 'Empty Favorite List';
+  static const String emptyFavoriteSubTitle = 'Tap on product Favorite\n icon to add it.';
 }

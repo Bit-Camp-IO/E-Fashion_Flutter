@@ -36,7 +36,6 @@ part 'app_router.gr.dart';
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 @singleton
 class AppRouter extends _$AppRouter {
-
   @override
   RouteType get defaultRouteType => const RouteType.material();
 
@@ -138,13 +137,12 @@ class AppRouter extends _$AppRouter {
             ),
             AutoRoute(
               page: CartRoute.page,
-              maintainState: false,
               children: [
                 CustomRoute(
-                    page: CartRoute.page,
-                    initial: true,
-                    transitionsBuilder: TransitionsBuilders.fadeIn,
-                    maintainState: false)
+                  page: CartRoute.page,
+                  initial: true,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                ),
               ],
             ),
             AutoRoute(

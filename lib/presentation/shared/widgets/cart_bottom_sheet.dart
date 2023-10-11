@@ -1,9 +1,15 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/components/productComponent/domain/entities/product_color.dart';
 import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
+import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/product_color.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/product_pieces_counter.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/product_size.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/snack_bar.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -11,6 +17,7 @@ class CartBottomSheet extends StatefulWidget {
   const CartBottomSheet({
     super.key,
     required this.productName,
+    required this.productId,
     required this.productPrice,
     required this.productColors,
     required this.productSizes,
@@ -18,19 +25,29 @@ class CartBottomSheet extends StatefulWidget {
   });
 
   final String productName;
+
+  final String productId;
   final int productPrice;
   final int productStock;
-  final List productColors;
-  final List productSizes;
+  final List<ProductColor> productColors;
+  final List<String> productSizes;
 
   @override
   State<CartBottomSheet> createState() => _CartBottomSheetState();
 }
 
 class _CartBottomSheetState extends State<CartBottomSheet> {
-  int selectedColorIndex = 0;
-  int selectedSizeIndex = 0;
-  int productPieces = 0;
+  ValueNotifier<int> selectedColorIndex = ValueNotifier(0);
+  ValueNotifier<int> selectedSizeIndex = ValueNotifier(0);
+  ValueNotifier<int> productPieces = ValueNotifier(1);
+  bool isBagButtonLoading = false;
+  late final CartCubit cartCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    cartCubit = context.read<CartCubit>();
+  }
 
   double _cartHeight() {
     if (widget.productColors.isNotEmpty && widget.productSizes.isNotEmpty) {
@@ -46,6 +63,12 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
   @override
   Widget build(BuildContext context) {
     if (widget.productName.isNotEmpty) {
+      widget.productColors.isNotEmpty
+          ? cartCubit.updateSelectedColor(widget.productColors[0].hex)
+          : null;
+      widget.productSizes.isNotEmpty
+          ? cartCubit.updateSelectedSize(widget.productSizes[0])
+          : null;
       return CustomFadeAnimation(
         duration: const Duration(milliseconds: 250),
         child: Container(
@@ -96,45 +119,54 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                               child: SizedBox(
                                 height: 45.h,
                                 child: SingleChildScrollView(
-                                    padding: EdgeInsets.zero,
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          'Colors : ',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall,
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 16).r,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: List.generate(
-                                              widget.productColors.length,
-                                              (colorsIndex) {
-                                                String color = widget
-                                                    .productColors[colorsIndex]
-                                                    .hex;
-                                                return ProductColor(
+                                  padding: EdgeInsets.zero,
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Colors : ',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 16).r,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: List.generate(
+                                            widget.productColors.length,
+                                            (colorsIndex) {
+                                              String color = widget
+                                                  .productColors[colorsIndex]
+                                                  .hex;
+                                              return ValueListenableBuilder(
+                                                valueListenable:
+                                                    selectedColorIndex,
+                                                builder:
+                                                    (context, value, child) =>
+                                                        SelectableProductColor(
                                                   color: color,
                                                   onTap: () {
-                                                    setState(() {
-                                                      selectedColorIndex =
-                                                          colorsIndex;
-                                                    });
+                                                    selectedColorIndex.value =
+                                                        colorsIndex;
+                                                    cartCubit
+                                                        .updateSelectedColor(
+                                                      color,
+                                                    );
                                                   },
-                                                  isSelected: colorsIndex ==
-                                                      selectedColorIndex,
-                                                );
-                                              },
-                                            ),
+                                                  isSelected:
+                                                      colorsIndex == value,
+                                                ),
+                                              );
+                                            },
                                           ),
                                         ),
-                                      ],
-                                    )),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             )
                           : const SizedBox.shrink(),
@@ -145,46 +177,54 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                           ? Align(
                               alignment: Alignment.topLeft,
                               child: SizedBox(
-                                  height: 45.h,
-                                  child: SingleChildScrollView(
-                                    padding: EdgeInsets.zero,
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          'Sizes : ',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall,
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 24).r,
-                                          child: Row(
-                                            children: List.generate(
-                                              widget.productSizes.length,
-                                              (sizeIndex) {
-                                                String size = widget
-                                                    .productSizes[sizeIndex];
-                                                return ProductSize(
+                                height: 45.h,
+                                child: SingleChildScrollView(
+                                  padding: EdgeInsets.zero,
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Sizes : ',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 24).r,
+                                        child: Row(
+                                          children: List.generate(
+                                            widget.productSizes.length,
+                                            (sizeIndex) {
+                                              String size = widget
+                                                  .productSizes[sizeIndex];
+                                              return ValueListenableBuilder(
+                                                valueListenable:
+                                                    selectedSizeIndex,
+                                                builder:
+                                                    (context, value, child) =>
+                                                        SelectableProductSize(
                                                   size: size,
                                                   onTap: () {
-                                                    setState(() {
-                                                      selectedSizeIndex =
-                                                          sizeIndex;
-                                                    });
+                                                    selectedSizeIndex.value =
+                                                        sizeIndex;
+                                                    context
+                                                        .read<CartCubit>()
+                                                        .updateSelectedSize(
+                                                            size);
                                                   },
                                                   isSelected:
-                                                      selectedSizeIndex ==
-                                                          sizeIndex,
-                                                );
-                                              },
-                                            ),
+                                                      sizeIndex == value,
+                                                ),
+                                              );
+                                            },
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                  )),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
                             )
                           : const SizedBox.shrink(),
                       widget.productSizes.isNotEmpty
@@ -201,32 +241,64 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                           SizedBox(width: 40.w),
-                          ProductPiecesCounter(
-                            onIncrementPress: () {
-                              setState(() {
-                                if (productPieces != widget.productStock) {
-                                  productPieces++;
+                          ValueListenableBuilder(
+                            valueListenable: productPieces,
+                            builder: (context, value, child) =>
+                                ProductPiecesCounter(
+                              onIncrementPress: () {
+                                if (value != widget.productStock) {
+                                  productPieces.value++;
+                                  cartCubit.updateSelectedQuantity(
+                                    productPieces.value,
+                                  );
                                 }
-                              });
-                            },
-                            onDecrementPress: () {
-                              setState(() {
-                                if (productPieces != 0) {
-                                  productPieces--;
+                              },
+                              onDecrementPress: () {
+                                if (value != 1) {
+                                  productPieces.value--;
+                                  cartCubit.updateSelectedQuantity(
+                                    productPieces.value,
+                                  );
                                 }
-                              });
-                            },
-                            productPieces: productPieces,
+                              },
+                              productPieces: value,
+                            ),
                           ),
                         ],
                       ),
                       SizedBox(height: 30.h),
-                      PrimaryButton(
-                        width: 230.w,
-                        onTap: () {},
-                        buttonTitle: 'Add To Bag',
-                        buttonIcon:
-                            const Icon(Iconsax.bag_2, color: Colors.white),
+                      BlocConsumer<CartCubit, CartState>(
+                        listenWhen: (previous, current) =>
+                            previous.cartState != current.cartState,
+                        listener: (context, state) {
+                          if (state.cartState == CubitState.loading) {
+                            isBagButtonLoading = true;
+                          } else if (state.cartState == CubitState.success) {
+                            isBagButtonLoading = false;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              customSnackBar(
+                                customSnackBarType: CustomSnackBarType.success,
+                                message: state.cartMessage,
+                                context: context,
+                              ),
+                            );
+                            context.popRoute();
+                          } else {
+                            isBagButtonLoading = false;
+                          }
+                        },
+                        builder: (context, state) {
+                          return PrimaryButton(
+                            width: 230.w,
+                            onTap: () => cartCubit.addProductToCart(
+                                productId: widget.productId,
+                                productName: widget.productName),
+                            isLoading: isBagButtonLoading,
+                            buttonTitle: 'Add To Bag',
+                            buttonIcon:
+                                const Icon(Iconsax.bag_2, color: Colors.white),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -269,5 +341,13 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
         ),
       );
     }
+  }
+
+  @override
+  void dispose() {
+    selectedSizeIndex.dispose();
+    selectedColorIndex.dispose();
+    productPieces.dispose();
+    super.dispose();
   }
 }

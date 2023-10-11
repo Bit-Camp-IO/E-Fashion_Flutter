@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProductColor extends StatelessWidget {
-  const ProductColor({
+class SelectableProductColor extends StatelessWidget {
+  const SelectableProductColor({
     super.key,
     required this.color,
     required this.onTap,

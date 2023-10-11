@@ -1,33 +1,20 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/presentation/product/mock/cart_mock.dart';
+import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/empty_widget.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/product/components/cart/dismissible_cart_card.dart';
+import 'package:efashion_flutter/shared/util/assets_manager.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
-class CartScreen extends StatefulWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
   @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
-   int _totalPrice = 0;
-
-  _calculateTotalPrice(){
-    for(int cartIndex = 0; cartIndex < cartList.length; cartIndex++ ){
-        _totalPrice += cartList[cartIndex].cartPrice;
-    }
-  }
-
-  @override
-  void initState() {
-    _calculateTotalPrice();
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,92 +23,142 @@ class _CartScreenState extends State<CartScreen> {
         child: Column(
           children: [
             const CustomAppBar(
-              appBarTitle: 'Shopping Bag',
+              appBarTitle: StringsManager.cartScreenTitle,
               appBarType: AppBarType.normal,
               disableBackButton: true,
             ),
-            SizedBox(height: 16.h),
             Expanded(
-              child: ListView.builder(
-                itemCount: cartList.length,
-                padding: EdgeInsets.zero,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 8.0).r,
-                    child: DismissibleCartCard(
-                      productName: cartList[index].productName,
-                      productId: cartList[index].productId,
-                      productPrice: cartList[index].productPrice,
-                      productImage: cartList[index].productImage,
-                      cartPieces: cartList[index].cartPieces,
-                      cartPrice: cartList[index].cartPrice,
-                      availablePieces: cartList[index].avaliblePieces,
-                      onPiecesIncrement: () {
-                        setState(() {
-                          _totalPrice += cartList[index].productPrice;
-                          debugPrint('executed');
-                        });
-                      },
-                      onPiecesDecrement: () {
-
-                        setState(() {
-
-                          _totalPrice -= cartList[index].productPrice;
-                        });
-                      },
-                      orderedPieces: (pieces) {
-
-                      },
-                      onDismissed: (dismissedItemPrice) {
-                        setState(() {
-                          cartList.removeWhere((element) => element.productId == cartList[index].productId);
-                          _totalPrice -= dismissedItemPrice;
-                        });
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
-            SizedBox(
-              height: 150.h,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: BlocBuilder<CartCubit, CartState>(
+                builder: (context, state) {
+                  if (state.cart.products.isEmpty) {
+                    return const EmptyWidget(
+                      image: AssetsManager.cartImage,
+                      title: StringsManager.emptyCartTitle,
+                      subTitle: StringsManager.emptyCartSubTitle,
+                    );
+                  } else {
+                    return Column(
                       children: [
-                        Text(
-                          'Sub total :',
-                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSurfaceVariant,
+                        SizedBox(height: 16.h),
+                        BlocBuilder<CartCubit, CartState>(
+                          buildWhen: (previous, current) =>
+                              previous.cart.products != current.cart.products,
+                          builder: (context, state) {
+                            final CartCubit cartCubit =
+                                context.read<CartCubit>();
+                            return Expanded(
+                              child: ListView.builder(
+                                itemCount: state.cart.products.length,
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (context, index) {
+                                  final String productName = state.cart.products[index].title;
+                                  final String productId = state.cart.products[index].id;
+                                  final int totalPrice = state.cart.products[index].totalPrice;
+                                  final String productImage = state.cart.products[index].imageUrl;
+                                  int productQuantity = state.cart.products[index].quantity;
+                                  final int productStock =  state.cart.products[index].stock;
+                                  return Padding(
+                                    padding: const EdgeInsets.only(top: 8.0).r,
+                                    child: DismissibleCartCard(
+                                      key: ValueKey<String>(productId),
+                                      productName: productName,
+                                      productId: productId,
+                                      totalPrice: totalPrice,
+                                      productImage: productImage,
+                                      quantity: productQuantity,
+                                      stock: productStock,
+                                      onPiecesIncrement: () async {
+                                        if(productQuantity <= state.cart.products[index].stock){
+                                          productQuantity++;
+                                          await cartCubit.editProductQuantity(
+                                            productId: productId,
+                                            newQuantity: productQuantity,
+                                          );
+                                        }
+
+                                      },
+                                      onPiecesDecrement: () async {
+                                        if(productQuantity > 1){
+                                          productQuantity--;
+                                          await cartCubit.editProductQuantity(
+                                            productId: productId,
+                                            newQuantity: productQuantity--,
+                                          );
+                                        }
+                                      },
+                                      onDismissed: (dismissDirection) async {
+                                        await cartCubit.removeProductFromCart(
+                                          productId: productId,
+                                          productName: productName,
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
                               ),
+                            );
+                          },
                         ),
-                        AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 200),
-                          child: Text(
-                            key: ValueKey<int>(_totalPrice),
-                            '\$$_totalPrice',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.onSurface,
+                        SizedBox(
+                          height: 150.h,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Column(
+                              children: [
+                                BlocBuilder<CartCubit, CartState>(
+                                  buildWhen: (previous, current) =>
+                                      previous.cart.subTotal !=
+                                      current.cart.subTotal,
+                                  builder: (context, state) {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          StringsManager.cartSubTotal,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurfaceVariant,
+                                              ),
+                                        ),
+                                        AnimatedSwitcher(
+                                          duration:
+                                              const Duration(milliseconds: 200),
+                                          child: Text(
+                                            key: ValueKey<int>(
+                                                state.cart.subTotal),
+                                            '\$${state.cart.subTotal}',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .copyWith(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 ),
+                                SizedBox(height: 8.h),
+                                PrimaryButton(
+                                  buttonTitle: StringsManager.cartCheckOutButtonTitle,
+                                  onTap: () {},
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
-                    ),
-                    SizedBox(height: 8.h),
-                    PrimaryButton(
-                      buttonTitle: 'Checkout',
-                      onTap: () {},
-                    ),
-                  ],
-                ),
+                    );
+                  }
+                },
               ),
             ),
           ],

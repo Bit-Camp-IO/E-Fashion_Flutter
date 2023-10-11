@@ -5,7 +5,13 @@ class CartProduct extends Equatable {
   final String title;
   final String imageUrl;
   final String size;
+
+  final int price;
+
+  final int totalPrice;
   final int quantity;
+
+  final int stock;
 
   const CartProduct({
     required this.id,
@@ -13,8 +19,20 @@ class CartProduct extends Equatable {
     required this.imageUrl,
     required this.size,
     required this.quantity,
+    required this.stock,
+    required this.price,
+    required this.totalPrice,
   });
 
   @override
-  List<Object?> get props => [id, title, imageUrl, size, quantity];
+  List<Object?> get props => [
+        id,
+        title,
+        imageUrl,
+        size,
+        quantity,
+        stock,
+        price,
+        totalPrice,
+      ];
 }

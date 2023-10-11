@@ -85,8 +85,10 @@ class _BrandComponentState extends State<BrandComponent> {
                                             child: BlocBuilder<DetailsCubit, DetailsState>(
                                               buildWhen: (previous, current) =>
                                                   previous.productDetailsState != current.productDetailsState,
-                                              builder: (context, state) {return CartBottomSheet(
+                                              builder: (context, state) {
+                                                return CartBottomSheet(
                                                   productName: state.productDetails.title,
+                                                  productId: state.productDetails.id,
                                                   productPrice: state.productDetails.price.toInt(),
                                                   productColors: state.productDetails.colors,
                                                   productSizes: state.productDetails.sizes,

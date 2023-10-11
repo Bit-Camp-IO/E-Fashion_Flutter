@@ -1,28 +1,28 @@
 import 'package:dartz/dartz.dart';
-import 'package:efashion_flutter/components/cartComponent/domain/entities/cart_product.dart';
+import 'package:efashion_flutter/components/cartComponent/domain/entities/cart.dart';
 import 'package:efashion_flutter/shared/error/failure.dart';
 
 abstract class CartRepository {
-  Future<Either<Failure, String>> addProductToCart({
+  Future<Either<Failure, Cart>> addProductToCart({
     required String userAccessToken,
     required String productId,
-    required String productSize,
-    required String productColor,
+    required String? productSize,
+    required String? productColor,
     required int productQuantity,
   });
 
-  Future<Either<Failure, String>> removeProductFromCart({
+  Future<Either<Failure, Cart>> removeProductFromCart({
     required String userAccessToken,
     required String productId,
   });
 
-  Future<Either<Failure, void>> editProductQuantity({
+  Future<Either<Failure, Cart>> editProductQuantity({
     required String userAccessToken,
     required String productId,
-    required String newQuantity,
+    required int newQuantity,
 });
 
-  Future<Either<Failure, List<CartProduct>>> getCartProducts({
+  Future<Either<Failure, Cart>> getCartProducts({
     required String userAccessToken,
 });
 }

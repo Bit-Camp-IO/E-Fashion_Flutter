@@ -19,7 +19,6 @@ class GridViewComponent extends StatefulWidget {
 
 class _GridViewComponentState extends State<GridViewComponent> {
   late final ScrollController _scrollController;
-
   void _onScroll() {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
@@ -110,10 +109,9 @@ class _GridViewComponentState extends State<GridViewComponent> {
                                 builder: (context, state) {
                                   return CartBottomSheet(
                                     productName: state.productDetails.title,
-                                    productPrice:
-                                    state.productDetails.price.toInt(),
-                                    productColors:
-                                    state.productDetails.colors,
+                                    productId: state.productDetails.id,
+                                    productPrice: state.productDetails.price.toInt(),
+                                    productColors: state.productDetails.colors,
                                     productSizes: state.productDetails.sizes,
                                     productStock: state.productDetails.stock,
                                   );

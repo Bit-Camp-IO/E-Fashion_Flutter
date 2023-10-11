@@ -13,11 +13,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SkewGridViewComponent extends StatefulWidget {
-  const SkewGridViewComponent(
-      {super.key,
-      required this.discoverScreenType,
-      this.categories,
-      required this.brandId});
+  const SkewGridViewComponent({
+    super.key,
+    required this.discoverScreenType,
+    this.categories,
+    required this.brandId,
+  });
 
   final DiscoverScreenType discoverScreenType;
   final String? categories;
@@ -37,7 +38,8 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
     if (currentScroll >= maxScroll * 0.9) {
       switch (widget.discoverScreenType) {
         case (DiscoverScreenType.offers):
-          discoverBloc.add(GetOffersProductsEvent(categories: widget.categories));
+          discoverBloc
+              .add(GetOffersProductsEvent(categories: widget.categories));
         case (DiscoverScreenType.brand):
           discoverBloc.add(GetBrandProductsEvent(
               brandId: widget.brandId, categories: widget.categories));
@@ -58,18 +60,17 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
       builder: (context, state) {
         return GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10.h,
-            crossAxisSpacing: 10.h,
-            mainAxisExtent: 220.h
-          ),
+              crossAxisCount: 2,
+              mainAxisSpacing: 10.h,
+              crossAxisSpacing: 10.h,
+              mainAxisExtent: 220.h),
           itemCount: state.products.length + 1,
           controller: _scrollController,
           itemBuilder: (context, index) {
             if (index >= state.products.length) {
-              if(state.hasProductsListReachedMax){
+              if (state.hasProductsListReachedMax) {
                 return const SizedBox.shrink();
-              }else{
+              } else {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -113,10 +114,10 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
                                 builder: (context, state) {
                                   return CartBottomSheet(
                                     productName: state.productDetails.title,
+                                    productId: state.productDetails.id,
                                     productPrice:
                                         state.productDetails.price.toInt(),
-                                    productColors:
-                                        state.productDetails.colors,
+                                    productColors: state.productDetails.colors,
                                     productSizes: state.productDetails.sizes,
                                     productStock: state.productDetails.stock,
                                   );
@@ -165,10 +166,10 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
                                 builder: (context, state) {
                                   return CartBottomSheet(
                                     productName: state.productDetails.title,
+                                    productId: state.productDetails.id,
                                     productPrice:
                                         state.productDetails.price.toInt(),
-                                    productColors:
-                                        state.productDetails.colors,
+                                    productColors: state.productDetails.colors,
                                     productSizes: state.productDetails.sizes,
                                     productStock: state.productDetails.stock,
                                   );
@@ -217,10 +218,10 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
                                 builder: (context, state) {
                                   return CartBottomSheet(
                                     productName: state.productDetails.title,
+                                    productId: state.productDetails.id,
                                     productPrice:
                                         state.productDetails.price.toInt(),
-                                    productColors:
-                                        state.productDetails.colors,
+                                    productColors: state.productDetails.colors,
                                     productSizes: state.productDetails.sizes,
                                     productStock: state.productDetails.stock,
                                   );
@@ -269,10 +270,10 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
                                 builder: (context, state) {
                                   return CartBottomSheet(
                                     productName: state.productDetails.title,
+                                    productId: state.productDetails.id,
                                     productPrice:
                                         state.productDetails.price.toInt(),
-                                    productColors:
-                                        state.productDetails.colors,
+                                    productColors: state.productDetails.colors,
                                     productSizes: state.productDetails.sizes,
                                     productStock: state.productDetails.stock,
                                   );

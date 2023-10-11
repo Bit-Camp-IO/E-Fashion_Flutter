@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/size_manager.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
@@ -28,6 +29,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
   int selectedSizeIndex = 0;
   int productPieces = 0;
   ValueNotifier<bool> isSheetExpanded = ValueNotifier(false);
+  bool isBagButtonLoading = false;
   late DraggableScrollableController draggableScrollableController;
 
   @override
@@ -38,13 +40,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
       ..getUserProductReview(productId: widget.productId);
     draggableScrollableController = DraggableScrollableController();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    draggableScrollableController.dispose();
-    isSheetExpanded.dispose();
-    super.dispose();
   }
 
   @override
@@ -75,6 +70,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                     initialChildSize: 0.65,
                     minChildSize: 0.65,
                     builder: (context, scrollController) {
+                      final CartCubit cartCubit = context.read<CartCubit>();
                       return ValueListenableBuilder(
                         valueListenable: isSheetExpanded,
                         builder: (context, isSheetExpandedValue, child) => AnimatedTransformSkew(
@@ -136,15 +132,27 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                       shrinkWrap: true,
                                       children: [
                                         ProductCartComponent(
-                                          productName: state.productDetails.title,
-                                          productColors: state.productDetails.colors,
-                                          productSizes: state.productDetails.sizes,
-                                          productDescription: state.productDetails.description,
-                                          productStock: state.productDetails.stock,
-                                          productPrice: state.productDetails.price.toInt(),
-                                          addToBag: () {
-
-                                          },
+                                        productName: state.productDetails.title,
+                                        productColors: state.productDetails.colors,
+                                        productSizes: state.productDetails.sizes,
+                                        productDescription: state.productDetails.description,
+                                        productStock: state.productDetails.stock,
+                                        productPrice: state.productDetails.price.toInt(),
+                                        cartQuantity: (quantity) {
+                                          cartCubit.updateSelectedQuantity(quantity);
+                                        },
+                                        selectedColor: (color) {
+                                          cartCubit.updateSelectedColor(color);
+                                        },
+                                        selectedSize: (size) {
+                                          cartCubit.updateSelectedSize(size);
+                                        },
+                                        onAddToBagTap: () {
+                                          context.read<CartCubit>().addProductToCart(
+                                            productId: state.productDetails.id,
+                                            productName: state.productDetails.title,
+                                          );
+                                        },
                                         ),
                                         RatingAndReviewsComponent(
                                           productId: widget.productId,
@@ -169,5 +177,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
         },
       ),
     );
+  }
+  @override
+  void dispose() {
+    draggableScrollableController.dispose();
+    isSheetExpanded.dispose();
+    super.dispose();
   }
 }

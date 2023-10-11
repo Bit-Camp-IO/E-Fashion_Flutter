@@ -41,7 +41,7 @@ import 'package:efashion_flutter/components/cartComponent/domain/repositories/ca
     as _i10;
 import 'package:efashion_flutter/components/cartComponent/domain/usecases/add_product_to_cart_usecase.dart'
     as _i41;
-import 'package:efashion_flutter/components/cartComponent/domain/usecases/edit_cart_product_quantity_usecase.dart'
+import 'package:efashion_flutter/components/cartComponent/domain/usecases/edit_product_quantity_usecase.dart'
     as _i16;
 import 'package:efashion_flutter/components/cartComponent/domain/usecases/get_cart_products_usecase.dart'
     as _i19;
@@ -54,11 +54,11 @@ import 'package:efashion_flutter/components/mapComponent/data/repositories/map_r
 import 'package:efashion_flutter/components/mapComponent/domain/repositories/map_repository.dart'
     as _i21;
 import 'package:efashion_flutter/components/mapComponent/domain/usecases/get_place_latitude_and_longitude_usecase.dart'
-    as _i51;
-import 'package:efashion_flutter/components/mapComponent/domain/usecases/get_places_suggestions_usecase.dart'
     as _i52;
+import 'package:efashion_flutter/components/mapComponent/domain/usecases/get_places_suggestions_usecase.dart'
+    as _i53;
 import 'package:efashion_flutter/components/mapComponent/domain/usecases/get_user_location_usecase.dart'
-    as _i58;
+    as _i59;
 import 'package:efashion_flutter/components/mapComponent/domain/usecases/update_user_location_usecase.dart'
     as _i32;
 import 'package:efashion_flutter/components/productComponent/data/datasources/product_remote_data_source.dart'
@@ -72,29 +72,29 @@ import 'package:efashion_flutter/components/productComponent/domain/repositories
 import 'package:efashion_flutter/components/productComponent/domain/usecases/favorite/add_product_to_favorite_list_usecase.dart'
     as _i42;
 import 'package:efashion_flutter/components/productComponent/domain/usecases/favorite/get_favorite_products_usecase.dart'
-    as _i50;
+    as _i51;
 import 'package:efashion_flutter/components/productComponent/domain/usecases/favorite/get_user_favorite_products_ids.dart'
-    as _i57;
+    as _i58;
 import 'package:efashion_flutter/components/productComponent/domain/usecases/favorite/remove_product_from_favorite_list_usecase.dart'
     as _i28;
 import 'package:efashion_flutter/components/productComponent/domain/usecases/home/add_or_edit_product_review_usecase.dart'
     as _i40;
 import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_all_brands_products_usecase.dart'
-    as _i45;
+    as _i46;
 import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_brand_products_usecase.dart'
-    as _i47;
-import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_brands_usecase.dart'
     as _i48;
-import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_categories_usecase.dart'
+import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_brands_usecase.dart'
     as _i49;
+import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_categories_usecase.dart'
+    as _i50;
 import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_product_details_usecase.dart'
-    as _i53;
-import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_product_reviews_and_ratings_usecase.dart'
     as _i54;
-import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_products_offers_usecase.dart'
+import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_product_reviews_and_ratings_usecase.dart'
     as _i55;
+import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_products_offers_usecase.dart'
+    as _i56;
 import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_user_review_usecase.dart'
-    as _i59;
+    as _i60;
 import 'package:efashion_flutter/components/productComponent/domain/usecases/search/search_for_product_usecase.dart'
     as _i30;
 import 'package:efashion_flutter/components/userComponent/data/datasources/local/user_local_data_source.dart'
@@ -106,36 +106,38 @@ import 'package:efashion_flutter/components/userComponent/data/repositories/user
 import 'package:efashion_flutter/components/userComponent/domain/repositories/user_repository.dart'
     as _i36;
 import 'package:efashion_flutter/components/userComponent/domain/usecases/change_app_theme_usecase.dart'
-    as _i43;
-import 'package:efashion_flutter/components/userComponent/domain/usecases/get_app_theme_usecase.dart'
-    as _i46;
-import 'package:efashion_flutter/components/userComponent/domain/usecases/get_user_data_usecase.dart'
-    as _i56;
-import 'package:efashion_flutter/presentation/account/bloc/account_cubit/account_cubit.dart'
-    as _i66;
-import 'package:efashion_flutter/presentation/account/bloc/maps_bloc/map_bloc.dart'
-    as _i62;
-import 'package:efashion_flutter/presentation/auth/cubits/forget_password/forget_password_cubit.dart'
     as _i44;
-import 'package:efashion_flutter/presentation/auth/cubits/login/login_cubit.dart'
-    as _i61;
-import 'package:efashion_flutter/presentation/auth/cubits/signup/signup_cubit.dart'
-    as _i64;
-import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart'
+import 'package:efashion_flutter/components/userComponent/domain/usecases/get_app_theme_usecase.dart'
+    as _i47;
+import 'package:efashion_flutter/components/userComponent/domain/usecases/get_user_data_usecase.dart'
+    as _i57;
+import 'package:efashion_flutter/presentation/account/bloc/account_cubit/account_cubit.dart'
     as _i67;
-import 'package:efashion_flutter/presentation/product/bloc/discover_cubit/discover_bloc.dart'
-    as _i68;
-import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart'
-    as _i69;
-import 'package:efashion_flutter/presentation/product/bloc/home_bloc/home_bloc.dart'
-    as _i60;
-import 'package:efashion_flutter/presentation/product/bloc/search_bloc/search_bloc.dart'
+import 'package:efashion_flutter/presentation/account/bloc/maps_bloc/map_bloc.dart'
     as _i63;
-import 'package:efashion_flutter/presentation/shared/bloc/theme_cubit/theme_cubit.dart'
+import 'package:efashion_flutter/presentation/auth/cubits/forget_password/forget_password_cubit.dart'
+    as _i45;
+import 'package:efashion_flutter/presentation/auth/cubits/login/login_cubit.dart'
+    as _i62;
+import 'package:efashion_flutter/presentation/auth/cubits/signup/signup_cubit.dart'
     as _i65;
+import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart'
+    as _i68;
+import 'package:efashion_flutter/presentation/product/bloc/discover_cubit/discover_bloc.dart'
+    as _i69;
+import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart'
+    as _i70;
+import 'package:efashion_flutter/presentation/product/bloc/home_bloc/home_bloc.dart'
+    as _i61;
+import 'package:efashion_flutter/presentation/product/bloc/search_bloc/search_bloc.dart'
+    as _i64;
+import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart'
+    as _i43;
+import 'package:efashion_flutter/presentation/shared/bloc/theme_cubit/theme_cubit.dart'
+    as _i66;
 import 'package:efashion_flutter/presentation/shared/bloc/tokens_cubit/tokens_cubit.dart'
     as _i31;
-import 'package:efashion_flutter/register_module.dart' as _i70;
+import 'package:efashion_flutter/register_module.dart' as _i71;
 import 'package:efashion_flutter/shared/api/api_consumer.dart' as _i3;
 import 'package:efashion_flutter/shared/api/dio_interceptor.dart' as _i14;
 import 'package:efashion_flutter/shared/api/dio_logger.dart' as _i15;
@@ -237,91 +239,98 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i41.AddProductToCartUseCase(gh<_i10.CartRepository>()));
     gh.lazySingleton<_i42.AddProductToFavoriteListUseCase>(() =>
         _i42.AddProductToFavoriteListUseCase(gh<_i25.ProductRepository>()));
-    gh.lazySingleton<_i43.ChangeAppThemeUseCase>(() =>
-        _i43.ChangeAppThemeUseCase(themeRepository: gh<_i36.UserRepository>()));
-    gh.factory<_i44.ForgetPasswordCubit>(() => _i44.ForgetPasswordCubit(
+    gh.factory<_i43.CartCubit>(() => _i43.CartCubit(
+          gh<_i41.AddProductToCartUseCase>(),
+          gh<_i27.RemoveProductFromCartUseCase>(),
+          gh<_i19.GetCartProductsUseCase>(),
+          gh<_i16.EditProductQuantityUseCase>(),
+          gh<_i18.GetAccessTokenUseCase>(),
+        ));
+    gh.lazySingleton<_i44.ChangeAppThemeUseCase>(() =>
+        _i44.ChangeAppThemeUseCase(themeRepository: gh<_i36.UserRepository>()));
+    gh.factory<_i45.ForgetPasswordCubit>(() => _i45.ForgetPasswordCubit(
           gh<_i17.ForgetPasswordUseCase>(),
           gh<_i39.VerifyOtpUseCase>(),
           gh<_i29.ResetPasswordUseCase>(),
         ));
-    gh.lazySingleton<_i45.GetAllBrandsProductsUseCase>(
-        () => _i45.GetAllBrandsProductsUseCase(gh<_i25.ProductRepository>()));
-    gh.lazySingleton<_i46.GetAppThemeUseCase>(() =>
-        _i46.GetAppThemeUseCase(themeRepository: gh<_i36.UserRepository>()));
-    gh.lazySingleton<_i47.GetBrandProductsUseCase>(
-        () => _i47.GetBrandProductsUseCase(gh<_i25.ProductRepository>()));
-    gh.lazySingleton<_i48.GetBrandsUseCase>(
-        () => _i48.GetBrandsUseCase(gh<_i25.ProductRepository>()));
-    gh.lazySingleton<_i49.GetCategoriesUseCase>(
-        () => _i49.GetCategoriesUseCase(gh<_i25.ProductRepository>()));
-    gh.lazySingleton<_i50.GetFavoriteProductsUseCase>(
-        () => _i50.GetFavoriteProductsUseCase(gh<_i25.ProductRepository>()));
-    gh.lazySingleton<_i51.GetPlaceLatitudeAndLongitudeUseCase>(() =>
-        _i51.GetPlaceLatitudeAndLongitudeUseCase(gh<_i21.MapRepository>()));
-    gh.lazySingleton<_i52.GetPlacesSuggestionsUseCase>(
-        () => _i52.GetPlacesSuggestionsUseCase(gh<_i21.MapRepository>()));
-    gh.lazySingleton<_i53.GetProductDetailsUseCase>(
-        () => _i53.GetProductDetailsUseCase(gh<_i25.ProductRepository>()));
-    gh.lazySingleton<_i54.GetProductReviewsAndRatingsUseCase>(() =>
-        _i54.GetProductReviewsAndRatingsUseCase(gh<_i25.ProductRepository>()));
-    gh.lazySingleton<_i55.GetProductsOffersUseCase>(
-        () => _i55.GetProductsOffersUseCase(gh<_i25.ProductRepository>()));
-    gh.lazySingleton<_i56.GetUserDataUseCase>(
-        () => _i56.GetUserDataUseCase(gh<_i36.UserRepository>()));
-    gh.lazySingleton<_i57.GetUserFavoriteProductsIdsUseCase>(() =>
-        _i57.GetUserFavoriteProductsIdsUseCase(gh<_i25.ProductRepository>()));
-    gh.lazySingleton<_i58.GetUserLocationUseCase>(
-        () => _i58.GetUserLocationUseCase(gh<_i21.MapRepository>()));
-    gh.lazySingleton<_i59.GetUserProductReviewUseCase>(
-        () => _i59.GetUserProductReviewUseCase(gh<_i25.ProductRepository>()));
-    gh.factory<_i60.HomeBloc>(() => _i60.HomeBloc(
-          gh<_i49.GetCategoriesUseCase>(),
-          gh<_i55.GetProductsOffersUseCase>(),
-          gh<_i48.GetBrandsUseCase>(),
-          gh<_i45.GetAllBrandsProductsUseCase>(),
+    gh.lazySingleton<_i46.GetAllBrandsProductsUseCase>(
+        () => _i46.GetAllBrandsProductsUseCase(gh<_i25.ProductRepository>()));
+    gh.lazySingleton<_i47.GetAppThemeUseCase>(() =>
+        _i47.GetAppThemeUseCase(themeRepository: gh<_i36.UserRepository>()));
+    gh.lazySingleton<_i48.GetBrandProductsUseCase>(
+        () => _i48.GetBrandProductsUseCase(gh<_i25.ProductRepository>()));
+    gh.lazySingleton<_i49.GetBrandsUseCase>(
+        () => _i49.GetBrandsUseCase(gh<_i25.ProductRepository>()));
+    gh.lazySingleton<_i50.GetCategoriesUseCase>(
+        () => _i50.GetCategoriesUseCase(gh<_i25.ProductRepository>()));
+    gh.lazySingleton<_i51.GetFavoriteProductsUseCase>(
+        () => _i51.GetFavoriteProductsUseCase(gh<_i25.ProductRepository>()));
+    gh.lazySingleton<_i52.GetPlaceLatitudeAndLongitudeUseCase>(() =>
+        _i52.GetPlaceLatitudeAndLongitudeUseCase(gh<_i21.MapRepository>()));
+    gh.lazySingleton<_i53.GetPlacesSuggestionsUseCase>(
+        () => _i53.GetPlacesSuggestionsUseCase(gh<_i21.MapRepository>()));
+    gh.lazySingleton<_i54.GetProductDetailsUseCase>(
+        () => _i54.GetProductDetailsUseCase(gh<_i25.ProductRepository>()));
+    gh.lazySingleton<_i55.GetProductReviewsAndRatingsUseCase>(() =>
+        _i55.GetProductReviewsAndRatingsUseCase(gh<_i25.ProductRepository>()));
+    gh.lazySingleton<_i56.GetProductsOffersUseCase>(
+        () => _i56.GetProductsOffersUseCase(gh<_i25.ProductRepository>()));
+    gh.lazySingleton<_i57.GetUserDataUseCase>(
+        () => _i57.GetUserDataUseCase(gh<_i36.UserRepository>()));
+    gh.lazySingleton<_i58.GetUserFavoriteProductsIdsUseCase>(() =>
+        _i58.GetUserFavoriteProductsIdsUseCase(gh<_i25.ProductRepository>()));
+    gh.lazySingleton<_i59.GetUserLocationUseCase>(
+        () => _i59.GetUserLocationUseCase(gh<_i21.MapRepository>()));
+    gh.lazySingleton<_i60.GetUserProductReviewUseCase>(
+        () => _i60.GetUserProductReviewUseCase(gh<_i25.ProductRepository>()));
+    gh.factory<_i61.HomeBloc>(() => _i61.HomeBloc(
+          gh<_i50.GetCategoriesUseCase>(),
+          gh<_i56.GetProductsOffersUseCase>(),
+          gh<_i49.GetBrandsUseCase>(),
+          gh<_i46.GetAllBrandsProductsUseCase>(),
         ));
-    gh.factory<_i61.LoginCubit>(
-        () => _i61.LoginCubit(gh<_i34.UserLoginUseCase>()));
-    gh.factory<_i62.MapBloc>(() => _i62.MapBloc(
-          gh<_i52.GetPlacesSuggestionsUseCase>(),
-          gh<_i51.GetPlaceLatitudeAndLongitudeUseCase>(),
-          gh<_i58.GetUserLocationUseCase>(),
+    gh.factory<_i62.LoginCubit>(
+        () => _i62.LoginCubit(gh<_i34.UserLoginUseCase>()));
+    gh.factory<_i63.MapBloc>(() => _i63.MapBloc(
+          gh<_i53.GetPlacesSuggestionsUseCase>(),
+          gh<_i52.GetPlaceLatitudeAndLongitudeUseCase>(),
+          gh<_i59.GetUserLocationUseCase>(),
           gh<_i32.UpdateUserLocationUseCase>(),
           gh<_i18.GetAccessTokenUseCase>(),
         ));
-    gh.factory<_i63.SearchBloc>(
-        () => _i63.SearchBloc(gh<_i30.SearchForProductsUseCase>()));
-    gh.factory<_i64.SignupCubit>(
-        () => _i64.SignupCubit(gh<_i38.UserSignUpUseCase>()));
-    gh.factory<_i65.ThemeCubit>(() => _i65.ThemeCubit(
-          gh<_i46.GetAppThemeUseCase>(),
-          gh<_i43.ChangeAppThemeUseCase>(),
+    gh.factory<_i64.SearchBloc>(
+        () => _i64.SearchBloc(gh<_i30.SearchForProductsUseCase>()));
+    gh.factory<_i65.SignupCubit>(
+        () => _i65.SignupCubit(gh<_i38.UserSignUpUseCase>()));
+    gh.factory<_i66.ThemeCubit>(() => _i66.ThemeCubit(
+          gh<_i47.GetAppThemeUseCase>(),
+          gh<_i44.ChangeAppThemeUseCase>(),
         ));
-    gh.factory<_i66.AccountCubit>(() => _i66.AccountCubit(
-          gh<_i56.GetUserDataUseCase>(),
+    gh.factory<_i67.AccountCubit>(() => _i67.AccountCubit(
+          gh<_i57.GetUserDataUseCase>(),
           gh<_i18.GetAccessTokenUseCase>(),
         ));
-    gh.factory<_i67.DetailsCubit>(() => _i67.DetailsCubit(
-          gh<_i53.GetProductDetailsUseCase>(),
-          gh<_i54.GetProductReviewsAndRatingsUseCase>(),
+    gh.factory<_i68.DetailsCubit>(() => _i68.DetailsCubit(
+          gh<_i54.GetProductDetailsUseCase>(),
+          gh<_i55.GetProductReviewsAndRatingsUseCase>(),
           gh<_i40.AddOrEditProductReviewUseCase>(),
-          gh<_i59.GetUserProductReviewUseCase>(),
+          gh<_i60.GetUserProductReviewUseCase>(),
           gh<_i18.GetAccessTokenUseCase>(),
         ));
-    gh.factory<_i68.DiscoverBloc>(() => _i68.DiscoverBloc(
-          gh<_i47.GetBrandProductsUseCase>(),
-          gh<_i55.GetProductsOffersUseCase>(),
+    gh.factory<_i69.DiscoverBloc>(() => _i69.DiscoverBloc(
+          gh<_i48.GetBrandProductsUseCase>(),
+          gh<_i56.GetProductsOffersUseCase>(),
         ));
-    gh.factory<_i69.FavoriteCubit>(() => _i69.FavoriteCubit(
+    gh.factory<_i70.FavoriteCubit>(() => _i70.FavoriteCubit(
           gh<_i18.GetAccessTokenUseCase>(),
-          gh<_i57.GetUserFavoriteProductsIdsUseCase>(),
+          gh<_i58.GetUserFavoriteProductsIdsUseCase>(),
           gh<_i42.AddProductToFavoriteListUseCase>(),
           gh<_i28.RemoveProductFromFavoriteListUseCase>(),
-          gh<_i53.GetProductDetailsUseCase>(),
-          gh<_i50.GetFavoriteProductsUseCase>(),
+          gh<_i54.GetProductDetailsUseCase>(),
+          gh<_i51.GetFavoriteProductsUseCase>(),
         ));
     return this;
   }
 }
 
-class _$RegisterModule extends _i70.RegisterModule {}
+class _$RegisterModule extends _i71.RegisterModule {}

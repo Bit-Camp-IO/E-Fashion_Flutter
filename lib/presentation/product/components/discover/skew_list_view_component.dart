@@ -14,11 +14,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SkewListViewComponent extends StatefulWidget {
-  const SkewListViewComponent(
-      {super.key,
-      required this.discoverScreenType,
-      this.categories,
-      required this.brandId});
+  const SkewListViewComponent({
+    super.key,
+    required this.discoverScreenType,
+    this.categories,
+    required this.brandId,
+  });
 
   final DiscoverScreenType discoverScreenType;
   final String? categories;
@@ -30,6 +31,9 @@ class SkewListViewComponent extends StatefulWidget {
 
 class _SkewListViewComponentState extends State<SkewListViewComponent> {
   late final ScrollController _scrollController;
+  int cartQuantity = 1;
+  String? selectedSize;
+  String? selectedColor;
 
   void _onScroll() {
     final maxScroll = _scrollController.position.maxScrollExtent;
@@ -69,9 +73,9 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
                 controller: _scrollController,
                 itemBuilder: (context, index) {
                   if (index >= state.products.length) {
-                    if(state.hasProductsListReachedMax){
+                    if (state.hasProductsListReachedMax) {
                       return const SizedBox.shrink();
-                    }else{
+                    } else {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
@@ -80,7 +84,8 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
                     final String productId = state.products[index].id;
                     final String productImage = state.products[index].imageUrl;
                     final String productName = state.products[index].title;
-                    final int productPrice = state.products[index].price.toInt();
+                    final int productPrice =
+                        state.products[index].price.toInt();
                     if (index == 0) {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
@@ -90,7 +95,8 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
                               productImage: productImage,
                               productName: productName,
                               productPrice: productPrice,
-                              isFavorite: state.favoritesIds.contains(productId),
+                              isFavorite:
+                                  state.favoritesIds.contains(productId),
                               onTap: () {
                                 context.pushRoute(
                                   ProductDetailsRoute(
@@ -102,8 +108,8 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
                                 context
                                     .read<FavoriteCubit>()
                                     .addOrRemoveProductFromFavoriteListEvent(
-                                  productId: productId,
-                                );
+                                      productId: productId,
+                                    );
                               },
                               onCartTap: () {
                                 showModalBottomSheet(
@@ -111,21 +117,20 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
                                   builder: (context) {
                                     return BlocProvider(
                                       create: (context) => getIt<DetailsCubit>()
-                                        ..getProductDetails(productId: productId),
-                                      child:
-                                      BlocBuilder<DetailsCubit, DetailsState>(
+                                        ..getProductDetails(
+                                            productId: productId),
+                                      child: BlocBuilder<DetailsCubit,
+                                          DetailsState>(
                                         buildWhen: (previous, current) =>
-                                        previous.productDetailsState !=
+                                            previous.productDetailsState !=
                                             current.productDetailsState,
                                         builder: (context, state) {
                                           return CartBottomSheet(
                                             productName: state.productDetails.title,
-                                            productPrice:
-                                            state.productDetails.price.toInt(),
-                                            productColors:
-                                            state.productDetails.colors,
-                                            productSizes:
-                                            state.productDetails.sizes,
+                                            productId: state.productDetails.id,
+                                            productPrice: state.productDetails.price.toInt(),
+                                            productColors: state.productDetails.colors,
+                                            productSizes: state.productDetails.sizes,
                                             productStock: state.productDetails.stock,
                                           );
                                         },
@@ -147,7 +152,8 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
                               productImage: productImage,
                               productName: productName,
                               productPrice: productPrice,
-                              isFavorite: state.favoritesIds.contains(productId),
+                              isFavorite:
+                                  state.favoritesIds.contains(productId),
                               onTap: () {
                                 context.pushRoute(
                                   ProductDetailsRoute(
@@ -159,7 +165,7 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
                                 context
                                     .read<FavoriteCubit>()
                                     .addOrRemoveProductFromFavoriteListEvent(
-                                    productId: productId);
+                                        productId: productId);
                               },
                               onCartTap: () {
                                 showModalBottomSheet(
@@ -167,21 +173,20 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
                                   builder: (context) {
                                     return BlocProvider(
                                       create: (context) => getIt<DetailsCubit>()
-                                        ..getProductDetails(productId: productId),
-                                      child:
-                                      BlocBuilder<DetailsCubit, DetailsState>(
+                                        ..getProductDetails(
+                                            productId: productId),
+                                      child: BlocBuilder<DetailsCubit,
+                                          DetailsState>(
                                         buildWhen: (previous, current) =>
-                                        previous.productDetailsState !=
+                                            previous.productDetailsState !=
                                             current.productDetailsState,
                                         builder: (context, state) {
                                           return CartBottomSheet(
                                             productName: state.productDetails.title,
-                                            productPrice:
-                                            state.productDetails.price.toInt(),
-                                            productColors:
-                                            state.productDetails.colors,
-                                            productSizes:
-                                            state.productDetails.sizes,
+                                            productId: state.productDetails.id,
+                                            productPrice: state.productDetails.price.toInt(),
+                                            productColors: state.productDetails.colors,
+                                            productSizes: state.productDetails.sizes,
                                             productStock: state.productDetails.stock,
                                           );
                                         },

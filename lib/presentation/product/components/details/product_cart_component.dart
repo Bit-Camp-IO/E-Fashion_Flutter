@@ -1,9 +1,13 @@
+import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/product_color.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/product_pieces_counter.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/product_size.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/snack_bar.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -16,7 +20,10 @@ class ProductCartComponent extends StatefulWidget {
     required this.productDescription,
     required this.productStock,
     required this.productPrice,
-    required this.addToBag,
+    required this.onAddToBagTap,
+    required this.selectedColor,
+    required this.selectedSize,
+    required this.cartQuantity,
   });
 
   final String productName;
@@ -25,16 +32,33 @@ class ProductCartComponent extends StatefulWidget {
   final String productDescription;
   final int productStock;
   final int productPrice;
-  final void Function() addToBag;
+
+  final void Function() onAddToBagTap;
+  final void Function(String? color) selectedColor;
+  final void Function(String? size) selectedSize;
+  final void Function(int quantity) cartQuantity;
 
   @override
   State<ProductCartComponent> createState() => _ProductCartComponentState();
 }
 
 class _ProductCartComponentState extends State<ProductCartComponent> {
-  final ValueNotifier<int> _productPieces = ValueNotifier(0);
-  int _selectedColorIndex = 0;
-  int _selectedSizeIndex = 0;
+  final ValueNotifier<int> productPieces = ValueNotifier(1);
+  ValueNotifier<int> selectedColorIndex = ValueNotifier(0);
+  ValueNotifier<int> selectedSizeIndex = ValueNotifier(0);
+
+  bool isBagButtonLoading = false;
+
+  @override
+  void initState() {
+    widget.productColors.isNotEmpty
+        ? widget.selectedColor(widget.productColors[0].hex)
+        : widget.selectedColor(null);
+    widget.productSizes.isNotEmpty
+        ? widget.selectedSize(widget.productSizes[0])
+        : widget.selectedSize(null);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,14 +97,17 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
                         scrollDirection: Axis.horizontal,
                         children: List.generate(
                           widget.productColors.length,
-                          (colorIndex) => ProductColor(
-                            color: widget.productColors[colorIndex].hex,
-                            onTap: () {
-                              setState(() {
-                                _selectedColorIndex = colorIndex;
-                              });
-                            },
-                            isSelected: colorIndex == _selectedColorIndex,
+                          (colorIndex) => ValueListenableBuilder(
+                            valueListenable: selectedColorIndex,
+                            builder: (context, value, child) => SelectableProductColor(
+                              color: widget.productColors[colorIndex].hex,
+                              onTap: () {
+                                selectedColorIndex.value = colorIndex;
+                                widget.selectedColor(
+                                    widget.productColors[colorIndex].hex);
+                              },
+                              isSelected: colorIndex == value,
+                            ),
                           ),
                         ),
                       ),
@@ -106,14 +133,18 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
                         scrollDirection: Axis.horizontal,
                         children: List.generate(
                           widget.productSizes.length,
-                          (sizeIndex) => ProductSize(
-                            size: widget.productSizes[sizeIndex],
-                            onTap: () {
-                              setState(() {
-                                _selectedSizeIndex = sizeIndex;
-                              });
-                            },
-                            isSelected: sizeIndex == _selectedSizeIndex,
+                          (sizeIndex) => ValueListenableBuilder(
+                            valueListenable: selectedSizeIndex,
+                            builder: (context, value, child) => SelectableProductSize(
+                              size: widget.productSizes[sizeIndex],
+                              onTap: () {
+                                selectedSizeIndex.value = sizeIndex;
+                                widget.selectedSize(
+                                  widget.productSizes[sizeIndex],
+                                );
+                              },
+                              isSelected: sizeIndex == value,
+                            ),
                           ),
                         ),
                       ),
@@ -130,16 +161,16 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
                     ),
               ),
               ValueListenableBuilder(
-                valueListenable: _productPieces,
+                valueListenable: productPieces,
                 builder: (context, value, child) => ProductPiecesCounter(
                   onIncrementPress: () {
-                    if (_productPieces.value != widget.productStock) {
-                      _productPieces.value++;
+                    if (productPieces.value != widget.productStock) {
+                      productPieces.value++;
                     }
                   },
                   onDecrementPress: () {
-                    if (_productPieces.value != 0) {
-                      _productPieces.value--;
+                    if (productPieces.value != 0) {
+                      productPieces.value--;
                     }
                   },
                   productPieces: value,
@@ -158,12 +189,30 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
           ),
           SizedBox(height: 20.h),
           Center(
-            child: PrimaryButton(
-              onTap: widget.addToBag,
-              width: 312.w,
-              height: 46.h,
-              buttonTitle: StringsManager.addToBag,
-              buttonIcon: const Icon(Iconsax.bag_2, color: Colors.white),
+            child: BlocConsumer<CartCubit, CartState>(
+              listenWhen: (previous, current) => previous.cartState != current.cartState,
+              listener: (context, state) {
+                if(state.cartState == CubitState.loading){
+                  isBagButtonLoading = true;
+                }else if (state.cartState == CubitState.success){
+                  isBagButtonLoading = false;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    customSnackBar(customSnackBarType: CustomSnackBarType.success, message: state.cartMessage, context: context),
+                  );
+                }else{
+                  isBagButtonLoading = false;
+                }
+              },
+              builder: (context, state) {
+                return PrimaryButton(
+                  onTap: widget.onAddToBagTap,
+                  width: 312.w,
+                  height: 46.h,
+                  buttonTitle: StringsManager.addToBag,
+                  isLoading: isBagButtonLoading,
+                  buttonIcon: const Icon(Iconsax.bag_2, color: Colors.white),
+                );
+              },
             ),
           ),
           SizedBox(height: 50.h),
@@ -171,9 +220,12 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
       ),
     );
   }
+
   @override
   void dispose() {
-    _productPieces.dispose();
+    selectedSizeIndex.dispose();
+    selectedColorIndex.dispose();
+    productPieces.dispose();
     super.dispose();
   }
 }

@@ -19,7 +19,6 @@ class ListViewComponent extends StatefulWidget {
 
 class _ListViewComponentState extends State<ListViewComponent> {
   late final ScrollController _scrollController;
-
 void _onScroll() {
   final maxScroll = _scrollController.position.maxScrollExtent;
   final currentScroll = _scrollController.offset;
@@ -112,20 +111,15 @@ void _onScroll() {
                                     ..getProductDetails(productId: productId),
                                   child:
                                       BlocBuilder<DetailsCubit, DetailsState>(
-                                    buildWhen: (previous, current) =>
-                                        previous.productDetailsState !=
-                                        current.productDetailsState,
+                                    buildWhen: (previous, current) => previous.productDetailsState != current.productDetailsState,
                                     builder: (context, state) {
                                       return CartBottomSheet(
                                         productName: state.productDetails.title,
-                                        productPrice:
-                                            state.productDetails.price.toInt(),
-                                        productColors:
-                                            state.productDetails.colors,
-                                        productSizes:
-                                            state.productDetails.sizes,
-                                        productStock:
-                                            state.productDetails.stock,
+                                        productId: state.productDetails.id,
+                                        productPrice: state.productDetails.price.toInt(),
+                                        productColors: state.productDetails.colors,
+                                        productSizes: state.productDetails.sizes,
+                                        productStock: state.productDetails.stock,
                                       );
                                     },
                                   ),

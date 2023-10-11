@@ -67,6 +67,7 @@ class _OffersCarouselComponentState extends State<OffersCarouselComponent> {
                                 builder: (context, state) {
                                   return CartBottomSheet(
                                     productName: state.productDetails.title,
+                                    productId: state.productDetails.id,
                                     productPrice: state.productDetails.price.toInt(),
                                     productColors: state.productDetails.colors,
                                     productSizes: state.productDetails.sizes,

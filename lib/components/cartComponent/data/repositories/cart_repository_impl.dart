@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:efashion_flutter/components/cartComponent/data/datasources/cart_datasource.dart';
-import 'package:efashion_flutter/components/cartComponent/data/models/cart_product_model.dart';
+import 'package:efashion_flutter/components/cartComponent/data/models/cart_model.dart';
 import 'package:efashion_flutter/components/cartComponent/domain/repositories/cart_repository.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:efashion_flutter/shared/error/failure.dart';
@@ -11,9 +11,9 @@ class CartRepositoryImpl extends CartRepository{
 
   CartRepositoryImpl(this._cartDataSource);
   @override
-  Future<Either<Failure, String>> addProductToCart({required String userAccessToken, required String productId, required String productSize, required String productColor, required int productQuantity}) async{
+  Future<Either<Failure, CartModel>> addProductToCart({required String userAccessToken, required String productId, required String? productSize, required String? productColor, required int productQuantity}) async{
     try{
-    final String response = await _cartDataSource.addProductToCart(userAccessToken: userAccessToken, productId: productId, productSize: productSize, productColor: productColor, productQuantity: productQuantity);
+    final CartModel response = await _cartDataSource.addProductToCart(userAccessToken: userAccessToken, productId: productId, productSize: productSize, productColor: productColor, productQuantity: productQuantity);
     return right(response);
     }on ServerException catch(exception){
       return left(Failure(exception.message!));
@@ -21,9 +21,9 @@ class CartRepositoryImpl extends CartRepository{
   }
 
   @override
-  Future<Either<Failure, void>> editProductQuantity({required String userAccessToken, required String productId, required String newQuantity}) async{
+  Future<Either<Failure, CartModel>> editProductQuantity({required String userAccessToken, required String productId, required int newQuantity}) async{
     try{
-    final void response = await _cartDataSource.editProductQuantity(userAccessToken: userAccessToken, productId: productId, newQuantity: newQuantity);
+    final CartModel response = await _cartDataSource.editProductQuantity(userAccessToken: userAccessToken, productId: productId, newQuantity: newQuantity);
     return right(response);
     }on ServerException catch(exception){
       return left(Failure(exception.message!));
@@ -31,9 +31,9 @@ class CartRepositoryImpl extends CartRepository{
   }
 
   @override
-  Future<Either<Failure, List<CartProductModel>>> getCartProducts({required String userAccessToken}) async{
+  Future<Either<Failure, CartModel>> getCartProducts({required String userAccessToken}) async{
     try{
-    final List<CartProductModel> cartProducts = await _cartDataSource.getCartProducts(userAccessToken: userAccessToken);
+    final CartModel cartProducts = await _cartDataSource.getCartProducts(userAccessToken: userAccessToken);
     return right(cartProducts);
     }on ServerException catch(exception){
       return left(Failure(exception.message!));
@@ -41,9 +41,9 @@ class CartRepositoryImpl extends CartRepository{
   }
 
   @override
-  Future<Either<Failure, String>> removeProductFromCart({required String userAccessToken, required String productId}) async{
+  Future<Either<Failure, CartModel>> removeProductFromCart({required String userAccessToken, required String productId}) async{
     try{
-    final String response = await _cartDataSource.removeProductFromCart(userAccessToken: userAccessToken, productId: productId);
+    final CartModel response = await _cartDataSource.removeProductFromCart(userAccessToken: userAccessToken, productId: productId);
     return Right(response);
     }on ServerException catch(exception){
       return left(Failure(exception.message!));

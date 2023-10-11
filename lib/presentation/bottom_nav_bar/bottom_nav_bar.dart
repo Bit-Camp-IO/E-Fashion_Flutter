@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/account/bloc/account_cubit/account_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart';
+import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/custom_tick.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +22,13 @@ class BottomNavBar extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => getIt<FavoriteCubit>()..getUserFavoriteIdListEvent()..getFavoriteProductsList()),
+        BlocProvider(
+            create: (context) => getIt<FavoriteCubit>()
+              ..getUserFavoriteIdListEvent()
+              ..getFavoriteProductsList()),
         BlocProvider(create: (context) => getIt<AccountCubit>()..getUserData()),
+        BlocProvider(
+            create: (context) => getIt<CartCubit>()..getCartProducts()),
       ],
       child: this,
     );
@@ -90,20 +97,38 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     }
                     _lastTapTime = timeNow;
                   },
-                  items: const [
-                    BottomNavigationBarItem(
+                  items: [
+                    const BottomNavigationBarItem(
                       icon: Icon(Iconsax.home),
                       label: StringsManager.homeTabLabel,
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Iconsax.bag_2),
+                      icon: Stack(
+                        children: [
+                          const Icon(Iconsax.bag_2),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: BlocBuilder<CartCubit, CartState>(
+                              buildWhen: (previous, current) =>
+                                  previous.cart.products !=
+                                  current.cart.products,
+                              builder: (context, state) {
+                                return CustomTick(
+                                  isTickVisible: state.cart.products.isNotEmpty,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                       label: StringsManager.cartTabLabel,
                     ),
-                    BottomNavigationBarItem(
+                    const BottomNavigationBarItem(
                       icon: Icon(Iconsax.heart),
                       label: StringsManager.favoriteTabLabel,
                     ),
-                    BottomNavigationBarItem(
+                    const BottomNavigationBarItem(
                       icon: Icon(Iconsax.user),
                       label: StringsManager.accountTabLabel,
                     ),

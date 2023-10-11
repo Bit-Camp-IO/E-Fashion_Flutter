@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProductSize extends StatelessWidget {
-  const ProductSize({
+class SelectableProductSize extends StatelessWidget {
+  const SelectableProductSize({
     super.key,
     required this.size,
     required this.onTap,
