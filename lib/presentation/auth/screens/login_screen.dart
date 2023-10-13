@@ -7,6 +7,7 @@ import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/auth/components/shared/auth_clipped_container.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_text_form_field.dart';
+import 'package:efashion_flutter/shared/util/validation_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,7 +31,7 @@ class LoginScreen extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _isChecked = false;
+  ValueNotifier<bool> isChecked = ValueNotifier(false);
   bool _isLoading = false;
   late GlobalKey<FormState> _formKey;
   late String email;
@@ -99,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           email = value;
                         }
                       },
+                      validator: ValidationManager.emailValidator(),
                     ),
                     CustomTextFormField(
                       label: StringsManager.password,
@@ -114,13 +116,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Row(
                       children: [
-                        Checkbox(
-                          value: _isChecked,
-                          onChanged: (newBool) {
-                            setState(() {
-                              _isChecked = newBool!;
-                            });
-                          },
+                        ValueListenableBuilder(
+                          valueListenable: isChecked,
+                          builder: (context, value, child) => Checkbox(
+                            value: value,
+                            onChanged: (newBool) {
+                                isChecked.value = newBool!;
+                            },
+                          ),
                         ),
                         Text(
                           StringsManager.rememberMe,
@@ -200,6 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     _formKey.currentState?.dispose();
+    isChecked.dispose();
     super.dispose();
   }
 }

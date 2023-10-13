@@ -57,7 +57,7 @@ class FavoriteCard extends StatelessWidget {
           ),
           Positioned(
             left: 0,
-            right: 10.w,
+            right: 0,
             bottom: 40.h,
             child: GestureDetector(
               onTap: onCartTap,

@@ -5,7 +5,7 @@ import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/auth/components/shared/auth_clipped_container.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_text_form_field.dart';
-import 'package:efashion_flutter/shared/util/strings_manager.dart';
+import 'package:efashion_flutter/shared/util/validation_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -109,28 +109,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           password = value;
                         }
                       },
-                      validator: (value) {
-                        final lowercaseRegex = RegExp(r'[a-z]');
-                        final uppercaseRegex = RegExp(r'[A-Z]');
-                        final digitRegex = RegExp(r'[0-9]');
-                        if (value == null || value.isEmpty) {
-                          return 'Password is required';
-                        } else if (_passwordController.text !=
-                                _confirmPasswordController.text &&
-                            _confirmPasswordController.text.isNotEmpty) {
-                          return "Passwords don't match";
-                        } else if (value.length < 8) {
-                          return 'Password is too short (minimum 8 chars)';
-                        } else if (!lowercaseRegex.hasMatch(value)) {
-                          return 'Password must contain one lowercase letter';
-                        } else if (!uppercaseRegex.hasMatch(value)) {
-                          return 'Password must contain one uppercase letter';
-                        } else if (!digitRegex.hasMatch(value)) {
-                          return 'Password must contain one digit';
-                        } else {
-                          return null;
-                        }
-                      },
+                      validator: ValidationManager.passwordValidator(
+                        passwordController: _passwordController,
+                        confirmPasswordController: _confirmPasswordController,
+                      ),
                     ),
                     CustomTextFormField(
                       label: "Confirm Password",
@@ -144,16 +126,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           confirmPassword = value;
                         }
                       },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return StringsManager.passwordIsRequired;
-                        } else if (_passwordController.text !=
-                            _confirmPasswordController.text) {
-                          return StringsManager.passwordNoMatch;
-                        } else {
-                          return null;
-                        }
-                      },
+                      validator: ValidationManager.confirmPasswordValidator(
+                        passwordController: _passwordController,
+                        confirmPasswordController: _confirmPasswordController,
+                      ),
                     ),
                     SizedBox(
                       height: 25.h,

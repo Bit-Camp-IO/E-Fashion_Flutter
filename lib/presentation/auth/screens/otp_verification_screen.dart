@@ -114,9 +114,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               ),
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .errorContainer),
+                              color:
+                                  Theme.of(context).colorScheme.errorContainer,
+                            ),
                             borderRadius: const BorderRadius.all(
                               Radius.circular(10.0),
                             ).r,
@@ -130,8 +130,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   ),
                   OtpTimer(
                     onResendPress: () {
-                      final forgetPasswordCubit = context.read<ForgetPasswordCubit>();
-                     forgetPasswordCubit.forgetPassword(email: forgetPasswordCubit.email);
+                      final forgetPasswordCubit =
+                          context.read<ForgetPasswordCubit>();
+                      forgetPasswordCubit.forgetPassword(
+                          email: forgetPasswordCubit.email);
                     },
                   ),
                   SizedBox(

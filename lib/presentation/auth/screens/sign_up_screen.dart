@@ -8,6 +8,7 @@ import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/auth/components/shared/auth_clipped_container.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_text_form_field.dart';
+import 'package:efashion_flutter/shared/util/validation_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -118,6 +119,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           _email = value;
                         }
                       },
+                      validator: ValidationManager.emailValidator(),
                     ),
                     CustomTextFormField(
                       controller: _passwordController,
@@ -131,28 +133,10 @@ class _SignupScreenState extends State<SignupScreen> {
                           _password = value;
                         }
                       },
-                      validator: (value) {
-                        final lowercaseRegex = RegExp(r'[a-z]');
-                        final uppercaseRegex = RegExp(r'[A-Z]');
-                        final digitRegex = RegExp(r'[0-9]');
-                        if (value == null || value.isEmpty) {
-                          return 'Password is required';
-                        } else if (_passwordController.text !=
-                                _confirmPasswordController.text &&
-                            _confirmPasswordController.text.isNotEmpty) {
-                          return "Passwords don't match";
-                        } else if (value.length < 8) {
-                          return 'Password is too short (minimum 8 chars)';
-                        } else if (!lowercaseRegex.hasMatch(value)) {
-                          return 'Password must contain one lowercase letter';
-                        } else if (!uppercaseRegex.hasMatch(value)) {
-                          return 'Password must contain one uppercase letter';
-                        } else if (!digitRegex.hasMatch(value)) {
-                          return 'Password must contain one digit';
-                        } else {
-                          return null;
-                        }
-                      },
+                      validator: ValidationManager.passwordValidator(
+                        passwordController: _passwordController,
+                        confirmPasswordController: _confirmPasswordController,
+                      ),
                     ),
                     CustomTextFormField(
                       controller: _confirmPasswordController,
@@ -166,16 +150,10 @@ class _SignupScreenState extends State<SignupScreen> {
                           _confirmPassword = value;
                         }
                       },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return StringsManager.passwordIsRequired;
-                        } else if (_passwordController.text !=
-                            _confirmPasswordController.text) {
-                          return StringsManager.passwordNoMatch;
-                        } else {
-                          return null;
-                        }
-                      },
+                      validator: ValidationManager.confirmPasswordValidator(
+                        passwordController: _passwordController,
+                        confirmPasswordController: _confirmPasswordController,
+                      ),
                     ),
                     ValueListenableBuilder(
                       valueListenable: checkBoxError,
@@ -195,7 +173,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           width: 312.w,
                           height: 46.h,
                           onTap: () {
-                            if (_formKey.currentState!.validate() && isChecked) {
+                            if (_formKey.currentState!.validate() &&
+                                isChecked) {
                               _formKey.currentState!.save();
                               checkBoxError.value = false;
                               context.read<SignupCubit>().signUp(
@@ -204,7 +183,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     password: _password,
                                     confirmPassword: _confirmPassword,
                                   );
-                            }else{
+                            } else {
                               debugPrint(isChecked.toString());
                               _formKey.currentState!.validate();
                               checkBoxError.value = true;

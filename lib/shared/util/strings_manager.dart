@@ -64,7 +64,6 @@ class StringsManager {
   static const String confirmPassword = 'Confirm Password';
   static const String phoneNumber = 'Phone Number';
   static const String name = 'Name';
-  static const String passwordIsRequired = 'Password is required';
   static const String passwordNoMatch = "Passwords don't match";
 
   //! Shared
