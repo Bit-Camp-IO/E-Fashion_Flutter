@@ -16,6 +16,8 @@ final class ApiConstants {
   static const String verifyPasswordOtpEndPoint = '/auth/verify-password-otp';
   static const String resetPasswordEndPoint = '/auth/reset-password';
 
+  static const String changePasswordEndPoint = '/auth/change-password';
+
   //! Products End Points
   static const String categoriesEndPoint = '/category/list';
   static const String productsEndPoint = '/product/list';
@@ -36,6 +38,7 @@ final class ApiConstants {
   static const String userDataEndPoint = '/user/me';
   //! Cart
   static String cartEndPoint = '/user/cart';
+  static String paymentIntentEndPoint = '/order/create-payment-intent';
   //! Maps EndPoints
   static const String mapPlaceAutoComplete = '/place/autocomplete/json';
   static const String mapPlaceDetails = '/place/details/json';

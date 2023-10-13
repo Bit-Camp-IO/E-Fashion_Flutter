@@ -116,4 +116,14 @@ class AuthRepositoryImpl extends AuthRepository {
       return left(Failure(exception.message!));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> changePassword({required String userAccessToken, required String oldPassword, required String newPassword, required String confirmNewPassword}) async{
+    try{
+      final changePasswordRequest = await _authRemoteDataSource.changePassword(userAccessToken: userAccessToken, oldPassword: oldPassword, newPassword: newPassword, confirmNewPassword: confirmNewPassword);
+      return right(changePasswordRequest);
+    }on ServerException catch (exception){
+      return left(Failure(exception.message!));
+    }
+  }
 }

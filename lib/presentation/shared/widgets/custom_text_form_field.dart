@@ -1,3 +1,4 @@
+import 'package:efashion_flutter/shared/util/validation_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -112,33 +113,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               ),
             ),
           ),
-          validator: widget.validator ??
-              _buildValidator()
+          validator: widget.validator ?? ValidationManager.basicValidator(label: widget.label)
         ),
       ),
     );
   }
 
-  _buildValidator() {
-    if (widget.keyboardType == TextInputType.emailAddress) {
-      return (value) {
-        final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
-        if (!emailRegex.hasMatch(value ?? '')) {
-          return 'Not a valid email address';
-        }
-        return null;
-      };
-    } else {
-      return (value) {
-        if (value!.isEmpty) {
-          return '${widget.label} is required';
-        } else if (value.length < 8) {
-          return '${widget.label} is too short';
-        }
-        return null;
-      };
-    }
-  }
 
   Widget? _buildSuffix() {
     if (_obscuredText != null) {
@@ -166,10 +146,5 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     } else {
       return Iconsax.eye_slash;
     }
-  }
-  @override
-  void dispose() {
-    widget.controller?.dispose();
-    super.dispose();
   }
 }

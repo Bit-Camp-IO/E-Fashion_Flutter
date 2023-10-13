@@ -17,26 +17,26 @@ class EditProfileContainerComponent extends StatefulWidget {
 
 class _EditProfileContainerComponentState
     extends State<EditProfileContainerComponent> {
-  late GlobalKey<FormState> formKey;
-  late TextEditingController nameController;
-  late TextEditingController phoneController;
-  late TextEditingController emailController;
+  late GlobalKey<FormState> _formKey;
+  late TextEditingController _nameController;
+  late TextEditingController _phoneController;
+  late TextEditingController _emailController;
   late String name;
   late String phoneNumber;
   late String email;
   @override
   void initState() {
-    formKey = GlobalKey<FormState>();
-    nameController = TextEditingController(text: 'Tara Slander');
-    phoneController = TextEditingController(text: '+1 2018577757');
-    emailController = TextEditingController(text: 'taraslan127@gmail.com');
+    _formKey = GlobalKey<FormState>();
+    _nameController = TextEditingController(text: 'Tara Slander');
+    _phoneController = TextEditingController(text: '+1 2018577757');
+    _emailController = TextEditingController(text: 'taraslan127@gmail.com');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
+      key: _formKey,
       child: AccountClippedContainer(
         height: FocusScope.of(context).hasPrimaryFocus ||
                 !FocusScope.of(context).hasFocus
@@ -69,7 +69,7 @@ class _EditProfileContainerComponentState
                 height: 20.h,
               ),
               CustomTextFormField(
-                controller: nameController,
+                controller: _nameController,
                 keyboardType: TextInputType.text,
                 prefixIcon: Iconsax.user,
                 label: "Name",
@@ -82,7 +82,7 @@ class _EditProfileContainerComponentState
                 },
               ),
               CustomTextFormField(
-                controller: phoneController,
+                controller: _phoneController,
                 keyboardType: TextInputType.number,
                 prefixIcon: Iconsax.call,
                 label: "Phone Number",
@@ -95,7 +95,7 @@ class _EditProfileContainerComponentState
                 },
               ),
               CustomTextFormField(
-                controller: emailController,
+                controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 prefixIcon: Icons.email_outlined,
                 label: "Email",
@@ -113,8 +113,8 @@ class _EditProfileContainerComponentState
                   width: 100.w,
                   height: 42.h,
                   onTap: () {
-                    if(formKey.currentState!.validate()){
-                      formKey.currentState!.save();
+                    if(_formKey.currentState!.validate()){
+                      _formKey.currentState!.save();
                     }
                   },
                 ),
@@ -128,10 +128,10 @@ class _EditProfileContainerComponentState
 
   @override
   void dispose() {
-    formKey.currentState?.dispose();
-    nameController.dispose();
-    phoneController.dispose();
-    emailController.dispose();
+    _formKey.currentState?.dispose();
+    _nameController.dispose();
+    _phoneController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 }

@@ -16,9 +16,28 @@ abstract class AuthRepository {
   });
 
   Either<Failure, Tokens> checkIfTokensExist();
+
   Future<void> deleteTokens();
+
   Future<Either<Failure, String>> getAccessToken();
+
   Future<Either<Failure, String>> forgetPassword({required String email});
-  Future<Either<Failure, void>> verifyOtp({required String email, required String otpCode});
-  Future<Either<Failure, String>> resetPassword({required String email, required String otpCode, required newPassword});
+
+  Future<Either<Failure, void>> verifyOtp({
+    required String email,
+    required String otpCode,
+  });
+
+  Future<Either<Failure, String>> resetPassword({
+    required String email,
+    required String otpCode,
+    required newPassword,
+  });
+
+  Future<Either<Failure, String>> changePassword({
+    required String userAccessToken,
+    required String oldPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+  });
 }

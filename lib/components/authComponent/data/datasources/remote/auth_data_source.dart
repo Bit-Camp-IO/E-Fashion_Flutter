@@ -18,9 +18,19 @@ abstract class AuthRemoteDataSource {
   });
 
   Future<String> updateAccessToken({required String refreshToken});
+
   Future<String> forgetPassword({required String email});
+
   Future<void> verifyOtp({required String email, required String otpCode});
-  Future<String> resetPassword({required String email, required String otpCode, required newPassword});
+
+  Future<String> resetPassword(
+      {required String email, required String otpCode, required newPassword});
+
+  Future<String> changePassword(
+      {required String userAccessToken,
+      required String oldPassword,
+      required String newPassword,
+      required String confirmNewPassword});
 }
 
 @LazySingleton(as: AuthRemoteDataSource)
@@ -41,9 +51,9 @@ class AuthDataSourceImpl extends AuthRemoteDataSource {
         "password": password,
       },
     );
-    if(response['status'] == 'success'){
+    if (response['status'] == 'success') {
       return TokensModel.fromJson(response);
-    }else{
+    } else {
       throw const ServerException('Error! Wrong email or password.');
     }
   }
@@ -64,58 +74,97 @@ class AuthDataSourceImpl extends AuthRemoteDataSource {
         "confirmPassword": confirmPassword,
       },
     );
-    if(response['status'] == 'success'){
+    if (response['status'] == 'success') {
       return TokensModel.fromJson(response);
-    }else{
+    } else {
       throw const ServerException('Error! Invalid email address.');
     }
   }
+
   @override
-  Future<String> updateAccessToken({required String refreshToken}) async{
-    final newAccessToken = await _apiConsumer.get(ApiConstants.refreshAccessToken, headers: {
-      'X-Refresh-Token' : refreshToken,
+  Future<String> updateAccessToken({required String refreshToken}) async {
+    final newAccessToken =
+        await _apiConsumer.get(ApiConstants.refreshAccessToken, headers: {
+      'X-Refresh-Token': refreshToken,
     });
-    if(newAccessToken['status'] == 'success'){
+    if (newAccessToken['status'] == 'success') {
       return newAccessToken['data']['accessToken'];
-    }else{
+    } else {
       throw TokensException(newAccessToken['error']['message']);
     }
   }
 
   @override
-  Future<String> forgetPassword({required String email}) async{
-    final forgetPasswordRequest = await _apiConsumer.post(ApiConstants.forgetPasswordEndPoint, body: {
-      'email' : email,
+  Future<String> forgetPassword({required String email}) async {
+    final forgetPasswordRequest =
+        await _apiConsumer.post(ApiConstants.forgetPasswordEndPoint, body: {
+      'email': email,
     });
-    if(forgetPasswordRequest['status'] == ApiCallStatus.success.value){
+    if (forgetPasswordRequest['status'] == ApiCallStatus.success.value) {
       return "Success! OTP Code sent to your email.";
-    }else{
+    } else {
       throw const NotFoundException("Error! Wrong Email Address.");
     }
   }
 
   @override
-  Future<void> verifyOtp({required String email, required String otpCode}) async{
-    final verifyOtpRequest = await _apiConsumer.post(ApiConstants.verifyPasswordOtpEndPoint, body: {
-      'email' : email,
+  Future<void> verifyOtp(
+      {required String email, required String otpCode}) async {
+    final verifyOtpRequest =
+        await _apiConsumer.post(ApiConstants.verifyPasswordOtpEndPoint, body: {
+      'email': email,
       'otp': otpCode,
     });
-    if(verifyOtpRequest['status'] == ApiCallStatus.error.value || verifyOtpRequest['data']['ok'] == false){
+    if (verifyOtpRequest['status'] == ApiCallStatus.error.value ||
+        verifyOtpRequest['data']['ok'] == false) {
       throw const NotFoundException("Error! Wrong OTP Code.");
     }
   }
 
   @override
-  Future<String> resetPassword({required String email, required String otpCode, required newPassword}) async{
-    final resetPasswordRequest = await _apiConsumer.post(ApiConstants.resetPasswordEndPoint, body: {
-      'email' : email,
-      'newPassword': newPassword,
-      'otp': otpCode,
-    });
-    if(resetPasswordRequest['status'] == ApiCallStatus.success.value  && resetPasswordRequest['message'] == "OK"){
+  Future<String> resetPassword(
+      {required String email,
+      required String otpCode,
+      required newPassword}) async {
+    final resetPasswordRequest = await _apiConsumer.post(
+      ApiConstants.resetPasswordEndPoint,
+      body: {
+        'email': email,
+        'newPassword': newPassword,
+        'otp': otpCode,
+      },
+    );
+    if (resetPasswordRequest['status'] == ApiCallStatus.success.value &&
+        resetPasswordRequest['message'] == "OK") {
       return "Password changed successfully! ";
-    }else{
+    } else {
       throw const NotFoundException("Please choose a new password!");
+    }
+  }
+
+  @override
+  Future<String> changePassword({
+    required String userAccessToken,
+    required String oldPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+  }) async {
+    final changePasswordRequest = await _apiConsumer.patch(
+      ApiConstants.changePasswordEndPoint,
+      headers: {
+        'Authorization': 'Bearer $userAccessToken',
+      },
+      body: {
+        'oldPassword': oldPassword,
+        'password': newPassword,
+        'confirmNewPassword': confirmNewPassword
+      },
+    );
+    if (changePasswordRequest['status'] == ApiCallStatus.success.value &&
+        changePasswordRequest['message'] == "OK") {
+      return "Password changed successfully! ";
+    } else {
+      throw const NotFoundException("Current Password Incorrect!");
     }
   }
 }
