@@ -3,6 +3,7 @@ import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 class ThemeManager {
   static ThemeData lightTheme() {
@@ -185,6 +186,22 @@ class ThemeManager {
         backgroundColor: Colors.black.withOpacity(0.8),
         selectedItemColor: ColorsManager.darkPrimaryColor,
         unselectedItemColor: Colors.white,
+      ),
+    );
+  }
+
+  static PaymentSheetAppearance stripeSheetTheme({required BuildContext context}){
+    return PaymentSheetAppearance(
+      colors: PaymentSheetAppearanceColors(
+        primary: Theme.of(context).colorScheme.primary,
+        primaryText: Theme.of(context).colorScheme.primary,
+        secondaryText: Theme.of(context).colorScheme.outline,
+        background: Theme.of(context).scaffoldBackgroundColor,
+        componentBackground: Theme.of(context).colorScheme.onInverseSurface,
+        componentText: Theme.of(context).colorScheme.onSurfaceVariant,
+        placeholderText: Theme.of(context).colorScheme.outline,
+        error: Theme.of(context).colorScheme.error,
+        icon: Theme.of(context).colorScheme.primary,
       ),
     );
   }

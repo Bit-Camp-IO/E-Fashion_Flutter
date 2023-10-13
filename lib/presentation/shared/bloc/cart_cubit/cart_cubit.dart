@@ -1,6 +1,7 @@
 import 'package:efashion_flutter/components/authComponent/domain/usecases/get_access_token_usecase.dart';
 import 'package:efashion_flutter/components/cartComponent/domain/entities/cart.dart';
 import 'package:efashion_flutter/components/cartComponent/domain/usecases/add_product_to_cart_usecase.dart';
+import 'package:efashion_flutter/components/cartComponent/domain/usecases/create_payment_intent_usecase.dart';
 import 'package:efashion_flutter/components/cartComponent/domain/usecases/edit_product_quantity_usecase.dart';
 import 'package:efashion_flutter/components/cartComponent/domain/usecases/get_cart_products_usecase.dart';
 import 'package:efashion_flutter/components/cartComponent/domain/usecases/remove_product_from_cart_usecase.dart';
@@ -18,8 +19,8 @@ class CartCubit extends Cubit<CartState> {
   final RemoveProductFromCartUseCase _removeProductFromCartUseCase;
   final GetCartProductsUseCase _getCartProductsUseCase;
   final EditProductQuantityUseCase _editCartProductQuantityUseCase;
-
   final GetAccessTokenUseCase _getAccessTokenUseCase;
+  final CreatePaymentIntentUseCase _createPaymentIntentUseCase;
 
   late String userAccessToken;
 
@@ -29,6 +30,7 @@ class CartCubit extends Cubit<CartState> {
     this._getCartProductsUseCase,
     this._editCartProductQuantityUseCase,
     this._getAccessTokenUseCase,
+    this._createPaymentIntentUseCase,
   ) : super(const CartState());
 
   Future<void> getCartProducts() async {
@@ -48,6 +50,7 @@ class CartCubit extends Cubit<CartState> {
         state.copyWith(
           cart: cartProducts,
           cartState: CubitState.success,
+          paymentState: CubitState.initial,
         ),
       ),
     );
@@ -57,7 +60,12 @@ class CartCubit extends Cubit<CartState> {
     required String productId,
     required String productName,
   }) async {
-    emit(state.copyWith(cartState: CubitState.loading));
+    emit(
+      state.copyWith(
+        cartState: CubitState.loading,
+        paymentState: CubitState.initial,
+      ),
+    );
     final getUserAccessToken = await _getAccessTokenUseCase();
     userAccessToken = getUserAccessToken.getOrElse(() => '');
     if (userAccessToken.isNotEmpty) {
@@ -100,6 +108,7 @@ class CartCubit extends Cubit<CartState> {
           state.copyWith(
             cartState: CubitState.failure,
             cartMessage: failure.message,
+            paymentState: CubitState.initial,
           ),
         ),
         (cart) {
@@ -107,6 +116,36 @@ class CartCubit extends Cubit<CartState> {
             state.copyWith(
               cart: cart,
               cartState: CubitState.success,
+              paymentState: CubitState.initial,
+            ),
+          );
+        },
+      );
+    }
+  }
+
+  Future<void> createPaymentIntent(
+      {required PaymentType paymentType, String? collectionId}) async {
+    emit(state.copyWith(paymentState: CubitState.loading));
+    final getUserAccessToken = await _getAccessTokenUseCase();
+    userAccessToken = getUserAccessToken.getOrElse(() => '');
+    if (userAccessToken.isNotEmpty) {
+      final response = await _createPaymentIntentUseCase(
+          paymentType: paymentType,
+          collectionId: collectionId,
+          userAccessToken: userAccessToken);
+      response.fold(
+        (failure) => emit(
+          state.copyWith(
+            cartState: CubitState.failure,
+            paymentMessage: failure.message,
+          ),
+        ),
+        (clientSecret) {
+          emit(
+            state.copyWith(
+              paymentClientSecret: clientSecret,
+              paymentState: CubitState.success,
             ),
           );
         },
@@ -116,7 +155,8 @@ class CartCubit extends Cubit<CartState> {
 
   Future<void> editProductQuantity(
       {required productId, required int newQuantity}) async {
-    emit(state.copyWith(cartState: CubitState.loading));
+    emit(state.copyWith(
+        cartState: CubitState.loading, paymentState: CubitState.initial));
     final getUserAccessToken = await _getAccessTokenUseCase();
     userAccessToken = getUserAccessToken.getOrElse(() => '');
     if (userAccessToken.isNotEmpty) {

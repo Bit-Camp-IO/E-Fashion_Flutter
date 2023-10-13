@@ -23,3 +23,9 @@ enum CubitState{
   failure,
   success,
 }
+
+enum PaymentType{
+  cart("cart"),
+  collection("collection");
+  const PaymentType(String value);
+}

@@ -4,6 +4,7 @@ import 'package:efashion_flutter/components/cartComponent/data/models/cart_model
 import 'package:efashion_flutter/components/cartComponent/domain/repositories/cart_repository.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:efashion_flutter/shared/error/failure.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:injectable/injectable.dart';
 @LazySingleton(as: CartRepository)
 class CartRepositoryImpl extends CartRepository{
@@ -45,6 +46,16 @@ class CartRepositoryImpl extends CartRepository{
     try{
     final CartModel response = await _cartDataSource.removeProductFromCart(userAccessToken: userAccessToken, productId: productId);
     return Right(response);
+    }on ServerException catch(exception){
+      return left(Failure(exception.message!));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> createPaymentIntent({required String userAccessToken, required PaymentType paymentType, String? collectionId}) async{
+    try{
+      final String response = await _cartDataSource.createPaymentIntent(userAccessToken: userAccessToken, paymentType: paymentType, collectionId: collectionId);
+      return Right(response);
     }on ServerException catch(exception){
       return left(Failure(exception.message!));
     }

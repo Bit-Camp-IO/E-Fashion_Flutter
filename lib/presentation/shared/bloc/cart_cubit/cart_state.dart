@@ -4,10 +4,14 @@ class CartState extends Equatable {
   final Cart cart;
   final CubitState cartState;
   final String cartMessage;
-
   final int selectedQuantity;
   final String? selectedColor;
   final String? selectedSize;
+
+  final String paymentClientSecret;
+  final CubitState paymentState;
+
+  final String paymentMessage;
 
   @override
   List<Object?> get props => [
@@ -17,6 +21,8 @@ class CartState extends Equatable {
         selectedQuantity,
         selectedColor,
         selectedSize,
+        paymentState,
+        paymentMessage,
       ];
 
   const CartState({
@@ -31,6 +37,9 @@ class CartState extends Equatable {
     this.selectedQuantity = 1,
     this.selectedColor,
     this.selectedSize,
+    this.paymentClientSecret = '',
+    this.paymentState = CubitState.initial,
+    this.paymentMessage = '',
   });
 
   CartState copyWith({
@@ -40,6 +49,9 @@ class CartState extends Equatable {
     int? selectedQuantity,
     String? selectedColor,
     String? selectedSize,
+    String? paymentClientSecret,
+    CubitState? paymentState,
+    String? paymentMessage,
   }) {
     return CartState(
       cart: cart ?? this.cart,
@@ -48,6 +60,9 @@ class CartState extends Equatable {
       selectedQuantity: selectedQuantity ?? this.selectedQuantity,
       selectedColor: selectedColor ?? this.selectedColor,
       selectedSize: selectedSize ?? this.selectedSize,
+      paymentClientSecret: paymentClientSecret ?? this.paymentClientSecret,
+      paymentState: paymentState ?? this.paymentState,
+      paymentMessage: paymentMessage ?? this.paymentMessage,
     );
   }
 }

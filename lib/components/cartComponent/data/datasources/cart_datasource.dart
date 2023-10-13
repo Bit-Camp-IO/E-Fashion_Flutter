@@ -2,6 +2,7 @@ import 'package:efashion_flutter/components/cartComponent/data/models/cart_model
 import 'package:efashion_flutter/shared/api/api_consumer.dart';
 import 'package:efashion_flutter/shared/constants/api_constants.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class CartDataSource {
@@ -26,6 +27,12 @@ abstract class CartDataSource {
 
   Future<CartModel> getCartProducts({
     required String userAccessToken,
+  });
+
+  Future<String> createPaymentIntent({
+    required String userAccessToken,
+    required PaymentType paymentType,
+    String? collectionId,
   });
 }
 
@@ -80,8 +87,7 @@ class CartDataSourceImpl extends CartDataSource {
   }
 
   @override
-  Future<CartModel> getCartProducts(
-      {required String userAccessToken}) async {
+  Future<CartModel> getCartProducts({required String userAccessToken}) async {
     final response =
         await _apiConsumer.get(ApiConstants.cartEndPoint, headers: {
       'Authorization': 'Bearer $userAccessToken',
@@ -105,6 +111,31 @@ class CartDataSourceImpl extends CartDataSource {
     if (response['status'] == ApiCallStatus.success.value) {
       // return CartModel.fromJson(response['data']);
       return await getCartProducts(userAccessToken: userAccessToken);
+    } else {
+      throw const FetchDataException();
+    }
+  }
+
+  @override
+  Future<String> createPaymentIntent({
+    required String userAccessToken,
+    required PaymentType paymentType,
+    String? collectionId,
+  }) async {
+    final response = await _apiConsumer.post(ApiConstants.paymentIntentEndPoint,
+        headers: {
+          'Authorization': 'Bearer $userAccessToken',
+        },
+        body: paymentType == PaymentType.collection
+            ? {
+                'collectionId': collectionId,
+              }
+            : {},
+        queryParameters: {
+          'type': paymentType == PaymentType.collection ? 'collection' : 'cart'
+        });
+    if (response['status'] == ApiCallStatus.success.value) {
+      return response['data']['clientSecret'];
     } else {
       throw const FetchDataException();
     }

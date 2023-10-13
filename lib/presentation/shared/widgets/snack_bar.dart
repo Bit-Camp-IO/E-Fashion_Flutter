@@ -8,8 +8,10 @@ SnackBar customSnackBar({
   required CustomSnackBarType customSnackBarType,
   required String message,
   required BuildContext context,
+  TextStyle? textStyle,
 }) {
   return SnackBar(
+    duration: const Duration(milliseconds: 700),
     animation: CurvedAnimation(
       curve: Curves.bounceIn,
       parent: kAlwaysCompleteAnimation,
@@ -33,7 +35,7 @@ SnackBar customSnackBar({
           SizedBox(width: 3.w),
           Text(
             message,
-            style: Theme.of(context)
+            style: textStyle ?? Theme.of(context)
                 .textTheme
                 .labelMedium!
                 .copyWith(color: Colors.white),

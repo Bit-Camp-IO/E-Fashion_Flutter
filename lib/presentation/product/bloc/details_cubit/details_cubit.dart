@@ -65,8 +65,9 @@ class DetailsCubit extends Cubit<DetailsState> {
       ),
       (reviewsAndRatings) => emit(
         state.copyWith(
-            reviewsAndRatings: reviewsAndRatings,
-            reviewState: CubitState.success),
+          reviewsAndRatings: reviewsAndRatings,
+          reviewState: CubitState.success,
+        ),
       ),
     );
   }

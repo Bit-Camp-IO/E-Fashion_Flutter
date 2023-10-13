@@ -2,10 +2,9 @@ import 'package:efashion_flutter/components/mapComponent/data/models/place_data_
 import 'package:efashion_flutter/components/mapComponent/data/models/place_model.dart';
 import 'package:efashion_flutter/shared/api/api_consumer.dart';
 import 'package:efashion_flutter/shared/constants/api_constants.dart';
-import 'package:efashion_flutter/shared/constants/map_secrets.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
-
 abstract class MapDataSource {
  Future<List<PlaceModel>> getPlacesSuggestions({required String searchQuery});
  Future<PlaceDataModel> getPlaceLatitudeAndLongitude({required String placeId});
@@ -18,6 +17,8 @@ class MapDataSourceImpl extends MapDataSource {
   final ApiConsumer _mainApiConsumer;
   final ApiConsumer _mapApiConsumer;
 
+  final googleMapsKey = dotenv.env["GOOGLE_MAPS_KEY"]!;
+
   MapDataSourceImpl(
     @Named(ApiConstants.mainConsumerName) this._mainApiConsumer,
     @Named(ApiConstants.mapsConsumerName) this._mapApiConsumer,
@@ -28,7 +29,7 @@ class MapDataSourceImpl extends MapDataSource {
     final response = await _mapApiConsumer.get(ApiConstants.mapPlaceAutoComplete, queryParameters: {
       'input' : searchQuery,
       'radius' : 500,
-      'key' : MapSecrets.googleMapsKey,
+      'key' : googleMapsKey,
     });
     return List<PlaceModel>.from((response['predictions'] as List).map((place) => PlaceModel.fromJson(place)));
   }
@@ -38,7 +39,7 @@ class MapDataSourceImpl extends MapDataSource {
     final response = await _mapApiConsumer.get(ApiConstants.mapPlaceDetails, queryParameters: {
       'place_id' : placeId,
       'radius' : 500,
-      'key' : MapSecrets.googleMapsKey,
+      'key' : googleMapsKey,
     });
     return PlaceDataModel.fromJson(response['result']['geometry']['location']);
   }
