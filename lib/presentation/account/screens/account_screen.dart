@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:efashion_flutter/presentation/account/bloc/account_cubit/account_cubit.dart';
+import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/no_profile_picture.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
@@ -23,7 +23,7 @@ class AccountScreen extends StatelessWidget{
           context.replaceRoute(const AuthRoute());
         }
       },
-      child: BlocBuilder<AccountCubit, AccountState>(
+      child: BlocBuilder<ProfileCubit, ProfiletState>(
         builder: (context, state) {
           return Scaffold(
             body: Stack(

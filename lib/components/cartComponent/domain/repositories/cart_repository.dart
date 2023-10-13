@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:efashion_flutter/components/cartComponent/domain/entities/cart.dart';
+import 'package:efashion_flutter/components/cartComponent/domain/entities/cart_order.dart';
 import 'package:efashion_flutter/shared/error/failure.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 
@@ -31,5 +32,9 @@ abstract class CartRepository {
     required String userAccessToken,
     required PaymentType paymentType,
     String? collectionId,
+  });
+
+  Future<Either<Failure, List<CartOrder>>> getOrdersList({
+    required String userAccessToken,
   });
 }

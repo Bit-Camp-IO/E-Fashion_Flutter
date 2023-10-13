@@ -4,9 +4,9 @@ import 'package:efashion_flutter/shared/error/failure.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class GetAccessTokenUseCase {
+class GetUserAccessTokenUseCase {
   final AuthRepository _authRepository;
-  GetAccessTokenUseCase(this._authRepository);
+  GetUserAccessTokenUseCase(this._authRepository);
   Future<Either<Failure,String>>  call() async{
     return await _authRepository.getAccessToken();
   }

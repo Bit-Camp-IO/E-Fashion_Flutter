@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:efashion_flutter/components/authComponent/domain/usecases/get_access_token_usecase.dart';
+import 'package:efashion_flutter/components/authComponent/domain/usecases/get_user_access_token_usecase.dart';
 
 import 'package:efashion_flutter/components/productComponent/domain/entities/product_details.dart';
 import 'package:efashion_flutter/components/productComponent/domain/usecases/favorite/add_product_to_favorite_list_usecase.dart';
@@ -18,7 +18,7 @@ part 'favorite_state.dart';
 
 @injectable
 class FavoriteCubit extends Cubit<FavoriteState> {
-  final GetAccessTokenUseCase _getAccessTokenUseCase;
+  final GetUserAccessTokenUseCase _getAccessTokenUseCase;
   final GetUserFavoriteProductsIdsUseCase _getUserFavoriteProductsIdsUseCase;
   final AddProductToFavoriteListUseCase _addProductToFavoriteListUseCase;
   final RemoveProductFromFavoriteListUseCase

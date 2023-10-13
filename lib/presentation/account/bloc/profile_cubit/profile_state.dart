@@ -1,6 +1,6 @@
-part of 'account_cubit.dart';
+part of 'profile_cubit.dart';
 
-class AccountState extends Equatable {
+class ProfiletState extends Equatable {
   final User userData;
   final String userDataLoadFailMessage;
   final BlocState userDataState;
@@ -12,7 +12,7 @@ class AccountState extends Equatable {
         userDataState,
       ];
 
-  const AccountState({
+  const ProfiletState({
     this.userData = const User(
       email: '',
       fullName: '',
@@ -22,12 +22,12 @@ class AccountState extends Equatable {
     this.userDataState = BlocState.initial,
   });
 
-  AccountState copyWith({
+  ProfiletState copyWith({
     User? userData,
     String? userDataLoadFailMessage,
     BlocState? userDataState,
   }) {
-    return AccountState(
+    return ProfiletState(
       userData: userData ?? this.userData,
       userDataLoadFailMessage:
           userDataLoadFailMessage ?? this.userDataLoadFailMessage,

@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/presentation/account/bloc/account_cubit/account_cubit.dart';
+import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
 import 'package:efashion_flutter/presentation/product/components/details/add_reviews/reviewer_card.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
@@ -59,7 +59,7 @@ class _AddOrEditReviewScreenState extends State<AddOrEditReviewScreen> {
                   productPrice: state.productDetails.price.toInt(),
                 ),
                 const SizedBox(height: 30),
-                BlocBuilder<AccountCubit, AccountState>(
+                BlocBuilder<ProfileCubit, ProfiletState>(
                   builder: (context, state) {
                     return ReviewerCard(
                       reviewerImage: state.userData.profileImage,

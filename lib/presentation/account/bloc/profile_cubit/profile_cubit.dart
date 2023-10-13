@@ -1,4 +1,4 @@
-import 'package:efashion_flutter/components/authComponent/domain/usecases/get_access_token_usecase.dart';
+import 'package:efashion_flutter/components/authComponent/domain/usecases/get_user_access_token_usecase.dart';
 import 'package:efashion_flutter/components/userComponent/domain/entities/user.dart';
 import 'package:efashion_flutter/components/userComponent/domain/usecases/get_user_data_usecase.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
@@ -6,15 +6,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 
-part 'account_state.dart';
+part 'profile_state.dart';
 
 @injectable
-class AccountCubit extends Cubit<AccountState> {
+class ProfileCubit extends Cubit<ProfiletState> {
   final GetUserDataUseCase _getUserDataUseCase;
-  final GetAccessTokenUseCase _getAccessTokenUseCase;
+  final GetUserAccessTokenUseCase _getAccessTokenUseCase;
 
   late String userAccessToken;
-  AccountCubit(this._getUserDataUseCase, this._getAccessTokenUseCase) : super(const AccountState());
+  ProfileCubit(this._getUserDataUseCase, this._getAccessTokenUseCase) : super(const ProfiletState());
 
   Future<void> getUserData() async {
     final getAccessToken = await _getAccessTokenUseCase();

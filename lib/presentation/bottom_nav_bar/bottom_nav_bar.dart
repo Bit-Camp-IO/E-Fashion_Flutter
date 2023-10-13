@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/injection_container.dart';
-import 'package:efashion_flutter/presentation/account/bloc/account_cubit/account_cubit.dart';
+import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_tick.dart';
@@ -26,7 +26,7 @@ class BottomNavBar extends StatefulWidget implements AutoRouteWrapper {
             create: (context) => getIt<FavoriteCubit>()
               ..getUserFavoriteIdListEvent()
               ..getFavoriteProductsList()),
-        BlocProvider(create: (context) => getIt<AccountCubit>()..getUserData()),
+        BlocProvider(create: (context) => getIt<ProfileCubit>()..getUserData()),
         BlocProvider(
             create: (context) => getIt<CartCubit>()..getCartProducts()),
       ],

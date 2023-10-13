@@ -1,4 +1,4 @@
-import 'package:efashion_flutter/components/authComponent/domain/usecases/get_access_token_usecase.dart';
+import 'package:efashion_flutter/components/authComponent/domain/usecases/get_user_access_token_usecase.dart';
 import 'package:efashion_flutter/components/mapComponent/domain/entities/place.dart';
 import 'package:efashion_flutter/components/mapComponent/domain/entities/place_data.dart';
 import 'package:efashion_flutter/components/mapComponent/domain/usecases/get_place_latitude_and_longitude_usecase.dart';
@@ -24,7 +24,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       _getPlaceLatitudeAndLongitudeUseCase;
   final GetUserLocationUseCase _getUserLocationUseCase;
   final UpdateUserLocationUseCase _updateUserLocationUseCase;
-  final GetAccessTokenUseCase _getAccessTokenUseCase;
+  final GetUserAccessTokenUseCase _getAccessTokenUseCase;
   late String userAccessToken;
 
   MapBloc(

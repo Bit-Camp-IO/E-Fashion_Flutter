@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
-class DeliveryStatusScreen extends StatelessWidget {
-  const DeliveryStatusScreen({super.key, required this.activeStep});
+class TrackOrderScreen extends StatelessWidget {
+  const TrackOrderScreen({super.key, required this.activeStep});
   final int activeStep;
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class DeliveryStatusScreen extends StatelessWidget {
         child: Column(
           children: [
             const CustomAppBar(
-              appBarTitle: 'Delivery Status',
+              appBarTitle: 'Track Order',
               appBarType: AppBarType.normal,
             ),
             const Spacer(flex: 1),
@@ -61,7 +61,7 @@ class DeliveryStatusScreen extends StatelessWidget {
     }else if(activeStep == 1){
       return 'The delivery man on his\n way to your location.';
     }else{
-      return 'Your order has been\n delivered, hope you liked it.';
+      return 'Your order has been\n delivered, hope you like it.';
     }
   }
 }

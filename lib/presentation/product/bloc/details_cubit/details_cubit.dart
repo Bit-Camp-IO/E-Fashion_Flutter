@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:efashion_flutter/components/authComponent/domain/usecases/get_access_token_usecase.dart';
+import 'package:efashion_flutter/components/authComponent/domain/usecases/get_user_access_token_usecase.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/product_details.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/review.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/reviewer.dart';
@@ -23,7 +23,7 @@ class DetailsCubit extends Cubit<DetailsState> {
   final GetProductReviewsAndRatingsUseCase _getProductReviewsAndRatingsUseCase;
   final AddOrEditProductReviewUseCase _addOrEditProductReviewUseCase;
   final GetUserProductReviewUseCase _getUserProductReviewUseCase;
-  final GetAccessTokenUseCase _getAccessTokenUseCase;
+  final GetUserAccessTokenUseCase _getAccessTokenUseCase;
   late String userAccessToken;
 
   DetailsCubit(

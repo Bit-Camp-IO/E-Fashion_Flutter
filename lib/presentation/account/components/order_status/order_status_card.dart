@@ -1,32 +1,29 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
 
-class OrderStatusCard extends StatelessWidget {
-  const OrderStatusCard({
+class OrderCard extends StatelessWidget {
+  const OrderCard({
     super.key,
-    required this.orderPicture,
-    required this.orderName,
+    required this.orderId,
     required this.orderCost,
-    this.orderSize,
-    required this.orderProgress,
+    required this.orderStatus,
   });
 
-  final String orderPicture;
-  final String orderName;
+  final String orderId;
   final int orderCost;
-  final String? orderSize;
-  final int orderProgress;
+  final int orderStatus;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         context.pushRoute(
-          DeliveryStatusRoute(
-            activeStep: orderProgress,
+          TrackOrderRoute(
+            activeStep: orderStatus - 1,
           ),
         );
       },
@@ -44,72 +41,29 @@ class OrderStatusCard extends StatelessWidget {
               vertical: 8.0,
               horizontal: 8,
             ).r,
-            child: Stack(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15).r,
-                      child: CachedNetworkImage(
-                        width: 90.w,
-                        height: 100.h,
-                        fit: BoxFit.cover,
-                        imageUrl: orderPicture,
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Iconsax.box, size: 20.sp),
+                      SizedBox(width: 2.w),
+                      Text(
+                        'OrderId : #${orderId.length > 15 ? '${orderId.substring(0,20)}..' : orderId}',
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 24.w,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          orderName,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                        ),
-                        orderSize != null
-                            ? Text(
-                                'Size : ${orderSize!}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface,
-                                    ),
-                              )
-                            : const SizedBox.shrink(),
-                        SizedBox(
-                            height: orderSize != null
-                                ? 8.h
-                                : 4.h),
-                        Text(
-                          '\$$orderCost',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Text(
-                    'Delivery Status',
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                      IconButton(
+                        onPressed: () async{
+                          await Clipboard.setData(ClipboardData(text: orderId));
+                        },
+                        icon: Icon(Iconsax.clipboard_text, color: Theme.of(context).colorScheme.primary, size: 20.sp,),
+                      ),
+                    ],
                   ),
                 ),
               ],

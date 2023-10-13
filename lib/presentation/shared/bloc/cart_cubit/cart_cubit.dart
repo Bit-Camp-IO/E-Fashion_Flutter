@@ -1,4 +1,4 @@
-import 'package:efashion_flutter/components/authComponent/domain/usecases/get_access_token_usecase.dart';
+import 'package:efashion_flutter/components/authComponent/domain/usecases/get_user_access_token_usecase.dart';
 import 'package:efashion_flutter/components/cartComponent/domain/entities/cart.dart';
 import 'package:efashion_flutter/components/cartComponent/domain/usecases/add_product_to_cart_usecase.dart';
 import 'package:efashion_flutter/components/cartComponent/domain/usecases/create_payment_intent_usecase.dart';
@@ -19,7 +19,7 @@ class CartCubit extends Cubit<CartState> {
   final RemoveProductFromCartUseCase _removeProductFromCartUseCase;
   final GetCartProductsUseCase _getCartProductsUseCase;
   final EditProductQuantityUseCase _editCartProductQuantityUseCase;
-  final GetAccessTokenUseCase _getAccessTokenUseCase;
+  final GetUserAccessTokenUseCase _getAccessTokenUseCase;
   final CreatePaymentIntentUseCase _createPaymentIntentUseCase;
 
   late String userAccessToken;

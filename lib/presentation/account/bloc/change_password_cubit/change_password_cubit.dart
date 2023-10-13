@@ -1,5 +1,5 @@
 import 'package:efashion_flutter/components/authComponent/domain/usecases/change_password_usecase.dart';
-import 'package:efashion_flutter/components/authComponent/domain/usecases/get_access_token_usecase.dart';
+import 'package:efashion_flutter/components/authComponent/domain/usecases/get_user_access_token_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -8,7 +8,7 @@ part 'change_password_state.dart';
 
 @injectable
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {
-  final GetAccessTokenUseCase _getAccessTokenUseCase;
+  final GetUserAccessTokenUseCase _getAccessTokenUseCase;
   final ChangePasswordUseCase _changePasswordUseCase;
   late String userAccessToken;
 

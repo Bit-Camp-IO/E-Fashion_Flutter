@@ -1,4 +1,5 @@
 import 'package:efashion_flutter/components/cartComponent/data/models/cart_model.dart';
+import 'package:efashion_flutter/components/cartComponent/data/models/cart_order_model.dart';
 import 'package:efashion_flutter/shared/api/api_consumer.dart';
 import 'package:efashion_flutter/shared/constants/api_constants.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
@@ -34,6 +35,8 @@ abstract class CartDataSource {
     required PaymentType paymentType,
     String? collectionId,
   });
+
+  Future<List<CartOrderModel>> getOrdersList({required String userAccessToken});
 }
 
 @LazySingleton(as: CartDataSource)
@@ -136,6 +139,24 @@ class CartDataSourceImpl extends CartDataSource {
         });
     if (response['status'] == ApiCallStatus.success.value) {
       return response['data']['clientSecret'];
+    } else {
+      throw const FetchDataException();
+    }
+  }
+
+  @override
+  Future<List<CartOrderModel>> getOrdersList(
+      {required String userAccessToken}) async {
+    final response =
+        await _apiConsumer.get(ApiConstants.ordersEndPoint, headers: {
+      'Authorization': 'Bearer $userAccessToken',
+    });
+    if (response['status'] == ApiCallStatus.success.value) {
+      return List<CartOrderModel>.from(
+        (response['data'] as List).map(
+          (order) => CartOrderModel.fromJson(order),
+        ),
+      );
     } else {
       throw const FetchDataException();
     }

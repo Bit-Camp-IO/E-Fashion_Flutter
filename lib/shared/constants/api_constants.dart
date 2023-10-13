@@ -39,6 +39,7 @@ final class ApiConstants {
   //! Cart
   static String cartEndPoint = '/user/cart';
   static String paymentIntentEndPoint = '/order/create-payment-intent';
+  static const String ordersEndPoint = '/order';
   //! Maps EndPoints
   static const String mapPlaceAutoComplete = '/place/autocomplete/json';
   static const String mapPlaceDetails = '/place/details/json';

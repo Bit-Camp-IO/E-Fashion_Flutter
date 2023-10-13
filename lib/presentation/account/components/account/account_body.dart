@@ -67,7 +67,7 @@ class AccountContainerComponent extends StatelessWidget {
               ),
               AccountCustomRow(
                 onTap: () {
-                  context.pushRoute(const OrdersStatusRoute());
+                  context.pushRoute(const OrdersRoute());
                 },
                 text: "Orders Status",
                 prefixIcon: Iconsax.bag_2,
