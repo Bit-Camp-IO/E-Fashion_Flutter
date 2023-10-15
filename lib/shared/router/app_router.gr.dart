@@ -84,6 +84,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ChatSupportScreen(),
       );
     },
+    CollectionDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<CollectionDetailsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: CollectionDetailsScreen(
+          key: args.key,
+          collectionId: args.collectionId,
+          collectionName: args.collectionName,
+          collectionPrice: args.collectionPrice,
+        ),
+      );
+    },
     DetailsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -143,7 +155,7 @@ abstract class _$AppRouter extends RootStackRouter {
     HomeTabRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const HomeTab(),
+        child: WrappedRoute(child: const HomeTab()),
       );
     },
     LocationRoute.name: (routeData) {
@@ -420,6 +432,54 @@ class ChatSupportRoute extends PageRouteInfo<void> {
   static const String name = 'ChatSupportRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CollectionDetailsScreen]
+class CollectionDetailsRoute extends PageRouteInfo<CollectionDetailsRouteArgs> {
+  CollectionDetailsRoute({
+    Key? key,
+    required String collectionId,
+    required String collectionName,
+    required int collectionPrice,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CollectionDetailsRoute.name,
+          args: CollectionDetailsRouteArgs(
+            key: key,
+            collectionId: collectionId,
+            collectionName: collectionName,
+            collectionPrice: collectionPrice,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'CollectionDetailsRoute';
+
+  static const PageInfo<CollectionDetailsRouteArgs> page =
+      PageInfo<CollectionDetailsRouteArgs>(name);
+}
+
+class CollectionDetailsRouteArgs {
+  const CollectionDetailsRouteArgs({
+    this.key,
+    required this.collectionId,
+    required this.collectionName,
+    required this.collectionPrice,
+  });
+
+  final Key? key;
+
+  final String collectionId;
+
+  final String collectionName;
+
+  final int collectionPrice;
+
+  @override
+  String toString() {
+    return 'CollectionDetailsRouteArgs{key: $key, collectionId: $collectionId, collectionName: $collectionName, collectionPrice: $collectionPrice}';
+  }
 }
 
 /// generated route for

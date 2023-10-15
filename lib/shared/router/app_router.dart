@@ -16,8 +16,10 @@ import 'package:efashion_flutter/presentation/auth/screens/login_screen.dart';
 import 'package:efashion_flutter/presentation/auth/screens/reset_password_screen.dart';
 import 'package:efashion_flutter/presentation/auth/screens/sign_up_screen.dart';
 import 'package:efashion_flutter/presentation/auth/screens/welcome_screen.dart';
+import 'package:efashion_flutter/presentation/product/bloc/collections_cubit/collections_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
 import 'package:efashion_flutter/presentation/product/screens/cart_screen.dart';
+import 'package:efashion_flutter/presentation/product/screens/collection_details_screen.dart';
 import 'package:efashion_flutter/presentation/product/screens/favorite_screen.dart';
 import 'package:efashion_flutter/presentation/product/screens/add_or_edit_review_screen.dart';
 import 'package:efashion_flutter/presentation/product/screens/all_reviews_screen.dart';
@@ -95,6 +97,11 @@ class AppRouter extends _$AppRouter {
                 CustomRoute(
                   page: HomeRoute.page,
                   initial: true,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: CollectionDetailsRoute.page,
                   transitionsBuilder: TransitionsBuilders.fadeIn,
                   durationInMilliseconds: 300,
                 ),
@@ -253,8 +260,17 @@ class ForgetPassword extends AutoRouter implements AutoRouteWrapper {
 }
 
 @RoutePage(name: 'HomeTabRoute')
-class HomeTab extends AutoRouter {
+class HomeTab extends AutoRouter implements AutoRouteWrapper {
   const HomeTab({super.key});
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<CollectionsCubit>()..getCollectionsListUseCase(),
+      lazy: false,
+      child: this,
+    );
+  }
 }
 
 @RoutePage(name: 'CartTabRoute')

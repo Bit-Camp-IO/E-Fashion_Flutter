@@ -33,7 +33,9 @@ final class ApiConstants {
   static String userReviewEndPoint({required String productId}) =>
       '/product/$productId/rate/my-rating';
 
-
+  //! Collection Endpoints
+  static const String collectionsListEndPoint = '/collection';
+  static String getCollectionItemsEndPoint({required String collectionId}) => '/collection/$collectionId';
   //! User EndPoints
   static const String userDataEndPoint = '/user/me';
   static const String editUserDataEndPoint = '/user/me/edit';

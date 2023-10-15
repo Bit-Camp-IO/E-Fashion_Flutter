@@ -124,20 +124,20 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  Future<void> createPaymentIntent(
-      {required PaymentType paymentType, String? collectionId}) async {
+  Future<void> createPaymentIntent({String? collectionId}) async {
     emit(state.copyWith(paymentState: CubitState.loading));
     final getUserAccessToken = await _getAccessTokenUseCase();
     userAccessToken = getUserAccessToken.getOrElse(() => '');
     if (userAccessToken.isNotEmpty) {
       final response = await _createPaymentIntentUseCase(
-          paymentType: paymentType,
-          collectionId: collectionId,
-          userAccessToken: userAccessToken);
+        paymentType: PaymentType.cart,
+        collectionId: collectionId,
+        userAccessToken: userAccessToken,
+      );
       response.fold(
         (failure) => emit(
           state.copyWith(
-            cartState: CubitState.failure,
+            paymentState: CubitState.failure,
             paymentMessage: failure.message,
           ),
         ),

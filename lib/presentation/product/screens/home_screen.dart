@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/presentation/product/components/home/collection/collection_carousel_component.dart';
 import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:efashion_flutter/presentation/product/bloc/home_bloc/home_bloc.dart';
-import 'package:efashion_flutter/presentation/product/components/home/collection_carousel_component.dart';
 import 'package:efashion_flutter/presentation/product/components/home/categories_component.dart';
 import 'package:efashion_flutter/presentation/product/components/home/offers_carousel_component.dart';
 import 'package:efashion_flutter/presentation/product/components/home/brand_component.dart';

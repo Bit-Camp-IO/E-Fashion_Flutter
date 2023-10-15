@@ -7,13 +7,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CarouselCard extends StatelessWidget {
   const CarouselCard({
     super.key,
-    required this.offerPercentage,
+    required this.discount,
     required this.collectionName,
     required this.cardImageUrl,
     required this.onTap,
   });
 
-  final int offerPercentage;
+  final int discount;
   final String collectionName;
   final String cardImageUrl;
   final void Function() onTap;
@@ -54,7 +54,7 @@ class CarouselCard extends StatelessWidget {
                 color: Colors.white,
               ),
               Text(
-                '$offerPercentage%OFF',
+                '$discount%OFF',
                 style: SizeManager.screenWidth <= 400
                     ? Theme.of(context)
                         .textTheme
@@ -82,7 +82,7 @@ class CarouselCard extends StatelessWidget {
             width: 100.w,
             height: 48.h,
             buttonTitle: 'Shop Now',
-            onTap: () async {},
+            onTap: onTap,
           ),
         )
       ],

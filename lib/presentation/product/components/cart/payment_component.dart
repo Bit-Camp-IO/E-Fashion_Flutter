@@ -111,9 +111,7 @@ class _PaymentComponentState extends State<PaymentComponent> {
                 buttonTitle: StringsManager.cartCheckOutButtonTitle,
                 isLoading: isCheckOutLoading,
                 onTap: () {
-                  context.read<CartCubit>().createPaymentIntent(
-                    paymentType: PaymentType.cart,
-                  );
+                  context.read<CartCubit>().createPaymentIntent();
                 },
               ),
             ),
