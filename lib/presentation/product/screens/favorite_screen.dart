@@ -12,19 +12,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
-class FavoriteScreen extends StatefulWidget implements AutoRouteWrapper {
+class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({super.key});
 
   @override
   State<FavoriteScreen> createState() => _FavoriteScreenState();
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider.value(
-      value: context.read<FavoriteCubit>()..getFavoriteProductsList(),
-      child: this,
-    );
-  }
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {

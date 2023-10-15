@@ -36,7 +36,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     this._getFavoriteProductsUseCase,
   ) : super(const FavoriteState());
 
-  Future<void> getUserFavoriteIdListEvent() async {
+  Future<void> getUserFavoriteIdList() async {
     final getUserAccessToken = await _getAccessTokenUseCase();
     userAccessToken = getUserAccessToken.getOrElse(() => '');
     if (userAccessToken.isNotEmpty) {
@@ -44,9 +44,12 @@ class FavoriteCubit extends Cubit<FavoriteState> {
           userAccessToken: userAccessToken);
       response.fold(
         (failure) => debugPrint('>>>>>>>>> ${failure.message} <<<<<<<<<<<'),
-        (favoriteList) => emit(
-          state.copyWith(favoritesIds: favoriteList),
-        ),
+        (favoriteList) {
+          emit(
+            state.copyWith(favoritesIds: favoriteList),
+          );
+          _getFavoriteProductsList();
+        },
       );
     }
   }
@@ -80,7 +83,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     }
   }
 
-  Future<void> getFavoriteProductsList() async {
+  Future<void> _getFavoriteProductsList() async {
     final Either<Failure, List<ProductDetails>> favoriteProducts =
         await _getFavoriteProductsUseCase(
       favoriteIds: state.favoritesIds,

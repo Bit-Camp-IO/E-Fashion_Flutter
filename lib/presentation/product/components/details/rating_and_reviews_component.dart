@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
+import 'package:efashion_flutter/shared/constants/api_constants.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
@@ -54,13 +56,15 @@ class RatingAndReviewsComponent extends StatelessWidget {
               Center(
                 child: TextButton(
                   onPressed: () {
-                    context.pushRoute(AddOrEditReviewRoute(productId: productId));
+                    context
+                        .pushRoute(AddOrEditReviewRoute(productId: productId));
                   },
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 250),
                     child: Text(
                       key: ValueKey<bool>(state.userReview.createdAt.isEmpty),
-                    StringsManager.addOrEditReviewTextButton(state.userReview.createdAt.isEmpty),
+                      StringsManager.addOrEditReviewTextButton(
+                          state.userReview.createdAt.isEmpty),
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: Theme.of(context).colorScheme.primary,
                           ),
@@ -87,14 +91,17 @@ class RatingAndReviewsComponent extends StatelessWidget {
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 250),
                   child: Column(
-                    key: ValueKey<double>(state.reviewsAndRatings.average.toDouble()),
+                    key: ValueKey<double>(
+                        state.reviewsAndRatings.average.toDouble()),
                     children: [
                       Text(
                         state.reviewsAndRatings.average.toDouble().toString(),
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  color: Theme.of(context).colorScheme.onSurface,
-                                ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall!
+                            .copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                       ),
                       RatingBarIndicator(
                         unratedColor: Theme.of(context).colorScheme.outline,
@@ -108,7 +115,8 @@ class RatingAndReviewsComponent extends StatelessWidget {
                       ),
                       SizedBox(height: 8.h),
                       Text(
-                      StringsManager.reviewsCount(state.reviewsAndRatings.reviews.length),
+                        StringsManager.reviewsCount(
+                            state.reviewsAndRatings.reviews.length),
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Theme.of(context).colorScheme.onSurface,
                             ),
@@ -128,7 +136,10 @@ class RatingAndReviewsComponent extends StatelessWidget {
                       children: [
                         Text(
                           '${index + 1}',
-                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
                                 color: Theme.of(context).colorScheme.onSurface,
                               ),
                         ),
@@ -141,16 +152,20 @@ class RatingAndReviewsComponent extends StatelessWidget {
                         AnimatedSwitcher(
                           duration: const Duration(milliseconds: 250),
                           child: LinearPercentIndicator(
-                            key: ValueKey(state.reviewsAndRatings.rateCount['${index + 1}']),
+                            key: ValueKey(state
+                                .reviewsAndRatings.rateCount['${index + 1}']),
                             width: 220.w,
                             lineHeight: 8.h,
                             curve: Curves.bounceInOut,
                             backgroundColor: Colors.white,
                             progressColor: Colors.black,
                             barRadius: const Radius.circular(5).r,
-                            percent: state.reviewsAndRatings.rateCount.isNotEmpty
-                                ? state.reviewsAndRatings.rateCount['${index + 1}'].toDouble()
-                                : 0,
+                            percent:
+                                state.reviewsAndRatings.rateCount.isNotEmpty
+                                    ? state.reviewsAndRatings
+                                        .rateCount['${index + 1}']
+                                        .toDouble()
+                                    : 0,
                           ),
                         )
                       ],
@@ -159,34 +174,67 @@ class RatingAndReviewsComponent extends StatelessWidget {
                 }),
               ),
               ListView.builder(
-                itemCount: state.reviewsAndRatings.reviews.length > 3 ? 3
+                itemCount: state.reviewsAndRatings.reviews.length > 3
+                    ? 3
                     : state.reviewsAndRatings.reviews.length,
                 physics: const NeverScrollableScrollPhysics(),
                 padding:
                     const EdgeInsets.only(top: 16.0, left: 24, right: 24).r,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                    return CustomFadeAnimation(
-                      duration: const Duration(milliseconds: 250),
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0).r,
-                        child: ReviewCard(
-                          reviewerImage: state.reviewsAndRatings.reviews[index].reviewer.profileImage,
-                          reviewerName: state.reviewsAndRatings.reviews[index].reviewer.fullName,
-                          reviewDate: state.reviewsAndRatings.reviews[index].createdAt,
-                          reviewRating: state.reviewsAndRatings.reviews[index].rate.toDouble(),
-                          reviewDescription:
-                          state.reviewsAndRatings.reviews[index].comment,
-                        ),
-                      ),
+                  ProfileCubit profileCubit = context.read<ProfileCubit>();
+                 final String? reviewerImage =  state.reviewsAndRatings.reviews[index].reviewer.profileImage;
+                  final String reviewerName =  state.reviewsAndRatings.reviews[index].reviewer.fullName;
+                  final String reviewerId = state.reviewsAndRatings.reviews[index].reviewer.id;
+                  final String reviewDate = state.reviewsAndRatings.reviews[index].createdAt;
+                  final double reviewRating =  state.reviewsAndRatings.reviews[index].rate.toDouble();
+                  final String reviewDescription = state.reviewsAndRatings.reviews[index].comment;
+                  if (index == 0 && reviewerId == profileCubit.state.userData.id) {
+                   return BlocBuilder<ProfileCubit, ProfileState>(
+                      buildWhen: (previous, current) => previous.userData != current.userData,
+                      builder: (context, state) {
+                        return ReviewCard(
+                          reviewerImage:
+                             state.userData.profileImagePath !=
+                                      null
+                                  ? ApiConstants.getUserProfilePicture(
+                                      path: state.userData.profileImagePath!,
+                                    )
+                                  : null,
+                          reviewerName:reviewerName,
+                          reviewDate: reviewDate,
+                          reviewRating: reviewRating,
+                          reviewDescription: reviewDescription,
+                        );
+                      },
                     );
+                  }
+                  return CustomFadeAnimation(
+                    duration: const Duration(milliseconds: 250),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0).r,
+                      child: ReviewCard(
+                        reviewerImage: reviewerImage !=
+                                null
+                            ? ApiConstants.getUserProfilePicture(
+                                path: reviewerImage,
+                              )
+                            : null,
+                        reviewerName:reviewerName,
+                        reviewDate: reviewDate,
+                        reviewRating: reviewRating,
+                        reviewDescription: reviewDescription,
+                      ),
+                    ),
+                  );
                 },
               ),
               state.reviewsAndRatings.reviews.length > 3
                   ? Center(
                       child: TextButton(
                         onPressed: () {
-                          context.pushRoute(AllReviewsRoute(productId: productId));
+                          context
+                              .pushRoute(AllReviewsRoute(productId: productId));
                         },
                         child: Text(
                           'See all reviews',

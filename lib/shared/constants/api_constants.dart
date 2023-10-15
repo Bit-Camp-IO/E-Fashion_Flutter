@@ -36,14 +36,19 @@ final class ApiConstants {
 
   //! User EndPoints
   static const String userDataEndPoint = '/user/me';
+  static const String editUserDataEndPoint = '/user/me/edit';
+  static const String updateUserProfileEndPoint = '/user/profile-image';
+  static String getUserProfilePicture({required String path}) => '$baseUrl/u/profile/$path';
   //! Cart
   static String cartEndPoint = '/user/cart';
   static String paymentIntentEndPoint = '/order/create-payment-intent';
   static const String ordersEndPoint = '/order';
+
   //! Maps EndPoints
   static const String mapPlaceAutoComplete = '/place/autocomplete/json';
   static const String mapPlaceDetails = '/place/details/json';
   static const String addressEndPoint = '/user/address';
+
 }
 enum ApiCallStatus{
   success('success'),

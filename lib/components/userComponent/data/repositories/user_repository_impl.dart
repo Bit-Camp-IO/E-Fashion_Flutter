@@ -35,4 +35,24 @@ class UserRepositoryImpl extends UserRepository{
       return left(ApiFailure(exception.message!));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> updateUserPicture({required String userAccessToken, required String imagePath, required String imageName}) async{
+    try{
+      final String updatedImage = await _userRemoteDataSource.updateUserPicture(userAccessToken: userAccessToken, imagePath: imagePath, imageName: imageName);
+      return right(updatedImage);
+    }on ServerException catch(exception){
+      return left(ApiFailure(exception.message!));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> updateUserData({required String userAccessToken, required String fullName, required String? phoneNumber, required String email}) async{
+    try{
+      final UserModel userData = await _userRemoteDataSource.updateUserData(userAccessToken: userAccessToken, fullName: fullName, phoneNumber: phoneNumber, email: email);
+      return right(userData);
+    }on ServerException catch(exception){
+      return left(ApiFailure(exception.message!));
+    }
+  }
 }

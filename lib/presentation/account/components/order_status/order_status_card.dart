@@ -42,26 +42,44 @@ class OrderCard extends StatelessWidget {
               horizontal: 8,
             ).r,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Center(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Iconsax.box, size: 20.sp, color: Theme.of(context).colorScheme.onSurface,),
+                    SizedBox(width: 16.w),
+                    Text(
+                      'OrderId : #${orderId.length > 15 ? '${orderId.substring(0,15)}..' : orderId}',
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                    ),
+                    IconButton(
+                      onPressed: () async{
+                        await Clipboard.setData(ClipboardData(text: orderId));
+                      },
+                      icon: Icon(Iconsax.copy, color: Theme.of(context).colorScheme.primary, size: 20.sp,),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0).r,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(Iconsax.box, size: 20.sp),
-                      SizedBox(width: 2.w),
                       Text(
-                        'OrderId : #${orderId.length > 15 ? '${orderId.substring(0,20)}..' : orderId}',
+                        'Order Price : \$$orderCost',
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                       ),
-                      IconButton(
-                        onPressed: () async{
-                          await Clipboard.setData(ClipboardData(text: orderId));
-                        },
-                        icon: Icon(Iconsax.clipboard_text, color: Theme.of(context).colorScheme.primary, size: 20.sp,),
+                      const Spacer(),
+                      Text(
+                        'Track Order',
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     ],
                   ),

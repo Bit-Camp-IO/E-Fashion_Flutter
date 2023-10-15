@@ -49,8 +49,7 @@ class DioApiConsumer extends ApiConsumer {
   }
 
   @override
-  Future post(String endPointPath,
-      {Map<String, dynamic>? body, Map<String, dynamic>? queryParameters, Map<String, dynamic>? headers}) async {
+  Future post(String endPointPath, {dynamic body, Map<String, dynamic>? queryParameters, Map<String, dynamic>? headers}) async {
     try {
       final Response response = await dioClient.post(endPointPath, queryParameters: queryParameters, data: body, options: Options(
         headers: headers,

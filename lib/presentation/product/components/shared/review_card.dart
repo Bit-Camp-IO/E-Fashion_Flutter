@@ -48,7 +48,7 @@ class ReviewCard extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       )
-                    : NoProfilePicture(name: reviewerName),
+                    : EmptyProfilePicture(name: reviewerName),
                 SizedBox(width: 16.w),
                 Text(
                   reviewerName,

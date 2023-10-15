@@ -2,8 +2,8 @@ import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class NoProfilePicture extends StatelessWidget {
-  const NoProfilePicture({
+class EmptyProfilePicture extends StatelessWidget {
+  const EmptyProfilePicture({
     super.key,
     required this.name,
     this.width,

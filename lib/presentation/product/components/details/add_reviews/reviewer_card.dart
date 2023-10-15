@@ -24,7 +24,7 @@ class ReviewerCard extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               )
-            : NoProfilePicture(name: reviewerName[0]),
+            : EmptyProfilePicture(name: reviewerName[0]),
         SizedBox(width: 16.w),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

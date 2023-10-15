@@ -1,9 +1,12 @@
 part of 'profile_cubit.dart';
 
-class ProfiletState extends Equatable {
+class ProfileState extends Equatable {
   final User userData;
   final String userDataLoadFailMessage;
-  final BlocState userDataState;
+  final CubitState userDataState;
+
+  final String updateProfilePictureFailMessage;
+  final CubitState updateProfilePictureState;
 
   @override
   List<Object> get props => [
@@ -12,26 +15,37 @@ class ProfiletState extends Equatable {
         userDataState,
       ];
 
-  const ProfiletState({
+  const ProfileState({
     this.userData = const User(
+      id: '',
       email: '',
       fullName: '',
-      profileImage: null,
+      profileImagePath: null,
+      phoneNumber: null
     ),
     this.userDataLoadFailMessage = '',
-    this.userDataState = BlocState.initial,
+    this.userDataState = CubitState.initial,
+    this.updateProfilePictureFailMessage = '',
+    this.updateProfilePictureState = CubitState.initial,
   });
 
-  ProfiletState copyWith({
+  ProfileState copyWith({
     User? userData,
     String? userDataLoadFailMessage,
-    BlocState? userDataState,
+    CubitState? userDataState,
+    String? updateProfilePictureFailMessage,
+    CubitState? updateProfilePictureState,
+    String? userId,
   }) {
-    return ProfiletState(
+    return ProfileState(
       userData: userData ?? this.userData,
       userDataLoadFailMessage:
           userDataLoadFailMessage ?? this.userDataLoadFailMessage,
       userDataState: userDataState ?? this.userDataState,
+      updateProfilePictureFailMessage: updateProfilePictureFailMessage ??
+          this.updateProfilePictureFailMessage,
+      updateProfilePictureState:
+          updateProfilePictureState ?? this.updateProfilePictureState,
     );
   }
 }

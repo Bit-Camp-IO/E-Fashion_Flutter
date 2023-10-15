@@ -22,13 +22,9 @@ class BottomNavBar extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-            create: (context) => getIt<FavoriteCubit>()
-              ..getUserFavoriteIdListEvent()
-              ..getFavoriteProductsList()),
-        BlocProvider(create: (context) => getIt<ProfileCubit>()..getUserData()),
-        BlocProvider(
-            create: (context) => getIt<CartCubit>()..getCartProducts()),
+        BlocProvider(create: (context) => getIt<ProfileCubit>()..getUserData(), lazy: false,),
+        BlocProvider(create: (context) => getIt<FavoriteCubit>()..getUserFavoriteIdList()),
+        BlocProvider(create: (context) => getIt<CartCubit>()..getCartProducts()),
       ],
       child: this,
     );

@@ -113,7 +113,7 @@ abstract class _$AppRouter extends RootStackRouter {
     FavoriteRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const FavoriteScreen()),
+        child: const FavoriteScreen(),
       );
     },
     FavoriteTabRoute.name: (routeData) {

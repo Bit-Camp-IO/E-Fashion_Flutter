@@ -47,7 +47,6 @@ class _LocationScreenState extends State<LocationScreen> {
 
   @override
   void initState() {
-    context.read<MapBloc>().add(const GetUserLocationEvent());
     _loadMapStyles();
     super.initState();
   }
@@ -123,10 +122,10 @@ class _LocationScreenState extends State<LocationScreen> {
                   initialCameraPosition: _setInitialPosition(),
                   onMapCreated: (GoogleMapController controller) async {
                     _mapController = controller;
-                    if (context.read<ThemeCubit>().state.appTheme
-                        .isDarkTheme) {
+                    if (context.read<ThemeCubit>().state.appTheme.isDarkTheme) {
                       _mapController.setMapStyle(_darkMapStyle);
                     }
+                    context.read<MapBloc>().add(const GetUserLocationEvent());
                   },
                 );
               },

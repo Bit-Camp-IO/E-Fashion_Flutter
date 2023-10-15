@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/container_button.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_text_form_field.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/secondary_button.dart';
 import 'package:efashion_flutter/presentation/account/components/shared/account_clipped_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -21,15 +23,26 @@ class _EditProfileContainerComponentState
   late TextEditingController _nameController;
   late TextEditingController _phoneController;
   late TextEditingController _emailController;
-  late String name;
-  late String phoneNumber;
-  late String email;
+  String? _fullName;
+  String? _phoneNumber;
+  String? _email;
+  late final ProfileCubit profileCubit;
+
   @override
   void initState() {
+    profileCubit = context.read<ProfileCubit>();
     _formKey = GlobalKey<FormState>();
-    _nameController = TextEditingController(text: 'Tara Slander');
-    _phoneController = TextEditingController(text: '+1 2018577757');
-    _emailController = TextEditingController(text: 'taraslan127@gmail.com');
+    _nameController =
+        TextEditingController(text: profileCubit.state.userData.fullName);
+    if (profileCubit.state.userData.phoneNumber != null) {
+      _phoneController =
+          TextEditingController(text: profileCubit.state.userData.phoneNumber);
+    } else {
+      _phoneController = TextEditingController();
+    }
+
+    _emailController =
+        TextEditingController(text: profileCubit.state.userData.email);
     super.initState();
   }
 
@@ -75,9 +88,10 @@ class _EditProfileContainerComponentState
                 label: "Name",
                 borderRadius: (12.0).r,
                 onSaved: (value) {
-                  if(value != null){
-                    name = value;
-                    debugPrint(name);
+                  if (value != null &&
+                      value != profileCubit.state.userData.fullName) {
+                    _fullName = value;
+                    debugPrint(_fullName);
                   }
                 },
               ),
@@ -88,9 +102,18 @@ class _EditProfileContainerComponentState
                 label: "Phone Number",
                 borderRadius: (12.0).r,
                 onSaved: (value) {
-                  if(value != null){
-                    phoneNumber = value;
-                    debugPrint(phoneNumber);
+                  if (value!.isNotEmpty &&
+                      value != profileCubit.state.userData.phoneNumber) {
+                    _phoneNumber = value;
+                    debugPrint(_phoneNumber);
+                  }
+                },
+                validator: (value) {
+                  if (_phoneController.text.isNotEmpty &&
+                      _phoneController.text.length < 11) {
+                    return 'Phone Number is Too Short';
+                  } else {
+                    return null;
                   }
                 },
               ),
@@ -101,9 +124,10 @@ class _EditProfileContainerComponentState
                 label: "Email",
                 borderRadius: (12.0).r,
                 onSaved: (value) {
-                  if(value != null){
-                    email = value;
-                    debugPrint(email);
+                  if (value != null &&
+                      value != profileCubit.state.userData.email) {
+                    _email = value;
+                    debugPrint(_email);
                   }
                 },
               ),
@@ -113,8 +137,17 @@ class _EditProfileContainerComponentState
                   width: 100.w,
                   height: 42.h,
                   onTap: () {
-                    if(_formKey.currentState!.validate()){
+                    if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
+                      if (_fullName != null ||
+                          _phoneNumber != null ||
+                          _email != null) {
+                        context.read<ProfileCubit>().updateUserData(
+                              fullName: _fullName,
+                              phoneNumber: _phoneNumber,
+                              email: _email,
+                            );
+                      }
                     }
                   },
                 ),

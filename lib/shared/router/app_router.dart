@@ -178,9 +178,11 @@ class AppRouter extends _$AppRouter {
             AutoRoute(
               page: AccountTabRoute.page,
               children: [
-                AutoRoute(
+                CustomRoute(
                   page: AccountRoute.page,
                   initial: true,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
                 ),
                 CustomRoute(
                   page: EditProfileRoute.page,

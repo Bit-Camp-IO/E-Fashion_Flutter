@@ -2,6 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/account/bloc/change_password_cubit/change_password_cubit.dart';
+import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile_cubit.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/no_profile_picture.dart';
+import 'package:efashion_flutter/shared/constants/api_constants.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/blurred_background_image.dart';
 import 'package:efashion_flutter/presentation/account/components/change_password/change_password_container_component.dart';
@@ -26,9 +29,20 @@ class ChangePasswordScreen extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       body: Stack(
         children: [
-          const BlurredBackgroundImage(
-            isLocalImage: false,
-            imagePath: AssetsManager.userTestImage,
+          BlocBuilder<ProfileCubit, ProfileState>(
+            buildWhen: (previous, current) =>
+                previous.userData != current.userData,
+            builder: (context, state) {
+              return BlurredBackgroundImage(
+                isLocalImage:
+                    state.userData.profileImagePath != null ? false : true,
+                imagePath: state.userData.profileImagePath != null
+                    ? ApiConstants.getUserProfilePicture(
+                        path: state.userData.profileImagePath!,
+                      )
+                    : AssetsManager.welcomeImage,
+              );
+            },
           ),
           Positioned(
             left: 0.0,
@@ -44,13 +58,25 @@ class ChangePasswordScreen extends StatelessWidget implements AutoRouteWrapper {
                             !FocusScope.of(context).hasFocus),
                     visible: FocusScope.of(context).hasPrimaryFocus ||
                         !FocusScope.of(context).hasFocus,
-                    child: ClipOval(
-                      child: CachedNetworkImage(
-                        fit: BoxFit.cover,
-                        imageUrl: AssetsManager.userTestImage,
-                        width: 120.w,
-                        height: 120.h,
-                      ),
+                    child: BlocBuilder<ProfileCubit, ProfileState>(
+                      builder: (context, state) {
+                        return state.userData.profileImagePath == null
+                            ? EmptyProfilePicture(
+                                name: state.userData.fullName,
+                                width: 120.w,
+                                height: 120.h,
+                                isLarge: true,
+                              )
+                            : ClipOval(
+                                child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: ApiConstants.getUserProfilePicture(
+                                      path: state.userData.profileImagePath!),
+                                  width: 120.w,
+                                  height: 120.h,
+                                ),
+                              );
+                      },
                     ),
                   ),
                 ),

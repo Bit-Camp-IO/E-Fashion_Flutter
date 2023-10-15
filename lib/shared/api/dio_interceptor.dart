@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:efashion_flutter/shared/constants/api_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -11,7 +10,6 @@ class DioInterceptor extends Interceptor{
     if (kDebugMode) {
       print('REQUEST[${options.method}] => PATH: ${options.path}');
     }
-    options.headers[ApiConstants.headerContentType] = ApiConstants.headerContentTypeValue;
     super.onRequest(options, handler);
   }
 

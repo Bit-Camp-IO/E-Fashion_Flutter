@@ -7,6 +7,7 @@ import 'package:efashion_flutter/presentation/product/components/details/add_rev
 import 'package:efashion_flutter/presentation/product/components/details/add_reviews/review_text_field.dart';
 import 'package:efashion_flutter/presentation/product/components/shared/custom_rating_bar.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
+import 'package:efashion_flutter/shared/constants/api_constants.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,10 +60,14 @@ class _AddOrEditReviewScreenState extends State<AddOrEditReviewScreen> {
                   productPrice: state.productDetails.price.toInt(),
                 ),
                 const SizedBox(height: 30),
-                BlocBuilder<ProfileCubit, ProfiletState>(
+                BlocBuilder<ProfileCubit, ProfileState>(
                   builder: (context, state) {
                     return ReviewerCard(
-                      reviewerImage: state.userData.profileImage,
+                      reviewerImage: state.userData.profileImagePath != null
+                          ? ApiConstants.getUserProfilePicture(
+                              path: state.userData.profileImagePath!,
+                            )
+                          : state.userData.profileImagePath,
                       reviewerName: state.userData.fullName,
                     );
                   },
