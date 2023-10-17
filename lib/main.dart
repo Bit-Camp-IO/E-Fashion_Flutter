@@ -1,29 +1,28 @@
 import 'package:efashion_flutter/app.dart';
 import 'package:efashion_flutter/bloc_observer.dart';
-import 'package:efashion_flutter/shared/constants/app_constants.dart';
+import 'package:efashion_flutter/firebase_options.dart';
+import 'package:efashion_flutter/hive_configration.dart';
 import 'package:efashion_flutter/injection_container.dart';
-import 'package:efashion_flutter/components/userComponent/data/models/app_theme_model.dart';
-import 'package:efashion_flutter/components/authComponent/data/models/tokens_model.dart';
+import 'package:efashion_flutter/shared/util/notifications_manager.dart';
+import 'package:efashion_flutter/stripe_configration.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
-Future<void> main() async{
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  await NotificationsManager.showNotification(message);
+  debugPrint("Background Message: ${message.messageId}");
+}
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await Future.wait([
-    Hive.initFlutter(),
-    dotenv.load(fileName: "lib/.env"),
+    Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+    HiveConfigration.init(),
+    StripeConfigration.init(),
   ]);
-  Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY']!;
-  Hive.registerAdapter(AppThemeModelAdapter());
-  Hive.registerAdapter(TokensModelAdapter());
-  await Future.wait([
-  Stripe.instance.applySettings(),
-  Hive.openBox<AppThemeModel>(AppConstants.themeBox),
-  Hive.openBox<TokensModel>(AppConstants.authBox),
-  ]);
+  await NotificationsManager().init();
   configureDependencies();
   Bloc.observer = MyBlocObserver();
   runApp(const EfashionApp());

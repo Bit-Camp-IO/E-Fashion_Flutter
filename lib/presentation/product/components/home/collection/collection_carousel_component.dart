@@ -27,8 +27,7 @@ class _CollectionCarouselComponentState
     return Stack(
       children: [
         BlocBuilder<CollectionsCubit, CollectionsState>(
-          buildWhen: (previous, current) =>
-              previous.collectionsList != current.collectionsList,
+          buildWhen: (previous, current) => previous.collectionsState != current.collectionsState,
           builder: (context, state) {
             return CarouselSlider.builder(
               itemCount: state.collectionsList.length,
@@ -52,7 +51,6 @@ class _CollectionCarouselComponentState
                 height: 320.h,
                 viewportFraction: 1,
                 enlargeCenterPage: false,
-                pageViewKey: const PageStorageKey('Collection'),
                 initialPage: 0,
                 onPageChanged: (index, reason) {
                   listenableIndicatorIndex.value = index;

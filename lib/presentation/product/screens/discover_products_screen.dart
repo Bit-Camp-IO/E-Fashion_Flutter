@@ -39,9 +39,6 @@ class DiscoverProductsScreen extends StatefulWidget
 class _DiscoverProductsScreenState extends State<DiscoverProductsScreen> {
   late final String screenTitle;
   ValueNotifier<int> switchIndex = ValueNotifier(0);
-  late final ScrollController listViewController;
-  late final ScrollController gridViewController;
-
   @override
   void initState() {
     final DiscoverBloc discoverBloc = context.read<DiscoverBloc>();
@@ -97,8 +94,6 @@ class _DiscoverProductsScreenState extends State<DiscoverProductsScreen> {
   @override
   void dispose() {
     switchIndex.dispose();
-    listViewController.dispose();
-    gridViewController.dispose();
     super.dispose();
   }
 }

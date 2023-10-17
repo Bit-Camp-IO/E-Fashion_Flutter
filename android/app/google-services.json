@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "741865556047",
+    "project_id": "efash-391423",
+    "storage_bucket": "efash-391423.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741865556047:android:14ed868c82a9c88a09c23a",
+        "android_client_info": {
+          "package_name": "com.bitio.efashion_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741865556047-j2l265o3ikqh1afvbjpe5vsel63l6fh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOz4KBLdsuwbkGPOthnOeaIc-ZfBexkk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "741865556047-j2l265o3ikqh1afvbjpe5vsel63l6fh4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

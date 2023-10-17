@@ -16,6 +16,7 @@ class EfashionApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeManager().init(context);
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => getIt<ThemeCubit>()..getAppTheme()),
@@ -30,8 +31,7 @@ class EfashionApp extends StatelessWidget {
             builder: (context, child) => MaterialApp.router(
               debugShowCheckedModeBanner: false,
               routerConfig: getIt<AppRouter>().config(
-                navigatorObservers: () =>
-                    [AppRoutesObserver(), AutoRouteObserver()],
+                navigatorObservers: () => [AppRoutesObserver(), AutoRouteObserver()],
               ),
               theme: state.appTheme.isDarkTheme
                   ? ThemeManager.darkTheme()
