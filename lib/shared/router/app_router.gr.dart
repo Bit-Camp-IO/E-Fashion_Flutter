@@ -79,9 +79,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     ChatSupportRoute.name: (routeData) {
+      final args = routeData.argsAs<ChatSupportRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ChatSupportScreen(),
+        child: WrappedRoute(
+            child: ChatSupportScreen(
+          key: args.key,
+          userId: args.userId,
+        )),
       );
     },
     CollectionDetailsRoute.name: (routeData) {
@@ -422,16 +427,40 @@ class ChangePasswordRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ChatSupportScreen]
-class ChatSupportRoute extends PageRouteInfo<void> {
-  const ChatSupportRoute({List<PageRouteInfo>? children})
-      : super(
+class ChatSupportRoute extends PageRouteInfo<ChatSupportRouteArgs> {
+  ChatSupportRoute({
+    Key? key,
+    required String userId,
+    List<PageRouteInfo>? children,
+  }) : super(
           ChatSupportRoute.name,
+          args: ChatSupportRouteArgs(
+            key: key,
+            userId: userId,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ChatSupportRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ChatSupportRouteArgs> page =
+      PageInfo<ChatSupportRouteArgs>(name);
+}
+
+class ChatSupportRouteArgs {
+  const ChatSupportRouteArgs({
+    this.key,
+    required this.userId,
+  });
+
+  final Key? key;
+
+  final String userId;
+
+  @override
+  String toString() {
+    return 'ChatSupportRouteArgs{key: $key, userId: $userId}';
+  }
 }
 
 /// generated route for

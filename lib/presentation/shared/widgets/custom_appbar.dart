@@ -11,12 +11,14 @@ class CustomAppBar extends StatefulWidget {
     required this.appBarType,
     this.onIndexChange,
     this.disableBackButton = false,
+    this.onBackTap,
   });
 
   final String appBarTitle;
   final AppBarType appBarType;
   final void Function(int? currentIndex)? onIndexChange;
   final bool disableBackButton;
+  final void Function()? onBackTap;
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
 }
@@ -40,7 +42,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           widget.disableBackButton ? const SizedBox.shrink() :  GestureDetector(
-            onTap: () {
+            onTap: widget.onBackTap ?? () {
               context.popRoute();
             },
             child: Icon(

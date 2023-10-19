@@ -51,6 +51,10 @@ final class ApiConstants {
   static const String mapPlaceDetails = '/place/details/json';
   static const String addressEndPoint = '/user/address';
 
+  //! SupportChat EndPoints
+  static const String getExistingChat = '/user/chat';
+  static const String createNewChat = '/user/new-chat';
+
 }
 enum ApiCallStatus{
   success('success'),

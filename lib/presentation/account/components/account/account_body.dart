@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile_cubit.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/tokens_cubit/tokens_cubit.dart';
@@ -34,7 +35,7 @@ class AccountContainerComponent extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 12).r,
                   child: ClippedContainerButton(
                     onTap: () {
-                     context.read<TokensCubit>().deleteUserToken();
+                      context.read<TokensCubit>().deleteUserToken();
                     },
                     icon: Iconsax.logout5,
                   ),
@@ -43,11 +44,9 @@ class AccountContainerComponent extends StatelessWidget {
               SizedBox(
                 height: 30.h,
               ),
-              Text(
-                "Profile Settings",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleMedium
-              ),
+              Text("Profile Settings",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleMedium),
               SizedBox(
                 height: 10.h,
               ),
@@ -72,11 +71,12 @@ class AccountContainerComponent extends StatelessWidget {
                 text: "Orders Status",
                 prefixIcon: Iconsax.bag_2,
               ),
-
               AccountCustomRow(
                 onTap: () {
                   context.pushRoute(
-                    const ChatSupportRoute(),
+                    ChatSupportRoute(
+                      userId: context.read<ProfileCubit>().state.userData.id,
+                    ),
                   );
                 },
                 text: "Chat Support",

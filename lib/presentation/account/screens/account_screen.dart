@@ -29,16 +29,15 @@ class AccountScreen extends StatelessWidget {
           children: [
             BlocBuilder<ProfileCubit, ProfileState>(
               buildWhen: (previous, current) =>
-              previous.userData != current.userData,
+                  previous.userData != current.userData,
               builder: (context, state) {
                 return BlurredBackgroundImage(
-                  isLocalImage: state.userData.profileImagePath != null
-                      ? false
-                      : true,
+                  isLocalImage:
+                      state.userData.profileImagePath != null ? false : true,
                   imagePath: state.userData.profileImagePath != null
                       ? ApiConstants.getUserProfilePicture(
-                    path: state.userData.profileImagePath!,
-                  )
+                          path: state.userData.profileImagePath!,
+                        )
                       : AssetsManager.welcomeImage,
                 );
               },
@@ -49,40 +48,35 @@ class AccountScreen extends StatelessWidget {
               top: 90.h,
               child: BlocBuilder<ProfileCubit, ProfileState>(
                 buildWhen: (previous, current) =>
-                previous.userData != current.userData,
+                    previous.userData != current.userData,
                 builder: (context, state) {
                   return Column(
                     children: [
                       state.userData.profileImagePath == null
                           ? EmptyProfilePicture(
-                        name: state.userData.fullName,
-                        width: 120.w,
-                        height: 120.h,
-                        isLarge: true,
-                      )
+                              name: state.userData.fullName,
+                              width: 120.w,
+                              height: 120.h,
+                              isLarge: true,
+                            )
                           : ClipOval(
-                        child: CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          imageUrl:
-                          ApiConstants.getUserProfilePicture(
-                              path: state
-                                  .userData.profileImagePath!),
-                          width: 120.w,
-                          height: 120.h,
-                        ),
-                      ),
+                              child: CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                imageUrl: ApiConstants.getUserProfilePicture(
+                                    path: state.userData.profileImagePath!),
+                                width: 120.w,
+                                height: 120.h,
+                              ),
+                            ),
                       SizedBox(
                         height: 8.h,
                       ),
                       Text(
                         state.userData.fullName,
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(
-                          color: Colors.white,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.white,
+                                ),
                       ),
                     ],
                   );
