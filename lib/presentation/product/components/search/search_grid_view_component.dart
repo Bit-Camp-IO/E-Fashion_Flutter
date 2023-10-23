@@ -3,6 +3,7 @@ import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/search_bloc/search_bloc.dart';
+import 'package:efashion_flutter/presentation/product/components/shared/small_product_card_shimmer_loading.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/cart_bottom_sheet.dart';
 import 'package:efashion_flutter/presentation/product/components/shared/small_brand_card.dart';
@@ -58,17 +59,15 @@ class _GridViewComponentState extends State<GridViewComponent> {
               crossAxisSpacing: 10.h,
               mainAxisExtent: 200.h
           ),
-          itemCount: state.searchProducts.length + 1,
+          itemCount: state.searchProducts.length + 2,
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           controller: _scrollController,
           itemBuilder: (context, index) {
             if (index >= state.searchProducts.length) {
-              if(state.hasSearchProductsListReachedMax){
-                return const SizedBox.shrink();
+              if(!state.hasSearchProductsListReachedMax){
+                return const SmallProductCardShimmerLoading();
               }else{
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const SizedBox.shrink();
               }
             } else {
               final String productId = state.searchProducts[index].id;

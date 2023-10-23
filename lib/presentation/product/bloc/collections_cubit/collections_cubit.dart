@@ -28,6 +28,7 @@ class CollectionsCubit extends Cubit<CollectionsState> {
   ) : super(const CollectionsState());
 
   Future<void> getCollectionsListUseCase() async {
+    emit(state.copyWith(collectionsState: CubitState.loading));
     final response = await _getCollectionsListUseCase();
     response.fold(
       (failure) => emit(

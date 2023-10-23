@@ -1,7 +1,7 @@
 import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
-import 'package:efashion_flutter/presentation/product/components/home/titled_avatar.dart';
+import 'package:efashion_flutter/presentation/product/components/home/categories/titled_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

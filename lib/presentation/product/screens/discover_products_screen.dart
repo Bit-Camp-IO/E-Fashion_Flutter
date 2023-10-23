@@ -10,19 +10,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
-class DiscoverProductsScreen extends StatefulWidget
-    implements AutoRouteWrapper {
-  const DiscoverProductsScreen(
-      {super.key,
-      this.brandName = '',
-      this.brandId = '',
-      required this.categories,
-      required this.discoverScreenType});
-
+class DiscoverProductsScreen extends StatefulWidget implements AutoRouteWrapper {
   final String brandName;
   final String brandId;
   final String? categories;
   final DiscoverScreenType discoverScreenType;
+  const DiscoverProductsScreen({
+    super.key,
+    this.brandName = '',
+    this.brandId = '',
+    required this.categories,
+    required this.discoverScreenType,
+  });
 
   @override
   State<DiscoverProductsScreen> createState() => _DiscoverProductsScreenState();
@@ -39,6 +38,7 @@ class DiscoverProductsScreen extends StatefulWidget
 class _DiscoverProductsScreenState extends State<DiscoverProductsScreen> {
   late final String screenTitle;
   ValueNotifier<int> switchIndex = ValueNotifier(0);
+
   @override
   void initState() {
     final DiscoverBloc discoverBloc = context.read<DiscoverBloc>();
@@ -91,6 +91,7 @@ class _DiscoverProductsScreenState extends State<DiscoverProductsScreen> {
       ),
     );
   }
+
   @override
   void dispose() {
     switchIndex.dispose();

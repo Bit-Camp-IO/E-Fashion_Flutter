@@ -3,6 +3,7 @@ import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/search_bloc/search_bloc.dart';
+import 'package:efashion_flutter/presentation/product/components/shared/large_product_card_shimmer_loading.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/cart_bottom_sheet.dart';
 import 'package:efashion_flutter/presentation/product/components/shared/large_product_card.dart';
@@ -66,8 +67,9 @@ void _onScroll() {
               itemBuilder: (context, index) {
                 if (index >= state.searchProducts.length) {
                   if (!state.hasSearchProductsListReachedMax) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0).r,
+                      child: const LargeProductCardShimmerLoading(),
                     );
                   } else {
                     return const SizedBox.shrink();
