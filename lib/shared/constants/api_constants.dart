@@ -15,23 +15,24 @@ final class ApiConstants {
   static const String forgetPasswordEndPoint = '/auth/forgot-password';
   static const String verifyPasswordOtpEndPoint = '/auth/verify-password-otp';
   static const String resetPasswordEndPoint = '/auth/reset-password';
-
   static const String changePasswordEndPoint = '/auth/change-password';
+
+  //!Notifications End Points
+  static const String getNotificationsList = '/notif/list';
+  static const String subscribeToNotifications = '/notif/subscribe';
+  static const String unsubscribeFromNotifications = '/notif/unsubscribe';
 
   //! Products End Points
   static const String categoriesEndPoint = '/category/list';
   static const String productsEndPoint = '/product/list';
   static const String brandsEndPoint = '/brand/list';
 
-  static String productDetailsEndPoint({required String productId}) =>
-      '/product/$productId';
+  static String productDetailsEndPoint({required String productId}) => '/product/$productId';
   static const String userFavoriteListEndPoint = '/user/favorites';
 
-  static String productReviewsEndPoint({required String productId}) =>
-      '/product/$productId/rate';
+  static String productReviewsEndPoint({required String productId}) => '/product/$productId/rate';
 
-  static String userReviewEndPoint({required String productId}) =>
-      '/product/$productId/rate/my-rating';
+  static String userReviewEndPoint({required String productId}) => '/product/$productId/rate/my-rating';
 
   //! Collection Endpoints
   static const String collectionsListEndPoint = '/collection';
@@ -52,9 +53,10 @@ final class ApiConstants {
   static const String addressEndPoint = '/user/address';
 
   //! SupportChat EndPoints
-  static const String getExistingChat = '/user/chat';
-  static const String createNewChat = '/user/new-chat';
-
+  static const String getExistingChat = '/chat';
+  static const String createNewChat = '/chat/new-chat';
+  static String getChatMessages({required String chatId}) => '/chat/$chatId/messages';
+  static String sendNewMessage({required String chatId}) => '/chat/$chatId/new-message';
 }
 enum ApiCallStatus{
   success('success'),

@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile_cubit.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/tokens_cubit/tokens_cubit.dart';
@@ -73,11 +72,7 @@ class AccountContainerComponent extends StatelessWidget {
               ),
               AccountCustomRow(
                 onTap: () {
-                  context.pushRoute(
-                    ChatSupportRoute(
-                      userId: context.read<ProfileCubit>().state.userData.id,
-                    ),
-                  );
+                  context.pushRoute(const ChatSupportRoute());
                 },
                 text: "Chat Support",
                 prefixIcon: Iconsax.message,

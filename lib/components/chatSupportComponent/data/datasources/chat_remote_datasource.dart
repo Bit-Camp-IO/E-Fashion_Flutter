@@ -9,13 +9,15 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
 abstract class ChatRemoteDataSource {
-  Future<List<ChatMessageModel>> createOrJoinChat({required userAccessToken});
+  Future<String> createOrJoinChat({required userAccessToken});
 
-  void sendMessage({required String message});
+  Future<ChatMessageModel> sendMessage({required String userAccessToken, required String message, required String chatId});
 
   Stream<ChatMessageModel> getChatStream();
 
   Future<void> closeSocketConnection();
+
+  Future<List<ChatMessageModel>> getChatMessages({required userAccessToken, required chatId});
   @disposeMethod
   dispose();
 }
@@ -32,22 +34,14 @@ class ChatRemoteDataSourceImpl extends ChatRemoteDataSource {
       StreamController<ChatMessageModel>.broadcast();
 
   @override
-  Future<List<ChatMessageModel>> createOrJoinChat(
-      {required userAccessToken}) async {
+  Future<String> createOrJoinChat({required userAccessToken}) async {
     final response =
     await _apiConsumer.get(ApiConstants.getExistingChat, headers: {
       'Authorization': 'Bearer $userAccessToken',
     });
     if (response['status'] == ApiCallStatus.success.value) {
-      _connectToSocket(
-          userAccessToken: userAccessToken, chatId: response['data']['id']);
-      final List messagesList = response['data']['messages'];
-      if (messagesList.isNotEmpty) {
-        return List<ChatMessageModel>.from((messagesList)
-            .map((message) => ChatMessageModel.fromJson(message)));
-      } else {
-        return <ChatMessageModel>[];
-      }
+      _connectToSocket(userAccessToken: userAccessToken, chatId: response['data']['id']);
+      return response['data']['id'];
     } else {
       final getChatResponse =
       await _apiConsumer.post(ApiConstants.createNewChat, headers: {
@@ -55,11 +49,29 @@ class ChatRemoteDataSourceImpl extends ChatRemoteDataSource {
       });
       if (getChatResponse['status'] == ApiCallStatus.success.value) {
         _connectToSocket(
-            userAccessToken: userAccessToken, chatId: response['data']['id']);
-        return <ChatMessageModel>[];
+            userAccessToken: userAccessToken, chatId: getChatResponse['data']['id']);
+        return getChatResponse['data']['id'];
       } else {
         throw const FetchDataException();
       }
+    }
+  }
+
+  @override
+  Future<List<ChatMessageModel>> getChatMessages({required userAccessToken, required chatId}) async{
+    final response = await _apiConsumer.get(ApiConstants.getChatMessages(chatId: chatId), headers: {
+      'Authorization': 'Bearer $userAccessToken',
+    });
+    if(response['status'] == ApiCallStatus.success.value){
+      final List messagesList = response['data'];
+      if (messagesList.isNotEmpty) {
+        return List<ChatMessageModel>.from((messagesList)
+            .map((message) => ChatMessageModel.fromJson(message)));
+      } else {
+        return <ChatMessageModel>[];
+      }
+    }else{
+      throw const FetchDataException();
     }
   }
 
@@ -72,21 +84,32 @@ class ChatRemoteDataSourceImpl extends ChatRemoteDataSource {
         'query': {'chatId': chatId},
       });
       socketConsumer.connect();
-      socketConsumer.on('new-message', (data) {
-        final chatMessage = ChatMessageModel(
+      socketConsumer.on('new_message', (data) {
+        final ChatMessageModel newMessage = ChatMessageModel(
             message: data['content'],
-            senderId: data['senderId'],
+            isMe: false,
             date: data['date']);
         chatMessageController.sink.add(
-          chatMessage,
+          newMessage,
         ); // Add the message to the stream
       });
     socketConsumer.onError((data) => const FetchDataException());
   }
 
   @override
-  void sendMessage({required String message}) {
-    socketConsumer.emit('send-message', message);
+  Future<ChatMessageModel> sendMessage({required String userAccessToken, required String message, required String chatId}) async{
+    final response = await _apiConsumer.post(ApiConstants.sendNewMessage(chatId: chatId), headers: {
+      'Authorization': 'Bearer $userAccessToken',
+    },
+      body: {
+        'content': message,
+      }
+    );
+    if(response['status'] == ApiCallStatus.success.value){
+      return ChatMessageModel.fromJson(response['data']);
+    }else{
+      throw const FetchDataException();
+    }
   }
 
   @override

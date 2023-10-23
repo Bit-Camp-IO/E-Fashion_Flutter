@@ -5,15 +5,12 @@ import 'package:efashion_flutter/shared/error/failure.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class SendMessageUseCase{
+class GetChatMessagesUseCase{
   final ChatSupportRepository _chatSupportRepository;
-  const SendMessageUseCase(this._chatSupportRepository);
 
-  Future<Either<Failure, ChatMessage>> call({
-    required String userAccessToken,
-    required String message,
-    required String chatId,
-  }) async{
-    return await _chatSupportRepository.sendMessage(userAccessToken: userAccessToken, message: message, chatId: chatId);
+  const GetChatMessagesUseCase(this._chatSupportRepository);
+
+  Future<Either<Failure, List<ChatMessage>>> call({required String chatId, required userAccessToken}) async {
+    return await _chatSupportRepository.getChatMessages(userAccessToken: userAccessToken, chatId: chatId);
   }
 }

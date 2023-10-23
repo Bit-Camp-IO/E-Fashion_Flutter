@@ -6,6 +6,7 @@ import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart'
 import 'package:efashion_flutter/presentation/account/components/chat_support/support_message.dart';
 import 'package:efashion_flutter/presentation/account/components/chat_support/user_message.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_text_form_field.dart';
+import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,14 +14,13 @@ import 'package:iconsax/iconsax.dart';
 
 @RoutePage()
 class ChatSupportScreen extends StatefulWidget implements AutoRouteWrapper {
-  final String userId;
-
-  const ChatSupportScreen({super.key, required this.userId});
+  const ChatSupportScreen({super.key});
 
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<ChatSupportBloc>()..add(CreateOrJoinChatEvent()),
+      create: (context) =>
+          getIt<ChatSupportBloc>()..add(CreateOrJoinChatEvent()),
       child: this,
     );
   }
@@ -72,47 +72,50 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 16.h,
-            ),
-            BlocBuilder<ChatSupportBloc, ChatSupportState>(
-              buildWhen: (previous, current) =>
-                  previous.chatMessages != current.chatMessages,
-              builder: (context, state) {
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: state.chatMessages.length,
-                    reverse: true,
-                    itemBuilder: (context, index) {
-                      final date = DateTime.parse(
-                        state.chatMessages[index].date,
-                      ).toLocal();
-                      if (state.chatMessages[index].senderId == widget.userId) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0).r,
-                          child: CustomFadeAnimation(
-                            duration: const Duration(milliseconds: 250),
-                            child: UserMessage(
-                                message: state.chatMessages[index].message,
-                                date: date),
-                          ),
-                        );
-                      } else {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0).r,
-                          child: CustomFadeAnimation(
-                            duration: const Duration(milliseconds: 250),
-                            child: SupportMessage(
-                              message: state.chatMessages[index].message,
-                              date: date,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                );
-              },
+            Expanded(
+              child: BlocBuilder<ChatSupportBloc, ChatSupportState>(
+                buildWhen: (previous, current) =>
+                    previous.chatMessages != current.chatMessages,
+                builder: (context, state) {
+                  if (state.chatMessages.isEmpty) {
+                    return Center(
+                      child: Image.asset(AssetsManager.emptyChatImage),
+                    );
+                  } else {
+                    return ListView.builder(
+                        itemCount: state.chatMessages.length,
+                        reverse: true,
+                        itemBuilder: (context, index) {
+                          final date = DateTime.parse(
+                            state.chatMessages[index].date,
+                          ).toLocal();
+                          if (state.chatMessages[index].isMe == true) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 16.0).r,
+                              child: CustomFadeAnimation(
+                                duration: const Duration(milliseconds: 250),
+                                child: UserMessage(
+                                  message: state.chatMessages[index].message,
+                                  date: date,
+                                ),
+                              ),
+                            );
+                          } else {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 16.0).r,
+                              child: CustomFadeAnimation(
+                                duration: const Duration(milliseconds: 250),
+                                child: SupportMessage(
+                                  message: state.chatMessages[index].message,
+                                  date: date,
+                                ),
+                              ),
+                            );
+                          }
+                        });
+                  }
+                },
+              ),
             ),
             Form(
               key: _formKey,
@@ -157,7 +160,6 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
                         context.read<ChatSupportBloc>().add(
                               SendMessageEvent(
                                 message: message,
-                                senderId: widget.userId,
                               ),
                             );
                         _messageController.clear();

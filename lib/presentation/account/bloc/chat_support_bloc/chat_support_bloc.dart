@@ -4,6 +4,7 @@ import 'package:efashion_flutter/components/authComponent/domain/usecases/get_us
 import 'package:efashion_flutter/components/chatSupportComponent/domain/entities/chat_message.dart';
 import 'package:efashion_flutter/components/chatSupportComponent/domain/usecases/close_socket_connection.dart';
 import 'package:efashion_flutter/components/chatSupportComponent/domain/usecases/create_or_join_existing_chat_usecase.dart';
+import 'package:efashion_flutter/components/chatSupportComponent/domain/usecases/get_chat_messages_usecase.dart';
 import 'package:efashion_flutter/components/chatSupportComponent/domain/usecases/get_chat_stream_usecase.dart';
 import 'package:efashion_flutter/components/chatSupportComponent/domain/usecases/send_message_usecase.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
@@ -19,9 +20,9 @@ part 'chat_support_state.dart';
 class ChatSupportBloc extends Bloc<ChatSupportEvent, ChatSupportState> {
   final GetUserAccessTokenUseCase _getUserAccessTokenUseCase;
   final CreateOrJoinChatUseCase _createOrJoinChatUseCase;
+  final GetChatMessagesUseCase _getChatMessagesUseCase;
   final SendMessageUseCase _sendMessageUseCase;
   final GetChatStreamUseCase _getChatStreamUseCase;
-
   final CloseSocketConnectionUseCase _closeSocketConnectionUseCase;
   late String userAccessToken;
   late StreamSubscription<ChatMessage> streamSubscription;
@@ -30,13 +31,15 @@ class ChatSupportBloc extends Bloc<ChatSupportEvent, ChatSupportState> {
   ChatSupportBloc(
     this._getUserAccessTokenUseCase,
     this._createOrJoinChatUseCase,
+    this._getChatMessagesUseCase,
     this._sendMessageUseCase,
     this._getChatStreamUseCase,
     this._closeSocketConnectionUseCase,
   ) : super(const ChatSupportState()) {
     on<CreateOrJoinChatEvent>(_createOrJoinChatEvent);
-    on<MessageReceivedEvent>(_newMessageEvent);
+    on<MessageReceivedEvent>(_messageReceivedEvent);
     on<SendMessageEvent>(_sendMessageEvent);
+    on<GetChatMessagesEvent>(_getChatMessages);
   }
 
   Future<void> _createOrJoinChatEvent(
@@ -51,38 +54,70 @@ class ChatSupportBloc extends Bloc<ChatSupportEvent, ChatSupportState> {
           chatState: BlocState.failure,
         ),
       ),
-      (listOfMessages) {
+      (chatId) {
         _startChatStreamSubscription();
         emit(
           state.copyWith(
-            chatMessages: listOfMessages.reversed.toList(),
+            chatId: chatId,
             chatState: BlocState.success,
           ),
         );
+        add(GetChatMessagesEvent());
       },
     );
   }
 
-  void _sendMessageEvent(
-      SendMessageEvent event, Emitter<ChatSupportState> emit) {
-    _sendMessageUseCase(message: event.message);
-    ChatMessage sentMessage = ChatMessage(
-      message: event.message,
-      senderId: event.senderId,
-      date: DateTime.now().toString(),
-    );
-    List<ChatMessage> newChatList = [sentMessage, ...state.chatMessages];
-    emit(
-      state.copyWith(chatMessages: newChatList),
+  void _getChatMessages(
+      GetChatMessagesEvent event, Emitter<ChatSupportState> emit) async {
+    final getAccessToken = await _getUserAccessTokenUseCase();
+    userAccessToken = getAccessToken.getOrElse(() => '');
+    final response = await _getChatMessagesUseCase(
+        userAccessToken: userAccessToken, chatId: state.chatId);
+    response.fold(
+      (failure) => emit(
+        state.copyWith(
+          chatMessagesState: BlocState.failure,
+          chatFailMessage: failure.message,
+        ),
+      ),
+      (chatMessages) => emit(
+        state.copyWith(
+          chatMessagesState: BlocState.success,
+          chatMessages: chatMessages.reversed.toList(),
+        ),
+      ),
     );
   }
 
-  void _newMessageEvent(
+  void _sendMessageEvent(
+      SendMessageEvent event, Emitter<ChatSupportState> emit) async {
+    final getAccessToken = await _getUserAccessTokenUseCase();
+    userAccessToken = getAccessToken.getOrElse(() => '');
+    final response = await _sendMessageUseCase(
+      message: event.message,
+      chatId: state.chatId,
+      userAccessToken: userAccessToken,
+    );
+    response.fold(
+      (failure) => emit(
+        state.copyWith(
+          sendMessageState: BlocState.failure,
+        ),
+      ),
+      (sentMessage) => emit(
+        state.copyWith(
+          sendMessageState: BlocState.success,
+          chatMessages: [sentMessage, ...state.chatMessages],
+        ),
+      ),
+    );
+  }
+
+  void _messageReceivedEvent(
       MessageReceivedEvent event, Emitter<ChatSupportState> emit) {
-    List<ChatMessage> newChatList = [event.message, ...state.chatMessages];
     emit(
       state.copyWith(
-        chatMessages: newChatList,
+        chatMessages:  [event.message, ...state.chatMessages]
       ),
     );
   }

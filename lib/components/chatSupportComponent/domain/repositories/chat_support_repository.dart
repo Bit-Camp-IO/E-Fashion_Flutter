@@ -3,10 +3,22 @@ import 'package:efashion_flutter/components/chatSupportComponent/domain/entities
 import 'package:efashion_flutter/shared/error/failure.dart';
 
 abstract class ChatSupportRepository {
-  Future<Either<Failure, List<ChatMessage>>> createOrJoinChat({
+  Future<Either<Failure, String>> createOrJoinChat({
     required userAccessToken,
   });
-  void sendMessage({required String message});
+
+  Future<Either<Failure, ChatMessage>> sendMessage({
+    required String userAccessToken,
+    required String message,
+    required String chatId,
+  });
+
+  Future<Either<Failure, List<ChatMessage>>> getChatMessages({
+    required String userAccessToken,
+    required String chatId,
+});
+
   Stream<ChatMessage> getChatStream();
+
   Future<void> closeSocketConnection();
 }

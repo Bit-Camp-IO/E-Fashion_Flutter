@@ -17,9 +17,7 @@ class AssetsManager {
   static const String greatSvgIcon = 'assets/images/great.svg';
   static const String menCategoryImage = 'assets/images/men_category.jpeg';
   static const String womenCategoryImage = 'assets/images/woman_category.jpeg';
-  static const String userTestImage = 'https://images.unsplash.com/photo-1581338834647-b0fb40704e21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80';
-
   static const String cartImage = 'assets/images/cart.png';
-
   static const String favoriteImage = 'assets/images/favorite.png';
+  static const String emptyChatImage = 'assets/images/empty_chat.png';
 }

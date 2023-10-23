@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
-class BuildMyMessageItem extends StatelessWidget {
-  const BuildMyMessageItem({super.key});
-
+class UserMessage extends StatelessWidget {
+  const UserMessage({super.key, required this.message, required this.date});
+  final String message;
+  final DateTime date;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -26,16 +28,10 @@ class BuildMyMessageItem extends StatelessWidget {
                     bottomLeft: const Radius.circular(50).r,
                   ),
                   boxShadow: const [
-                    // BoxShadow(
-                    //   color: Colors.black38,
-                    //   spreadRadius: 2.0,
-                    //   blurRadius: 5,
-                    //   offset: Offset(0, 3),
-                    // ),
                   ],
                 ),
                 child: Text(
-                  "Lorem ipsum dolor",
+                  message,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: Colors.white,
                       ),
@@ -45,7 +41,7 @@ class BuildMyMessageItem extends StatelessWidget {
                 height: 4.h,
               ),
               Text(
-                "11:50 Am",
+                DateFormat.jm().format(date),
                 style: Theme.of(context).textTheme.labelSmall!.copyWith(
                       color: const Color(0xFF247BA0),
                     ),

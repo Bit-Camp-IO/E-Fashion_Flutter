@@ -8,12 +8,13 @@ abstract class ChatSupportEvent extends Equatable {
 
 class CreateOrJoinChatEvent extends ChatSupportEvent{}
 
+class GetChatMessagesEvent extends ChatSupportEvent{}
+
 class SendMessageEvent extends ChatSupportEvent{
   final String message;
-  final String senderId;
-  const SendMessageEvent( {required this.message, required this.senderId});
+  const SendMessageEvent( {required this.message});
   @override
-  List<Object?> get props => [message, senderId];
+  List<Object?> get props => [message];
 }
 
 class MessageReceivedEvent extends ChatSupportEvent{
