@@ -16,7 +16,6 @@ class EfashionApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeManager().init(context);
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => getIt<ThemeCubit>()..getAppTheme()),

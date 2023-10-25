@@ -1,30 +1,31 @@
-enum NotificationType{
-  rating,
-  orderStatus,
-  supportMessage;
+enum NotificationType {
+  general('GENERAL'),
+  newMessage('NEW_MESSAGE'),
+  orderStatus('STATUS_ORDER');
+  const NotificationType(String value);
 }
 
-enum DeliverStatus{
+enum DeliverStatus {
   onProgress,
   onTheWay,
   delivered;
 }
 
-enum BlocState{
+enum BlocState {
   initial,
   loading,
   failure,
   success,
 }
 
-enum CubitState{
+enum CubitState {
   initial,
   loading,
   failure,
   success,
 }
 
-enum PaymentType{
+enum PaymentType {
   cart("cart"),
   collection("collection");
   const PaymentType(String value);

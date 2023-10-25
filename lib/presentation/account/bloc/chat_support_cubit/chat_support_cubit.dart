@@ -11,13 +11,10 @@ import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-
-part 'chat_support_event.dart';
-
 part 'chat_support_state.dart';
 
 @injectable
-class ChatSupportBloc extends Bloc<ChatSupportEvent, ChatSupportState> {
+class ChatSupportCubit extends Cubit<ChatSupportState> {
   final GetUserAccessTokenUseCase _getUserAccessTokenUseCase;
   final CreateOrJoinChatUseCase _createOrJoinChatUseCase;
   final GetChatMessagesUseCase _getChatMessagesUseCase;
@@ -26,24 +23,18 @@ class ChatSupportBloc extends Bloc<ChatSupportEvent, ChatSupportState> {
   final CloseSocketConnectionUseCase _closeSocketConnectionUseCase;
   late String userAccessToken;
   late StreamSubscription<ChatMessage> streamSubscription;
-  bool hasSubscribedToStream = false;
+  bool activateSocketStream = true;
 
-  ChatSupportBloc(
+  ChatSupportCubit(
     this._getUserAccessTokenUseCase,
     this._createOrJoinChatUseCase,
     this._getChatMessagesUseCase,
     this._sendMessageUseCase,
     this._getChatStreamUseCase,
     this._closeSocketConnectionUseCase,
-  ) : super(const ChatSupportState()) {
-    on<CreateOrJoinChatEvent>(_createOrJoinChatEvent);
-    on<MessageReceivedEvent>(_messageReceivedEvent);
-    on<SendMessageEvent>(_sendMessageEvent);
-    on<GetChatMessagesEvent>(_getChatMessages);
-  }
+  ) : super(const ChatSupportState());
 
-  Future<void> _createOrJoinChatEvent(
-      CreateOrJoinChatEvent event, Emitter<ChatSupportState> emit) async {
+  Future<void> createOrJoinChatEvent() async {
     final getAccessToken = await _getUserAccessTokenUseCase();
     userAccessToken = getAccessToken.getOrElse(() => '');
     final response =
@@ -54,21 +45,22 @@ class ChatSupportBloc extends Bloc<ChatSupportEvent, ChatSupportState> {
           chatState: BlocState.failure,
         ),
       ),
-      (chatId) {
-        _startChatStreamSubscription();
+      (chatId) async{
         emit(
           state.copyWith(
             chatId: chatId,
             chatState: BlocState.success,
           ),
         );
-        add(GetChatMessagesEvent());
+        if (activateSocketStream) {
+          _startChatStreamSubscription();
+          await _getChatMessages();
+        }
       },
     );
   }
 
-  void _getChatMessages(
-      GetChatMessagesEvent event, Emitter<ChatSupportState> emit) async {
+  Future<void> _getChatMessages() async {
     final getAccessToken = await _getUserAccessTokenUseCase();
     userAccessToken = getAccessToken.getOrElse(() => '');
     final response = await _getChatMessagesUseCase(
@@ -89,49 +81,53 @@ class ChatSupportBloc extends Bloc<ChatSupportEvent, ChatSupportState> {
     );
   }
 
-  void _sendMessageEvent(
-      SendMessageEvent event, Emitter<ChatSupportState> emit) async {
+  Future<void> sendMessage({required String message}) async {
     final getAccessToken = await _getUserAccessTokenUseCase();
     userAccessToken = getAccessToken.getOrElse(() => '');
-    final response = await _sendMessageUseCase(
-      message: event.message,
-      chatId: state.chatId,
-      userAccessToken: userAccessToken,
-    );
-    response.fold(
-      (failure) => emit(
-        state.copyWith(
-          sendMessageState: BlocState.failure,
+    if (state.chatId.isNotEmpty) {
+      final response = await _sendMessageUseCase(
+        message: message,
+        chatId: state.chatId,
+        userAccessToken: userAccessToken,
+      );
+      response.fold(
+        (failure) => emit(
+          state.copyWith(
+            sendMessageState: BlocState.failure,
+          ),
         ),
-      ),
-      (sentMessage) => emit(
-        state.copyWith(
-          sendMessageState: BlocState.success,
-          chatMessages: [sentMessage, ...state.chatMessages],
+        (sentMessage) => emit(
+          state.copyWith(
+            sendMessageState: BlocState.success,
+            chatMessages: [sentMessage, ...state.chatMessages],
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      activateSocketStream = false;
+      await createOrJoinChatEvent();
+      await sendMessage(message: message);
+    }
   }
 
-  void _messageReceivedEvent(
-      MessageReceivedEvent event, Emitter<ChatSupportState> emit) {
+  void _messageReceived({required ChatMessage receivedMessage}) {
     emit(
-      state.copyWith(
-        chatMessages:  [event.message, ...state.chatMessages]
-      ),
+      state.copyWith(chatMessages: [receivedMessage, ...state.chatMessages]),
     );
   }
 
   void _startChatStreamSubscription() {
     streamSubscription = _getChatStreamUseCase().listen((newMessage) {
-      add(MessageReceivedEvent(message: newMessage));
+      _messageReceived(receivedMessage: newMessage);
     });
   }
 
   @override
   Future<void> close() async {
-    streamSubscription.cancel();
-    await _closeSocketConnectionUseCase();
+    if(activateSocketStream){
+      streamSubscription.cancel();
+      await _closeSocketConnectionUseCase();
+    }
     return super.close();
   }
 }

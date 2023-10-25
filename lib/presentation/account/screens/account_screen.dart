@@ -19,6 +19,7 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: BlocListener<TokensCubit, TokensState>(
         listener: (context, state) {
           if (state is TokensUnAuthenticatedState) {

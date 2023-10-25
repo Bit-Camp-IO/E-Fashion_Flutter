@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/injection_container.dart';
-import 'package:efashion_flutter/presentation/account/bloc/chat_support_bloc/chat_support_bloc.dart';
+import 'package:efashion_flutter/presentation/account/bloc/chat_support_cubit/chat_support_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/presentation/account/components/chat_support/support_message.dart';
@@ -20,7 +20,7 @@ class ChatSupportScreen extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          getIt<ChatSupportBloc>()..add(CreateOrJoinChatEvent()),
+          getIt<ChatSupportCubit>()..createOrJoinChatEvent(),
       child: this,
     );
   }
@@ -55,25 +55,28 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
             SizedBox(
               height: 16.h,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Iconsax.lock,
-                  size: 16.0,
-                ),
-                SizedBox(
-                  width: 8.w,
-                ),
-                Text(
-                  "Message and calls are secured, \n no one outside of this chat can read them",
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0).r,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Iconsax.lock,
+                    size: 16.0,
+                  ),
+                  SizedBox(
+                    width: 8.w,
+                  ),
+                  Text(
+                    "Message and calls are secured, \n no one outside of this chat can read them",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
+                ],
+              ),
             ),
             Expanded(
-              child: BlocBuilder<ChatSupportBloc, ChatSupportState>(
+              child: BlocBuilder<ChatSupportCubit, ChatSupportState>(
                 buildWhen: (previous, current) =>
                     previous.chatMessages != current.chatMessages,
                 builder: (context, state) {
@@ -157,11 +160,7 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        context.read<ChatSupportBloc>().add(
-                              SendMessageEvent(
-                                message: message,
-                              ),
-                            );
+                        context.read<ChatSupportCubit>().sendMessage(message: message);
                         _messageController.clear();
                       }
                     },

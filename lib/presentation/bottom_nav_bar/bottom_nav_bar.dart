@@ -5,6 +5,7 @@ import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favori
 import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_tick.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/shared/util/notifications_manager.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,9 +23,15 @@ class BottomNavBar extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => getIt<ProfileCubit>()..getUserData(), lazy: false,),
-        BlocProvider(create: (context) => getIt<FavoriteCubit>()..getUserFavoriteIdList()),
-        BlocProvider(create: (context) => getIt<CartCubit>()..getCartProducts()),
+        BlocProvider(
+          create: (context) => getIt<ProfileCubit>()..getUserData(),
+          lazy: false,
+        ),
+        BlocProvider(
+            create: (context) =>
+                getIt<FavoriteCubit>()..getUserFavoriteIdList()),
+        BlocProvider(
+            create: (context) => getIt<CartCubit>()..getCartProducts()),
       ],
       child: this,
     );
@@ -33,6 +40,18 @@ class BottomNavBar extends StatefulWidget implements AutoRouteWrapper {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   DateTime? _lastTapTime;
+
+  @override
+  void initState() {
+    NotificationsManager.onClickNotification.stream.listen((event) {
+      if (event.payload == "NEW_MESSAGE") {
+        context.pushRoute(const ChatSupportRoute());
+      } else {
+        context.pushRoute(const NotificationsRoute());
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,5 +155,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
         );
       },
     );
+  }
+  @override
+  void dispose() {
+    NotificationsManager.close();
+    super.dispose();
   }
 }

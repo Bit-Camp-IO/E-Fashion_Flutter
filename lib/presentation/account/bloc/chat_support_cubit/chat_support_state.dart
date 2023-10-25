@@ -1,4 +1,4 @@
-part of 'chat_support_bloc.dart';
+part of 'chat_support_cubit.dart';
 
 class ChatSupportState extends Equatable {
   final String chatId;

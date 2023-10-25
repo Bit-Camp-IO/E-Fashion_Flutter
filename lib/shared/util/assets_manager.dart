@@ -20,4 +20,7 @@ class AssetsManager {
   static const String cartImage = 'assets/images/cart.png';
   static const String favoriteImage = 'assets/images/favorite.png';
   static const String emptyChatImage = 'assets/images/empty_chat.png';
+  static const String deliveryImage1 = 'assets/images/delivery_image1.png';
+  static const String deliveryImage2 = 'assets/images/delivery_image2.png';
+  static const String deliveryImage3 = 'assets/images/delivery_image3.png';
 }

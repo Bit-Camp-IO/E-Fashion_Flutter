@@ -37,7 +37,7 @@ class MessageNotification extends StatelessWidget {
                 Row(
                   children: [
                     Icon(
-                      Iconsax.sun_1,
+                      Iconsax.message,
                       color: Theme.of(context).colorScheme.primary,
                       size: 14,
                     ),
@@ -50,14 +50,17 @@ class MessageNotification extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(
-                 notificationBody,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: null,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                   notificationBody,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: null,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                  ),
                 ),
               ],
             ),

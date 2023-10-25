@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
+import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
-import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -8,17 +8,15 @@ import 'package:iconsax/iconsax.dart';
 class DeliveryNotification extends StatelessWidget {
   const DeliveryNotification({
     super.key,
-    required this.notificationImagePath,
     required this.notificationTitle,
     required this.notificationBody,
     required this.deliveryStatus,
     required this.notificationTime,
   });
 
-  final String notificationImagePath;
   final String notificationTitle;
   final String notificationBody;
-  final DeliverStatus deliveryStatus;
+  final int deliveryStatus;
   final String notificationTime;
 
   @override
@@ -37,55 +35,48 @@ class DeliveryNotification extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 6).r,
             child: Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(15).r,
-                  child: CachedNetworkImage(
-                    width: 60.w,
-                    height: 80.h,
-                    imageUrl: notificationImagePath,
-                    fit: BoxFit.cover,
-                  ),
+                Image.asset(
+                  AssetsManager.deliveryImage1,
+                  width: 60.w,
+                  height: 80.h,
+                  fit: BoxFit.cover,
                 ),
-                const Spacer(
-                  flex: 2,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 140.w,
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          notificationTitle,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                        ),
+                const Spacer(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 140.w,
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        notificationTitle,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                       ),
-                      SizedBox(
-                        width: 120.w,
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          notificationBody,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.outline,
-                              ),
-                        ),
+                    ),
+                    SizedBox(
+                      width: 120.w,
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        notificationBody,
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelSmall!
+                            .copyWith(
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const Spacer(flex: 2),
+                const Spacer(),
                 Icon(
                   Iconsax.verify,
-                  color: deliveryStatus == DeliverStatus.delivered
+                  color: deliveryStatus == 3
                       ? ColorsManager.successColor
                       : Theme.of(context).colorScheme.primary,
                 ),

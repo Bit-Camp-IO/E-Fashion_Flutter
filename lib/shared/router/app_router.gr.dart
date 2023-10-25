@@ -173,7 +173,7 @@ abstract class _$AppRouter extends RootStackRouter {
     NotificationsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const NotificationsScreen(),
+        child: WrappedRoute(child: const NotificationsScreen()),
       );
     },
     OrdersRoute.name: (routeData) {

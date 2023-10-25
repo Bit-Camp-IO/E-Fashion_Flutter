@@ -47,11 +47,11 @@ class TrackOrderScreen extends StatelessWidget {
 
   String _buildStepImagePath(int activeStep){
     if(activeStep == 0){
-      return 'assets/images/stepper_image1.png';
+      return 'assets/images/delivery_image1.png';
     }else if(activeStep == 1){
-      return 'assets/images/stepper_image2.png';
+      return 'assets/images/delivery_image2.png';
     }else{
-      return 'assets/images/stepper_image3.png';
+      return 'assets/images/delivery_image3.png';
     }
 
   }

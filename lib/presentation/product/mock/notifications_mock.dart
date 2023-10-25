@@ -35,13 +35,9 @@ List<AppNotification> notifications = [
     notificationDeliveryStatus: DeliverStatus.delivered,
     notificationTime: '01:50 pm',
   ),
-  const AppNotification(
-    notificationBody: 'Please tap to rate our services we are more than happy to know your opinion',
-    notificationType: NotificationType.rating,
-    notificationTime: '02:30 pm',
-  ),const AppNotification(
+const AppNotification(
     notificationBody: 'We are more than happy to help you sir 💙',
-    notificationType: NotificationType.supportMessage,
+    notificationType: NotificationType.newMessage,
     notificationTime: '02:30 pm',
   ),
 ];

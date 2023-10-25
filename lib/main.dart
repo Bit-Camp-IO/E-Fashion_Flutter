@@ -9,20 +9,25 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'shared/constants/app_constants.dart';
+
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  await NotificationsManager.showNotification(message);
-  debugPrint("Background Message: ${message.messageId}");
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging.instance.subscribeToTopic(AppConstants.generalNotificationsTopic);
+  await NotificationsManager.showNotification(message: message);
 }
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await Future.wait([
-    Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+    NotificationsManager.init(),
     HiveConfigration.init(),
     StripeConfigration.init(),
   ]);
-  await NotificationsManager().init();
   configureDependencies();
   Bloc.observer = MyBlocObserver();
   runApp(const EfashionApp());
