@@ -1,11 +1,11 @@
-import 'package:efashion_flutter/components/notificationsComponent/data/models/notification_model.dart';
+import 'package:efashion_flutter/components/notificationsComponent/data/models/app_notification_model.dart';
 import 'package:efashion_flutter/shared/api/api_consumer.dart';
 import 'package:efashion_flutter/shared/constants/api_constants.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class NotificationsDataSource {
-  Future<List<NotificationModel>> getNotificationsList(
+  Future<List<AppNotificationModel>> getNotificationsList(
       {required String userAccessToken});
 
   Future<void> subscripeToNotifications(
@@ -22,15 +22,15 @@ class NotificationsDataSourceImpl extends NotificationsDataSource {
   NotificationsDataSourceImpl(@Named(ApiConstants.mainConsumerName) this._apiConsumer);
 
   @override
-  Future<List<NotificationModel>> getNotificationsList(
+  Future<List<AppNotificationModel>> getNotificationsList(
       {required String userAccessToken}) async {
     final response =
         await _apiConsumer.get(ApiConstants.getNotificationsList, headers: {
       'Authorization': 'Bearer $userAccessToken',
     });
     if (response['status'] == ApiCallStatus.success.value) {
-      return List<NotificationModel>.from((response['data'] as List)
-          .map((notification) => NotificationModel.fromJson(notification)));
+      return List<AppNotificationModel>.from((response['data'] as List)
+          .map((notification) => AppNotificationModel.fromJson(notification)));
     } else {
       throw const FetchDataException();
     }

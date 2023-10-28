@@ -1,13 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/presentation/account/components/edit_profile/rounded_cutout_clipper.dart';
+import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ProfilePictureEdit extends StatelessWidget {
-  const ProfilePictureEdit({super.key, required this.imageUrl, required this.onTap});
+  const ProfilePictureEdit(
+      {super.key, required this.imageUrl, required this.onTap});
+
   final String imageUrl;
   final void Function() onTap;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -22,6 +27,14 @@ class ProfilePictureEdit extends StatelessWidget {
               height: 120.h,
               fit: BoxFit.cover,
               imageUrl: imageUrl,
+              cacheManager: CacheManager(
+                Config(
+                  AppConstants.cacheFolder,
+                  stalePeriod: const Duration(
+                    days: AppConstants.cacheDuration,
+                  ),
+                ),
+              ),
             ),
           ),
           Positioned(
@@ -31,10 +44,10 @@ class ProfilePictureEdit extends StatelessWidget {
               radius: 12.2.r,
               backgroundColor: Theme.of(context).colorScheme.primary,
               child: Icon(
-                  Iconsax.edit_2,
-                  color: Colors.white,
-                  size: 15.0.sp,
-                ),
+                Iconsax.edit_2,
+                color: Colors.white,
+                size: 15.0.sp,
+              ),
             ),
           ),
         ],

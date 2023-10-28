@@ -22,11 +22,14 @@ class NotificationsManager {
     onClickNotification.add(notificationResponse);
   }
 
-  static Future<void> init() async {
+  static Future<void> requestNotificationsPermissions() async{
     await _notification
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+        AndroidFlutterLocalNotificationsPlugin>()
         ?.requestNotificationsPermission();
+  }
+
+  static Future<void> init() async {
     FirebaseMessaging.instance
         .subscribeToTopic(AppConstants.generalNotificationsTopic);
     _notification.initialize(
@@ -64,7 +67,7 @@ class NotificationsManager {
   }) async {
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'high_importance_channel',
-      'high_importance_notifications',
+      'eFashion Notifications',
       channelDescription: 'channel used for very important notifications',
       importance: Importance.max,
       priority: Priority.high,

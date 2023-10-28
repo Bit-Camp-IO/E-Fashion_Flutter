@@ -31,7 +31,6 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-/lib/shared/constants/map_secrets.dart
 
 # Symbolication related
 app.*.symbols

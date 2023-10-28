@@ -14,25 +14,23 @@ class OtpTimer extends StatefulWidget {
 }
 
 class _OtpTimerState extends State<OtpTimer> {
-  final interval = const Duration(seconds: 1);
+  final _interval = const Duration(seconds: 1);
 
-  final int timerMaxSeconds = 60;
+  final int _timerMaxSeconds = 60;
 
-  late int currentSeconds = 0;
+  final ValueNotifier<int> _currentSeconds = ValueNotifier(0);
 
   String get timerText =>
-      '${((timerMaxSeconds - currentSeconds) ~/ 60).toString().padLeft(2, '0')}: ${((timerMaxSeconds - currentSeconds) % 60).toString().padLeft(2, '0')}';
+      '${((_timerMaxSeconds - _currentSeconds.value) ~/ 60).toString().padLeft(2, '0')}: ${((_timerMaxSeconds - _currentSeconds.value) % 60).toString().padLeft(2, '0')}';
 
   startTimeout([int? milliseconds]) {
-    var duration = interval;
+    var duration = _interval;
     Timer.periodic(duration, (timer) {
-      setState(() {
-        currentSeconds = timer.tick;
-        if (timer.tick >= timerMaxSeconds) {
+        _currentSeconds.value = timer.tick;
+        if (timer.tick >= _timerMaxSeconds) {
           timer.cancel();
-          currentSeconds = -1;
+          _currentSeconds.value = -1;
         }
-      });
     });
   }
 
@@ -46,56 +44,68 @@ class _OtpTimerState extends State<OtpTimer> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Visibility(
-          visible: currentSeconds >= 0,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'RESEND OTP IN',
-                style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.outline,
-                    ),
-              ),
-              SizedBox(
-                width: 5.w,
-              ),
-              Text(
-                timerText,
-                style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.outline,
-                    ),
-              )
-            ],
-          ),
-        ),
-        Visibility(
-          visible: currentSeconds == -1,
-          child: CustomFadeAnimation(
-            duration: const Duration(milliseconds: 250),
+        ValueListenableBuilder(
+          valueListenable: _currentSeconds,
+          builder: (context, currentSecondsValue, child) => Visibility(
+            visible: currentSecondsValue >= 0,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Didn't Receive OTP Code ?",
+                  'RESEND OTP IN',
                   style: Theme.of(context).textTheme.labelLarge!.copyWith(
                         color: Theme.of(context).colorScheme.outline,
                       ),
                 ),
-                TextButton(
-                  onPressed: widget.onResendPress,
-                  child: Text(
-                    'Resend',
+                SizedBox(
+                  width: 5.w,
+                ),
+                Text(
+                  timerText,
+                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.outline,
+                      ),
+                )
+              ],
+            ),
+          ),
+        ),
+        ValueListenableBuilder(
+          valueListenable: _currentSeconds,
+          builder: (context, currentSecondsValue, child) =>  Visibility(
+            visible: currentSecondsValue == -1,
+            child: CustomFadeAnimation(
+              duration: const Duration(milliseconds: 250),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Didn't Receive OTP Code ?",
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: Theme.of(context).colorScheme.outline,
                         ),
                   ),
-                ),
-              ],
+                  TextButton(
+                    onPressed: widget.onResendPress,
+                    child: Text(
+                      'Resend',
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _currentSeconds.dispose();
+    super.dispose();
   }
 }

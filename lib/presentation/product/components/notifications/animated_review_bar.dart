@@ -2,64 +2,69 @@ import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 class AnimatedReviewBar extends StatefulWidget {
   const AnimatedReviewBar({super.key, required this.selectedIndex});
+
   final void Function(int selectedIndex) selectedIndex;
+
   @override
   State<AnimatedReviewBar> createState() => _AnimatedReviewBarState();
 }
 
 class _AnimatedReviewBarState extends State<AnimatedReviewBar> {
-  int selectedIconIndex = -1;
+  ValueNotifier<int> selectedIconIndex = ValueNotifier(-1);
 
   void _handleIconTap(int index) {
-    if(index != selectedIconIndex){
-      setState(() {
-        selectedIconIndex = index;
-      });
-    }else{
-      setState(() {
-        selectedIconIndex = -1;
-      });
+    if (index != selectedIconIndex.value) {
+      selectedIconIndex.value = index;
+    } else {
+      selectedIconIndex.value = -1;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        AnimatedReviewIcon(
-          isSelected: selectedIconIndex == 0,
-          label: 'Great',
-          svgIconPath: AssetsManager.greatSvgIcon,
-          onTap: () {
-            _handleIconTap(0);
-            widget.selectedIndex(selectedIconIndex);
-          },
+        ValueListenableBuilder(
+          valueListenable: selectedIconIndex,
+          builder: (context, value, child) => AnimatedReviewIcon(
+            isSelected: value == 0,
+            label: 'Great',
+            svgIconPath: AssetsManager.greatSvgIcon,
+            onTap: () {
+              _handleIconTap(0);
+              widget.selectedIndex(value);
+            },
+          ),
         ),
         SizedBox(width: 24.w),
-        AnimatedReviewIcon(
-          isSelected: selectedIconIndex == 1,
-          label: 'Not Bad',
-          svgIconPath: AssetsManager.notBadSvgIcon,
-          onTap: () {
-            setState(() {
+        ValueListenableBuilder(
+          valueListenable: selectedIconIndex,
+          builder: (context, value, child) => AnimatedReviewIcon(
+            isSelected: value == 1,
+            label: 'Not Bad',
+            svgIconPath: AssetsManager.notBadSvgIcon,
+            onTap: () {
               _handleIconTap(1);
-              widget.selectedIndex(selectedIconIndex);
-            });
-          },
+              widget.selectedIndex(value);
+            },
+          ),
         ),
         SizedBox(width: 24.w),
-        AnimatedReviewIcon(
-          isSelected: selectedIconIndex == 2,
-          label: 'Bad',
-          svgIconPath: AssetsManager.badSvgIcon,
-          onTap: () {
-            setState(() {
+        ValueListenableBuilder(
+          valueListenable: selectedIconIndex,
+          builder: (context, value, child) => AnimatedReviewIcon(
+            isSelected: value == 2,
+            label: 'Bad',
+            svgIconPath: AssetsManager.badSvgIcon,
+            onTap: () {
               _handleIconTap(2);
-              widget.selectedIndex(selectedIconIndex);
-            });
-          },
+              widget.selectedIndex(value);
+            },
+          ),
         )
       ],
     );
@@ -90,7 +95,7 @@ class AnimatedReviewIcon extends StatelessWidget {
           key: ValueKey<bool>(isSelected),
           children: [
             SvgPicture.asset(
-             svgIconPath,
+              svgIconPath,
               colorFilter: ColorFilter.mode(
                 isSelected
                     ? const Color(0xFFFFF504)

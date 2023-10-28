@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:efashion_flutter/components/notificationsComponent/data/datasources/notifications_datasource.dart';
-import 'package:efashion_flutter/components/notificationsComponent/data/models/notification_model.dart';
+import 'package:efashion_flutter/components/notificationsComponent/data/models/app_notification_model.dart';
 import 'package:efashion_flutter/components/notificationsComponent/domain/repositories/notifications_repository.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:efashion_flutter/shared/error/failure.dart';
@@ -12,9 +12,9 @@ class NotificationsRepositoryImpl extends NotificationsRepository{
 
   NotificationsRepositoryImpl(this._notificationsDataSource);
   @override
-  Future<Either<Failure, List<NotificationModel>>> getNotificationsList({required String userAccessToken}) async{
+  Future<Either<Failure, List<AppNotificationModel>>> getNotificationsList({required String userAccessToken}) async{
     try{
-      final List<NotificationModel> notificationsList = await _notificationsDataSource.getNotificationsList(userAccessToken: userAccessToken);
+      final List<AppNotificationModel> notificationsList = await _notificationsDataSource.getNotificationsList(userAccessToken: userAccessToken);
       return right(notificationsList);
     }on ServerException catch(exception){
       return left(ApiFailure(exception.message!));

@@ -2,7 +2,8 @@ enum NotificationType {
   general('GENERAL'),
   newMessage('NEW_MESSAGE'),
   orderStatus('STATUS_ORDER');
-  const NotificationType(String value);
+  const NotificationType(this.value);
+  final String value;
 }
 
 enum DeliverStatus {

@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/injection_container.dart';
-import 'package:efashion_flutter/presentation/product/bloc/notifications_cubit/notifications_cubit.dart';
+import 'package:efashion_flutter/presentation/shared/bloc/notifications_cubit/notifications_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/presentation/product/components/notifications/delivery_notification.dart';
 import 'package:efashion_flutter/presentation/product/components/notifications/message_notification.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,8 +15,8 @@ class NotificationsScreen extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<NotificationsCubit>()..getNotificationsList(),
+    return BlocProvider.value(
+      value: context.read<NotificationsCubit>()..getNotificationsList(),
       child: this,
     );
   }
@@ -44,7 +44,16 @@ class NotificationsScreen extends StatelessWidget implements AutoRouteWrapper {
                           state.notifications[index].date,
                         ).toLocal(),
                       );
-                      if (state.notifications[index].type == 'STATUS_ORDER') {
+                      if (state.notifications[index].type ==
+                          NotificationType.newMessage.value) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0).r,
+                          child: MessageNotification(
+                            notificationBody: state.notifications[index].body,
+                            notificationTime: formattedDate,
+                          ),
+                        );
+                      } else {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 16.0).r,
                           child: DeliveryNotification(
@@ -53,15 +62,6 @@ class NotificationsScreen extends StatelessWidget implements AutoRouteWrapper {
                             deliveryStatus: 2,
                             notificationTime: formattedDate,
                           ),
-                        );
-                      } else {
-                        return Column(
-                          children: [
-                            MessageNotification(
-                              notificationBody: state.notifications[index].body,
-                              notificationTime: formattedDate,
-                            ),
-                          ],
                         );
                       }
                     },

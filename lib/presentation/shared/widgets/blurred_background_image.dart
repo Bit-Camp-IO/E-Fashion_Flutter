@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class BlurredBackgroundImage extends StatelessWidget {
   const BlurredBackgroundImage(
@@ -23,6 +25,13 @@ class BlurredBackgroundImage extends StatelessWidget {
             : CachedNetworkImage(
                 imageUrl: imagePath,
                 fit: BoxFit.cover,
+                cacheManager: CacheManager(
+                  Config(
+                    AppConstants.cacheFolder,
+                    stalePeriod:
+                        const Duration(days: AppConstants.cacheDuration),
+                  ),
+                ),
               ),
       ),
     );

@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/presentation/shared/bloc/notifications_cubit/notifications_cubit.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/notifications_permissions_dialog.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/tokens_cubit/tokens_cubit.dart';
@@ -86,22 +88,46 @@ class AccountContainerComponent extends StatelessWidget {
                 text: "Change Password",
                 prefixIcon: Iconsax.lock,
               ),
-              AccountCustomRow(
-                enableOnTap: false,
-                text: "Notifications",
-                prefixIcon: Iconsax.notification,
-                suffixWidget: IconSwitcher(
-                  initialSwitcherValue: true,
-                  activeTrackColor: Theme.of(context).colorScheme.error,
-                  activeIconColor: Colors.white,
-                  activeThumbColor: Colors.white,
-                  disabledTrackColor: ColorsManager.successColor,
-                  onChanged: (switched) {
-                    debugPrint(switched.toString());
-                  },
-                  activeIcon: Icons.notifications_off_outlined,
-                  disabledIcon: Icons.notifications_active_outlined,
-                ),
+              BlocConsumer<NotificationsCubit, NotificationsState>(
+                listenWhen: (previous, current) => previous.notificationsPermissionsState != current.notificationsPermissionsState,
+                listener: (context, state) {
+                  if (state.notificationsPermissionsState == NotificationsPermissionsState.permanentlyDenied) {
+                    showDialog(
+                      routeSettings: const RouteSettings(name: 'PermissionsDialogRoute'),
+                      context: context,
+                      builder: (context) {
+                        return const NotificationsPermissionsDialog();
+                      },
+                    );
+                  }else if (state.notificationsPermissionsState == NotificationsPermissionsState.granted && state.isUserSubscribedToNotifications == false){
+                    context.read<NotificationsCubit>().subscribeToNotifications();
+                  }
+                },
+                builder: (context, state) {
+                  return AccountCustomRow(
+                    enableOnTap: false,
+                    text: "Notifications",
+                    prefixIcon: Iconsax.notification,
+                    suffixWidget: IconSwitcher(
+                      isSwitcherActive: state.isUserSubscribedToNotifications,
+                      activeTrackColor: Theme.of(context).colorScheme.error,
+                      activeIconColor: Colors.white,
+                      activeThumbColor: Colors.white,
+                      disabledTrackColor: ColorsManager.successColor,
+                      onChanged: (switched) {
+                        if (switched && state.notificationsPermissionsState == NotificationsPermissionsState.granted) {
+                          context.read<NotificationsCubit>().subscribeToNotifications();
+                        } else if (state.notificationsPermissionsState == NotificationsPermissionsState.denied || state.notificationsPermissionsState == NotificationsPermissionsState.permanentlyDenied) {
+                          context.read<NotificationsCubit>().requestNotificationsPermissions();
+                        } else {
+                          context.read<NotificationsCubit>().unSubscribeFromNotifications();
+                        }
+                      },
+                      activeIcon: Icons.notifications_off_outlined,
+                      disabledIcon: Icons.notifications_active_outlined,
+                    ),
+                  );
+                },
               ),
               AccountCustomRow(
                 enableOnTap: false,
@@ -110,7 +136,7 @@ class AccountContainerComponent extends StatelessWidget {
                 suffixWidget: BlocBuilder<ThemeCubit, ThemeState>(
                   builder: (context, state) {
                     return IconSwitcher(
-                      initialSwitcherValue: state.appTheme.isDarkTheme,
+                      isSwitcherActive: state.appTheme.isDarkTheme,
                       onChanged: (switched) {
                         context.read<ThemeCubit>().changeAppTheme(switched);
                       },

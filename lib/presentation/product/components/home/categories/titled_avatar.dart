@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
+import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TitledAvatar extends StatefulWidget {
@@ -22,15 +24,13 @@ class TitledAvatar extends StatefulWidget {
 }
 
 class _TitledAvatarState extends State<TitledAvatar> {
-  bool isSelected = false;
+  ValueNotifier<bool> isSelected = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        setState(() {
-          isSelected = !isSelected;
-        });
+        isSelected.value = !isSelected.value;
         widget.onTap();
       },
       child: Column(
@@ -50,60 +50,84 @@ class _TitledAvatarState extends State<TitledAvatar> {
     return SizedBox(
       width: 46.w,
       height: 46.h,
-      child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        switchInCurve: Curves.easeInOut,
-        switchOutCurve: Curves.easeInOut,
-        child: isSelected
-            ? ClipOval(
-                child: Container(
-                  key: ValueKey<bool>(isSelected),
-                  width: 46.w,
-                  height: 46.h,
-                  color: Theme.of(context).colorScheme.primary,
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0).r,
-                    child: ClipOval(
-                      child: widget.titledImageType == TitledImageType.remote
-                          ? CachedNetworkImage(
-                              key: ValueKey<bool>(isSelected),
-                              width: 40.w,
-                              height: 40.h,
-                              imageUrl: widget.imagePath,
-                              fit: BoxFit.cover,
-                            )
-                          : CustomFadeAnimation(
-                              duration: const Duration(milliseconds: 500),
-                              child: Image.asset(
-                                key: ValueKey<bool>(isSelected),
-                                widget.imagePath,
-                                fit: BoxFit.cover,
+      child: ValueListenableBuilder(
+        valueListenable: isSelected,
+        builder: (context, value, child) => AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          switchInCurve: Curves.easeInOut,
+          switchOutCurve: Curves.easeInOut,
+          child: value
+              ? ClipOval(
+                  child: Container(
+                    key: ValueKey<bool>(value),
+                    width: 46.w,
+                    height: 46.h,
+                    color: Theme.of(context).colorScheme.primary,
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0).r,
+                      child: ClipOval(
+                        child: widget.titledImageType == TitledImageType.remote
+                            ? CachedNetworkImage(
+                                key: ValueKey<bool>(value),
                                 width: 40.w,
                                 height: 40.h,
+                                imageUrl: widget.imagePath,
+                                fit: BoxFit.cover,
+                                cacheManager: CacheManager(
+                                  Config(
+                                    AppConstants.cacheFolder,
+                                    stalePeriod: const Duration(
+                                      days: AppConstants.cacheDuration,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : CustomFadeAnimation(
+                                duration: const Duration(milliseconds: 500),
+                                child: Image.asset(
+                                  key: ValueKey<bool>(value),
+                                  widget.imagePath,
+                                  fit: BoxFit.cover,
+                                  width: 40.w,
+                                  height: 40.h,
+                                ),
                               ),
-                            ),
+                      ),
                     ),
                   ),
+                )
+              : ClipOval(
+                  child: widget.titledImageType == TitledImageType.remote
+                      ? CachedNetworkImage(
+                          width: 40.w,
+                          height: 40.h,
+                          imageUrl: widget.imagePath,
+                          fit: BoxFit.cover,
+                          cacheManager: CacheManager(
+                            Config(
+                              AppConstants.cacheFolder,
+                              stalePeriod: const Duration(
+                                days: AppConstants.cacheDuration,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Image.asset(
+                          widget.imagePath,
+                          fit: BoxFit.cover,
+                          width: 40.w,
+                          height: 40.h,
+                        ),
                 ),
-              )
-            : ClipOval(
-                child: widget.titledImageType == TitledImageType.remote
-                    ? CachedNetworkImage(
-                        width: 40.w,
-                        height: 40.h,
-                        imageUrl:
-                            '${widget.imagePath}?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk0NjE3MzUxfA&ixlib=rb-4.0.3&dpr=1&auto=format&fit=crop&w=120&h=200&q=60',
-                        fit: BoxFit.cover,
-                      )
-                    : Image.asset(
-                        widget.imagePath,
-                        fit: BoxFit.cover,
-                        width: 40.w,
-                        height: 40.h,
-                      ),
-              ),
+        ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    isSelected.dispose();
+    super.dispose();
   }
 }
 

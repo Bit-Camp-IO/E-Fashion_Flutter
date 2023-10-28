@@ -43,12 +43,12 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  bool? _obscuredText;
+  final ValueNotifier<bool?> _obscuredText = ValueNotifier(null);
 
   @override
   void initState() {
     if (widget.obscureText == true) {
-      _obscuredText = widget.obscureText!;
+      _obscuredText.value = widget.obscureText!;
     }
     super.initState();
   }
@@ -59,61 +59,64 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       padding: const EdgeInsets.only(bottom: 4).r,
       child: SizedBox(
         height: widget.textFieldHeight ?? 75.h,
-        child: TextFormField(
-          controller: widget.controller,
-          keyboardType: widget.keyboardType,
-          obscureText: _obscuredText ?? false,
-          onSaved: widget.onSaved,
-          onFieldSubmitted: widget.onSubmit,
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+        child: ValueListenableBuilder(
+          valueListenable: _obscuredText,
+          builder: (context, value, child) => TextFormField(
+            controller: widget.controller,
+            keyboardType: widget.keyboardType,
+            obscureText: value ?? false,
+            onSaved: widget.onSaved,
+            onFieldSubmitted: widget.onSubmit,
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+            decoration: InputDecoration(
+              errorStyle: Theme.of(context).textTheme.bodySmall,
+              constraints: widget.boxConstraints ?? BoxConstraints(
+                  maxHeight: 46.h,
+                  maxWidth: 312.w
               ),
-          decoration: InputDecoration(
-            errorStyle: Theme.of(context).textTheme.bodySmall,
-            constraints: widget.boxConstraints ?? BoxConstraints(
-                maxHeight: 46.h,
-                maxWidth: 312.w
-            ),
-            hintText: widget.hintText,
-            errorMaxLines: 1,
-            prefixIcon: widget.prefixIcon == null
-                ? null
-                : Icon(
-                    widget.prefixIcon,
-              size: 20.sp,
-                  ),
-            suffixIcon: _buildSuffix(),
-            labelText: widget.label,
-            labelStyle: Theme.of(context).textTheme.bodySmall,
-            contentPadding: const EdgeInsets.all(15.0).r,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0).r,
-              borderSide: BorderSide(
-                color: widget.enableBorderColor ??
-                    Theme.of(context).colorScheme.outline,
+              hintText: widget.hintText,
+              errorMaxLines: 1,
+              prefixIcon: widget.prefixIcon == null
+                  ? null
+                  : Icon(
+                      widget.prefixIcon,
+                size: 20.sp,
+                    ),
+              suffixIcon: _buildSuffix(),
+              labelText: widget.label,
+              labelStyle: Theme.of(context).textTheme.bodySmall,
+              contentPadding: const EdgeInsets.all(15.0).r,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0).r,
+                borderSide: BorderSide(
+                  color: widget.enableBorderColor ??
+                      Theme.of(context).colorScheme.outline,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0).r,
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0).r,
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0).r,
+                borderSide: BorderSide(
+                  color: widget.enableBorderColor ??
+                      Theme.of(context).colorScheme.outline,
+                ),
               ),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0).r,
-              borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0).r,
-              borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.error,
-              ),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0).r,
-              borderSide: BorderSide(
-                color: widget.enableBorderColor ??
-                    Theme.of(context).colorScheme.outline,
-              ),
-            ),
+            validator: widget.validator ?? ValidationManager.basicValidator(label: widget.label)
           ),
-          validator: widget.validator ?? ValidationManager.basicValidator(label: widget.label)
         ),
       ),
     );
@@ -121,17 +124,18 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
 
   Widget? _buildSuffix() {
-    if (_obscuredText != null) {
-      return IconButton(
-        icon: Icon(_buildSuffixIcon(), size: 20.sp,),
-        onPressed: () {
-          if (_obscuredText != null) {
-            setState(() {
-              _obscuredText = !_obscuredText!;
-            });
-          }
-          widget.onSuffixPress;
-        },
+    if (_obscuredText.value != null) {
+      return ValueListenableBuilder(
+        valueListenable: _obscuredText,
+        builder: (context, value, child) => IconButton(
+          icon: Icon(_buildSuffixIcon(), size: 20.sp,),
+          onPressed: () {
+            if (value != null) {
+                _obscuredText.value = !value;
+            }
+            widget.onSuffixPress;
+          },
+        ),
       );
     } else if (widget.suffixIcon != null) {
       return Icon(widget.suffixIcon, size: 20.sp,);
@@ -141,10 +145,15 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   }
 
   IconData? _buildSuffixIcon() {
-    if (_obscuredText == true) {
+    if (_obscuredText.value == true) {
       return Iconsax.eye;
     } else {
       return Iconsax.eye_slash;
     }
+  }
+  @override
+  void dispose() {
+    _obscuredText.dispose();
+    super.dispose();
   }
 }

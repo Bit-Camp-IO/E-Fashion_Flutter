@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
+import 'package:efashion_flutter/shared/util/notifications_manager.dart';
 import 'package:efashion_flutter/shared/util/size_manager.dart';
 import 'package:efashion_flutter/presentation/auth/components/welcome/welcome_container_component.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/tokens_cubit/tokens_cubit.dart';
@@ -10,8 +11,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  @override
+  void initState() {
+    NotificationsManager.requestNotificationsPermissions();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

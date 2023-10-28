@@ -5,6 +5,7 @@ import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/empty_widget.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +30,7 @@ class CartScreen extends StatelessWidget {
             Expanded(
               child: BlocBuilder<CartCubit, CartState>(
                 builder: (context, state) {
-                  if (state.cart.products.isEmpty) {
+                  if (state.cart.products.isEmpty && state.cartState == CubitState.success) {
                     return const EmptyWidget(
                       image: AssetsManager.cartImage,
                       title: StringsManager.emptyCartTitle,

@@ -3,8 +3,10 @@ import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
+import 'package:efashion_flutter/presentation/shared/bloc/notifications_cubit/notifications_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_tick.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/notifications_manager.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
@@ -28,23 +30,33 @@ class BottomNavBar extends StatefulWidget implements AutoRouteWrapper {
           lazy: false,
         ),
         BlocProvider(
-            create: (context) =>
-                getIt<FavoriteCubit>()..getUserFavoriteIdList()),
+          create: (context) => getIt<FavoriteCubit>()..getUserFavoriteIdList(),
+        ),
         BlocProvider(
-            create: (context) => getIt<CartCubit>()..getCartProducts()),
+          create: (context) => getIt<CartCubit>()..getCartProducts(),
+        ),
       ],
       child: this,
     );
   }
 }
 
-class _BottomNavBarState extends State<BottomNavBar> {
+class _BottomNavBarState extends State<BottomNavBar> with WidgetsBindingObserver{
   DateTime? _lastTapTime;
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    debugPrint(state.toString());
+    if (state == AppLifecycleState.resumed) {
+      debugPrint('ACTIVATED');
+      getIt<NotificationsCubit>().checkForNotificationsPermission();
+    }
+  }
+  @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     NotificationsManager.onClickNotification.stream.listen((event) {
-      if (event.payload == "NEW_MESSAGE") {
+      if (event.payload == NotificationType.newMessage.value) {
         context.pushRoute(const ChatSupportRoute());
       } else {
         context.pushRoute(const NotificationsRoute());
@@ -158,7 +170,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
   @override
   void dispose() {
-    NotificationsManager.close();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 }

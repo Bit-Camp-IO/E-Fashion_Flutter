@@ -10,6 +10,9 @@ class AnimatedIndicator extends StatelessWidget {
   final double dotWidth;
   final double dotHeight;
 
+  final double? minDotWidth;
+  final double? minDotHeight;
+
   const AnimatedIndicator({
     super.key,
     required this.currentIndex,
@@ -19,6 +22,8 @@ class AnimatedIndicator extends StatelessWidget {
     required this.unSelectedColor,
     required this.dotWidth,
     required this.dotHeight,
+    this.minDotWidth,
+    this.minDotHeight,
   });
 
 
@@ -34,8 +39,8 @@ class AnimatedIndicator extends StatelessWidget {
           child: AnimatedContainer(
             curve: Curves.easeIn,
             duration: const Duration(milliseconds: 300),
-            width: dotWidth,
-            height: dotHeight,
+            width:  index == currentIndex ? dotWidth : _buildIndicatorWidth(),
+            height:  index == currentIndex ? dotHeight : _buildIndicatorHeight(),
             decoration: BoxDecoration(
               color: index == currentIndex ? selectedColor : unSelectedColor,
               borderRadius: BorderRadius.circular(20).r,
@@ -44,5 +49,20 @@ class AnimatedIndicator extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _buildIndicatorWidth(){
+    if(minDotWidth != null){
+      return minDotWidth;
+    }else{
+      return dotWidth;
+    }
+  }
+  _buildIndicatorHeight(){
+    if(minDotHeight != null){
+      return minDotHeight;
+    }else{
+      return dotHeight;
+    }
   }
 }

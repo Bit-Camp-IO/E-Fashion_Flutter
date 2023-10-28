@@ -5,11 +5,13 @@ import 'package:efashion_flutter/presentation/account/bloc/change_password_cubit
 import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/no_profile_picture.dart';
 import 'package:efashion_flutter/shared/constants/api_constants.dart';
+import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/blurred_background_image.dart';
 import 'package:efashion_flutter/presentation/account/components/change_password/change_password_container_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
@@ -71,9 +73,18 @@ class ChangePasswordScreen extends StatelessWidget implements AutoRouteWrapper {
                                 child: CachedNetworkImage(
                                   fit: BoxFit.cover,
                                   imageUrl: ApiConstants.getUserProfilePicture(
-                                      path: state.userData.profileImagePath!),
+                                    path: state.userData.profileImagePath!,
+                                  ),
                                   width: 120.w,
                                   height: 120.h,
+                                  cacheManager: CacheManager(
+                                    Config(
+                                      AppConstants.cacheFolder,
+                                      stalePeriod: const Duration(
+                                        days: AppConstants.cacheDuration,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               );
                       },

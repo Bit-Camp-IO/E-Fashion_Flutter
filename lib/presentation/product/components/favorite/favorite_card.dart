@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/favorite_icon_button.dart';
+import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -43,6 +45,13 @@ class FavoriteCard extends StatelessWidget {
                 child: CachedNetworkImage(
                   imageUrl: productImage,
                   fit: BoxFit.cover,
+                  cacheManager: CacheManager(
+                    Config(
+                      AppConstants.cacheFolder,
+                      stalePeriod:
+                      const Duration(days: AppConstants.cacheDuration),
+                    ),
+                  ),
                 ),
               ),
             ),

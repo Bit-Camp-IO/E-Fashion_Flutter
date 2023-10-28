@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CollectionItemCard extends StatelessWidget {
@@ -36,6 +38,14 @@ class CollectionItemCard extends StatelessWidget {
                 height: 180.h,
                 fit: BoxFit.cover,
                 imageUrl: image,
+                cacheManager: CacheManager(
+                  Config(
+                    AppConstants.cacheFolder,
+                    stalePeriod: const Duration(
+                      days: AppConstants.cacheDuration,
+                    ),
+                  ),
+                ),
               ),
             ),
             Padding(

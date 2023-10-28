@@ -19,7 +19,7 @@ class CategoriesComponent extends StatefulWidget {
 
 class _CategoriesComponentState extends State<CategoriesComponent> {
   late final ScrollController _categoriesController;
-  double animatedGendersWidth = 145;
+  ValueNotifier<double> animatedGendersWidth = ValueNotifier(145);
   List selectedCategories = [];
   ValueNotifier<bool> isApplyButtonActiveNotifier = ValueNotifier<bool>(false);
 
@@ -35,20 +35,14 @@ class _CategoriesComponentState extends State<CategoriesComponent> {
     final scrollDirection = _categoriesController.position.userScrollDirection;
     if (_categoriesController.position.userScrollDirection ==
         ScrollDirection.reverse) {
-      if (animatedGendersWidth != 0) {
-        setState(() {
-          animatedGendersWidth = 0;
-        });
+      if (animatedGendersWidth.value != 0) {
+        animatedGendersWidth.value = 0;
       }
     }
     if (scrollDirection == ScrollDirection.forward &&
         currentScroll < maxScroll * 0.05) {
-      if (animatedGendersWidth != 145) {
-        setState(
-          () {
-            animatedGendersWidth = 145;
-          },
-        );
+      if (animatedGendersWidth.value != 145) {
+        animatedGendersWidth.value = 145;
       }
     }
   }
@@ -95,7 +89,8 @@ class _CategoriesComponentState extends State<CategoriesComponent> {
                           final categories = selectedCategories.join(',');
                           context.read<HomeBloc>()
                             ..add(GetProductOffersEvent(categories: categories))
-                            ..add(GetBrandsProductsEvent(categories: categories));
+                            ..add(
+                                GetBrandsProductsEvent(categories: categories));
                         },
                       ),
                     ),
@@ -112,13 +107,16 @@ class _CategoriesComponentState extends State<CategoriesComponent> {
                     padding: const EdgeInsets.symmetric(horizontal: 16).r,
                     child: Row(
                       children: [
-                        GendersCategories(
-                          width: animatedGendersWidth.w,
-                          selectedGenders: (genderId) {
-                            context
-                                .read<HomeBloc>()
-                                .add(GetCategoriesEvent(genderId: genderId));
-                          },
+                        ValueListenableBuilder(
+                          valueListenable: animatedGendersWidth,
+                          builder: (context, value, child) => GendersCategories(
+                            width: value.w,
+                            selectedGenders: (genderId) {
+                              context
+                                  .read<HomeBloc>()
+                                  .add(GetCategoriesEvent(genderId: genderId));
+                            },
+                          ),
                         ),
                         SizedBox(width: 14.w),
                         Container(
@@ -151,18 +149,16 @@ class _CategoriesComponentState extends State<CategoriesComponent> {
                                     itemCount: state.categories.length,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
+                                    physics: const NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, index) {
                                       return Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 10.0)
-                                                .r,
+                                        padding: const EdgeInsets.only(right: 10.0).r,
                                         child: TitledAvatar(
                                           onTap: () {
                                             _handelCategories(
-                                                categoryId:
-                                                    state.categories[index].id);
+                                              categoryId:
+                                                  state.categories[index].id,
+                                            );
                                           },
                                           imagePath:
                                               state.categories[index].imageUrl,
@@ -193,6 +189,7 @@ class _CategoriesComponentState extends State<CategoriesComponent> {
     _categoriesController
       ..dispose()
       ..removeListener(_onSwipeListener);
+    animatedGendersWidth.dispose();
     isApplyButtonActiveNotifier.dispose();
     super.dispose();
   }

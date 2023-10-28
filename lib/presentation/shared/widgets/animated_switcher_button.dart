@@ -13,35 +13,35 @@ class AnimatedSwitcherButton extends StatefulWidget {
 }
 
 class _AnimatedSwitcherButtonState extends State<AnimatedSwitcherButton> {
-  int _switchIndex = 0;
+  ValueNotifier<int> switchIndex = ValueNotifier(0);
 
   void _handleSwitchTap(int index) {
-    setState(() {
-      _switchIndex = index;
-    });
-    widget.onSwitchIndexChanged(_switchIndex);
+    switchIndex.value = index;
+    widget.onSwitchIndexChanged(switchIndex.value);
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _buildSquareIconButton(
-          onTap: () {
-            setState(() {
+        ValueListenableBuilder(
+          valueListenable: switchIndex,
+          builder: (context, value, child) => _buildSquareIconButton(
+            onTap: () {
               _handleSwitchTap(0);
-            });
-          },
-          isSquareSelected: _switchIndex == 0,
+            },
+            isSquareSelected: value == 0,
+          ),
         ),
         SizedBox(width: 12.w),
-        _buildRectangleIconButton(
-          onTap: () {
-            setState(() {
+        ValueListenableBuilder(
+          valueListenable: switchIndex,
+          builder: (context, value, child) => _buildRectangleIconButton(
+            onTap: () {
               _handleSwitchTap(1);
-            });
-          },
-          isRectangleSelected: _switchIndex == 1,
+            },
+            isRectangleSelected: value == 1,
+          ),
         ),
       ],
     );
@@ -117,5 +117,10 @@ class _AnimatedSwitcherButtonState extends State<AnimatedSwitcherButton> {
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    switchIndex.dispose();
+    super.dispose();
   }
 }
