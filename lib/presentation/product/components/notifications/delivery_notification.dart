@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
+
 class DeliveryNotification extends StatelessWidget {
   const DeliveryNotification({
     super.key,
@@ -32,12 +33,12 @@ class DeliveryNotification extends StatelessWidget {
             borderRadius: BorderRadius.circular(10).r,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6).r,
+            padding: const EdgeInsets.symmetric(horizontal: 16).r,
             child: Row(
               children: [
                 Image.asset(
-                  AssetsManager.deliveryImage1,
-                  width: 60.w,
+                  _notificationImage(),
+                  width: 80.w,
                   height: 80.h,
                   fit: BoxFit.cover,
                 ),
@@ -76,9 +77,7 @@ class DeliveryNotification extends StatelessWidget {
                 const Spacer(),
                 Icon(
                   Iconsax.verify,
-                  color: deliveryStatus == 3
-                      ? ColorsManager.successColor
-                      : Theme.of(context).colorScheme.primary,
+                  color: _notificationIconColor(context)
                 ),
               ],
             ),
@@ -94,4 +93,30 @@ class DeliveryNotification extends StatelessWidget {
       ],
     );
   }
+  Color _notificationIconColor(BuildContext context){
+    if(notificationBody == DeliveryNotificationStatus.inProgress.value){
+      return Colors.white;
+    }else if (notificationBody == DeliveryNotificationStatus.onItsWay.value){
+      return Theme.of(context).colorScheme.primary;
+    }else{
+      return  ColorsManager.successColor;
+    }
+  }
+  String _notificationImage(){
+    if(notificationBody == DeliveryNotificationStatus.inProgress.value){
+      return AssetsManager.deliveryImage1;
+    }else if (notificationBody == DeliveryNotificationStatus.onItsWay.value){
+      return AssetsManager.deliveryImage2;
+    }else{
+      return  AssetsManager.deliveryImage3;
+    }
+  }
+}
+
+enum DeliveryNotificationStatus{
+  inProgress('Your order is being processed'),
+  onItsWay("Your order is on it's way"),
+  delivered('Your order has been delivered');
+  const DeliveryNotificationStatus(this.value);
+  final String value;
 }

@@ -7,7 +7,6 @@ import 'package:efashion_flutter/presentation/account/screens/change_password_sc
 import 'package:efashion_flutter/presentation/account/screens/chat_support_screen.dart';
 import 'package:efashion_flutter/presentation/account/screens/edit_profile_screen.dart';
 import 'package:efashion_flutter/presentation/account/screens/location_screen.dart';
-import 'package:efashion_flutter/presentation/account/screens/track_order_screen.dart';
 import 'package:efashion_flutter/presentation/account/screens/orders_screen.dart';
 import 'package:efashion_flutter/presentation/auth/cubits/forget_password/forget_password_cubit.dart';
 import 'package:efashion_flutter/presentation/auth/screens/otp_verification_screen.dart';
@@ -198,11 +197,6 @@ class AppRouter extends _$AppRouter {
                 ),
                 CustomRoute(
                   page: OrdersRoute.page,
-                  transitionsBuilder: TransitionsBuilders.fadeIn,
-                  durationInMilliseconds: 300,
-                ),
-                CustomRoute(
-                  page: TrackOrderRoute.page,
                   transitionsBuilder: TransitionsBuilders.fadeIn,
                   durationInMilliseconds: 300,
                 ),

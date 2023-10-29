@@ -45,9 +45,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           notificationsState: CubitState.failure,
         )),
         (notificationsList) => emit(state.copyWith(
-          notifications: notificationsList
-            ..reversed
-            ..toList(),
+          notifications: notificationsList,
           notificationsState: CubitState.success,
         )),
       );

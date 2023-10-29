@@ -42,14 +42,14 @@ class ChatSupportCubit extends Cubit<ChatSupportState> {
     response.fold(
       (failure) => emit(
         state.copyWith(
-          chatState: BlocState.failure,
+          chatState: CubitState.failure,
         ),
       ),
       (chatId) async{
         emit(
           state.copyWith(
             chatId: chatId,
-            chatState: BlocState.success,
+            chatState: CubitState.success,
           ),
         );
         if (activateSocketStream) {
@@ -68,13 +68,13 @@ class ChatSupportCubit extends Cubit<ChatSupportState> {
     response.fold(
       (failure) => emit(
         state.copyWith(
-          chatMessagesState: BlocState.failure,
+          chatMessagesState: CubitState.failure,
           chatFailMessage: failure.message,
         ),
       ),
       (chatMessages) => emit(
         state.copyWith(
-          chatMessagesState: BlocState.success,
+          chatMessagesState: CubitState.success,
           chatMessages: chatMessages.reversed.toList(),
         ),
       ),
@@ -93,12 +93,12 @@ class ChatSupportCubit extends Cubit<ChatSupportState> {
       response.fold(
         (failure) => emit(
           state.copyWith(
-            sendMessageState: BlocState.failure,
+            sendMessageState: CubitState.failure,
           ),
         ),
         (sentMessage) => emit(
           state.copyWith(
-            sendMessageState: BlocState.success,
+            sendMessageState: CubitState.success,
             chatMessages: [sentMessage, ...state.chatMessages],
           ),
         ),

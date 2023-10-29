@@ -44,9 +44,9 @@ class FavoriteCubit extends Cubit<FavoriteState> {
           userAccessToken: userAccessToken);
       response.fold(
         (failure) => debugPrint('>>>>>>>>> ${failure.message} <<<<<<<<<<<'),
-        (favoriteList) {
+        (favoriteIds) {
           emit(
-            state.copyWith(favoritesIds: favoriteList),
+            state.copyWith(favoritesIds: favoriteIds),
           );
           _getFavoriteProductsList();
         },
@@ -84,6 +84,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   Future<void> _getFavoriteProductsList() async {
+    emit(state.copyWith(favoriteListState: CubitState.loading));
     final Either<Failure, List<ProductDetails>> favoriteProducts =
         await _getFavoriteProductsUseCase(
       favoriteIds: state.favoritesIds,

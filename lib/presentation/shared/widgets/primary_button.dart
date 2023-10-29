@@ -29,14 +29,14 @@ class PrimaryButton extends StatelessWidget {
         height: height ?? 46.h,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
-          borderRadius: const BorderRadius.all(Radius.circular(12)).r,
+          borderRadius: BorderRadius.circular(12).r,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             buttonIcon ?? const SizedBox.shrink(),
             buttonIcon != null
-                ? const SizedBox(width: 10)
+                ? SizedBox(width: 10.w)
                 : const SizedBox.shrink(),
             isLoading ?  const DotsLoadingIndicator() :
                 Text(

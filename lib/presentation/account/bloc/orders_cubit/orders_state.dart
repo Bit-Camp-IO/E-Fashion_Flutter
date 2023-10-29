@@ -1,25 +1,32 @@
 part of 'orders_cubit.dart';
 
-abstract class OrdersState extends Equatable {
-  @override
-  List<Object> get props => [];
-  const OrdersState();
-}
-
-class OrdersInitial extends OrdersState {}
-
-class OrdersLoadingState extends OrdersState{}
-
-class OrdersFailureState extends OrdersState{
-  final String message;
-  const OrdersFailureState({required this.message});
-  @override
-  List<Object> get props => [message];
-}
-
-class OrderSuccessState extends OrdersState{
+class OrdersState extends Equatable {
   final List<CartOrder> orders;
-  const OrderSuccessState({required this.orders});
+  final CubitState ordersState;
+  final String failMessage;
+
+  const OrdersState({
+    this.orders = const [],
+    this.ordersState = CubitState.initial,
+    this.failMessage = '',
+  });
+
   @override
-  List<Object> get props => [orders];
+  List<Object> get props => [
+        orders,
+        ordersState,
+        failMessage,
+      ];
+
+  OrdersState copyWith({
+    List<CartOrder>? orders,
+    CubitState? ordersState,
+    String? failMessage,
+  }) {
+    return OrdersState(
+      orders: orders ?? this.orders,
+      ordersState: ordersState ?? this.ordersState,
+      failMessage: failMessage ?? this.failMessage,
+    );
+  }
 }

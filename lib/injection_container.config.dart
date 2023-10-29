@@ -215,12 +215,12 @@ extension GetItInjectableX on _i1.GetIt {
     );
     final registerModule = _$RegisterModule();
     gh.lazySingleton<_i3.ApiConsumer>(
-      () => registerModule.mainApiConsumer,
-      instanceName: 'mainApiConsumer',
-    );
-    gh.lazySingleton<_i3.ApiConsumer>(
       () => registerModule.mapsApiConsumer,
       instanceName: 'mapsApiConsumer',
+    );
+    gh.lazySingleton<_i3.ApiConsumer>(
+      () => registerModule.mainApiConsumer,
+      instanceName: 'mainApiConsumer',
     );
     gh.singleton<_i4.AppRouter>(_i4.AppRouter());
     gh.lazySingleton<_i5.AuthLocalDataSource>(

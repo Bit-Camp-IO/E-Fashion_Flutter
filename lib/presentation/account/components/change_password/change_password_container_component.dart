@@ -27,6 +27,7 @@ class _ChangePasswordContainerComponentState
   late String confirmNewPassword;
   late TextEditingController newPasswordController;
   late TextEditingController confirmNewPasswordController;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -41,22 +42,22 @@ class _ChangePasswordContainerComponentState
     return BlocListener<ChangePasswordCubit, ChangePasswordState>(
       listener: (context, state) {
         if (state is ChangePasswordSuccessState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              customSnackBar(
-                customSnackBarType: CustomSnackBarType.success,
-                message: state.message,
-                context: context,
-              ),
-            );
+          ScaffoldMessenger.of(context).showSnackBar(
+            customSnackBar(
+              customSnackBarType: CustomSnackBarType.success,
+              message: state.message,
+              context: context,
+            ),
+          );
           context.popRoute();
         } else if (state is ChangePasswordFailureState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              customSnackBar(
-                customSnackBarType: CustomSnackBarType.error,
-                message: state.message,
-                context: context,
-              ),
-            );
+          ScaffoldMessenger.of(context).showSnackBar(
+            customSnackBar(
+              customSnackBarType: CustomSnackBarType.error,
+              message: state.message,
+              context: context,
+            ),
+          );
         }
       },
       child: Form(
@@ -139,19 +140,32 @@ class _ChangePasswordContainerComponentState
                   ),
                 ),
                 Center(
-                  child: SecondaryButton(
-                    buttonTitle: 'Done',
-                    width: 100.w,
-                    height: 42.h,
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        context.read<ChangePasswordCubit>().changePassword(
-                              oldPassword: currentPassword,
-                              newPassword: newPassword,
-                              confirmNewPassword: confirmNewPassword,
-                            );
+                  child: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
+                    listener: (context, state) {
+                      if(state is ChangePasswordLoadingState){
+                        isLoading = true;
+                      }else{
+                        isLoading = false;
                       }
+                    },
+                    builder: (context, state) {
+                      return SecondaryButton(
+                        buttonTitle: 'Change Password',
+                        width: 150.w,
+                        height: 42.h,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        isLoading: isLoading,
+                        onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            context.read<ChangePasswordCubit>().changePassword(
+                                  oldPassword: currentPassword,
+                                  newPassword: newPassword,
+                                  confirmNewPassword: confirmNewPassword,
+                                );
+                          }
+                        },
+                      );
                     },
                   ),
                 ),

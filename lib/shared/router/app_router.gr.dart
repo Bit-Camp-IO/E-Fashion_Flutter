@@ -222,16 +222,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: WrappedRoute(child: const SignupScreen()),
       );
     },
-    TrackOrderRoute.name: (routeData) {
-      final args = routeData.argsAs<TrackOrderRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: TrackOrderScreen(
-          key: args.key,
-          activeStep: args.activeStep,
-        ),
-      );
-    },
     WelcomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -823,44 +813,6 @@ class SignupRoute extends PageRouteInfo<void> {
   static const String name = 'SignupRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [TrackOrderScreen]
-class TrackOrderRoute extends PageRouteInfo<TrackOrderRouteArgs> {
-  TrackOrderRoute({
-    Key? key,
-    required int activeStep,
-    List<PageRouteInfo>? children,
-  }) : super(
-          TrackOrderRoute.name,
-          args: TrackOrderRouteArgs(
-            key: key,
-            activeStep: activeStep,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'TrackOrderRoute';
-
-  static const PageInfo<TrackOrderRouteArgs> page =
-      PageInfo<TrackOrderRouteArgs>(name);
-}
-
-class TrackOrderRouteArgs {
-  const TrackOrderRouteArgs({
-    this.key,
-    required this.activeStep,
-  });
-
-  final Key? key;
-
-  final int activeStep;
-
-  @override
-  String toString() {
-    return 'TrackOrderRouteArgs{key: $key, activeStep: $activeStep}';
-  }
 }
 
 /// generated route for

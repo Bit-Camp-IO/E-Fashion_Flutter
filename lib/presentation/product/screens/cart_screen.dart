@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/presentation/product/components/cart/cart_list_component.dart';
+import 'package:efashion_flutter/presentation/product/components/cart/cart_shimmer_loading.dart';
 import 'package:efashion_flutter/presentation/product/components/cart/payment_component.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
@@ -30,7 +31,10 @@ class CartScreen extends StatelessWidget {
             Expanded(
               child: BlocBuilder<CartCubit, CartState>(
                 builder: (context, state) {
-                  if (state.cart.products.isEmpty && state.cartState == CubitState.success) {
+                  if (state.cartState == CubitState.initial || state.cartState == CubitState.loading) {
+                    return const CartShimmerLoading();
+                  } else if (state.cart.products.isEmpty &&
+                      state.cartState == CubitState.success) {
                     return const EmptyWidget(
                       image: AssetsManager.cartImage,
                       title: StringsManager.emptyCartTitle,
@@ -38,10 +42,7 @@ class CartScreen extends StatelessWidget {
                     );
                   } else {
                     return const Column(
-                      children: [
-                        CartListComponent(),
-                        PaymentComponent()
-                      ],
+                      children: [CartListComponent(), PaymentComponent()],
                     );
                   }
                 },

@@ -32,7 +32,6 @@ dependencies:
   percent_indicator: ^4.2.3
   syncfusion_flutter_sliders: ^23.1.42
   syncfusion_flutter_core: ^23.1.42
-  easy_stepper: ^0.8.1
   pinput: ^3.0.1
   dartz: ^0.10.1
   intl: ^0.18.1

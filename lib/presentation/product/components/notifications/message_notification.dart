@@ -25,43 +25,45 @@ class MessageNotification extends StatelessWidget {
         ),
         Container(
           width: 312.w,
-          height: 60.h,
+          height: 85.h,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surfaceVariant,
             borderRadius: BorderRadius.circular(10).r,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 16).r,
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16).r,
             child: Column(
               children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    notificationTime,
+                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                  ),
+                ),
+                const Spacer(),
                 Row(
                   children: [
                     Icon(
                       Iconsax.message,
                       color: Theme.of(context).colorScheme.primary,
-                      size: 14,
+                      size: 14.sp,
                     ),
                     SizedBox(width: 4.w),
                     Text(
-                      notificationTime,
-                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
+                     notificationBody,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: null,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                     ),
                   ],
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                   notificationBody,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: null,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                  ),
-                ),
+                const Spacer()
               ],
             ),
           ),

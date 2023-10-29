@@ -57,6 +57,7 @@ class StringsManager {
   static const String cartSubTotal = 'Sub total :';
 
   static const String cartCheckOutButtonTitle = 'Check Out';
+
   //! TextFields Text
   static const String email = 'Email';
   static const String currentPassword = 'Current Password';
@@ -65,6 +66,11 @@ class StringsManager {
   static const String phoneNumber = 'Phone Number';
   static const String name = 'Name';
   static const String passwordNoMatch = "Passwords don't match";
+
+  //! Chat
+  static const String secureMessage = "Message and calls are secured, \n no one outside of this chat can read them";
+  static const String messageFieldHintText = 'Message';
+  static const String messageValidationResponse = "Message Can't be empty.";
 
   //! Shared
   static const String addToBag = 'Add To Bag';

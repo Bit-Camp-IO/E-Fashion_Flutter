@@ -54,17 +54,13 @@ class EditProfileScreen extends StatelessWidget {
                         ? EmptyProfilePictureEdit(
                             name: state.userData.fullName,
                             onTap: () {
-                              context
-                                  .read<ProfileCubit>()
-                                  .updateProfilePicture();
+                              context.read<ProfileCubit>().updateProfilePicture();
                             },
                           )
                         : ProfilePictureEdit(
                             imageUrl: ApiConstants.getUserProfilePicture(path: state.userData.profileImagePath!),
                             onTap: () {
-                              context
-                                  .read<ProfileCubit>()
-                                  .updateProfilePicture();
+                              context.read<ProfileCubit>().updateProfilePicture();
                             },
                           ),
                   ),

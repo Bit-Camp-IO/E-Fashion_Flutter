@@ -9,7 +9,7 @@ class FavoriteState extends Equatable {
   const FavoriteState({
     this.favoritesIds = const <String>{},
     this.favoriteList = const <ProductDetails>[],
-    this.favoriteListState = CubitState.failure,
+    this.favoriteListState = CubitState.initial,
     this.favoriteListFailMessage = '',
   });
 

@@ -18,7 +18,7 @@ class SelectableProductSize extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0).r,
         child: Stack(
           alignment: Alignment.center,
           children: [

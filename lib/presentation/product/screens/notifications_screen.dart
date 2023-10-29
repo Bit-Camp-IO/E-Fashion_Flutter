@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/presentation/product/components/notifications/notification_shimmer_loading.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/notifications_cubit/notifications_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/presentation/product/components/notifications/delivery_notification.dart';
@@ -36,33 +37,38 @@ class NotificationsScreen extends StatelessWidget implements AutoRouteWrapper {
               child: BlocBuilder<NotificationsCubit, NotificationsState>(
                 builder: (context, state) {
                   return ListView.builder(
-                    itemCount: state.notifications.length,
+                    itemCount: state.notifications.isEmpty ? 6 : state.notifications.length,
                     padding: const EdgeInsets.only(top: 30, bottom: 100).r,
                     itemBuilder: (context, index) {
-                      String formattedDate = DateFormat.jm().format(
-                        DateTime.parse(
-                          state.notifications[index].date,
-                        ).toLocal(),
-                      );
-                      if (state.notifications[index].type ==
-                          NotificationType.newMessage.value) {
+                      if(state.notificationsState == CubitState.initial || state.notificationsState == CubitState.loading){
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 16.0).r,
-                          child: MessageNotification(
-                            notificationBody: state.notifications[index].body,
-                            notificationTime: formattedDate,
-                          ),
+                          child: const NotificationShimmerLoading(),
                         );
-                      } else {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0).r,
-                          child: DeliveryNotification(
-                            notificationTitle: state.notifications[index].title,
-                            notificationBody: state.notifications[index].body,
-                            deliveryStatus: 2,
-                            notificationTime: formattedDate,
-                          ),
+                      }else{
+                        String formattedDate = DateFormat.jm().format(
+                          DateTime.parse(state.notifications[index].date).toLocal(),
                         );
+                        if (state.notifications[index].type ==
+                            NotificationType.newMessage.value) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0).r,
+                            child: MessageNotification(
+                              notificationBody: state.notifications[index].body,
+                              notificationTime: formattedDate,
+                            ),
+                          );
+                        } else {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0).r,
+                            child: DeliveryNotification(
+                              notificationTitle: state.notifications[index].title,
+                              notificationBody: state.notifications[index].body,
+                              deliveryStatus: 2,
+                              notificationTime: formattedDate,
+                            ),
+                          );
+                        }
                       }
                     },
                   );

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/product_color.dart';
 import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/cart_sheet_shimmer_loading.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/product_color.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/product_pieces_counter.dart';
@@ -88,8 +89,9 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                   width: 40.w,
                   height: 4.h,
                   decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.onSurface,
-                      borderRadius: BorderRadius.circular(10).r),
+                    color: Theme.of(context).colorScheme.onSurface,
+                    borderRadius: BorderRadius.circular(10).r,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(24).r,
@@ -311,6 +313,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
     } else {
       return Container(
         height: 450.h,
+        width: double.infinity,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.background,
           borderRadius: const BorderRadius.only(
@@ -330,12 +333,8 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                     borderRadius: BorderRadius.circular(10).r),
               ),
             ),
-            Expanded(
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
+            const Expanded(
+              child: CartSheetShimmerLoading(),
             ),
           ],
         ),

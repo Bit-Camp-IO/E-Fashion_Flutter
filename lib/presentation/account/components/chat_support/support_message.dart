@@ -1,3 +1,4 @@
+import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -20,9 +21,9 @@ class SupportMessage extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.surfaceVariant,
                   borderRadius: BorderRadius.only(
-                    topRight: const Radius.circular(50).r,
-                    topLeft: const Radius.circular(50).r,
-                    bottomRight: const Radius.circular(50).r,
+                    topRight: const Radius.circular(30).r,
+                    topLeft: const Radius.circular(30).r,
+                    bottomRight: const Radius.circular(30).r,
                   ),
                 ),
                 child: Text(
@@ -36,7 +37,7 @@ class SupportMessage extends StatelessWidget {
               Text(
                 DateFormat.jm().format(date),
                 style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                      color: const Color(0xFF247BA0),
+                      color: ColorsManager.messageTimeColor,
                     ),
               ),
             ],

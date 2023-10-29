@@ -2,19 +2,19 @@ part of 'chat_support_cubit.dart';
 
 class ChatSupportState extends Equatable {
   final String chatId;
-  final BlocState chatState;
+  final CubitState chatState;
   final String chatFailMessage;
   final List<ChatMessage> chatMessages;
-  final BlocState chatMessagesState;
-  final BlocState sendMessageState;
+  final CubitState chatMessagesState;
+  final CubitState sendMessageState;
 
   const ChatSupportState({
     this.chatId = '',
-    this.chatState = BlocState.initial,
+    this.chatState = CubitState.initial,
     this.chatFailMessage = '',
-    this.chatMessagesState = BlocState.initial,
+    this.chatMessagesState = CubitState.initial,
     this.chatMessages = const [],
-    this.sendMessageState = BlocState.initial,
+    this.sendMessageState = CubitState.initial,
   });
 
   @override
@@ -29,11 +29,11 @@ class ChatSupportState extends Equatable {
 
   ChatSupportState copyWith({
     String? chatId,
-    BlocState? chatState,
+    CubitState? chatState,
     String? chatFailMessage,
     List<ChatMessage>? chatMessages,
-    BlocState? chatMessagesState,
-    BlocState? sendMessageState,
+    CubitState? chatMessagesState,
+    CubitState? sendMessageState,
   }) {
     return ChatSupportState(
       chatId: chatId ?? this.chatId,

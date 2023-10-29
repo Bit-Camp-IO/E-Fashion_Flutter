@@ -12,8 +12,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   final ChangePasswordUseCase _changePasswordUseCase;
   late String userAccessToken;
 
-  ChangePasswordCubit(this._getAccessTokenUseCase, this._changePasswordUseCase)
-      : super(ChangePasswordInitial());
+  ChangePasswordCubit(this._getAccessTokenUseCase, this._changePasswordUseCase) : super(ChangePasswordInitial());
 
   Future<void> changePassword({
     required oldPassword,
