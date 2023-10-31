@@ -34,6 +34,7 @@ class CartCubit extends Cubit<CartState> {
   ) : super(const CartState());
 
   Future<void> getCartProducts() async {
+    emit(state.copyWith(cartState: CubitState.loading));
     final getUserAccessToken = await _getAccessTokenUseCase();
     userAccessToken = getUserAccessToken.getOrElse(() => '');
     final response = await _getCartProductsUseCase(
@@ -42,7 +43,7 @@ class CartCubit extends Cubit<CartState> {
     response.fold(
       (failure) => emit(
         state.copyWith(
-          cartState: CubitState.initial,
+          cartState: CubitState.failure,
           cartMessage: failure.message,
         ),
       ),

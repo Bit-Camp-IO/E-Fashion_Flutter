@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/presentation/product/components/cart/cart_list_component.dart';
-import 'package:efashion_flutter/presentation/product/components/cart/cart_shimmer_loading.dart';
-import 'package:efashion_flutter/presentation/product/components/cart/payment_component.dart';
+import 'package:efashion_flutter/presentation/cart/components/cart_list_component.dart';
+import 'package:efashion_flutter/presentation/cart/components/cart_shimmer_loading.dart';
+import 'package:efashion_flutter/presentation/cart/components/payment_component.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/empty_widget.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/no_internet_connection_widget.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
@@ -13,8 +14,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +37,14 @@ class CartScreen extends StatelessWidget {
               disableBackButton: true,
             ),
             Expanded(
-              child: BlocBuilder<CartCubit, CartState>(
+              child: BlocConsumer<CartCubit, CartState>(
+                listener: (context, state) {
+                  if(state.cartState == CubitState.loading){
+                    isLoading = true;
+                  }else{
+                    isLoading = false;
+                  }
+                },
                 builder: (context, state) {
                   if (state.cartState == CubitState.initial || state.cartState == CubitState.loading) {
                     return const CartShimmerLoading();
@@ -40,9 +55,16 @@ class CartScreen extends StatelessWidget {
                       title: StringsManager.emptyCartTitle,
                       subTitle: StringsManager.emptyCartSubTitle,
                     );
-                  } else {
+                  } else if (state.cartState == CubitState.success) {
                     return const Column(
                       children: [CartListComponent(), PaymentComponent()],
+                    );
+                  } else {
+                    return NoInternetConnectionWidget(
+                      onButtonTap: () {
+                        context.read<CartCubit>().getCartProducts();
+                      },
+                      isButtonLoading: isLoading,
                     );
                   }
                 },

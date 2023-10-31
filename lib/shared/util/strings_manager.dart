@@ -77,6 +77,8 @@ class StringsManager {
   static const String colorSection = 'Color :';
   static const String sizeSection = 'Size : ';
 
+  static const String profileInfoUpdated = "Profile Info Updated Successfully.";
+
   static const String emptyFavoriteTitle = 'Empty Favorite List';
   static const String emptyFavoriteSubTitle = 'Tap on product Favorite\n icon to add it.';
 }

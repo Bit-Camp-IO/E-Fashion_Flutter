@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart';
+import 'package:efashion_flutter/presentation/shared/bloc/favorite_cubit/favorite_cubit.dart';
 import 'package:efashion_flutter/presentation/product/components/favorite/favorite_card.dart';
 import 'package:efashion_flutter/presentation/product/components/favorite/favorite_shimmer_loading_card.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/cart_bottom_sheet.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/empty_widget.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/no_internet_connection_widget.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
@@ -23,7 +24,7 @@ class FavoriteScreen extends StatefulWidget {
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
   int switchIndex = 0;
-
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,30 +38,40 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               appBarType: AppBarType.normal,
             ),
             Expanded(
-              child: BlocBuilder<FavoriteCubit, FavoriteState>(
+              child: BlocConsumer<FavoriteCubit, FavoriteState>(
+                listener: (context, state) {
+                  if (state.favoriteListState == CubitState.loading) {
+                    isLoading = true;
+                  }else{
+                    isLoading = false;
+                  }
+                },
                 builder: (context, state) {
-                  if (state.favoriteList.isEmpty &&
-                      state.favoriteListState == CubitState.success) {
+                  if (state.favoriteList.isEmpty && state.favoriteListState == CubitState.success) {
                     return const EmptyWidget(
                       image: AssetsManager.favoriteImage,
                       title: StringsManager.emptyFavoriteTitle,
                       subTitle: StringsManager.emptyFavoriteSubTitle,
+                    );
+                  } else if (state.favoriteListState == CubitState.failure) {
+                    return NoInternetConnectionWidget(
+                      onButtonTap: () {
+                        context.read<FavoriteCubit>().getUserFavoriteIdList();
+                      },
+                      isButtonLoading: isLoading,
                     );
                   } else {
                     return Column(
                       children: [
                         Expanded(
                           child: GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               mainAxisSpacing: 13.h,
                               crossAxisSpacing: 10.w,
                               mainAxisExtent: 236.h,
                             ),
-                            itemCount: state.favoriteList.isEmpty
-                                ? 6
-                                : state.favoriteList.length,
+                            itemCount: state.favoriteListState == CubitState.loading ? 6 : state.favoriteList.length,
                             itemBuilder: (context, index) {
                               if (state.favoriteListState == CubitState.initial || state.favoriteListState == CubitState.loading) {
                                 return const FavoriteShimmerLoadingCard();
@@ -85,7 +96,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                           productId: productId));
                                     },
                                     onFavoriteTap: () {
-                                      context.read<FavoriteCubit>().addOrRemoveProductFromFavoriteListEvent(
+                                      context
+                                          .read<FavoriteCubit>()
+                                          .addOrRemoveProductFromFavoriteListEvent(
                                             productId: productId,
                                           );
                                     },
@@ -94,16 +107,29 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                         context: context,
                                         builder: (context) {
                                           return BlocProvider.value(
-                                            value: context.read<FavoriteCubit>(),
-                                            child: BlocBuilder<FavoriteCubit, FavoriteState>(
+                                            value:
+                                                context.read<FavoriteCubit>(),
+                                            child: BlocBuilder<FavoriteCubit,
+                                                FavoriteState>(
                                               builder: (context, state) {
                                                 return CartBottomSheet(
-                                                  productName: state.favoriteList[index].title,
-                                                  productId: state.favoriteList[index].id,
-                                                  productPrice: state.favoriteList[index].price.toInt(),
-                                                  productColors: state.favoriteList[index].colors,
-                                                  productSizes: state.favoriteList[index].sizes,
-                                                  productStock: state.favoriteList[index].stock,
+                                                  productName: state
+                                                      .favoriteList[index]
+                                                      .title,
+                                                  productId: state
+                                                      .favoriteList[index].id,
+                                                  productPrice: state
+                                                      .favoriteList[index].price
+                                                      .toInt(),
+                                                  productColors: state
+                                                      .favoriteList[index]
+                                                      .colors,
+                                                  productSizes: state
+                                                      .favoriteList[index]
+                                                      .sizes,
+                                                  productStock: state
+                                                      .favoriteList[index]
+                                                      .stock,
                                                 );
                                               },
                                             ),

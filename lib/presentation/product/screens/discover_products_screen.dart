@@ -5,16 +5,20 @@ import 'package:efashion_flutter/presentation/product/components/discover/skew_g
 import 'package:efashion_flutter/presentation/product/components/discover/skew_list_view_component.dart';
 import 'package:efashion_flutter/presentation/shared/animations/slide_fade_animation_switcher.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/no_internet_connection_widget.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
-class DiscoverProductsScreen extends StatefulWidget implements AutoRouteWrapper {
+class DiscoverProductsScreen extends StatefulWidget
+    implements AutoRouteWrapper {
   final String brandName;
   final String brandId;
   final String? categories;
   final DiscoverScreenType discoverScreenType;
+
   const DiscoverProductsScreen({
     super.key,
     this.brandName = '',
@@ -38,7 +42,7 @@ class DiscoverProductsScreen extends StatefulWidget implements AutoRouteWrapper 
 class _DiscoverProductsScreenState extends State<DiscoverProductsScreen> {
   late final String screenTitle;
   ValueNotifier<int> switchIndex = ValueNotifier(0);
-
+  bool isLoading = true;
   @override
   void initState() {
     final DiscoverBloc discoverBloc = context.read<DiscoverBloc>();
@@ -68,23 +72,51 @@ class _DiscoverProductsScreenState extends State<DiscoverProductsScreen> {
                 switchIndex.value = currentIndex!;
               },
             ),
-            ValueListenableBuilder(
-              valueListenable: switchIndex,
-              builder: (context, index, child) => Expanded(
-                child: SlideFadeAnimationSwitcher(
-                  child: index == 0
-                      ? SkewListViewComponent(
-                          discoverScreenType: widget.discoverScreenType,
-                          categories: widget.categories,
-                          brandId: widget.brandId,
-                        )
-                      : SkewGridViewComponent(
-                          discoverScreenType: widget.discoverScreenType,
-                          categories: widget.categories,
-                          brandId: widget.brandId,
-                        ),
-                ),
-              ),
+            BlocConsumer<DiscoverBloc, DiscoverState>(
+              listener: (context, state) {
+                if(state.discoverState == BlocState.loading){
+                  isLoading = true;
+                }else{
+                  isLoading = false;
+                }
+              },
+              builder: (context, state) {
+                if (state.discoverState == BlocState.failure) {
+                  return Expanded(
+                    child: NoInternetConnectionWidget(
+                      isButtonLoading: isLoading,
+                      onButtonTap: () {
+                        final DiscoverBloc discoverBloc = context.read<DiscoverBloc>();
+                        switch (widget.discoverScreenType) {
+                          case DiscoverScreenType.brand:
+                            discoverBloc.add(GetBrandProductsEvent(
+                                brandId: widget.brandId, categories: widget.categories));
+                          case DiscoverScreenType.offers:
+                            discoverBloc.add(GetOffersProductsEvent(categories: widget.categories));
+                        }
+                      },
+                    ),
+                  );
+                } else {
+                  return ValueListenableBuilder(
+                    valueListenable: switchIndex,
+                    builder: (context, index, child) => Expanded(
+                        child: SlideFadeAnimationSwitcher(
+                      child: index == 0
+                          ? SkewListViewComponent(
+                              discoverScreenType: widget.discoverScreenType,
+                              categories: widget.categories,
+                              brandId: widget.brandId,
+                            )
+                          : SkewGridViewComponent(
+                              discoverScreenType: widget.discoverScreenType,
+                              categories: widget.categories,
+                              brandId: widget.brandId,
+                            ),
+                    )),
+                  );
+                }
+              },
             ),
           ],
         ),

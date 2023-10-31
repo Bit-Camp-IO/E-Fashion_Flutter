@@ -5,12 +5,14 @@ class FavoriteState extends Equatable {
   final List<ProductDetails> favoriteList;
   final CubitState favoriteListState;
   final String favoriteListFailMessage;
+  final String addOrRemoveFromFavoriteFailMessage;
 
   const FavoriteState({
     this.favoritesIds = const <String>{},
     this.favoriteList = const <ProductDetails>[],
     this.favoriteListState = CubitState.initial,
     this.favoriteListFailMessage = '',
+    this.addOrRemoveFromFavoriteFailMessage = '',
   });
 
   @override
@@ -19,6 +21,7 @@ class FavoriteState extends Equatable {
         favoriteList,
         favoriteListState,
         favoriteListFailMessage,
+        addOrRemoveFromFavoriteFailMessage,
       ];
 
   FavoriteState copyWith({
@@ -26,13 +29,14 @@ class FavoriteState extends Equatable {
     List<ProductDetails>? favoriteList,
     CubitState? favoriteListState,
     String? favoriteListFailMessage,
+    String? addOrRemoveFromFavoriteFailMessage,
   }) {
     return FavoriteState(
       favoritesIds: favoritesIds ?? this.favoritesIds,
       favoriteList: favoriteList ?? this.favoriteList,
       favoriteListState: favoriteListState ?? this.favoriteListState,
-      favoriteListFailMessage:
-          favoriteListFailMessage ?? this.favoriteListFailMessage,
+      favoriteListFailMessage: favoriteListFailMessage ?? this.favoriteListFailMessage,
+      addOrRemoveFromFavoriteFailMessage: addOrRemoveFromFavoriteFailMessage ?? this.addOrRemoveFromFavoriteFailMessage
     );
   }
 }

@@ -7,10 +7,9 @@ import 'package:rxdart/rxdart.dart';
 class NotificationsManager {
   static final _notification = FlutterLocalNotificationsPlugin();
   static final onClickNotification = BehaviorSubject<NotificationResponse>();
+  static bool isInit = false;
   static final NotificationsManager _notificationService =
       NotificationsManager._internal();
-
-  static bool isInit = false;
 
   factory NotificationsManager() {
     return _notificationService;

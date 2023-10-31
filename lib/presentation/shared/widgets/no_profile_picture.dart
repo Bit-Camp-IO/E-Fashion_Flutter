@@ -1,6 +1,7 @@
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
 
 class EmptyProfilePicture extends StatelessWidget {
   const EmptyProfilePicture({
@@ -9,12 +10,15 @@ class EmptyProfilePicture extends StatelessWidget {
     this.width,
     this.height,
     this.isLarge = false,
+    this.onRefreshPress,
   });
 
   final String name;
   final double? width;
   final double? height;
   final bool isLarge;
+
+  final void Function()? onRefreshPress;
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +30,19 @@ class EmptyProfilePicture extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: Center(
-        child: Text(
-          name.isNotEmpty ? name[0] : name,
-          style: isLarge
-              ? Theme.of(context).textTheme.displayLarge!.copyWith(
-                  color: Colors.white,
-                  fontFamily: AssetsManager.primaryFontFamily)
-              : Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: Colors.white,
-                  ),
-        ),
+        child: name.isNotEmpty
+            ? Text(
+                name[0],
+                style: isLarge
+                    ? Theme.of(context).textTheme.displayLarge!.copyWith(
+                        color: Colors.white,
+                        fontFamily: AssetsManager.primaryFontFamily)
+                    : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Colors.white,
+                        ),
+              )
+            : IconButton(
+                onPressed: onRefreshPress, icon: const Icon(Iconsax.refresh, color: Colors.white,)),
       ),
     );
   }

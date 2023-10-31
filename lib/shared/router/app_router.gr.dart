@@ -155,7 +155,7 @@ abstract class _$AppRouter extends RootStackRouter {
     HomeTabRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const HomeTab()),
+        child: const HomeTab(),
       );
     },
     LocationRoute.name: (routeData) {
@@ -173,7 +173,7 @@ abstract class _$AppRouter extends RootStackRouter {
     NotificationsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const NotificationsScreen()),
+        child: const NotificationsScreen(),
       );
     },
     OrdersRoute.name: (routeData) {
@@ -186,6 +186,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const OtpVerificationScreen(),
+      );
+    },
+    PaymentSuccessRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PaymentSuccessScreen(),
       );
     },
     ProductDetailsRoute.name: (routeData) {
@@ -703,6 +709,20 @@ class OtpVerificationRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'OtpVerificationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PaymentSuccessScreen]
+class PaymentSuccessRoute extends PageRouteInfo<void> {
+  const PaymentSuccessRoute({List<PageRouteInfo>? children})
+      : super(
+          PaymentSuccessRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PaymentSuccessRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

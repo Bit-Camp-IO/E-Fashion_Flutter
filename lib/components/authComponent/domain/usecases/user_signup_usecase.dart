@@ -14,13 +14,13 @@ class UserSignUpUseCase {
     required String fullName,
     required String email,
     required String password,
-    required String confirmPassword,
+    required String phoneNumber,
   }) async {
     return await authRepository.userSignUp(
       fullName: fullName,
       email: email,
       password: password,
-      confirmPassword: confirmPassword,
+      phoneNumber: phoneNumber,
     );
   }
 }

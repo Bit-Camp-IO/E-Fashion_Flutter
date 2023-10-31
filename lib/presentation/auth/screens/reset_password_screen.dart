@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/presentation/auth/cubits/forget_password/forget_password_cubit.dart';
-import 'package:efashion_flutter/presentation/shared/widgets/snack_bar.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/auth/components/shared/auth_clipped_container.dart';
@@ -45,7 +45,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         } else if (state is ResetPasswordSuccessState) {
           _isLoading = false;
           ScaffoldMessenger.of(context).showSnackBar(
-            customSnackBar(
+            CustomSnackBar.show(
               customSnackBarType: CustomSnackBarType.success,
               message: state.message,
               context: context,
@@ -55,7 +55,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         } else if (state is ResetPasswordFailState) {
           _isLoading = false;
           ScaffoldMessenger.of(context).showSnackBar(
-            customSnackBar(
+            CustomSnackBar.show(
               customSnackBarType: CustomSnackBarType.error,
               message: state.message,
               context: context,
@@ -109,7 +109,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           password = value;
                         }
                       },
-                      validator: ValidationManager.passwordValidator(
+                      validator: ValidationManager.changePasswordValidator(
                         passwordController: _passwordController,
                         confirmPasswordController: _confirmPasswordController,
                       ),
@@ -126,7 +126,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           confirmPassword = value;
                         }
                       },
-                      validator: ValidationManager.confirmPasswordValidator(
+                      validator: ValidationManager.changePasswordValidator(
                         passwordController: _passwordController,
                         confirmPasswordController: _confirmPasswordController,
                       ),

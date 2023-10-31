@@ -5,7 +5,7 @@ import 'package:efashion_flutter/presentation/account/bloc/maps_bloc/map_bloc.da
 import 'package:efashion_flutter/presentation/account/components/map/map_search_field.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/theme_cubit/theme_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
-import 'package:efashion_flutter/presentation/shared/widgets/snack_bar.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +73,7 @@ class _LocationScreenState extends State<LocationScreen> {
         listener: (context, state) async {
           if (state.locationUpdateState == BlocState.failure || state.locationUpdateState == BlocState.success) {
             ScaffoldMessenger.of(context).showSnackBar(
-              customSnackBar(
+              CustomSnackBar.show(
                 customSnackBarType:
                 state.locationUpdateState == BlocState.failure
                     ? CustomSnackBarType.error

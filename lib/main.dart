@@ -4,7 +4,7 @@ import 'package:efashion_flutter/firebase_options.dart';
 import 'package:efashion_flutter/hive_configration.dart';
 import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/shared/util/notifications_manager.dart';
-import 'package:efashion_flutter/stripe_configration.dart';
+import 'package:efashion_flutter/shared/util/stripe_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +26,7 @@ Future<void> main() async {
   await Future.wait([
     NotificationsManager.init(),
     HiveConfigration.init(),
-    StripeConfigration.init(),
+    StripeManager.init(),
   ]);
   configureDependencies();
   Bloc.observer = MyBlocObserver();

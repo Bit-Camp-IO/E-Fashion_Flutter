@@ -23,4 +23,5 @@ class AssetsManager {
   static const String deliveryImage1 = 'assets/images/delivery_image1.png';
   static const String deliveryImage2 = 'assets/images/delivery_image2.png';
   static const String deliveryImage3 = 'assets/images/delivery_image3.png';
+  static const String wifiImage = 'assets/images/wifi.png';
 }

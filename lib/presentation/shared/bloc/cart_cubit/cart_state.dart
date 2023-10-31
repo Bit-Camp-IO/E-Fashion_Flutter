@@ -10,7 +10,6 @@ class CartState extends Equatable {
 
   final String paymentClientSecret;
   final CubitState paymentState;
-
   final String paymentMessage;
 
   @override

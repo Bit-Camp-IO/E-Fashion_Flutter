@@ -35,14 +35,14 @@ class AuthRepositoryImpl extends AuthRepository {
     required String fullName,
     required String email,
     required String password,
-    required String confirmPassword,
+    required String phoneNumber,
   }) async {
     try {
       final result = await _authRemoteDataSource.userSignUp(
         fullName: fullName,
         email: email,
         password: password,
-        confirmPassword: confirmPassword,
+        phoneNumber: phoneNumber,
       );
       _authLocalDataSource.addAuthTokens(authTokensModel: result);
       return right(result.toAuthTokens());

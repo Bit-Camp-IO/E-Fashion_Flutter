@@ -5,7 +5,6 @@ class SearchState extends Equatable {
   final bool hasSearchProductsListReachedMax;
   final BlocState searchState;
   final String searchFailMessage;
-
   final BlocState loadMoreProductsState;
   const SearchState({
     this.searchProducts = const [],

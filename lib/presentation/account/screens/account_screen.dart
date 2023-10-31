@@ -35,8 +35,7 @@ class AccountScreen extends StatelessWidget {
                   previous.userData != current.userData,
               builder: (context, state) {
                 return BlurredBackgroundImage(
-                  isLocalImage:
-                      state.userData.profileImagePath != null ? false : true,
+                  isLocalImage: state.userData.profileImagePath != null ? false : true,
                   imagePath: state.userData.profileImagePath != null
                       ? ApiConstants.getUserProfilePicture(
                           path: state.userData.profileImagePath!,
@@ -61,6 +60,9 @@ class AccountScreen extends StatelessWidget {
                               width: 120.w,
                               height: 120.h,
                               isLarge: true,
+                              onRefreshPress: () {
+                                context.read<ProfileCubit>().getUserData();
+                              },
                             )
                           : ClipOval(
                               child: CachedNetworkImage(

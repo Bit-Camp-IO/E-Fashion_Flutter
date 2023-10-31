@@ -1,3 +1,4 @@
+import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,9 @@ class OrderStatusCard extends StatelessWidget {
                         IconButton(
                           onPressed: () async {
                             await Clipboard.setData(ClipboardData(text: orderId));
+                            if(context.mounted){
+                              ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.show(customSnackBarType: CustomSnackBarType.clipboard, message: "Order Id Copied To Clipboard", context: context));
+                            }
                           },
                           icon: Icon(
                             Iconsax.copy,

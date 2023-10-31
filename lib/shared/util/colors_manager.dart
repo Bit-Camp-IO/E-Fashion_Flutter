@@ -9,6 +9,8 @@ class ColorsManager{
   static const Color textColorTertiary = Color(0xFF72777F);
   static const Color ratingStarColor = Color(0xFFF5EC00);
   static const Color successColor = Color(0xFF1DBA1A);
+
+  static const Color errorColor = Color(0xFFBA1A1A);
   static const Color messageTimeColor = Color(0xFF247BA0);
   static const Color messageDisabledSendIconColor = Color(0xFF3A4857);
 }

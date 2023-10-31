@@ -7,7 +7,6 @@ import 'package:efashion_flutter/components/notificationsComponent/domain/usecas
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/notifications_manager.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -63,9 +62,6 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         deviceToken: deviceToken!,
       );
       emit(state.copyWith(isUserSubscribedToNotifications: true));
-      debugPrint(
-          '=============== ${state.isUserSubscribedToNotifications} ==============');
-      debugPrint('============= SUBSCRIBED ==============');
     } else {
       emit(state.copyWith(isUserSubscribedToNotifications: false));
     }
@@ -98,7 +94,6 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         ),
       ),
     );
-    debugPrint('=============== ${state.isUserSubscribedToNotifications} ==============');
   }
 
   Future<void> checkForNotificationsPermission() async {

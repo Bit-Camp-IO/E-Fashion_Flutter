@@ -12,7 +12,7 @@ abstract class AuthRepository {
     required String fullName,
     required String email,
     required String password,
-    required String confirmPassword,
+    required String phoneNumber,
   });
 
   Either<Failure, Tokens> checkIfTokensExist();

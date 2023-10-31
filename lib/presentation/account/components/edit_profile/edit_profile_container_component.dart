@@ -1,10 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/container_button.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_text_form_field.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/secondary_button.dart';
 import 'package:efashion_flutter/presentation/account/components/shared/account_clipped_container.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
+import 'package:efashion_flutter/shared/util/validation_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,12 +56,7 @@ class _EditProfileContainerComponentState
     return Form(
       key: _formKey,
       child: AccountClippedContainer(
-        height: FocusScope
-            .of(context)
-            .hasPrimaryFocus ||
-            !FocusScope
-                .of(context)
-                .hasFocus
+        height: FocusScope.of(context).hasPrimaryFocus || !FocusScope.of(context).hasFocus
             ? 500.h
             : 410.h,
         child: Padding(
@@ -81,10 +79,7 @@ class _EditProfileContainerComponentState
               Center(
                 child: Text(
                   "Edit Profile",
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               SizedBox(
@@ -97,8 +92,7 @@ class _EditProfileContainerComponentState
                 label: "Name",
                 borderRadius: (12.0).r,
                 onSaved: (value) {
-                  if (value != null &&
-                      value != profileCubit.state.userData.fullName) {
+                  if (value != null && value != profileCubit.state.userData.fullName) {
                     _fullName = value;
                     debugPrint(_fullName);
                   }
@@ -111,20 +105,12 @@ class _EditProfileContainerComponentState
                 label: "Phone Number",
                 borderRadius: (12.0).r,
                 onSaved: (value) {
-                  if (value!.isNotEmpty &&
-                      value != profileCubit.state.userData.phoneNumber) {
+                  if (value!.isNotEmpty && value != profileCubit.state.userData.phoneNumber) {
                     _phoneNumber = value;
                     debugPrint(_phoneNumber);
                   }
                 },
-                validator: (value) {
-                  if (_phoneController.text.isNotEmpty &&
-                      _phoneController.text.length < 11) {
-                    return 'Phone Number is Too Short';
-                  } else {
-                    return null;
-                  }
-                },
+                validator: ValidationManager.phoneNumberValidator(phoneController: _phoneController)
               ),
               CustomTextFormField(
                 controller: _emailController,
@@ -145,7 +131,15 @@ class _EditProfileContainerComponentState
                   listener: (context, state) {
                     if(state.userDataState == CubitState.loading){
                       isLoading = true;
-                    }else{
+                    }else if (state.userDataState == CubitState.success){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        CustomSnackBar.show(
+                          customSnackBarType: CustomSnackBarType.success,
+                          message: StringsManager.profileInfoUpdated,
+                          context: context,
+                        ),
+                      );
+                      context.popRoute();
                       isLoading = false;
                     }
                   },

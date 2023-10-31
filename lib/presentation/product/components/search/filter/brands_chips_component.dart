@@ -70,11 +70,9 @@ class _BrandsChipsComponentState extends State<BrandsChipsComponent> {
                       brandChips.removeWhere(
                           (element) => element == widget.brands[index].id);
                       widget.selectedBrands(brandChips);
-                      debugPrint(brandChips.toString());
                     } else {
                       brandChips.add(widget.brands[index].id);
                       widget.selectedBrands(brandChips);
-                      debugPrint(brandChips.toString());
                     }
                   });
                 },

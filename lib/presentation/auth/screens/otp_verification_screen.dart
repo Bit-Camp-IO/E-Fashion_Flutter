@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/presentation/auth/components/forget_password/otp_timer.dart';
 import 'package:efashion_flutter/presentation/auth/cubits/forget_password/forget_password_cubit.dart';
-import 'package:efashion_flutter/presentation/shared/widgets/snack_bar.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:efashion_flutter/presentation/auth/components/shared/auth_clipped_container.dart';
@@ -31,7 +31,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           if (state is VerifyOtpFailState) {
             _otpError = true;
             ScaffoldMessenger.of(context).showSnackBar(
-              customSnackBar(
+              CustomSnackBar.show(
                 customSnackBarType: CustomSnackBarType.error,
                 message: state.message,
                 context: context,

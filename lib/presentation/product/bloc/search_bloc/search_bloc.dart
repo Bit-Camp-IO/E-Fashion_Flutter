@@ -25,8 +25,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     on<SearchForProductsEvent>(
       _searchForProductsEvent,
       transformer: (events, mapper) => events
-          .debounceTime(const Duration(milliseconds: 700))
           .distinct()
+          .debounceTime(const Duration(milliseconds: 700))
           .switchMap(mapper),
     );
     on<FilterSearchProductsEvent>(_filterSearchProducts, transformer: (events, mapper) => events
@@ -37,7 +37,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   Future<void> _searchForProductsEvent(
       SearchForProductsEvent event, Emitter<SearchState> emit) async {
-    if (event.searchQuery.isNotEmpty && event.searchQuery != searchQuery ) {
+    if (event.searchQuery.isNotEmpty && event.searchQuery != searchQuery || state.searchState == BlocState.failure && event.searchQuery == searchQuery) {
       emit(state.copyWith(searchState: BlocState.loading));
       searchQuery = event.searchQuery;
       searchPageNumber = 1;

@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile_cubit.dart';
-import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart';
+import 'package:efashion_flutter/presentation/product/bloc/collections_cubit/collections_cubit.dart';
+import 'package:efashion_flutter/presentation/shared/bloc/favorite_cubit/favorite_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/notifications_cubit/notifications_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_tick.dart';
@@ -30,10 +31,13 @@ class BottomNavBar extends StatefulWidget implements AutoRouteWrapper {
           lazy: false,
         ),
         BlocProvider(
-          create: (context) => getIt<FavoriteCubit>()..getUserFavoriteIdList(),
+          create: (context) => getIt<FavoriteCubit>()..getUserFavoriteIdList(), lazy: false,
         ),
         BlocProvider(
           create: (context) => getIt<CartCubit>()..getCartProducts(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<CollectionsCubit>()..getCollectionsList(),
         ),
       ],
       child: this,
@@ -41,17 +45,20 @@ class BottomNavBar extends StatefulWidget implements AutoRouteWrapper {
   }
 }
 
-class _BottomNavBarState extends State<BottomNavBar> with WidgetsBindingObserver{
+class _BottomNavBarState extends State<BottomNavBar>
+    with WidgetsBindingObserver {
   DateTime? _lastTapTime;
-
+  int currentTickCount = 0;
+  bool hasTickChanged = false;
+  double leftPosition = 125.w;
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     debugPrint(state.toString());
     if (state == AppLifecycleState.resumed) {
-      debugPrint('ACTIVATED');
       getIt<NotificationsCubit>().checkForNotificationsPermission();
     }
   }
+
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
@@ -102,62 +109,64 @@ class _BottomNavBarState extends State<BottomNavBar> with WidgetsBindingObserver
                 borderRadius: const BorderRadius.all(
                   Radius.circular(15.0),
                 ).r,
-                child: BottomNavigationBar(
-                  currentIndex: tabsRouter.activeIndex,
-                  onTap: (value) {
-                    final timeNow = DateTime.now();
-                    if (_lastTapTime != null &&
-                        timeNow.difference(_lastTapTime!) <=
-                            const Duration(milliseconds: 300)) {
-                      switch (tabsRouter.activeIndex) {
-                        case 0:
-                          context.router.root.navigate(const HomeRoute());
-                        case 1:
-                          context.router.root.navigate(const CartRoute());
-                        case 2:
-                          context.router.root.navigate(const FavoriteRoute());
-                        case 3:
-                          context.router.root.navigate(const AccountRoute());
-                      }
-                    } else {
-                      tabsRouter.setActiveIndex(value);
-                    }
-                    _lastTapTime = timeNow;
-                  },
-                  items: [
-                    const BottomNavigationBarItem(
-                      icon: Icon(Iconsax.home),
-                      label: StringsManager.homeTabLabel,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    BottomNavigationBar(
+                      currentIndex: tabsRouter.activeIndex,
+                      onTap: (value) {
+                        final timeNow = DateTime.now();
+                        if (_lastTapTime != null &&
+                            timeNow.difference(_lastTapTime!) <=
+                                const Duration(milliseconds: 300)) {
+                          switch (tabsRouter.activeIndex) {
+                            case 0:
+                              context.router.root.navigate(const HomeRoute());
+                            case 1:
+                              context.router.root.navigate(const CartRoute());
+                            case 2:
+                              context.router.root.navigate(const FavoriteRoute());
+                            case 3:
+                              context.router.root.navigate(const AccountRoute());
+                          }
+                        } else {
+                          tabsRouter.setActiveIndex(value);
+                        }
+                        _lastTapTime = timeNow;
+                      },
+                      items: const [
+                        BottomNavigationBarItem(
+                          icon: Icon(Iconsax.home),
+                          label: StringsManager.homeTabLabel,
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Iconsax.bag_2),
+                          label: StringsManager.cartTabLabel,
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Iconsax.heart),
+                          label: StringsManager.favoriteTabLabel,
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Iconsax.user),
+                          label: StringsManager.accountTabLabel,
+                        ),
+                      ],
                     ),
-                    BottomNavigationBarItem(
-                      icon: Stack(
-                        children: [
-                          const Icon(Iconsax.bag_2),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: BlocBuilder<CartCubit, CartState>(
-                              buildWhen: (previous, current) =>
-                                  previous.cart.products !=
-                                  current.cart.products,
-                              builder: (context, state) {
-                                return CustomTick(
-                                  isTickVisible: state.cart.products.isNotEmpty,
-                                );
-                              },
-                            ),
+                    BlocBuilder<CartCubit, CartState>(
+                      buildWhen: (previous, current) =>
+                      previous.cart.products.length != current.cart.products.length,
+                      builder: (context, state) {
+                        return AnimatedPositioned(
+                          duration: const Duration(milliseconds: 500),
+                          top: 18.h,
+                          left: 120.w,
+                          child: CustomTick(
+                            tickCount: state.cart.products.length,
+                            isTickVisible: state.cart.products.isNotEmpty,
                           ),
-                        ],
-                      ),
-                      label: StringsManager.cartTabLabel,
-                    ),
-                    const BottomNavigationBarItem(
-                      icon: Icon(Iconsax.heart),
-                      label: StringsManager.favoriteTabLabel,
-                    ),
-                    const BottomNavigationBarItem(
-                      icon: Icon(Iconsax.user),
-                      label: StringsManager.accountTabLabel,
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -168,6 +177,7 @@ class _BottomNavBarState extends State<BottomNavBar> with WidgetsBindingObserver
       },
     );
   }
+
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);

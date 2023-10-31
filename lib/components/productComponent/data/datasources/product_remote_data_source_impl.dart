@@ -106,12 +106,15 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   @override
   Future<Set<String>> getUserFavoriteProductsIds(
       {required String userAccessToken}) async {
-    final Map<String, dynamic> response =
-        await _apiConsumer.get(ApiConstants.userFavoriteListEndPoint, headers: {
-      'Authorization': 'Bearer $userAccessToken',
-    });
+    final Map<String, dynamic> response = await _apiConsumer.get(
+      ApiConstants.userFavoriteListEndPoint,
+      queryParameters: {"data": "id"},
+      headers: {
+        'Authorization': 'Bearer $userAccessToken',
+      },
+    );
     return Set<String>.from((response['data'] as List<dynamic>)
-        .map((favoriteResponse) => favoriteResponse['id']));
+        .map((productId) => productId));
   }
 
   @override
@@ -238,7 +241,6 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
     int? minPrice,
     int? maxPrice,
   }) async {
-
     final Map<String, dynamic> response = await _apiConsumer.get(
       ApiConstants.productsEndPoint,
       queryParameters: {

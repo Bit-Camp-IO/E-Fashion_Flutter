@@ -180,7 +180,7 @@ import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details
     as _i95;
 import 'package:efashion_flutter/presentation/product/bloc/discover_cubit/discover_bloc.dart'
     as _i96;
-import 'package:efashion_flutter/presentation/product/bloc/favorite_cubit/favorite_cubit.dart'
+import 'package:efashion_flutter/presentation/shared/bloc/favorite_cubit/favorite_cubit.dart'
     as _i97;
 import 'package:efashion_flutter/presentation/product/bloc/home_bloc/home_bloc.dart'
     as _i86;
@@ -426,8 +426,7 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i89.SearchBloc(gh<_i49.SearchForProductsUseCase>()));
     gh.factory<_i90.SignupCubit>(() => _i90.SignupCubit(
           gh<_i59.UserSignUpUseCase>(),
-          gh<_i34.GetUserAccessTokenUseCase>(),
-          gh<_i51.SubscribeToNotificationsUseCase>(),
+          gh<_i88.NotificationsCubit>(),
         ));
     gh.factory<_i91.ThemeCubit>(() => _i91.ThemeCubit(
           gh<_i71.GetAppThemeUseCase>(),

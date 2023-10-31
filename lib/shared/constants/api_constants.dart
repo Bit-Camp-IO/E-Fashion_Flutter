@@ -1,6 +1,5 @@
 final class ApiConstants {
   //! Core
-  // static const String baseUrl = 'https://e-fashionbackend-production.up.railway.app/api';
   static const String baseUrl = 'http://192.168.1.20:8080/api';
   static const String mapsBaseUrl = 'https://maps.googleapis.com/maps/api';
   static const String mainConsumerName = 'mainApiConsumer';

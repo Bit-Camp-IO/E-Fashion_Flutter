@@ -11,6 +11,7 @@ import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 part 'chat_support_state.dart';
 
 @injectable
@@ -23,7 +24,6 @@ class ChatSupportCubit extends Cubit<ChatSupportState> {
   final CloseSocketConnectionUseCase _closeSocketConnectionUseCase;
   late String userAccessToken;
   late StreamSubscription<ChatMessage> streamSubscription;
-  bool activateSocketStream = true;
 
   ChatSupportCubit(
     this._getUserAccessTokenUseCase,
@@ -35,6 +35,7 @@ class ChatSupportCubit extends Cubit<ChatSupportState> {
   ) : super(const ChatSupportState());
 
   Future<void> createOrJoinChatEvent() async {
+    emit(state.copyWith(chatState: CubitState.loading));
     final getAccessToken = await _getUserAccessTokenUseCase();
     userAccessToken = getAccessToken.getOrElse(() => '');
     final response =
@@ -45,17 +46,15 @@ class ChatSupportCubit extends Cubit<ChatSupportState> {
           chatState: CubitState.failure,
         ),
       ),
-      (chatId) async{
+      (chatId) async {
         emit(
           state.copyWith(
             chatId: chatId,
             chatState: CubitState.success,
           ),
         );
-        if (activateSocketStream) {
-          _startChatStreamSubscription();
-          await _getChatMessages();
-        }
+        _startChatStreamSubscription();
+        await _getChatMessages();
       },
     );
   }
@@ -93,8 +92,8 @@ class ChatSupportCubit extends Cubit<ChatSupportState> {
       response.fold(
         (failure) => emit(
           state.copyWith(
-            sendMessageState: CubitState.failure,
-          ),
+              sendMessageState: CubitState.failure,
+              chatFailMessage: failure.message),
         ),
         (sentMessage) => emit(
           state.copyWith(
@@ -103,10 +102,6 @@ class ChatSupportCubit extends Cubit<ChatSupportState> {
           ),
         ),
       );
-    } else {
-      activateSocketStream = false;
-      await createOrJoinChatEvent();
-      await sendMessage(message: message);
     }
   }
 
@@ -124,7 +119,7 @@ class ChatSupportCubit extends Cubit<ChatSupportState> {
 
   @override
   Future<void> close() async {
-    if(activateSocketStream){
+    if (state.chatState == CubitState.success) {
       streamSubscription.cancel();
       await _closeSocketConnectionUseCase();
     }

@@ -15,9 +15,9 @@ import 'package:efashion_flutter/presentation/auth/screens/login_screen.dart';
 import 'package:efashion_flutter/presentation/auth/screens/reset_password_screen.dart';
 import 'package:efashion_flutter/presentation/auth/screens/sign_up_screen.dart';
 import 'package:efashion_flutter/presentation/auth/screens/welcome_screen.dart';
-import 'package:efashion_flutter/presentation/product/bloc/collections_cubit/collections_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
-import 'package:efashion_flutter/presentation/product/screens/cart_screen.dart';
+import 'package:efashion_flutter/presentation/cart/screens/cart_screen.dart';
+import 'package:efashion_flutter/presentation/cart/screens/payment_success_screen.dart';
 import 'package:efashion_flutter/presentation/product/screens/collection_details_screen.dart';
 import 'package:efashion_flutter/presentation/product/screens/favorite_screen.dart';
 import 'package:efashion_flutter/presentation/product/screens/add_or_edit_review_screen.dart';
@@ -26,7 +26,7 @@ import 'package:efashion_flutter/presentation/product/screens/home_screen.dart';
 import 'package:efashion_flutter/presentation/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:efashion_flutter/presentation/product/screens/product_details_screen.dart';
 import 'package:efashion_flutter/presentation/product/screens/discover_products_screen.dart';
-import 'package:efashion_flutter/presentation/product/screens/notifications_screen.dart';
+import 'package:efashion_flutter/presentation/notifications/screens/notifications_screen.dart';
 import 'package:efashion_flutter/presentation/product/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -99,10 +99,8 @@ class AppRouter extends _$AppRouter {
                   transitionsBuilder: TransitionsBuilders.fadeIn,
                   durationInMilliseconds: 300,
                 ),
-                CustomRoute(
+                AutoRoute(
                   page: CollectionDetailsRoute.page,
-                  transitionsBuilder: TransitionsBuilders.fadeIn,
-                  durationInMilliseconds: 300,
                 ),
                 CustomRoute(
                   page: DiscoverProductsRoute.page,
@@ -142,12 +140,18 @@ class AppRouter extends _$AppRouter {
               ],
             ),
             AutoRoute(
-              page: CartRoute.page,
+              page: CartTabRoute.page,
               children: [
                 CustomRoute(
                   page: CartRoute.page,
                   initial: true,
                   transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
+                ),
+                CustomRoute(
+                  page: PaymentSuccessRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
                 ),
               ],
             ),
@@ -254,17 +258,8 @@ class ForgetPassword extends AutoRouter implements AutoRouteWrapper {
 }
 
 @RoutePage(name: 'HomeTabRoute')
-class HomeTab extends AutoRouter implements AutoRouteWrapper {
+class HomeTab extends AutoRouter{
   const HomeTab({super.key});
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<CollectionsCubit>()..getCollectionsListUseCase(),
-      lazy: false,
-      child: this,
-    );
-  }
 }
 
 @RoutePage(name: 'CartTabRoute')

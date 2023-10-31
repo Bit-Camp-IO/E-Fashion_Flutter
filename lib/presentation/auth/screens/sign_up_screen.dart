@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/presentation/shared/widgets/snack_bar.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:efashion_flutter/presentation/auth/components/sign_up/privacy_and_policy.dart';
@@ -34,7 +34,7 @@ class SignupScreen extends StatefulWidget implements AutoRouteWrapper {
 class _SignupScreenState extends State<SignupScreen> {
   late GlobalKey<FormState> _formKey;
   late TextEditingController _passwordController;
-  late TextEditingController _confirmPasswordController;
+  late TextEditingController _phoneNumberController;
   late String _fullName;
   late String _email;
   late String _password;
@@ -47,7 +47,7 @@ class _SignupScreenState extends State<SignupScreen> {
   void initState() {
     _formKey = GlobalKey<FormState>();
     _passwordController = TextEditingController();
-    _confirmPasswordController = TextEditingController();
+    _phoneNumberController = TextEditingController();
     super.initState();
   }
 
@@ -63,7 +63,7 @@ class _SignupScreenState extends State<SignupScreen> {
             _isLoading = false;
           } else if (state is SignupFailState) {
             ScaffoldMessenger.of(context).showSnackBar(
-              customSnackBar(
+              CustomSnackBar.show(
                 customSnackBarType: CustomSnackBarType.error,
                 message: state.failMessage,
                 context: context,
@@ -122,6 +122,19 @@ class _SignupScreenState extends State<SignupScreen> {
                       validator: ValidationManager.emailValidator(),
                     ),
                     CustomTextFormField(
+                        controller: _phoneNumberController,
+                        label: StringsManager.phoneNumber,
+                        prefixIcon: Iconsax.call,
+                        keyboardType: TextInputType.phone,
+                        hintText: StringsManager.phoneNumber,
+                        onSaved: (value) {
+                          if (value != null) {
+                            _confirmPassword = value;
+                          }
+                        },
+                        validator: ValidationManager.phoneNumberValidator(phoneController: _phoneNumberController)
+                    ),
+                    CustomTextFormField(
                       controller: _passwordController,
                       label: StringsManager.password,
                       obscureText: true,
@@ -135,24 +148,6 @@ class _SignupScreenState extends State<SignupScreen> {
                       },
                       validator: ValidationManager.passwordValidator(
                         passwordController: _passwordController,
-                        confirmPasswordController: _confirmPasswordController,
-                      ),
-                    ),
-                    CustomTextFormField(
-                      controller: _confirmPasswordController,
-                      label: StringsManager.confirmPassword,
-                      obscureText: true,
-                      prefixIcon: Iconsax.lock,
-                      keyboardType: TextInputType.visiblePassword,
-                      hintText: StringsManager.confirmPassword,
-                      onSaved: (value) {
-                        if (value != null) {
-                          _confirmPassword = value;
-                        }
-                      },
-                      validator: ValidationManager.confirmPasswordValidator(
-                        passwordController: _passwordController,
-                        confirmPasswordController: _confirmPasswordController,
                       ),
                     ),
                     ValueListenableBuilder(
@@ -181,7 +176,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     fullName: _fullName,
                                     email: _email,
                                     password: _password,
-                                    confirmPassword: _confirmPassword,
+                                    phoneNumber: _confirmPassword,
                                   );
                             } else {
                               debugPrint(isChecked.toString());
@@ -235,7 +230,7 @@ class _SignupScreenState extends State<SignupScreen> {
   void dispose() {
     _formKey.currentState?.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
+    _phoneNumberController.dispose();
     checkBoxError.dispose();
     super.dispose();
   }

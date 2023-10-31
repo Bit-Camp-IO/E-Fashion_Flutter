@@ -6,9 +6,7 @@ abstract class SearchEvent extends Equatable {
 
 class SearchForProductsEvent extends SearchEvent {
   final String searchQuery;
-
   const SearchForProductsEvent({required this.searchQuery});
-
   @override
   List<Object?> get props => [searchQuery];
 }
@@ -34,7 +32,6 @@ class FilterSearchProductsEvent extends SearchEvent {
 
 class LoadMoreSearchProductEvent extends SearchEvent {
   const LoadMoreSearchProductEvent();
-
   @override
   List<Object?> get props => [];
 }

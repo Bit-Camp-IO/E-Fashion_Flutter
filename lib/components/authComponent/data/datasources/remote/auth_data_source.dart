@@ -14,7 +14,7 @@ abstract class AuthRemoteDataSource {
     required String fullName,
     required String email,
     required String password,
-    required String confirmPassword,
+    required String phoneNumber,
   });
 
   Future<String> updateAccessToken({required String refreshToken});
@@ -63,7 +63,7 @@ class AuthDataSourceImpl extends AuthRemoteDataSource {
     required String fullName,
     required String email,
     required String password,
-    required String confirmPassword,
+    required String phoneNumber,
   }) async {
     final response = await _apiConsumer.post(
       ApiConstants.authSignUpEndPoint,
@@ -71,7 +71,8 @@ class AuthDataSourceImpl extends AuthRemoteDataSource {
         "fullName": fullName,
         "email": email,
         "password": password,
-        "confirmPassword": confirmPassword,
+        "confirmPassword": password,
+        "phone": phoneNumber,
       },
     );
     if (response['status'] == 'success') {

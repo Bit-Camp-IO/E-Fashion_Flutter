@@ -3,7 +3,6 @@ import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart
 import 'package:efashion_flutter/presentation/shared/widgets/product_color.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/product_pieces_counter.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/product_size.dart';
-import 'package:efashion_flutter/presentation/shared/widgets/snack_bar.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
@@ -194,11 +193,6 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
               listener: (context, state) {
                 if(state.cartState == CubitState.loading){
                   isBagButtonLoading = true;
-                }else if (state.cartState == CubitState.success){
-                  isBagButtonLoading = false;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    customSnackBar(customSnackBarType: CustomSnackBarType.success, message: state.cartMessage, context: context),
-                  );
                 }else{
                   isBagButtonLoading = false;
                 }

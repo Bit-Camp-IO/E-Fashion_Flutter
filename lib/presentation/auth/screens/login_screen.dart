@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:efashion_flutter/presentation/shared/widgets/snack_bar.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:efashion_flutter/presentation/auth/cubits/login/login_cubit.dart';
@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
             _isLoading = false;
           } else if(state is LoginFailState){
             ScaffoldMessenger.of(context).showSnackBar(
-              customSnackBar(
+              CustomSnackBar.show(
                 customSnackBarType: CustomSnackBarType.error,
                 message: state.failMessage,
                 context: context,

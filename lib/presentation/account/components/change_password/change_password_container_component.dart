@@ -4,7 +4,7 @@ import 'package:efashion_flutter/presentation/shared/widgets/container_button.da
 import 'package:efashion_flutter/presentation/shared/widgets/custom_text_form_field.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/secondary_button.dart';
 import 'package:efashion_flutter/presentation/account/components/shared/account_clipped_container.dart';
-import 'package:efashion_flutter/presentation/shared/widgets/snack_bar.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/shared/util/validation_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,23 +41,29 @@ class _ChangePasswordContainerComponentState
   Widget build(BuildContext context) {
     return BlocListener<ChangePasswordCubit, ChangePasswordState>(
       listener: (context, state) {
-        if (state is ChangePasswordSuccessState) {
+        if(state is ChangePasswordLoadingState){
+          isLoading = true;
+        }else if (state is ChangePasswordSuccessState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            customSnackBar(
+            CustomSnackBar.show(
               customSnackBarType: CustomSnackBarType.success,
               message: state.message,
               context: context,
             ),
           );
+          isLoading = false;
           context.popRoute();
         } else if (state is ChangePasswordFailureState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            customSnackBar(
+            CustomSnackBar.show(
               customSnackBarType: CustomSnackBarType.error,
               message: state.message,
               context: context,
             ),
           );
+          isLoading = false;
+        }else{
+          isLoading = false;
         }
       },
       child: Form(
@@ -101,7 +107,6 @@ class _ChangePasswordContainerComponentState
                   onSaved: (value) {
                     if (value != null) {
                       currentPassword = value;
-                      debugPrint(currentPassword);
                     }
                   },
                 ),
@@ -114,10 +119,9 @@ class _ChangePasswordContainerComponentState
                   onSaved: (value) {
                     if (value != null) {
                       newPassword = value;
-                      debugPrint(newPassword);
                     }
                   },
-                  validator: ValidationManager.passwordValidator(
+                  validator: ValidationManager.changePasswordValidator(
                     passwordController: newPasswordController,
                     confirmPasswordController: confirmNewPasswordController,
                   ),
@@ -131,23 +135,15 @@ class _ChangePasswordContainerComponentState
                   onSaved: (value) {
                     if (value != null) {
                       confirmNewPassword = value;
-                      debugPrint(confirmNewPassword);
                     }
                   },
-                  validator: ValidationManager.confirmPasswordValidator(
+                  validator: ValidationManager.changePasswordValidator(
                     passwordController: newPasswordController,
                     confirmPasswordController: confirmNewPasswordController,
                   ),
                 ),
                 Center(
-                  child: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
-                    listener: (context, state) {
-                      if(state is ChangePasswordLoadingState){
-                        isLoading = true;
-                      }else{
-                        isLoading = false;
-                      }
-                    },
+                  child: BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
                     builder: (context, state) {
                       return SecondaryButton(
                         buttonTitle: 'Change Password',

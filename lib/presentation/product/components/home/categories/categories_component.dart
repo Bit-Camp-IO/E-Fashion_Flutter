@@ -89,8 +89,7 @@ class _CategoriesComponentState extends State<CategoriesComponent> {
                           final categories = selectedCategories.join(',');
                           context.read<HomeBloc>()
                             ..add(GetProductOffersEvent(categories: categories))
-                            ..add(
-                                GetBrandsProductsEvent(categories: categories));
+                            ..add(GetBrandsProductsEvent(categories: categories));
                         },
                       ),
                     ),

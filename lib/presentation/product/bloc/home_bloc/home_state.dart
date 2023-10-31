@@ -8,6 +8,7 @@ class HomeState extends Equatable {
   final BlocState offersState;
   final String offersFailureMessage;
   final List<Brand> brands;
+  final BlocState brandsState;
   final String brandsFailureMessage;
   final Map<String, List<Product>> brandsProducts;
   final BlocState brandsProductsState;
@@ -21,6 +22,7 @@ class HomeState extends Equatable {
     this.offersState = BlocState.initial,
     this.offersFailureMessage = '',
     this.brands = const [],
+    this.brandsState = BlocState.initial,
     this.brandsFailureMessage = '',
     this.brandsProducts = const {},
     this.brandsProductsState = BlocState.initial,
@@ -28,7 +30,8 @@ class HomeState extends Equatable {
   });
 
   @override
-  List<Object> get props => [
+  List<Object> get props =>
+      [
         categories,
         categoriesState,
         categoriesFailureMessage,
@@ -36,6 +39,7 @@ class HomeState extends Equatable {
         offersState,
         offersFailureMessage,
         brands,
+        brandsState,
         brandsFailureMessage,
         brandsProducts,
         brandsProductsState,
@@ -50,6 +54,7 @@ class HomeState extends Equatable {
     BlocState? offersState,
     String? offersFailureMessage,
     List<Brand>? brands,
+    BlocState? brandsState,
     String? brandsFailureMessage,
     Map<String, List<Product>>? brandsProducts,
     BlocState? brandsProductsState,
@@ -58,15 +63,18 @@ class HomeState extends Equatable {
     return HomeState(
       categories: categories ?? this.categories,
       categoriesState: categoriesState ?? this.categoriesState,
-      categoriesFailureMessage: categoriesFailureMessage ?? this.categoriesFailureMessage,
+      categoriesFailureMessage: categoriesFailureMessage ??
+          this.categoriesFailureMessage,
       productsOffers: productsOffers ?? this.productsOffers,
       offersState: offersState ?? this.offersState,
       offersFailureMessage: offersFailureMessage ?? this.offersFailureMessage,
       brands: brands ?? this.brands,
+      brandsState: brandsState ?? this.brandsState,
       brandsFailureMessage: brandsFailureMessage ?? this.brandsFailureMessage,
       brandsProducts: brandsProducts ?? this.brandsProducts,
       brandsProductsState: brandsProductsState ?? this.brandsProductsState,
-      brandsProductsFailureMessage: brandsProductsFailureMessage ?? this.brandsProductsFailureMessage,
+      brandsProductsFailureMessage: brandsProductsFailureMessage ??
+          this.brandsProductsFailureMessage,
     );
   }
 }

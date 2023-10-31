@@ -27,7 +27,7 @@ class CollectionsCubit extends Cubit<CollectionsState> {
     this._createPaymentIntentUseCase,
   ) : super(const CollectionsState());
 
-  Future<void> getCollectionsListUseCase() async {
+  Future<void> getCollectionsList() async {
     emit(state.copyWith(collectionsState: CubitState.loading));
     final response = await _getCollectionsListUseCase();
     response.fold(
@@ -46,7 +46,7 @@ class CollectionsCubit extends Cubit<CollectionsState> {
     );
   }
 
-  Future<void> getCollectionItemsListUseCase(
+  Future<void> getCollectionItemsList(
       {required String collectionId}) async {
     emit(state.copyWith(collectionItemsState: CubitState.loading));
     final response =

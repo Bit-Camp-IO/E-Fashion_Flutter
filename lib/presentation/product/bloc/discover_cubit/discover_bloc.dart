@@ -25,9 +25,9 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
     on<GetOffersProductsEvent>(getOffersProducts, transformer: droppable());
   }
 
-  Future<void> getBrandProducts(
-      GetBrandProductsEvent event, Emitter<DiscoverState> emit) async {
+  Future<void> getBrandProducts(GetBrandProductsEvent event, Emitter<DiscoverState> emit) async {
     if (!state.hasProductsListReachedMax) {
+      emit(state.copyWith(discoverState: BlocState.loading));
       final response = await _getBrandProductsUseCase(
         pageNumber: pageNumber,
         brandId: event.brandId,
@@ -60,6 +60,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
   Future<void> getOffersProducts(
       GetOffersProductsEvent event, Emitter<DiscoverState> emit) async {
     if (!state.hasProductsListReachedMax) {
+      emit(state.copyWith(discoverState: BlocState.loading));
       final response = await _getProductsOffersUseCase(
           categories: event.categories, pageNumber: pageNumber);
       response.fold(

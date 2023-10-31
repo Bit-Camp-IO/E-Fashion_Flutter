@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:efashion_flutter/shared/error/failure.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
-import 'package:efashion_flutter/components/productComponent/data/models/brand_model.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/brand.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/category.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/product.dart';
@@ -36,7 +35,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       _getCategoriesEvent,
       transformer: (events, mapper) => events
           .debounceTime(const Duration(milliseconds: 700))
-          .distinct()
           .switchMap(mapper),
     );
     on<GetProductOffersEvent>(_getProductOffersEvent);
@@ -45,6 +43,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _getCategoriesEvent(GetCategoriesEvent event, emit) async {
+    emit(state.copyWith(categoriesState: BlocState.loading));
     final Either<Failure, List<Category>> response =
         await _getCategoriesUseCase(genderId: event.genderId);
     response.fold(
@@ -60,6 +59,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _getProductOffersEvent(GetProductOffersEvent event, emit) async {
+    emit(state.copyWith(offersState: BlocState.loading));
     categories = event.categories;
     final Either<Failure, List<Product>> response =
         await _getProductsOffersUseCase(categories: event.categories);
@@ -76,44 +76,50 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _getBrandsEvent(GetBrandsEvent event, emit) async {
+    emit(state.copyWith(brandsState: BlocState.loading));
     final Either<Failure, List<Brand>> response = await _getBrandsUseCase();
     response.fold(
       (failure) => emit(
         state.copyWith(
           brandsFailureMessage: failure.message,
+          brandsState: BlocState.failure,
         ),
       ),
-      (brands) => emit(
-        state.copyWith(
-          brands: brands,
-        ),
-      ),
+      (brands) {
+        emit(
+          state.copyWith(
+            brands: brands,
+            brandsState: BlocState.success,
+          ),
+        );
+        add(const GetBrandsProductsEvent());
+      },
     );
   }
 
-  Future<void> _getBrandsProductsEvent(
-      GetBrandsProductsEvent event, emit) async {
-    categories = event.categories;
-    final Either<Failure, List<Brand>> brandsResponse =
-        await _getBrandsUseCase();
-    emit(
-        state.copyWith(brands: brandsResponse.getOrElse(() => <BrandModel>[])));
-    final Either<Failure, Map<String, List<Product>>> brandsProductsResponse =
-        await _getBrandsProductsUseCase(
-            brandsList: state.brands, categories: event.categories);
-    brandsProductsResponse.fold(
-      (failure) => emit(
-        state.copyWith(
-          brandsProductsFailureMessage: failure.message,
-          brandsProductsState: BlocState.failure,
-        ),
-      ),
-      (brandsProducts) => emit(
-        state.copyWith(
-          brandsProducts: brandsProducts,
-          brandsProductsState: BlocState.success,
-        ),
-      ),
-    );
+  Future<void> _getBrandsProductsEvent(GetBrandsProductsEvent event, emit) async {
+    if (state.brands.isNotEmpty) {
+      emit(state.copyWith(brandsProductsState: BlocState.loading));
+      categories = event.categories;
+      final Either<Failure, Map<String, List<Product>>> brandsProductsResponse =
+      await _getBrandsProductsUseCase(
+          brandsList: state.brands, categories: event.categories);
+      brandsProductsResponse.fold(
+            (failure) =>
+            emit(
+              state.copyWith(
+                brandsProductsFailureMessage: failure.message,
+                brandsProductsState: BlocState.failure,
+              ),
+            ),
+            (brandsProducts) =>
+            emit(
+              state.copyWith(
+                brandsProducts: brandsProducts,
+                brandsProductsState: BlocState.success,
+              ),
+            ),
+      );
+    }
   }
 }

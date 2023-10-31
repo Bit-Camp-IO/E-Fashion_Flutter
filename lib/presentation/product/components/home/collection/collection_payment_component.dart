@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:efashion_flutter/presentation/product/bloc/collections_cubit/collections_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/secondary_button.dart';
-import 'package:efashion_flutter/presentation/shared/widgets/snack_bar.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/shared/theme/theme_manager.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ class _CollectionPaymentComponentState extends State<CollectionPaymentComponent>
         ),
       );
       await Stripe.instance.presentPaymentSheet().then((value) {
-        ScaffoldMessenger.of(context).showSnackBar(customSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.show(
           customSnackBarType: CustomSnackBarType.success,
           message: 'Order Payment Success!',
           context: context,
@@ -42,7 +42,7 @@ class _CollectionPaymentComponentState extends State<CollectionPaymentComponent>
     } on StripeException catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          customSnackBar(
+          CustomSnackBar.show(
             customSnackBarType: CustomSnackBarType.error,
             message: e.error.message!,
             context: context,

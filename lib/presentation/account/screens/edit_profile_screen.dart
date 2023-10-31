@@ -24,10 +24,8 @@ class EditProfileScreen extends StatelessWidget {
                 previous.userData != current.userData,
             builder: (context, state) {
               return BlurredBackgroundImage(
-                isLocalImage:
-                    state.userData.profileImagePath != null ? false : true,
-                imagePath: state.userData.profileImagePath != null
-                    ? ApiConstants.getUserProfilePicture(
+                isLocalImage: state.userData.profileImagePath != null ? false : true,
+                imagePath: state.userData.profileImagePath != null ? ApiConstants.getUserProfilePicture(
                         path: state.userData.profileImagePath!,
                       )
                     : AssetsManager.welcomeImage,
@@ -45,17 +43,17 @@ class EditProfileScreen extends StatelessWidget {
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
                   child: Visibility(
-                    key: ValueKey<bool>(
-                        FocusScope.of(context).hasPrimaryFocus ||
-                            !FocusScope.of(context).hasFocus),
-                    visible: FocusScope.of(context).hasPrimaryFocus ||
-                        !FocusScope.of(context).hasFocus,
+                    key: ValueKey<bool>(FocusScope.of(context).hasPrimaryFocus || !FocusScope.of(context).hasFocus),
+                    visible: FocusScope.of(context).hasPrimaryFocus || !FocusScope.of(context).hasFocus,
                     child: state.userData.profileImagePath == null
                         ? EmptyProfilePictureEdit(
                             name: state.userData.fullName,
                             onTap: () {
                               context.read<ProfileCubit>().updateProfilePicture();
                             },
+                      onRefreshPress: () {
+                        context.read<ProfileCubit>().getUserData();
+                      },
                           )
                         : ProfilePictureEdit(
                             imageUrl: ApiConstants.getUserProfilePicture(path: state.userData.profileImagePath!),

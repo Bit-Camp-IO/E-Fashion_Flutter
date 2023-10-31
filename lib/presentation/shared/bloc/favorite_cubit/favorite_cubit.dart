@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:efashion_flutter/components/authComponent/domain/usecases/get_user_access_token_usecase.dart';
-
 import 'package:efashion_flutter/components/productComponent/domain/entities/product_details.dart';
 import 'package:efashion_flutter/components/productComponent/domain/usecases/favorite/add_product_to_favorite_list_usecase.dart';
 import 'package:efashion_flutter/components/productComponent/domain/usecases/favorite/get_favorite_products_usecase.dart';
@@ -10,7 +9,6 @@ import 'package:efashion_flutter/components/productComponent/domain/usecases/hom
 import 'package:efashion_flutter/shared/error/failure.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -37,13 +35,19 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   ) : super(const FavoriteState());
 
   Future<void> getUserFavoriteIdList() async {
+    emit(state.copyWith(favoriteListState: CubitState.loading));
     final getUserAccessToken = await _getAccessTokenUseCase();
     userAccessToken = getUserAccessToken.getOrElse(() => '');
     if (userAccessToken.isNotEmpty) {
       final response = await _getUserFavoriteProductsIdsUseCase(
-          userAccessToken: userAccessToken);
+        userAccessToken: userAccessToken,
+      );
       response.fold(
-        (failure) => debugPrint('>>>>>>>>> ${failure.message} <<<<<<<<<<<'),
+        (failure) => emit(
+          state.copyWith(
+            favoriteListState: CubitState.failure,
+          ),
+        ),
         (favoriteIds) {
           emit(
             state.copyWith(favoritesIds: favoriteIds),
@@ -63,8 +67,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         final response = await _removeProductFromFavoriteListUseCase(
             productId: productId, userAccessToken: userAccessToken);
         response.fold(
-          (failure) => debugPrint('>>>>>>>>> ${failure.message} <<<<<<<<<<<'),
-          (r) => _removeFavoriteFromSetAndList(productId: productId),
+          (failure) => emit(state.copyWith(addOrRemoveFromFavoriteFailMessage: failure.message)),
+          (removeMessage) => _removeFavoriteFromSetAndList(productId: productId),
         );
       } else {
         final response = await _addProductToFavoriteListUseCase(
@@ -72,7 +76,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
           userAccessToken: userAccessToken,
         );
         response.fold(
-            (failure) => debugPrint('>>>>>>>>> ${failure.message} <<<<<<<<<<<'),
+            (failure) => emit(state.copyWith(addOrRemoveFromFavoriteFailMessage: failure.message)),
             (favoriteIdsList) {
           emit(
             state.copyWith(favoritesIds: favoriteIdsList),
@@ -84,7 +88,6 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   Future<void> _getFavoriteProductsList() async {
-    emit(state.copyWith(favoriteListState: CubitState.loading));
     final Either<Failure, List<ProductDetails>> favoriteProducts =
         await _getFavoriteProductsUseCase(
       favoriteIds: state.favoritesIds,
@@ -93,13 +96,13 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       (failure) => emit(
         state.copyWith(
           favoriteListState: CubitState.failure,
-          favoriteListFailMessage:  failure.message,
+          favoriteListFailMessage: failure.message,
         ),
       ),
       (favoriteList) => emit(
         state.copyWith(
           favoriteList: favoriteList,
-          favoriteListState: CubitState.success
+          favoriteListState: CubitState.success,
         ),
       ),
     );
