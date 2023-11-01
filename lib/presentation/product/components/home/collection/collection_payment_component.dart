@@ -1,14 +1,14 @@
 import 'dart:ui';
-
+import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/presentation/product/bloc/collections_cubit/collections_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/secondary_button.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
-import 'package:efashion_flutter/shared/theme/theme_manager.dart';
+import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
+import 'package:efashion_flutter/shared/util/stripe_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 
 class CollectionPaymentComponent extends StatefulWidget {
   const CollectionPaymentComponent({super.key, required this.collectionPrice, required this.collectionId});
@@ -21,36 +21,6 @@ class CollectionPaymentComponent extends StatefulWidget {
 
 class _CollectionPaymentComponentState extends State<CollectionPaymentComponent> {
   bool isBuyButtonLoading = false;
-
-  Future<void> initPaymentSheet({required clientSecretKey}) async {
-    try {
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-          customFlow: false,
-          merchantDisplayName: 'eFashion Store',
-          paymentIntentClientSecret: clientSecretKey,
-          appearance: ThemeManager.stripeSheetTheme(context: context),
-        ),
-      );
-      await Stripe.instance.presentPaymentSheet().then((value) {
-        ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.show(
-          customSnackBarType: CustomSnackBarType.success,
-          message: 'Order Payment Success!',
-          context: context,
-        ));
-      });
-    } on StripeException catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          CustomSnackBar.show(
-            customSnackBarType: CustomSnackBarType.error,
-            message: e.error.message!,
-            context: context,
-          ),
-        );
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +64,23 @@ class _CollectionPaymentComponentState extends State<CollectionPaymentComponent>
                       isBuyButtonLoading = true;
                     } else if (state.paymentState == CubitState.success) {
                       isBuyButtonLoading = false;
-                      await initPaymentSheet(
+                      await StripeManager.initPaymentSheet(
                         clientSecretKey: state.paymentClientSecret,
+                        context: context,
+                        onFailure: (error) {
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              CustomSnackBar.show(
+                                customSnackBarType: CustomSnackBarType.error,
+                                message: error,
+                                context: context,
+                              ),
+                            );
+                          }
+                        },
+                        onSuccess: () {
+                          context.pushRoute(PaymentSuccessRoute(paymentType: PaymentType.collection, collectionPrice: widget.collectionPrice));
+                        },
                       );
                     } else {
                       isBuyButtonLoading = false;

@@ -50,7 +50,7 @@ class _GridViewComponentState extends State<GridViewComponent> {
           _scrollBackUp();
         }
       },
-      buildWhen: (previous, current) => previous.searchProducts != current.searchProducts,
+      buildWhen: (previous, current) => previous.searchState != current.searchState,
       builder: (context, state) {
         return GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

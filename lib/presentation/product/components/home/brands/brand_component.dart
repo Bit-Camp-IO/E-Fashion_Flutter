@@ -62,7 +62,7 @@ class _BrandComponentState extends State<BrandComponent> {
                       height: state.brands.isNotEmpty ? state.brandsProducts[state.brands[index].id]?.isNotEmpty ?? false == true ? 200.h : 0 : 200.h,
                       child: Builder(
                         builder: (context) {
-                          if(state.brandsProducts[state.brands[index].id]?.isNotEmpty ?? false == true) {
+                          if(state.brands.isNotEmpty ? state.brandsProducts[state.brands[index].id]?.isNotEmpty ?? false == true : true) {
                             return ListView.builder(
                               key: ValueKey(state.brands.isEmpty ? 1 : state.brands[index].id),
                               itemCount: state.brandsProductsState == BlocState.initial || state.brandsProductsState == BlocState.loading ? 3 :

@@ -47,7 +47,6 @@ class _MessagingComponentState extends State<MessagingComponent> {
                 color: Theme.of(context).colorScheme.surfaceVariant,
               ),
               child: TextFormField(
-                onTapOutside: (event) => FocusScope.of(context).unfocus(),
                 controller: _messageController,
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,

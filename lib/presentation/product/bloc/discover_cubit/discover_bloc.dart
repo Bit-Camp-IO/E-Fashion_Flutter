@@ -3,6 +3,7 @@ import 'package:efashion_flutter/components/productComponent/domain/usecases/hom
 import 'package:efashion_flutter/components/productComponent/domain/usecases/home/get_products_offers_usecase.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
@@ -81,6 +82,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
               hasProductsListReachedMax: false,
             ));
             pageNumber++;
+            debugPrint(pageNumber.toString());
           }
         },
       );

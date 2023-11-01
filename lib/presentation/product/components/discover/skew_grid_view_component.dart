@@ -59,7 +59,7 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DiscoverBloc, DiscoverState>(
-      buildWhen: (previous, current) => previous.products != current.products,
+      buildWhen: (previous, current) =>  previous.discoverState != current.discoverState,
       builder: (context, state) {
         return GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

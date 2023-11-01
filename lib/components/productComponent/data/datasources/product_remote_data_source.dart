@@ -10,7 +10,7 @@ abstract class ProductRemoteDataSource {
   Future<List<CategoryModel>> getCategories({required int genderId});
 
   Future<List<ProductModel>> getProductsOffers(
-      {String? categories, int pageNumber});
+      {String? categories, int? pageNumber});
 
   Future<List<BrandModel>> getBrands();
 

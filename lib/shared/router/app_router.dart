@@ -28,6 +28,7 @@ import 'package:efashion_flutter/presentation/product/screens/product_details_sc
 import 'package:efashion_flutter/presentation/product/screens/discover_products_screen.dart';
 import 'package:efashion_flutter/presentation/notifications/screens/notifications_screen.dart';
 import 'package:efashion_flutter/presentation/product/screens/search_screen.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -101,6 +102,11 @@ class AppRouter extends _$AppRouter {
                 ),
                 AutoRoute(
                   page: CollectionDetailsRoute.page,
+                ),
+                CustomRoute(
+                  page: PaymentSuccessRoute.page,
+                  transitionsBuilder: TransitionsBuilders.fadeIn,
+                  durationInMilliseconds: 300,
                 ),
                 CustomRoute(
                   page: DiscoverProductsRoute.page,

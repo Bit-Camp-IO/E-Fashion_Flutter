@@ -84,7 +84,7 @@ class _PaymentComponentState extends State<PaymentComponent> with AutoRouteAware
                       }
                     },
                     onSuccess: () {
-                      context.pushRoute(const PaymentSuccessRoute());
+                      context.pushRoute(PaymentSuccessRoute(paymentType: PaymentType.cart));
                     },
                   );
                 } else {

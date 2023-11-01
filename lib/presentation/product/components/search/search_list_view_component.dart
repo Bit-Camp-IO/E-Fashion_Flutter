@@ -52,7 +52,7 @@ void _onScroll() {
         }
       },
       buildWhen: (previous, current) =>
-          previous.searchProducts != current.searchProducts,
+          previous.searchState != current.searchState,
       builder: (context, state) {
         switch (state.searchState) {
           case BlocState.initial || BlocState.loading:

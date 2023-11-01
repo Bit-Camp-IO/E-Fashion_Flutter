@@ -148,10 +148,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                       controller: scrollController,
                                       child: Builder(
                                         builder: (context) {
-                                          if (state.productDetailsState ==
-                                                  CubitState.initial ||
-                                              state.productDetailsState ==
-                                                  CubitState.loading) {
+                                          if (state.productDetailsState == CubitState.initial || state.productDetailsState == CubitState.loading) {
                                             return const DetailsBodyShimmerLoading();
                                           } else {
                                             return CustomFadeAnimation(
@@ -160,34 +157,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                               child: Column(
                                                 children: [
                                                   ProductCartComponent(
-                                                    productName: state
-                                                        .productDetails.title,
-                                                    productColors: state
-                                                        .productDetails.colors,
-                                                    productSizes: state
-                                                        .productDetails.sizes,
-                                                    productDescription: state
-                                                        .productDetails
-                                                        .description,
-                                                    productStock: state
-                                                        .productDetails.stock,
-                                                    productPrice: state
-                                                        .productDetails.price
-                                                        .toInt(),
+                                                    productName: state.productDetails.title,
+                                                    productColors: state.productDetails.colors,
+                                                    productSizes: state.productDetails.sizes,
+                                                    productDescription: state.productDetails.description,
+                                                    productStock: state.productDetails.stock,
+                                                    productPrice: state.productDetails.price.toInt(),
                                                     cartQuantity: (quantity) {
-                                                      cartCubit
-                                                          .updateSelectedQuantity(
-                                                              quantity);
+                                                      cartCubit.updateSelectedQuantity(quantity);
                                                     },
                                                     selectedColor: (color) {
-                                                      cartCubit
-                                                          .updateSelectedColor(
-                                                              color);
+                                                      cartCubit.updateSelectedColor(color);
                                                     },
                                                     selectedSize: (size) {
-                                                      cartCubit
-                                                          .updateSelectedSize(
-                                                              size);
+                                                      cartCubit.updateSelectedSize(size);
                                                     },
                                                     onAddToBagTap: () {
                                                       context
@@ -205,7 +188,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                                   RatingAndReviewsComponent(
                                                     productId: widget.productId,
                                                   ),
-                                                  SizedBox(height: 40.h),
+                                                  SizedBox(height: 120.h),
                                                 ],
                                               ),
                                             );

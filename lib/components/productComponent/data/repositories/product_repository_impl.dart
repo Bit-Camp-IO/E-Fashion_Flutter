@@ -33,11 +33,10 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductModel>>> getProductsOffers(
-      {String? categories, int? pageNumber}) async {
+  Future<Either<Failure, List<ProductModel>>> getProductsOffers({String? categories, int? pageNumber}) async {
     try {
       final List<ProductModel> productList = await _productRemoteDataSource
-          .getProductsOffers(categories: categories);
+          .getProductsOffers(categories: categories, pageNumber: pageNumber);
       return right(productList);
     } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));

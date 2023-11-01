@@ -62,7 +62,7 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DiscoverBloc, DiscoverState>(
-      buildWhen: (previous, current) => previous.products != current.products,
+      buildWhen: (previous, current) => previous.discoverState != current.discoverState,
       builder: (context, state) {
         return ListView.builder(
           itemCount: state.products.isEmpty ? 4 : state.products.length + 1,
@@ -203,7 +203,6 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
                     padding: EdgeInsets.only(bottom: 8.0),
                     child: TopListViewCardShimmerLoading(),
                   );
-
                 } else {
                   return Padding(
                       padding: const EdgeInsets.only(bottom: 8.0).r,

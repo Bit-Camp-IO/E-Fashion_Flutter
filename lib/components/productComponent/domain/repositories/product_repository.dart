@@ -10,7 +10,7 @@ import 'package:efashion_flutter/components/productComponent/domain/entities/pro
 abstract class ProductRepository{
   const ProductRepository();
   Future<Either<Failure, List<Category>>> getCategories({required int genderId});
-  Future<Either<Failure, List<Product>>> getProductsOffers({String? categories, int pageNumber});
+  Future<Either<Failure, List<Product>>> getProductsOffers({String? categories, int? pageNumber});
   Future<Either<Failure, List<Brand>>> getBrands();
   Future<Either<Failure, Map<String, List<Product>>>> getAllBrandsProducts({required List<Brand> brandsList, String? categories});
   Future<Either<Failure, ProductDetails>> getProductDetails({required String productId});

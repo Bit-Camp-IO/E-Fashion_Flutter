@@ -180,14 +180,14 @@ import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details
     as _i95;
 import 'package:efashion_flutter/presentation/product/bloc/discover_cubit/discover_bloc.dart'
     as _i96;
-import 'package:efashion_flutter/presentation/shared/bloc/favorite_cubit/favorite_cubit.dart'
-    as _i97;
 import 'package:efashion_flutter/presentation/product/bloc/home_bloc/home_bloc.dart'
     as _i86;
 import 'package:efashion_flutter/presentation/product/bloc/search_bloc/search_bloc.dart'
     as _i89;
 import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart'
     as _i64;
+import 'package:efashion_flutter/presentation/shared/bloc/favorite_cubit/favorite_cubit.dart'
+    as _i97;
 import 'package:efashion_flutter/presentation/shared/bloc/notifications_cubit/notifications_cubit.dart'
     as _i88;
 import 'package:efashion_flutter/presentation/shared/bloc/theme_cubit/theme_cubit.dart'

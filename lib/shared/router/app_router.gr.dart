@@ -189,9 +189,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     PaymentSuccessRoute.name: (routeData) {
+      final args = routeData.argsAs<PaymentSuccessRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const PaymentSuccessScreen(),
+        child: PaymentSuccessScreen(
+          key: args.key,
+          paymentType: args.paymentType,
+          collectionPrice: args.collectionPrice,
+        ),
       );
     },
     ProductDetailsRoute.name: (routeData) {
@@ -715,16 +720,45 @@ class OtpVerificationRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [PaymentSuccessScreen]
-class PaymentSuccessRoute extends PageRouteInfo<void> {
-  const PaymentSuccessRoute({List<PageRouteInfo>? children})
-      : super(
+class PaymentSuccessRoute extends PageRouteInfo<PaymentSuccessRouteArgs> {
+  PaymentSuccessRoute({
+    Key? key,
+    required PaymentType paymentType,
+    int? collectionPrice,
+    List<PageRouteInfo>? children,
+  }) : super(
           PaymentSuccessRoute.name,
+          args: PaymentSuccessRouteArgs(
+            key: key,
+            paymentType: paymentType,
+            collectionPrice: collectionPrice,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'PaymentSuccessRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<PaymentSuccessRouteArgs> page =
+      PageInfo<PaymentSuccessRouteArgs>(name);
+}
+
+class PaymentSuccessRouteArgs {
+  const PaymentSuccessRouteArgs({
+    this.key,
+    required this.paymentType,
+    this.collectionPrice,
+  });
+
+  final Key? key;
+
+  final PaymentType paymentType;
+
+  final int? collectionPrice;
+
+  @override
+  String toString() {
+    return 'PaymentSuccessRouteArgs{key: $key, paymentType: $paymentType, collectionPrice: $collectionPrice}';
+  }
 }
 
 /// generated route for

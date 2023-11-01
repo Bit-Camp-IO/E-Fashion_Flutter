@@ -9,7 +9,7 @@ class GetProductsOffersUseCase{
   final ProductRepository _productRepository;
   const GetProductsOffersUseCase(this._productRepository);
 
-  Future<Either<Failure, List<Product>>> call({String? categories, int pageNumber = 1}) async{
+  Future<Either<Failure, List<Product>>> call({String? categories, int? pageNumber}) async{
     return await _productRepository.getProductsOffers(categories: categories, pageNumber: pageNumber);
   }
 }

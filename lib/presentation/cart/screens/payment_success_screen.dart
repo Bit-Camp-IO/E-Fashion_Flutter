@@ -5,6 +5,7 @@ import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.
 import 'package:efashion_flutter/presentation/shared/widgets/secondary_button.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/size_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,9 @@ import 'package:intl/intl.dart';
 
 @RoutePage()
 class PaymentSuccessScreen extends StatelessWidget {
-  const PaymentSuccessScreen({super.key});
+  final PaymentType paymentType;
+  final int? collectionPrice;
+  const PaymentSuccessScreen({super.key, required this.paymentType, this.collectionPrice});
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +133,7 @@ class PaymentSuccessScreen extends StatelessWidget {
                                     .copyWith(color: Colors.black),
                               ),
                               Text(
-                                '\$${context.read<CartCubit>().state.cart.total} ',
+                                '\$${ paymentType == PaymentType.collection ? collectionPrice : context.read<CartCubit>().state.cart.total} ',
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium!
@@ -145,7 +148,7 @@ class PaymentSuccessScreen extends StatelessWidget {
                           height: 42.h,
                           buttonTitle: 'Go Back',
                           onTap: () {
-                            context.popRoute();
+                            context.router.popUntilRoot();
                           },
                         ),
                         const Spacer(),
