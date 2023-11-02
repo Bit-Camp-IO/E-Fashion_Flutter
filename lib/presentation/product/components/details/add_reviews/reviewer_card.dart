@@ -1,16 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/no_profile_picture.dart';
 import 'package:efashion_flutter/shared/constants/app_constants.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReviewerCard extends StatelessWidget {
-  const ReviewerCard(
-      {super.key, required this.reviewerImage, required this.reviewerName});
-
   final String? reviewerImage;
   final String reviewerName;
+  const ReviewerCard({super.key, required this.reviewerImage, required this.reviewerName});
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class ReviewerCard extends StatelessWidget {
             SizedBox(
               width: 216.w,
               child: Text(
-                'Reviews are public and include your account and device info.',
+                StringsManager.reviewCardNotice,
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.visible,
                 maxLines: null,

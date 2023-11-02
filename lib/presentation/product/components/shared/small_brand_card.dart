@@ -2,11 +2,21 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/cart_icon_button.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/favorite_icon_button.dart';
 import 'package:efashion_flutter/shared/constants/app_constants.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SmallProductCard extends StatelessWidget {
+  final String productName;
+  final String productImage;
+  final int productPrice;
+  final void Function() onTap;
+  final void Function() onFavoriteTap;
+  final void Function()? onCartTap;
+  final bool isCartActive;
+  final bool isFavorite;
+
   const SmallProductCard({
     super.key,
     required this.productName,
@@ -18,16 +28,6 @@ class SmallProductCard extends StatelessWidget {
     this.onCartTap,
     required this.isFavorite,
   });
-
-  final String productName;
-  final String productImage;
-  final int productPrice;
-  final void Function() onTap;
-  final void Function() onFavoriteTap;
-  final void Function()? onCartTap;
-  final bool isCartActive;
-  final bool isFavorite;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -80,22 +80,15 @@ class SmallProductCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                             productName.length > 13 ? '${productName.substring(0, 13)}..'
-                                  : productName,
+                             productName.length > 13 ? '${productName.substring(0, 13)}..' : productName,
                               overflow: TextOverflow.ellipsis,
                               softWrap: true,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(color: Colors.white),
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
                             ),
                             SizedBox(height: 5.h),
                             Text(
-                              '\$$productPrice',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(color: Colors.white),
+                              '${StringsManager.currencySign}$productPrice',
+                              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.white),
                             ),
                           ],
                         ),

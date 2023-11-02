@@ -7,11 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ProfilePictureEdit extends StatelessWidget {
-  const ProfilePictureEdit(
-      {super.key, required this.imageUrl, required this.onTap});
-
   final String imageUrl;
   final void Function() onTap;
+  const ProfilePictureEdit({super.key, required this.imageUrl, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

@@ -2,11 +2,21 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/cart_icon_button.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/favorite_icon_button.dart';
 import 'package:efashion_flutter/shared/constants/app_constants.dart';
+import 'package:efashion_flutter/shared/util/colors_manager.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OffersCard extends StatelessWidget {
+  final String productImage;
+  final String productName;
+  final int oldPrice;
+  final int newPrice;
+  final void Function() onFavorite;
+  final void Function() onAddToCart;
+  final void Function() onOfferTap;
+  final bool isFavorite;
   const OffersCard({
     super.key,
     required this.productImage,
@@ -18,16 +28,6 @@ class OffersCard extends StatelessWidget {
     required this.onOfferTap,
     required this.isFavorite,
   });
-
-  final String productImage;
-  final String productName;
-  final int oldPrice;
-  final int newPrice;
-  final void Function() onFavorite;
-  final void Function() onAddToCart;
-  final void Function() onOfferTap;
-  final bool isFavorite;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -83,8 +83,7 @@ class OffersCard extends StatelessWidget {
                         children: [
                           Text(
                             productName,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                                       color: Colors.white,
                                     ),
                           ),
@@ -92,24 +91,19 @@ class OffersCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                '\$$oldPrice',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
+                                '${StringsManager.currencySign}$oldPrice',
+                                style: Theme.of(context).textTheme.bodyMedium!
                                     .copyWith(
-                                      color: const Color(0xFF99CBFF),
+                                      color: ColorsManager.offerColor,
                                       decoration: TextDecoration.lineThrough,
-                                      decorationColor: const Color(0xFF99CBFF),
+                                      decorationColor: ColorsManager.offerColor,
                                       decorationThickness: 2.0,
                                     ),
                               ),
                               SizedBox(width: 4.w),
                               Text(
-                                '\$$newPrice',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
+                                '${StringsManager.currencySign}$newPrice',
+                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                                       color: Colors.white,
                                     ),
                               ),

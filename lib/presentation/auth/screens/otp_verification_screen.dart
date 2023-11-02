@@ -60,7 +60,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                           color: Theme.of(context).colorScheme.primary,
                         ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Text(
                     textAlign: TextAlign.center,
                     StringsManager.emailVerifySubTitle,
@@ -75,21 +75,16 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     builder: (context, state) {
                       return Pinput(
                         length: 6,
-                        onTapOutside: (event) =>
-                            FocusScope.of(context).unfocus(),
+                        onTapOutside: (event) => FocusScope.of(context).unfocus(),
                         forceErrorState: _otpError,
                         onCompleted: (value) async {
                           otpCode = value;
-                          await context
-                              .read<ForgetPasswordCubit>()
-                              .verifyOtp(otpCode: otpCode);
+                          await context.read<ForgetPasswordCubit>().verifyOtp(otpCode: otpCode);
                         },
                         defaultPinTheme: PinTheme(
                           width: 40.w,
                           height: 40.w,
-                          textStyle: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
+                          textStyle: Theme.of(context).textTheme.bodyLarge!
                               .copyWith(
                                 color: Theme.of(context).colorScheme.outline,
                               ),
@@ -106,9 +101,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         errorPinTheme: PinTheme(
                           width: 40.w,
                           height: 40.w,
-                          textStyle: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
+                          textStyle: Theme.of(context).textTheme.bodyLarge!
                               .copyWith(
                                 color: Theme.of(context).colorScheme.outline,
                               ),
@@ -130,10 +123,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   ),
                   OtpTimer(
                     onResendPress: () {
-                      final forgetPasswordCubit =
-                          context.read<ForgetPasswordCubit>();
-                      forgetPasswordCubit.forgetPassword(
-                          email: forgetPasswordCubit.email);
+                      final forgetPasswordCubit = context.read<ForgetPasswordCubit>();
+                      forgetPasswordCubit.forgetPassword(email: forgetPasswordCubit.email);
                     },
                   ),
                   SizedBox(

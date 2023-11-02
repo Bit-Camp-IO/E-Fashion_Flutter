@@ -1,10 +1,13 @@
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
+import 'package:efashion_flutter/shared/util/validation_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReviewTextField extends StatelessWidget {
-  const ReviewTextField({super.key, required this.onSaved, required this.reviewController});
   final void Function(String? value) onSaved;
   final TextEditingController reviewController;
+  const ReviewTextField({super.key, required this.onSaved, required this.reviewController});
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -18,15 +21,9 @@ class ReviewTextField extends StatelessWidget {
       style: Theme.of(context).textTheme.bodySmall!.copyWith(
         color: Theme.of(context).colorScheme.onSurface,
       ),
-      validator: (value) {
-        if(value!.length < 50){
-          return "The review must be at least 50 Characters.";
-        }else{
-          return null;
-        }
-      },
+      validator: ValidationManager.reviewValidator(),
       decoration: InputDecoration(
-        hintText: 'Describe your opinion',
+        hintText: StringsManager.describeYourOpinion,
         hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
           color: Theme.of(context).colorScheme.outline,
         ),

@@ -1,3 +1,4 @@
+import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,12 +20,12 @@ class IconSwitcher extends StatelessWidget {
     required this.activeIcon,
     required this.disabledIcon,
     required this.isSwitcherActive,
-    this.activeIconColor = const Color(0xFF1A1C1E),
-    this.activeTrackColor = const Color(0xFFFFFFFF),
-    this.activeThumbColor = const Color(0xFF1A1C1E),
-    this.disabledIconColor = const Color(0xFFFFFFFF),
-    this.disabledTrackColor = const Color(0xFF1A1C1E),
-    this.disabledThumbColor = const Color(0xFFFFFFFF),
+    this.activeIconColor = ColorsManager.switcherActiveIconColor,
+    this.activeTrackColor = ColorsManager.switcherActiveTrackColor,
+    this.activeThumbColor = ColorsManager.switcherActiveThumbColor,
+    this.disabledIconColor = ColorsManager.switcherDisabledIconColor,
+    this.disabledTrackColor = ColorsManager.switcherDisabledTrackColor,
+    this.disabledThumbColor = ColorsManager.switcherDisabledThumbColor,
   });
 
   @override

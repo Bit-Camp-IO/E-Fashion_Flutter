@@ -7,6 +7,7 @@ import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart'
 import 'package:efashion_flutter/presentation/account/components/order_status/order_status_card.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/no_internet_connection_widget.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,7 +37,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
         child: Column(
           children: [
             const CustomAppBar(
-              appBarTitle: 'Orders List',
+              appBarTitle: StringsManager.orderScreenTitle,
               appBarType: AppBarType.normal,
             ),
             Expanded(

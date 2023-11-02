@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -22,7 +23,7 @@ class NotificationsPermissionsDialog extends StatelessWidget {
             ),
             SizedBox(height: 20.h),
             Text(
-              'You have to re-enable Notifications\n permissions from settings',
+              StringsManager.notificationPermissionDialog,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelMedium,
             ),
@@ -44,7 +45,7 @@ class NotificationsPermissionsDialog extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'Open Settings',
+                    StringsManager.notificationOpenSettingButton,
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
                           color: Colors.white,
                         ),
@@ -69,7 +70,7 @@ class NotificationsPermissionsDialog extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'Close',
+                    StringsManager.notificationDialogCloseButton,
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
                           color: Colors.white,
                         ),

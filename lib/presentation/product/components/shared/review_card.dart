@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/no_profile_picture.dart';
 import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -9,6 +10,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class ReviewCard extends StatelessWidget {
+  final String? reviewerImage;
+  final String reviewerName;
+  final String reviewDate;
+  final String reviewDescription;
+  final double reviewRating;
+
   const ReviewCard({
     super.key,
     required this.reviewerImage,
@@ -17,12 +24,6 @@ class ReviewCard extends StatelessWidget {
     required this.reviewRating,
     required this.reviewDescription,
   });
-
-  final String? reviewerImage;
-  final String reviewerName;
-  final String reviewDate;
-  final String reviewDescription;
-  final double reviewRating;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +103,7 @@ class ReviewCard extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Text(
                 reviewDescription.isEmpty
-                    ? "No additional comments available."
+                    ? StringsManager.emptyReview
                     : reviewDescription,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,

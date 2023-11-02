@@ -6,10 +6,9 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class PriceSliderComponent extends StatelessWidget {
-  const PriceSliderComponent({super.key, required this.values, required this.onChanged});
-
   final SfRangeValues values;
   final void Function(SfRangeValues sliderValues) onChanged;
+  const PriceSliderComponent({super.key, required this.values, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class PriceSliderComponent extends StatelessWidget {
               color: Colors.white,
             ),
             tooltipBackgroundColor: Theme.of(context).colorScheme.primary,
-            thumbRadius: 10,
+            thumbRadius: 10.r,
             activeDividerColor: Colors.transparent
           ),
           child: SfRangeSlider(

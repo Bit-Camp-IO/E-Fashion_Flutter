@@ -50,7 +50,7 @@ class _GridViewComponentState extends State<GridViewComponent> {
           _scrollBackUp();
         }
       },
-      buildWhen: (previous, current) => previous.searchState != current.searchState,
+      buildWhen: (previous, current) => previous.searchState != current.searchState || previous.loadMoreProductsState != current.loadMoreProductsState,
       builder: (context, state) {
         return GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -59,7 +59,7 @@ class _GridViewComponentState extends State<GridViewComponent> {
               crossAxisSpacing: 10.h,
               mainAxisExtent: 200.h
           ),
-          itemCount: state.searchProducts.length + 2,
+          itemCount: state.hasSearchProductsListReachedMax ? state.searchProducts.length : state.searchProducts.length + 2,
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           controller: _scrollController,
           itemBuilder: (context, index) {
@@ -88,9 +88,7 @@ class _GridViewComponentState extends State<GridViewComponent> {
                         ));
                       },
                       onFavoriteTap: () {
-                        context
-                            .read<FavoriteCubit>()
-                            .addOrRemoveProductFromFavoriteListEvent(
+                        context.read<FavoriteCubit>().addOrRemoveProductFromFavoriteListEvent(
                           productId: productId,
                         );
                       },
@@ -99,8 +97,7 @@ class _GridViewComponentState extends State<GridViewComponent> {
                           context: context,
                           builder: (context) {
                             return BlocProvider(
-                              create: (context) => getIt<DetailsCubit>()
-                                ..getProductDetails(productId: productId),
+                              create: (context) => getIt<DetailsCubit>()..getProductDetails(productId: productId),
                               child: BlocBuilder<DetailsCubit, DetailsState>(
                                 buildWhen: (previous, current) =>
                                 previous.productDetailsState !=

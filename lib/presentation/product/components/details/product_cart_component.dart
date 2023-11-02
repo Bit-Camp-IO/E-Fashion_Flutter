@@ -11,20 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ProductCartComponent extends StatefulWidget {
-  const ProductCartComponent({
-    super.key,
-    required this.productName,
-    required this.productColors,
-    required this.productSizes,
-    required this.productDescription,
-    required this.productStock,
-    required this.productPrice,
-    required this.onAddToBagTap,
-    required this.selectedColor,
-    required this.selectedSize,
-    required this.cartQuantity,
-  });
-
+  final String productId;
   final String productName;
   final List productColors;
   final List productSizes;
@@ -32,10 +19,18 @@ class ProductCartComponent extends StatefulWidget {
   final int productStock;
   final int productPrice;
 
-  final void Function() onAddToBagTap;
-  final void Function(String? color) selectedColor;
-  final void Function(String? size) selectedSize;
-  final void Function(int quantity) cartQuantity;
+
+  const ProductCartComponent({
+    super.key,
+    required this.productId,
+    required this.productName,
+    required this.productColors,
+    required this.productSizes,
+    required this.productDescription,
+    required this.productStock,
+    required this.productPrice,
+  });
+
 
   @override
   State<ProductCartComponent> createState() => _ProductCartComponentState();
@@ -46,16 +41,16 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
   ValueNotifier<int> selectedColorIndex = ValueNotifier(0);
   ValueNotifier<int> selectedSizeIndex = ValueNotifier(0);
 
+  late final CartCubit cartCubit;
+
   bool isBagButtonLoading = false;
 
   @override
   void initState() {
-    widget.productColors.isNotEmpty
-        ? widget.selectedColor(widget.productColors[0].hex)
-        : widget.selectedColor(null);
-    widget.productSizes.isNotEmpty
-        ? widget.selectedSize(widget.productSizes[0])
-        : widget.selectedSize(null);
+    cartCubit = context.read<CartCubit>();
+    widget.productColors.isNotEmpty ? cartCubit.updateSelectedColor(widget.productColors[0].hex) : cartCubit.updateSelectedColor(null);
+    widget.productSizes.isNotEmpty ? cartCubit.updateSelectedSize(widget.productSizes[0]): cartCubit.updateSelectedSize(null);
+    cartCubit.updateSelectedQuantity(1);
     super.initState();
   }
 
@@ -74,7 +69,7 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
                 ),
           ),
           Text(
-            '\$${widget.productPrice}',
+            '${StringsManager.currencySign}${widget.productPrice}',
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
@@ -102,8 +97,7 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
                               color: widget.productColors[colorIndex].hex,
                               onTap: () {
                                 selectedColorIndex.value = colorIndex;
-                                widget.selectedColor(
-                                    widget.productColors[colorIndex].hex);
+                                cartCubit.updateSelectedColor(widget.productColors[colorIndex].hex);
                               },
                               isSelected: colorIndex == value,
                             ),
@@ -138,9 +132,7 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
                               size: widget.productSizes[sizeIndex],
                               onTap: () {
                                 selectedSizeIndex.value = sizeIndex;
-                                widget.selectedSize(
-                                  widget.productSizes[sizeIndex],
-                                );
+                                cartCubit.updateSelectedSize(widget.productSizes[sizeIndex]);
                               },
                               isSelected: sizeIndex == value,
                             ),
@@ -165,11 +157,13 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
                   onIncrementPress: () {
                     if (productPieces.value != widget.productStock) {
                       productPieces.value++;
+                      cartCubit.updateSelectedQuantity(productPieces.value);
                     }
                   },
                   onDecrementPress: () {
                     if (productPieces.value != 0) {
                       productPieces.value--;
+                      cartCubit.updateSelectedQuantity(productPieces.value);
                     }
                   },
                   productPieces: value,
@@ -199,7 +193,11 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
               },
               builder: (context, state) {
                 return PrimaryButton(
-                  onTap: widget.onAddToBagTap,
+                  onTap: () {
+                    context.read<CartCubit>().addProductToCart(
+                      productId: widget.productId,
+                    );
+                  },
                   width: 312.w,
                   height: 46.h,
                   buttonTitle: StringsManager.addToBag,

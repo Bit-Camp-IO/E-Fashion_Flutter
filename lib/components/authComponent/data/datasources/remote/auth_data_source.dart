@@ -37,7 +37,7 @@ abstract class AuthRemoteDataSource {
 class AuthDataSourceImpl extends AuthRemoteDataSource {
   final ApiConsumer _apiConsumer;
 
-  AuthDataSourceImpl(@Named(ApiConstants.mainConsumerName) this._apiConsumer);
+  AuthDataSourceImpl(@Named(ApiConstants.unAuthenticatedConsumer) this._apiConsumer);
 
   @override
   Future<TokensModel> userLogin({

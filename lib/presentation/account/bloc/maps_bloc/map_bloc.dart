@@ -1,4 +1,3 @@
-import 'package:efashion_flutter/components/authComponent/domain/usecases/get_user_access_token_usecase.dart';
 import 'package:efashion_flutter/components/mapComponent/domain/entities/place.dart';
 import 'package:efashion_flutter/components/mapComponent/domain/entities/place_data.dart';
 import 'package:efashion_flutter/components/mapComponent/domain/usecases/get_place_latitude_and_longitude_usecase.dart';
@@ -20,19 +19,15 @@ part 'map_state.dart';
 @injectable
 class MapBloc extends Bloc<MapEvent, MapState> {
   final GetPlacesSuggestionsUseCase _getPlacesSuggestionsUseCase;
-  final GetPlaceLatitudeAndLongitudeUseCase
-      _getPlaceLatitudeAndLongitudeUseCase;
+  final GetPlaceLatitudeAndLongitudeUseCase _getPlaceLatitudeAndLongitudeUseCase;
   final GetUserLocationUseCase _getUserLocationUseCase;
   final UpdateUserLocationUseCase _updateUserLocationUseCase;
-  final GetUserAccessTokenUseCase _getAccessTokenUseCase;
-  late String userAccessToken;
 
   MapBloc(
     this._getPlacesSuggestionsUseCase,
-    this._getPlaceLatitudeAndLongitudeUseCase,
     this._getUserLocationUseCase,
     this._updateUserLocationUseCase,
-    this._getAccessTokenUseCase,
+      this._getPlaceLatitudeAndLongitudeUseCase,
   ) : super(const MapState()) {
     on<GetUserLocationEvent>(_getUserLocationEvent);
     on<UpdateUserLocationEvent>(_updateUserLocationEvent);
@@ -50,11 +45,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   Future<void> _getUserLocationEvent(
       GetUserLocationEvent event, Emitter<MapState> emit) async {
     emit(state.copyWith(userLocationState: BlocState.loading));
-    final getUserAccessToken = await _getAccessTokenUseCase();
-    userAccessToken = getUserAccessToken.getOrElse(() => '');
-    if (userAccessToken.isNotEmpty) {
-      final response =
-          await _getUserLocationUseCase(userAccessToken: userAccessToken);
+      final response = await _getUserLocationUseCase();
       response.fold(
         (failure) => emit(
           state.copyWith(userLocationState: BlocState.failure),
@@ -70,17 +61,13 @@ class MapBloc extends Bloc<MapEvent, MapState> {
           ),
         ),
       );
-    }
+
   }
 
   Future<void> _updateUserLocationEvent(
       UpdateUserLocationEvent event, Emitter<MapState> emit) async {
     emit(state.copyWith(locationUpdateState: BlocState.loading));
-    final getUserAccessToken = await _getAccessTokenUseCase();
-    userAccessToken = getUserAccessToken.getOrElse(() => '');
-    if (userAccessToken.isNotEmpty && state.markers.isNotEmpty) {
       final response = await _updateUserLocationUseCase(
-        userAccessToken: userAccessToken,
         latitude: state.markers.first.position.latitude,
         longitude: state.markers.first.position.longitude,
       );
@@ -98,14 +85,6 @@ class MapBloc extends Bloc<MapEvent, MapState> {
           ),
         ),
       );
-    } else if (state.markers.isEmpty) {
-      emit(
-        state.copyWith(
-          locationUpdateState: BlocState.failure,
-          locationUpdateMessage: "ERROR! You should set a marker first.",
-        ),
-      );
-    }
   }
 
   Future<void> _getPlacesSuggestionsEvent(

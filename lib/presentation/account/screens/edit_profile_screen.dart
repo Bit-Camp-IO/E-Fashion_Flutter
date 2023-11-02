@@ -20,8 +20,7 @@ class EditProfileScreen extends StatelessWidget {
       body: Stack(
         children: [
           BlocBuilder<ProfileCubit, ProfileState>(
-            buildWhen: (previous, current) =>
-                previous.userData != current.userData,
+            buildWhen: (previous, current) => previous.userData != current.userData,
             builder: (context, state) {
               return BlurredBackgroundImage(
                 isLocalImage: state.userData.profileImagePath != null ? false : true,
@@ -54,7 +53,7 @@ class EditProfileScreen extends StatelessWidget {
                       onRefreshPress: () {
                         context.read<ProfileCubit>().getUserData();
                       },
-                          )
+                    )
                         : ProfilePictureEdit(
                             imageUrl: ApiConstants.getUserProfilePicture(path: state.userData.profileImagePath!),
                             onTap: () {

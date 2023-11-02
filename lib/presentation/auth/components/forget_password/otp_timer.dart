@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OtpTimer extends StatefulWidget {
-  const OtpTimer({super.key, required this.onResendPress});
-
   final void Function() onResendPress;
+  const OtpTimer({super.key, required this.onResendPress});
 
   @override
   State<OtpTimer> createState() => _OtpTimerState();
@@ -15,9 +15,7 @@ class OtpTimer extends StatefulWidget {
 
 class _OtpTimerState extends State<OtpTimer> {
   final _interval = const Duration(seconds: 1);
-
   final int _timerMaxSeconds = 60;
-
   final ValueNotifier<int> _currentSeconds = ValueNotifier(0);
 
   String get timerText =>
@@ -52,7 +50,7 @@ class _OtpTimerState extends State<OtpTimer> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'RESEND OTP IN',
+                  StringsManager.resendOtpIn,
                   style: Theme.of(context).textTheme.labelLarge!.copyWith(
                         color: Theme.of(context).colorScheme.outline,
                       ),
@@ -80,7 +78,7 @@ class _OtpTimerState extends State<OtpTimer> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "Didn't Receive OTP Code ?",
+                    StringsManager.noOtpCode,
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
                           color: Theme.of(context).colorScheme.outline,
                         ),
@@ -88,7 +86,7 @@ class _OtpTimerState extends State<OtpTimer> {
                   TextButton(
                     onPressed: widget.onResendPress,
                     child: Text(
-                      'Resend',
+                      StringsManager.resendOtp,
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(
                             color: Theme.of(context).colorScheme.primary,
                           ),

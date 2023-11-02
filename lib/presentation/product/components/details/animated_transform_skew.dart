@@ -18,8 +18,7 @@ class AnimatedTransformSkew extends StatefulWidget {
   State<AnimatedTransformSkew> createState() => _AnimatedTransformSkewState();
 }
 
-class _AnimatedTransformSkewState extends State<AnimatedTransformSkew>
-    with TickerProviderStateMixin {
+class _AnimatedTransformSkewState extends State<AnimatedTransformSkew> with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _skewAnimation;
 
@@ -35,13 +34,6 @@ class _AnimatedTransformSkewState extends State<AnimatedTransformSkew>
     _skewAnimation = Tween<double>(begin: widget.skewValue, end: 0.0)
         .animate(_animationController);
   }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
   @override
   void didUpdateWidget(covariant AnimatedTransformSkew oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -65,5 +57,11 @@ class _AnimatedTransformSkewState extends State<AnimatedTransformSkew>
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 }

@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class BlurredBackgroundImage extends StatelessWidget {
-  const BlurredBackgroundImage(
-      {super.key, required this.imagePath, required this.isLocalImage});
-
   final String imagePath;
   final bool isLocalImage;
+  const BlurredBackgroundImage({super.key, required this.imagePath, required this.isLocalImage});
 
   @override
   Widget build(BuildContext context) {

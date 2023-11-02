@@ -9,7 +9,7 @@ class RemoveProductFromFavoriteListUseCase {
 
   const RemoveProductFromFavoriteListUseCase(this._productRepository);
 
-  Future<Either<Failure, String>> call({required String productId, required String userAccessToken}) async {
-    return await _productRepository.removeProductFromFavoriteList(productId: productId, userAccessToken: userAccessToken);
+  Future<Either<Failure, String>> call({required String productId}) async {
+    return await _productRepository.removeProductFromFavoriteList(productId: productId);
   }
 }

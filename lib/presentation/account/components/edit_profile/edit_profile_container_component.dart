@@ -21,8 +21,7 @@ class EditProfileContainerComponent extends StatefulWidget {
       _EditProfileContainerComponentState();
 }
 
-class _EditProfileContainerComponentState
-    extends State<EditProfileContainerComponent> {
+class _EditProfileContainerComponentState extends State<EditProfileContainerComponent> {
   late GlobalKey<FormState> _formKey;
   late TextEditingController _nameController;
   late TextEditingController _phoneController;
@@ -37,17 +36,14 @@ class _EditProfileContainerComponentState
   void initState() {
     profileCubit = context.read<ProfileCubit>();
     _formKey = GlobalKey<FormState>();
-    _nameController =
-        TextEditingController(text: profileCubit.state.userData.fullName);
+    _nameController = TextEditingController(text: profileCubit.state.userData.fullName);
     if (profileCubit.state.userData.phoneNumber != null) {
-      _phoneController =
-          TextEditingController(text: profileCubit.state.userData.phoneNumber);
+      _phoneController = TextEditingController(text: profileCubit.state.userData.phoneNumber);
     } else {
       _phoneController = TextEditingController();
     }
 
-    _emailController =
-        TextEditingController(text: profileCubit.state.userData.email);
+    _emailController = TextEditingController(text: profileCubit.state.userData.email);
     super.initState();
   }
 
@@ -56,9 +52,7 @@ class _EditProfileContainerComponentState
     return Form(
       key: _formKey,
       child: AccountClippedContainer(
-        height: FocusScope.of(context).hasPrimaryFocus || !FocusScope.of(context).hasFocus
-            ? 500.h
-            : 410.h,
+        height: FocusScope.of(context).hasPrimaryFocus || !FocusScope.of(context).hasFocus ? 500.h : 410.h,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
           child: Column(
@@ -78,7 +72,7 @@ class _EditProfileContainerComponentState
               ),
               Center(
                 child: Text(
-                  "Edit Profile",
+                  StringsManager.editProfile,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -89,12 +83,11 @@ class _EditProfileContainerComponentState
                 controller: _nameController,
                 keyboardType: TextInputType.text,
                 prefixIcon: Iconsax.user,
-                label: "Name",
+                label: StringsManager.name,
                 borderRadius: (12.0).r,
                 onSaved: (value) {
                   if (value != null && value != profileCubit.state.userData.fullName) {
                     _fullName = value;
-                    debugPrint(_fullName);
                   }
                 },
               ),
@@ -102,12 +95,11 @@ class _EditProfileContainerComponentState
                 controller: _phoneController,
                 keyboardType: TextInputType.number,
                 prefixIcon: Iconsax.call,
-                label: "Phone Number",
+                label: StringsManager.phoneNumber,
                 borderRadius: (12.0).r,
                 onSaved: (value) {
                   if (value!.isNotEmpty && value != profileCubit.state.userData.phoneNumber) {
                     _phoneNumber = value;
-                    debugPrint(_phoneNumber);
                   }
                 },
                 validator: ValidationManager.phoneNumberValidator(phoneController: _phoneController)
@@ -116,13 +108,11 @@ class _EditProfileContainerComponentState
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 prefixIcon: Icons.email_outlined,
-                label: "Email",
+                label: StringsManager.email,
                 borderRadius: (12.0).r,
                 onSaved: (value) {
-                  if (value != null &&
-                      value != profileCubit.state.userData.email) {
+                  if (value != null && value != profileCubit.state.userData.email) {
                     _email = value;
-                    debugPrint(_email);
                   }
                 },
               ),
@@ -145,7 +135,7 @@ class _EditProfileContainerComponentState
                   },
                   builder: (context, state) {
                     return SecondaryButton(
-                      buttonTitle: 'Update',
+                      buttonTitle: StringsManager.updateButtonTitle,
                       width: 150.w,
                       height: 42.h,
                       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -153,8 +143,7 @@ class _EditProfileContainerComponentState
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          if (_fullName != null || _phoneNumber != null ||
-                              _email != null) {
+                          if (_fullName != null || _phoneNumber != null || _email != null) {
                             context.read<ProfileCubit>().updateUserData(
                               fullName: _fullName,
                               phoneNumber: _phoneNumber,

@@ -8,7 +8,6 @@ import 'package:injectable/injectable.dart';
 
 abstract class CartDataSource {
   Future<CartModel> addProductToCart({
-    required String userAccessToken,
     required String productId,
     required String? productSize,
     required String? productColor,
@@ -16,47 +15,39 @@ abstract class CartDataSource {
   });
 
   Future<CartModel> removeProductFromCart({
-    required String userAccessToken,
     required String productId,
   });
 
   Future<CartModel> editProductQuantity({
-    required String userAccessToken,
     required String productId,
     required int newQuantity,
   });
 
-  Future<CartModel> getCartProducts({
-    required String userAccessToken,
-  });
+  Future<CartModel> getCartProducts();
 
   Future<String> createPaymentIntent({
-    required String userAccessToken,
     required PaymentType paymentType,
     String? collectionId,
   });
 
-  Future<List<CartOrderModel>> getOrdersList({required String userAccessToken});
+  Future<List<CartOrderModel>> getOrdersList();
 }
 
 @LazySingleton(as: CartDataSource)
 class CartDataSourceImpl extends CartDataSource {
   final ApiConsumer _apiConsumer;
 
-  CartDataSourceImpl(@Named(ApiConstants.mainConsumerName) this._apiConsumer);
+  CartDataSourceImpl(@Named(ApiConstants.authenticatedConsumer) this._apiConsumer);
 
   @override
   Future<CartModel> addProductToCart({
-    required String userAccessToken,
     required String productId,
     required String? productSize,
     required String? productColor,
     required int productQuantity,
   }) async {
     final response =
-        await _apiConsumer.post(ApiConstants.cartEndPoint, headers: {
-      'Authorization': 'Bearer $userAccessToken',
-    }, body: {
+        await _apiConsumer.post(ApiConstants.cartEndPoint, body: {
       'id': productId,
       'size': productSize,
       'color': productColor,
@@ -71,14 +62,11 @@ class CartDataSourceImpl extends CartDataSource {
 
   @override
   Future<CartModel> editProductQuantity({
-    required String userAccessToken,
     required String productId,
     required int newQuantity,
   }) async {
     final response =
-        await _apiConsumer.patch(ApiConstants.cartEndPoint, headers: {
-      'Authorization': 'Bearer $userAccessToken',
-    }, body: {
+        await _apiConsumer.patch(ApiConstants.cartEndPoint, body: {
       'id': productId,
       'quantity': newQuantity,
     });
@@ -90,11 +78,9 @@ class CartDataSourceImpl extends CartDataSource {
   }
 
   @override
-  Future<CartModel> getCartProducts({required String userAccessToken}) async {
+  Future<CartModel> getCartProducts() async {
     final response =
-        await _apiConsumer.get(ApiConstants.cartEndPoint, headers: {
-      'Authorization': 'Bearer $userAccessToken',
-    });
+        await _apiConsumer.get(ApiConstants.cartEndPoint);
     if (response['status'] == ApiCallStatus.success.value) {
       return CartModel.fromJson(response['data']);
     } else {
@@ -103,17 +89,13 @@ class CartDataSourceImpl extends CartDataSource {
   }
 
   @override
-  Future<CartModel> removeProductFromCart(
-      {required String userAccessToken, required String productId}) async {
+  Future<CartModel> removeProductFromCart({required String productId}) async {
     final response =
-        await _apiConsumer.delete(ApiConstants.cartEndPoint, headers: {
-      'Authorization': 'Bearer $userAccessToken',
-    }, body: {
+        await _apiConsumer.delete(ApiConstants.cartEndPoint, body: {
       'id': productId,
     });
     if (response['status'] == ApiCallStatus.success.value) {
-      // return CartModel.fromJson(response['data']);
-      return await getCartProducts(userAccessToken: userAccessToken);
+      return await getCartProducts();
     } else {
       throw const FetchDataException();
     }
@@ -121,19 +103,11 @@ class CartDataSourceImpl extends CartDataSource {
 
   @override
   Future<String> createPaymentIntent({
-    required String userAccessToken,
     required PaymentType paymentType,
     String? collectionId,
   }) async {
     final response = await _apiConsumer.post(ApiConstants.paymentIntentEndPoint,
-        headers: {
-          'Authorization': 'Bearer $userAccessToken',
-        },
-        body: paymentType == PaymentType.collection
-            ? {
-                'collectionId': collectionId,
-              }
-            : {},
+        body: paymentType == PaymentType.collection ? {'collectionId': collectionId} : {},
         queryParameters: {
           'type': paymentType == PaymentType.collection ? 'collection' : 'cart'
         });
@@ -145,12 +119,9 @@ class CartDataSourceImpl extends CartDataSource {
   }
 
   @override
-  Future<List<CartOrderModel>> getOrdersList(
-      {required String userAccessToken}) async {
+  Future<List<CartOrderModel>> getOrdersList() async {
     final response =
-        await _apiConsumer.get(ApiConstants.ordersEndPoint, headers: {
-      'Authorization': 'Bearer $userAccessToken',
-    });
+        await _apiConsumer.get(ApiConstants.ordersEndPoint);
     if (response['status'] == ApiCallStatus.success.value) {
       return List<CartOrderModel>.from(
         (response['data'] as List).map(

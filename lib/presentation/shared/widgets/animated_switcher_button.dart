@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AnimatedSwitcherButton extends StatefulWidget {
+  final void Function(int buttonIndex) onSwitchIndexChanged;
   const AnimatedSwitcherButton({
     super.key,
     required this.onSwitchIndexChanged,
@@ -9,7 +10,6 @@ class AnimatedSwitcherButton extends StatefulWidget {
 
   @override
   State<AnimatedSwitcherButton> createState() => _AnimatedSwitcherButtonState();
-  final void Function(int buttonIndex) onSwitchIndexChanged;
 }
 
 class _AnimatedSwitcherButtonState extends State<AnimatedSwitcherButton> {
@@ -105,7 +105,8 @@ class _AnimatedSwitcherButtonState extends State<AnimatedSwitcherButton> {
                             color: isRectangleSelected
                                 ? Theme.of(context).colorScheme.primary
                                 : Theme.of(context).colorScheme.outline,
-                            width: 2.0),
+                            width: 2.0.w
+                        ),
                         borderRadius: BorderRadius.circular(3.0).r,
                       ),
                     ),

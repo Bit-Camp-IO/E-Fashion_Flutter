@@ -23,6 +23,9 @@ class RatingAndReviewsComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DetailsCubit, DetailsState>(
       builder: (context, state) {
+        final ratingAverage = state.reviewsAndRatings.average;
+        final rateCount = state.reviewsAndRatings.rateCount;
+        final userRate = state.userReview.rate;
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
           child: Column(
@@ -30,23 +33,20 @@ class RatingAndReviewsComponent extends StatelessWidget {
             children: [
               Text(
                 StringsManager.rateSuggestionTitle,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
+                style: Theme.of(context).textTheme.bodyMedium!
                     .copyWith(color: Theme.of(context).colorScheme.onSurface),
               ),
               SizedBox(height: 4.h),
               Text(
                 StringsManager.rateSuggestionSubTitle,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: Theme.of(context).colorScheme.outline),
+                style: Theme.of(context).textTheme.bodySmall!
+                    .copyWith(color: Theme.of(context).colorScheme.outline,
+                ),
               ),
               SizedBox(height: 24.h),
               Center(
                 child: CustomRatingBar(
-                  initialRating: state.userReview.rate.toDouble(),
+                  initialRating: userRate.toDouble(),
                   onRatingUpdate: (value) {
                     context.read<DetailsCubit>().addOrEditProductReview(
                         productId: productId, rate: value);
@@ -56,8 +56,7 @@ class RatingAndReviewsComponent extends StatelessWidget {
               Center(
                 child: TextButton(
                   onPressed: () {
-                    context
-                        .pushRoute(AddOrEditReviewRoute(productId: productId));
+                    context.pushRoute(AddOrEditReviewRoute(productId: productId));
                   },
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 250),
@@ -92,13 +91,12 @@ class RatingAndReviewsComponent extends StatelessWidget {
                   duration: const Duration(milliseconds: 250),
                   child: Column(
                     key: ValueKey<double>(
-                        state.reviewsAndRatings.average.toDouble()),
+                        ratingAverage.toDouble()),
                     children: [
-                      Text(
-                        state.reviewsAndRatings.average.toDouble().toString(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall!
+                      Text(ratingAverage == ratingAverage.floor() ?
+                      ratingAverage.floor().toString() :
+                      ratingAverage.toStringAsFixed(1),
+                        style: Theme.of(context).textTheme.headlineSmall!
                             .copyWith(
                               color: Theme.of(context).colorScheme.onSurface,
                             ),
@@ -107,7 +105,7 @@ class RatingAndReviewsComponent extends StatelessWidget {
                         unratedColor: Theme.of(context).colorScheme.outline,
                         itemSize: 24.sp,
                         itemPadding: const EdgeInsets.all(8).r,
-                        rating: state.reviewsAndRatings.average.toDouble(),
+                        rating: ratingAverage.toDouble(),
                         itemBuilder: (context, index) => const Icon(
                           Icons.star,
                           color: ColorsManager.ratingStarColor,
@@ -136,10 +134,7 @@ class RatingAndReviewsComponent extends StatelessWidget {
                       children: [
                         Text(
                           '${index + 1}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                                 color: Theme.of(context).colorScheme.onSurface,
                               ),
                         ),
@@ -152,19 +147,15 @@ class RatingAndReviewsComponent extends StatelessWidget {
                         AnimatedSwitcher(
                           duration: const Duration(milliseconds: 250),
                           child: LinearPercentIndicator(
-                            key: ValueKey(state
-                                .reviewsAndRatings.rateCount['${index + 1}']),
+                            key: ValueKey(rateCount['${index + 1}']),
                             width: 220.w,
                             lineHeight: 8.h,
                             curve: Curves.bounceInOut,
                             backgroundColor: Colors.white,
                             progressColor: Colors.black,
                             barRadius: const Radius.circular(5).r,
-                            percent:
-                                state.reviewsAndRatings.rateCount.isNotEmpty
-                                    ? state.reviewsAndRatings
-                                        .rateCount['${index + 1}']
-                                        .toDouble()
+                            percent: rateCount.isNotEmpty && rateCount['total'] != 0
+                                    ? (rateCount['${index + 1}'] / rateCount['total']).toDouble()
                                     : 0,
                           ),
                         )
@@ -193,18 +184,18 @@ class RatingAndReviewsComponent extends StatelessWidget {
                    return BlocBuilder<ProfileCubit, ProfileState>(
                       buildWhen: (previous, current) => previous.userData != current.userData,
                       builder: (context, state) {
-                        return ReviewCard(
-                          reviewerImage:
-                             state.userData.profileImagePath !=
-                                      null
-                                  ? ApiConstants.getUserProfilePicture(
-                                      path: state.userData.profileImagePath!,
-                                    )
-                                  : null,
-                          reviewerName:reviewerName,
-                          reviewDate: reviewDate,
-                          reviewRating: reviewRating,
-                          reviewDescription: reviewDescription,
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0).r,
+                          child: ReviewCard(
+                            reviewerImage:
+                               state.userData.profileImagePath != null ? ApiConstants.getUserProfilePicture(
+                                        path: state.userData.profileImagePath!,
+                                      ) : null,
+                            reviewerName:reviewerName,
+                            reviewDate: reviewDate,
+                            reviewRating: reviewRating,
+                            reviewDescription: reviewDescription,
+                          ),
                         );
                       },
                     );
@@ -214,12 +205,10 @@ class RatingAndReviewsComponent extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 8.0).r,
                       child: ReviewCard(
-                        reviewerImage: reviewerImage !=
-                                null
+                        reviewerImage: reviewerImage != null
                             ? ApiConstants.getUserProfilePicture(
                                 path: reviewerImage,
-                              )
-                            : null,
+                         ) : null,
                         reviewerName:reviewerName,
                         reviewDate: reviewDate,
                         reviewRating: reviewRating,
@@ -237,11 +226,8 @@ class RatingAndReviewsComponent extends StatelessWidget {
                               .pushRoute(AllReviewsRoute(productId: productId));
                         },
                         child: Text(
-                          'See all reviews',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelMedium!
-                              .copyWith(
+                          StringsManager.seeAllReviewsButton,
+                          style: Theme.of(context).textTheme.labelMedium!.copyWith(
                                 color: Theme.of(context).colorScheme.primary,
                               ),
                         ),

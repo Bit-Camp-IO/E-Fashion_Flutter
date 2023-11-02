@@ -28,8 +28,7 @@ class SearchFilterSheet extends StatefulWidget {
 }
 
 class _SearchFilterSheetState extends State<SearchFilterSheet> {
-  final ValueNotifier<SfRangeValues> _sliderRange =
-      ValueNotifier(const SfRangeValues(200, 800));
+  final ValueNotifier<SfRangeValues> _sliderRange = ValueNotifier(const SfRangeValues(200, 800));
   late DraggableScrollableController _draggableScrollableController;
   late ScrollController _listViewController;
   String? brands;

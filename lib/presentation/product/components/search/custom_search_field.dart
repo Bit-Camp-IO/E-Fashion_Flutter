@@ -1,13 +1,14 @@
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class CustomSearchField extends StatefulWidget {
-  const CustomSearchField(
-      {super.key, required this.onChanged, required this.onFilterTap});
 
   final ValueChanged<String> onChanged;
   final void Function() onFilterTap;
+  const CustomSearchField({super.key, required this.onChanged, required this.onFilterTap,});
+
 
   @override
   State<CustomSearchField> createState() => _CustomSearchFieldState();
@@ -60,7 +61,7 @@ class _CustomSearchFieldState extends State<CustomSearchField> {
             ),
             filled: true,
             fillColor: Theme.of(context).colorScheme.surfaceVariant,
-            hintText: 'Search...',
+            hintText: StringsManager.searchHint,
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.all(

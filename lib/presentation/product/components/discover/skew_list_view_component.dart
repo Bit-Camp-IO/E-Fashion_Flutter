@@ -16,16 +16,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SkewListViewComponent extends StatefulWidget {
+  final DiscoverScreenType discoverScreenType;
+  final String? categories;
+  final String brandId;
+
   const SkewListViewComponent({
     super.key,
     required this.discoverScreenType,
     this.categories,
     required this.brandId,
   });
-
-  final DiscoverScreenType discoverScreenType;
-  final String? categories;
-  final String brandId;
 
   @override
   State<SkewListViewComponent> createState() => _SkewListViewComponentState();
@@ -103,9 +103,7 @@ class _SkewListViewComponentState extends State<SkewListViewComponent> {
                                 );
                               },
                               onFavoriteTap: () {
-                                context
-                                    .read<FavoriteCubit>()
-                                    .addOrRemoveProductFromFavoriteListEvent(
+                                context.read<FavoriteCubit>().addOrRemoveProductFromFavoriteListEvent(
                                   productId: productId,
                                 );
                               },

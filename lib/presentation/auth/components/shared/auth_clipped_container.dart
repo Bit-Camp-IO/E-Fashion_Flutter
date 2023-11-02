@@ -3,9 +3,9 @@ import 'package:efashion_flutter/presentation/auth/components/shared/auth_contai
 import 'package:flutter/material.dart';
 
 class AuthClippedContainer extends StatelessWidget {
-  const AuthClippedContainer({super.key, required this.height, required this.child});
   final double height;
   final Widget child;
+  const AuthClippedContainer({super.key, required this.height, required this.child});
   @override
   Widget build(BuildContext context) {
     return ClipPath(

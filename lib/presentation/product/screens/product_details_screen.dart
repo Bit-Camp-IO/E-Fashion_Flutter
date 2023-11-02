@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/presentation/product/components/details/details_body_shimmer_loading.dart';
 import 'package:efashion_flutter/presentation/product/components/details/details_images_component.dart';
 import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
-import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/no_internet_connection_widget.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
@@ -56,8 +55,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
             isTryAgainButtonLoading = false;
           }
         },
-        buildWhen: (previous, current) =>
-            previous.productDetailsState != current.productDetailsState,
+        buildWhen: (previous, current) => previous.productDetailsState != current.productDetailsState,
         builder: (context, state) {
           if (state.productDetailsState == CubitState.failure) {
             return NoInternetConnectionWidget(
@@ -83,11 +81,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                     initialChildSize: 0.65,
                     minChildSize: 0.65,
                     builder: (context, scrollController) {
-                      final CartCubit cartCubit = context.read<CartCubit>();
                       return ValueListenableBuilder(
                         valueListenable: isSheetExpanded,
-                        builder: (context, isSheetExpandedValue, child) =>
-                            AnimatedTransformSkew(
+                        builder: (context, isSheetExpandedValue, child) => AnimatedTransformSkew(
                           skewValue: 0.15,
                           isExpanded: isSheetExpandedValue,
                           child: AnimatedContainer(
@@ -157,33 +153,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                               child: Column(
                                                 children: [
                                                   ProductCartComponent(
+                                                    productId: state.productDetails.id,
                                                     productName: state.productDetails.title,
                                                     productColors: state.productDetails.colors,
                                                     productSizes: state.productDetails.sizes,
                                                     productDescription: state.productDetails.description,
                                                     productStock: state.productDetails.stock,
                                                     productPrice: state.productDetails.price.toInt(),
-                                                    cartQuantity: (quantity) {
-                                                      cartCubit.updateSelectedQuantity(quantity);
-                                                    },
-                                                    selectedColor: (color) {
-                                                      cartCubit.updateSelectedColor(color);
-                                                    },
-                                                    selectedSize: (size) {
-                                                      cartCubit.updateSelectedSize(size);
-                                                    },
-                                                    onAddToBagTap: () {
-                                                      context
-                                                          .read<CartCubit>()
-                                                          .addProductToCart(
-                                                            productId: state
-                                                                .productDetails
-                                                                .id,
-                                                            productName: state
-                                                                .productDetails
-                                                                .title,
-                                                          );
-                                                    },
                                                   ),
                                                   RatingAndReviewsComponent(
                                                     productId: widget.productId,

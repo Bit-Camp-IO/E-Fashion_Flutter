@@ -7,14 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoryChipsComponent extends StatefulWidget {
+  final List<Category> categories;
+  final void Function(List listOfCategories) selectedCategories;
   const CategoryChipsComponent({
     super.key,
     required this.categories,
     required this.selectedCategories,
   });
-
-  final List<Category> categories;
-  final void Function(List listOfCategories) selectedCategories;
 
   @override
   State<CategoryChipsComponent> createState() => _CategoryChipsComponentState();
@@ -27,10 +26,7 @@ class _CategoryChipsComponentState extends State<CategoryChipsComponent> {
   void initState() {
     SearchBloc searchBloc = context.read<SearchBloc>();
     if (searchBloc.categories != null) {
-      categoriesChips = searchBloc.categories!
-          .split(',')
-          .map((category) => category)
-          .toList();
+      categoriesChips = searchBloc.categories!.split(',').map((category) => category).toList();
     }
     super.initState();
   }
@@ -60,8 +56,7 @@ class _CategoryChipsComponentState extends State<CategoryChipsComponent> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color:
-                          categoriesChips.contains(widget.categories[index].id)
+                      color: categoriesChips.contains(widget.categories[index].id)
                               ? Colors.transparent
                               : Theme.of(context).colorScheme.outline,
                     ),

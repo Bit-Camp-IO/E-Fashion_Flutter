@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PrimaryButton extends StatelessWidget {
+  final String buttonTitle;
+  final Icon? buttonIcon;
+  final double? width;
+  final double? height;
+  final void Function() onTap;
+  final bool isLoading;
   const PrimaryButton({
     super.key,
     required this.buttonTitle,
@@ -12,13 +18,6 @@ class PrimaryButton extends StatelessWidget {
     this.height,
     this.isLoading = false,
   });
-
-  final String buttonTitle;
-  final Icon? buttonIcon;
-  final double? width;
-  final double? height;
-  final void Function() onTap;
-  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {

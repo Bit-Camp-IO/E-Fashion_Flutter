@@ -63,8 +63,7 @@ class _CategoriesComponentState extends State<CategoriesComponent> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
-      buildWhen: (previous, current) =>
-          previous.categoriesState != current.categoriesState,
+      buildWhen: (previous, current) => previous.categoriesState != current.categoriesState,
       builder: (context, state) {
         if (state.categories.isEmpty) {
           return const CategoriesShimmerLoading();
@@ -159,8 +158,7 @@ class _CategoriesComponentState extends State<CategoriesComponent> {
                                                   state.categories[index].id,
                                             );
                                           },
-                                          imagePath:
-                                              state.categories[index].imageUrl,
+                                          imagePath: state.categories[index].imageUrl,
                                           title: state.categories[index].name,
                                         ),
                                       );
@@ -185,9 +183,7 @@ class _CategoriesComponentState extends State<CategoriesComponent> {
 
   @override
   void dispose() {
-    _categoriesController
-      ..dispose()
-      ..removeListener(_onSwipeListener);
+    _categoriesController..dispose()..removeListener(_onSwipeListener);
     animatedGendersWidth.dispose();
     isApplyButtonActiveNotifier.dispose();
     super.dispose();

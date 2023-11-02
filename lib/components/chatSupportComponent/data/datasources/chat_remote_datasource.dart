@@ -11,13 +11,13 @@ import 'package:socket_io_client/socket_io_client.dart';
 abstract class ChatRemoteDataSource {
   Future<String> createOrJoinChat({required userAccessToken});
 
-  Future<ChatMessageModel> sendMessage({required String userAccessToken, required String message, required String chatId});
+  Future<ChatMessageModel> sendMessage({required String message, required String chatId});
 
   Stream<ChatMessageModel> getChatStream();
 
   Future<void> closeSocketConnection();
 
-  Future<List<ChatMessageModel>> getChatMessages({required userAccessToken, required chatId});
+  Future<List<ChatMessageModel>> getChatMessages({required chatId});
   @disposeMethod
   dispose();
 }
@@ -26,8 +26,7 @@ abstract class ChatRemoteDataSource {
 class ChatRemoteDataSourceImpl extends ChatRemoteDataSource {
   final ApiConsumer _apiConsumer;
 
-  ChatRemoteDataSourceImpl(
-      @Named(ApiConstants.mainConsumerName) this._apiConsumer);
+  ChatRemoteDataSourceImpl(@Named(ApiConstants.authenticatedConsumer) this._apiConsumer);
 
   late IO.Socket socketConsumer;
   StreamController<ChatMessageModel> chatMessageController =
@@ -36,20 +35,15 @@ class ChatRemoteDataSourceImpl extends ChatRemoteDataSource {
   @override
   Future<String> createOrJoinChat({required userAccessToken}) async {
     final response =
-    await _apiConsumer.get(ApiConstants.getExistingChat, headers: {
-      'Authorization': 'Bearer $userAccessToken',
-    });
+    await _apiConsumer.get(ApiConstants.getExistingChat);
     if (response['status'] == ApiCallStatus.success.value) {
       _connectToSocket(userAccessToken: userAccessToken, chatId: response['data']['id']);
       return response['data']['id'];
     } else {
       final getChatResponse =
-      await _apiConsumer.post(ApiConstants.createNewChat, headers: {
-        'Authorization': 'Bearer $userAccessToken',
-      });
+      await _apiConsumer.post(ApiConstants.createNewChat);
       if (getChatResponse['status'] == ApiCallStatus.success.value) {
-        _connectToSocket(
-            userAccessToken: userAccessToken, chatId: getChatResponse['data']['id']);
+        _connectToSocket(userAccessToken: userAccessToken, chatId: getChatResponse['data']['id']);
         return getChatResponse['data']['id'];
       } else {
         throw const FetchDataException();
@@ -58,10 +52,8 @@ class ChatRemoteDataSourceImpl extends ChatRemoteDataSource {
   }
 
   @override
-  Future<List<ChatMessageModel>> getChatMessages({required userAccessToken, required chatId}) async{
-    final response = await _apiConsumer.get(ApiConstants.getChatMessages(chatId: chatId), headers: {
-      'Authorization': 'Bearer $userAccessToken',
-    });
+  Future<List<ChatMessageModel>> getChatMessages({required chatId}) async{
+    final response = await _apiConsumer.get(ApiConstants.getChatMessages(chatId: chatId));
     if(response['status'] == ApiCallStatus.success.value){
       final List messagesList = response['data'];
       if (messagesList.isNotEmpty) {
@@ -97,10 +89,8 @@ class ChatRemoteDataSourceImpl extends ChatRemoteDataSource {
   }
 
   @override
-  Future<ChatMessageModel> sendMessage({required String userAccessToken, required String message, required String chatId}) async{
-    final response = await _apiConsumer.post(ApiConstants.sendNewMessage(chatId: chatId), headers: {
-      'Authorization': 'Bearer $userAccessToken',
-    },
+  Future<ChatMessageModel> sendMessage({required String message, required String chatId}) async{
+    final response = await _apiConsumer.post(ApiConstants.sendNewMessage(chatId: chatId),
       body: {
         'content': message,
       }

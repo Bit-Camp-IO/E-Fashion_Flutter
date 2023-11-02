@@ -31,11 +31,7 @@ class EmptyProfilePictureEdit extends StatelessWidget {
             ),
             child: Center(
                 child: name.isNotEmpty ? Text(name[0],
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .displayLarge!
-                      .copyWith(
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     color: Colors.white,
                     fontFamily: AssetsManager.primaryFontFamily,
                   ),

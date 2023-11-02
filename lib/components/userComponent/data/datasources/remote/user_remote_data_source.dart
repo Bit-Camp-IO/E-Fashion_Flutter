@@ -7,16 +7,14 @@ import 'package:injectable/injectable.dart';
 import 'package:http_parser/http_parser.dart' as parser;
 
 abstract class UserRemoteDataSource {
-  Future<UserModel> getUserData({required String userAccessToken});
+  Future<UserModel> getUserData();
 
   Future<String> updateUserPicture({
-    required String userAccessToken,
     required String imagePath,
     required String imageName,
   });
 
   Future<UserModel> updateUserData({
-    required String userAccessToken,
     required String fullName,
     required String? phoneNumber,
     required String email,
@@ -27,13 +25,11 @@ abstract class UserRemoteDataSource {
 class UserRemoteDataSourceImpl extends UserRemoteDataSource {
   final ApiConsumer _mainApiConsumer;
 
-  UserRemoteDataSourceImpl(
-      @Named(ApiConstants.mainConsumerName) this._mainApiConsumer);
+  UserRemoteDataSourceImpl(@Named(ApiConstants.authenticatedConsumer) this._mainApiConsumer);
 
   @override
-  Future<UserModel> getUserData({required String userAccessToken}) async {
-    final response = await _mainApiConsumer.get(ApiConstants.userDataEndPoint,
-        headers: {'Authorization': 'Bearer $userAccessToken'});
+  Future<UserModel> getUserData() async {
+    final response = await _mainApiConsumer.get(ApiConstants.userDataEndPoint);
     if (response['status'] == ApiCallStatus.success.value) {
       return UserModel.fromJson(response['data']);
     } else {
@@ -43,7 +39,6 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
 
   @override
   Future<String> updateUserPicture({
-    required String userAccessToken,
     required String imagePath,
     required String imageName,
   }) async {
@@ -51,7 +46,6 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
       ApiConstants.updateUserProfileEndPoint,
       headers: {
         'Content-Type': 'multipart/form-data',
-        'Authorization': 'Bearer $userAccessToken',
       },
       body: FormData.fromMap(
         {
@@ -72,14 +66,12 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
 
   @override
   Future<UserModel> updateUserData({
-    required String userAccessToken,
     required String fullName,
     required String? phoneNumber,
     required String email,
   }) async {
     final response = await _mainApiConsumer.patch(
       ApiConstants.editUserDataEndPoint,
-      headers: {'Authorization': 'Bearer $userAccessToken'},
       body: phoneNumber != null ? {
         "email": email,
         "phoneNumber": phoneNumber,

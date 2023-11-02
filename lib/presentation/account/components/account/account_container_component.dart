@@ -9,6 +9,7 @@ import 'package:efashion_flutter/presentation/account/components/account/account
 import 'package:efashion_flutter/presentation/account/components/shared/account_clipped_container.dart';
 import 'package:efashion_flutter/presentation/account/components/shared/icon_switcher.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/theme_cubit/theme_cubit.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,7 +46,7 @@ class AccountContainerComponent extends StatelessWidget {
               SizedBox(
                 height: 30.h,
               ),
-              Text("Profile Settings",
+              Text(StringsManager.profileTitle,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleMedium),
               SizedBox(
@@ -55,28 +56,28 @@ class AccountContainerComponent extends StatelessWidget {
                 onTap: () {
                   context.pushRoute(const EditProfileRoute());
                 },
-                text: "My Profile",
+                text: StringsManager.profileTitle,
                 prefixIcon: Iconsax.user,
               ),
               AccountCustomRow(
                 onTap: () {
                   context.pushRoute(const LocationRoute());
                 },
-                text: "Location",
+                text: StringsManager.locationTab,
                 prefixIcon: Iconsax.location,
               ),
               AccountCustomRow(
                 onTap: () {
                   context.pushRoute(const OrdersRoute());
                 },
-                text: "Orders Status",
+                text: StringsManager.locationTab,
                 prefixIcon: Iconsax.bag_2,
               ),
               AccountCustomRow(
                 onTap: () {
                   context.pushRoute(const ChatSupportRoute());
                 },
-                text: "Chat Support",
+                text: StringsManager.chatTab,
                 prefixIcon: Iconsax.message,
               ),
               AccountCustomRow(
@@ -85,7 +86,7 @@ class AccountContainerComponent extends StatelessWidget {
                     const ChangePasswordRoute(),
                   );
                 },
-                text: "Change Password",
+                text: StringsManager.changePasswordTab,
                 prefixIcon: Iconsax.lock,
               ),
               BlocConsumer<NotificationsCubit, NotificationsState>(
@@ -106,7 +107,7 @@ class AccountContainerComponent extends StatelessWidget {
                 builder: (context, state) {
                   return AccountCustomRow(
                     enableOnTap: false,
-                    text: "Notifications",
+                    text: StringsManager.notificationSwitch,
                     prefixIcon: Iconsax.notification,
                     suffixWidget: IconSwitcher(
                       isSwitcherActive: state.isUserSubscribedToNotifications,
@@ -131,7 +132,7 @@ class AccountContainerComponent extends StatelessWidget {
               ),
               AccountCustomRow(
                 enableOnTap: false,
-                text: "App Theme",
+                text: StringsManager.appThemeSwitch,
                 prefixIcon: Iconsax.sun_1,
                 suffixWidget: BlocBuilder<ThemeCubit, ThemeState>(
                   builder: (context, state) {

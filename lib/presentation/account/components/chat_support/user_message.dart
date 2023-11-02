@@ -1,12 +1,11 @@
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 
 class UserMessage extends StatelessWidget {
-  const UserMessage({super.key, required this.message, required this.date});
   final String message;
-  final DateTime date;
+  final String date;
+  const UserMessage({super.key, required this.message, required this.date});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -42,7 +41,7 @@ class UserMessage extends StatelessWidget {
                 height: 4.h,
               ),
               Text(
-                DateFormat.jm().format(date),
+                date,
                 style: Theme.of(context).textTheme.labelSmall!.copyWith(
                       color: ColorsManager.messageTimeColor,
                     ),

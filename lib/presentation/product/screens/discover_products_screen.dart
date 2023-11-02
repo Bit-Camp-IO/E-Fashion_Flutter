@@ -7,13 +7,13 @@ import 'package:efashion_flutter/presentation/shared/animations/slide_fade_anima
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/no_internet_connection_widget.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
-class DiscoverProductsScreen extends StatefulWidget
-    implements AutoRouteWrapper {
+class DiscoverProductsScreen extends StatefulWidget implements AutoRouteWrapper {
   final String brandName;
   final String brandId;
   final String? categories;
@@ -48,11 +48,11 @@ class _DiscoverProductsScreenState extends State<DiscoverProductsScreen> {
     final DiscoverBloc discoverBloc = context.read<DiscoverBloc>();
     switch (widget.discoverScreenType) {
       case DiscoverScreenType.brand:
-        screenTitle = 'Discover ${widget.brandName}';
+        screenTitle = StringsManager.discoverBrand(widget.brandName);
         discoverBloc.add(GetBrandProductsEvent(
             brandId: widget.brandId, categories: widget.categories));
       case DiscoverScreenType.offers:
-        screenTitle = 'Discover Offers';
+        screenTitle = StringsManager.discoverOffers;
         discoverBloc.add(GetOffersProductsEvent(categories: widget.categories));
     }
     super.initState();
@@ -102,7 +102,7 @@ class _DiscoverProductsScreenState extends State<DiscoverProductsScreen> {
                     valueListenable: switchIndex,
                     builder: (context, index, child) => Expanded(
                         child: SlideFadeAnimationSwitcher(
-                      child: index == 0
+                         child: index == 0
                           ? SkewListViewComponent(
                               discoverScreenType: widget.discoverScreenType,
                               categories: widget.categories,
@@ -113,7 +113,8 @@ class _DiscoverProductsScreenState extends State<DiscoverProductsScreen> {
                               categories: widget.categories,
                               brandId: widget.brandId,
                             ),
-                    )),
+                      ),
+                    ),
                   );
                 }
               },

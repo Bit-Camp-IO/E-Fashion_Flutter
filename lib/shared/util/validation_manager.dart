@@ -1,12 +1,13 @@
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/cupertino.dart';
 
 class ValidationManager {
   static basicValidator({required String? label}) {
     return (value) {
       if (value!.isEmpty) {
-        return '$label is required';
+        return '$label ${StringsManager.textIsRequired}';
       } else if (value.length < 8) {
-        return '$label is too short';
+        return '$label ${StringsManager.textIsTooShort}';
       }
       return null;
     };
@@ -16,7 +17,7 @@ class ValidationManager {
     final phoneNumberRegex = RegExp(r'^\+\d{12}$');
     return  (value) {
       if (!phoneNumberRegex.hasMatch(value ?? '')) {
-        return 'Invalid Phone Number ex: +21045678910';
+        return StringsManager.phoneNumberValidationMessage;
       } else {
         return null;
       }
@@ -27,7 +28,7 @@ class ValidationManager {
     return (value) {
       final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
       if (!emailRegex.hasMatch(value ?? '')) {
-        return 'Not a valid email address';
+        return StringsManager.emailValidationMessage;
       }
       return null;
     };
@@ -42,18 +43,18 @@ class ValidationManager {
       final uppercaseRegex = RegExp(r'[A-Z]');
       final digitRegex = RegExp(r'[0-9]');
       if (value == null || value.isEmpty) {
-        return 'Password is required';
+        return StringsManager.passwordIsRequiredMessage;
       } else if (passwordController.text != confirmPasswordController.text &&
           confirmPasswordController.text.isNotEmpty) {
-        return "Passwords don't match";
+        return StringsManager.passwordNoMatch;
       } else if (value.length < 8) {
-        return 'Password is too short (minimum 8 chars)';
+        return StringsManager.passwordTooShort;
       } else if (!lowercaseRegex.hasMatch(value)) {
-        return 'Password must contain one lowercase letter';
+        return StringsManager.passwordMustHaveLowerCaseLetter;
       } else if (!uppercaseRegex.hasMatch(value)) {
-        return 'Password must contain one uppercase letter';
+        return StringsManager.passwordMustHaveUpperCaseLetter;
       } else if (!digitRegex.hasMatch(value)) {
-        return 'Password must contain one digit';
+        return StringsManager.passwordMustHaveOneDigit;
       } else {
         return null;
       }
@@ -67,16 +68,26 @@ class ValidationManager {
       final uppercaseRegex = RegExp(r'[A-Z]');
       final digitRegex = RegExp(r'[0-9]');
       if (value == null || value.isEmpty) {
-        return 'Password is required';
+        return StringsManager.passwordIsRequiredMessage;
       } else if (value.length < 8) {
-        return 'Password is too short (minimum 8 chars)';
+        return StringsManager.passwordTooShort;
       } else if (!lowercaseRegex.hasMatch(value)) {
-        return 'Password must contain one lowercase letter';
+        return StringsManager.passwordMustHaveLowerCaseLetter;
       } else if (!uppercaseRegex.hasMatch(value)) {
-        return 'Password must contain one uppercase letter';
+        return StringsManager.passwordMustHaveUpperCaseLetter;
       } else if (!digitRegex.hasMatch(value)) {
-        return 'Password must contain one digit';
+        return StringsManager.passwordMustHaveOneDigit;
       } else {
+        return null;
+      }
+    };
+  }
+
+  static reviewValidator(){
+    return (value) {
+      if(value!.length < 20){
+        return StringsManager.reviewValidationMessage;
+      }else{
         return null;
       }
     };

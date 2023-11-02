@@ -9,10 +9,9 @@ import 'package:iconsax/iconsax.dart';
 
 @RoutePage()
 class AllReviewsScreen extends StatelessWidget {
-  const AllReviewsScreen({super.key, required this.productId});
 
   final String productId;
-
+  const AllReviewsScreen({super.key, required this.productId});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

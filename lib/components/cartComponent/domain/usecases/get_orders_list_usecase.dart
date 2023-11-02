@@ -10,7 +10,7 @@ class GetOrdersListUseCase{
 
   const GetOrdersListUseCase(this._cartRepository);
 
-  Future<Either<Failure, List<CartOrder>>> call({required String userAccessToken}) async{
-    return await _cartRepository.getOrdersList(userAccessToken: userAccessToken);
+  Future<Either<Failure, List<CartOrder>>> call() async{
+    return await _cartRepository.getOrdersList();
   }
 }

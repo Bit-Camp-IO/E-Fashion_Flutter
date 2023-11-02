@@ -5,29 +5,23 @@ import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class NotificationsDataSource {
-  Future<List<AppNotificationModel>> getNotificationsList(
-      {required String userAccessToken});
+  Future<List<AppNotificationModel>> getNotificationsList();
 
-  Future<void> subscripeToNotifications(
-      {required String userAccessToken, required String deviceToken});
+  Future<void> subscribeToNotifications({required String deviceToken});
 
-  Future<void> unSubscripeFromNotifications(
-      {required String userAccessToken, required String deviceToken});
+  Future<void> unSubscribeFromNotifications({required String deviceToken});
 }
 
 @LazySingleton(as: NotificationsDataSource)
 class NotificationsDataSourceImpl extends NotificationsDataSource {
   final ApiConsumer _apiConsumer;
 
-  NotificationsDataSourceImpl(@Named(ApiConstants.mainConsumerName) this._apiConsumer);
+  NotificationsDataSourceImpl(@Named(ApiConstants.authenticatedConsumer) this._apiConsumer);
 
   @override
-  Future<List<AppNotificationModel>> getNotificationsList(
-      {required String userAccessToken}) async {
+  Future<List<AppNotificationModel>> getNotificationsList() async {
     final response =
-        await _apiConsumer.get(ApiConstants.getNotificationsList, headers: {
-      'Authorization': 'Bearer $userAccessToken',
-    });
+        await _apiConsumer.get(ApiConstants.getNotificationsList);
     if (response['status'] == ApiCallStatus.success.value) {
       return List<AppNotificationModel>.from((response['data'] as List)
           .map((notification) => AppNotificationModel.fromJson(notification)));
@@ -37,14 +31,11 @@ class NotificationsDataSourceImpl extends NotificationsDataSource {
   }
 
   @override
-  Future<void> subscripeToNotifications({
-    required String userAccessToken,
+  Future<void> subscribeToNotifications({
     required String deviceToken,
   }) async {
     final response = await _apiConsumer
-        .post(ApiConstants.subscribeToNotifications, headers: {
-      'Authorization': 'Bearer $userAccessToken',
-    }, body: {
+        .post(ApiConstants.subscribeToNotifications, body: {
       'device': deviceToken,
     });
     if (response['status'] == ApiCallStatus.error.value) {
@@ -53,14 +44,11 @@ class NotificationsDataSourceImpl extends NotificationsDataSource {
   }
 
   @override
-  Future<void> unSubscripeFromNotifications({
-    required String userAccessToken,
+  Future<void> unSubscribeFromNotifications({
     required String deviceToken,
   }) async {
     final response = await _apiConsumer
-        .delete(ApiConstants.unsubscribeFromNotifications, headers: {
-      'Authorization': 'Bearer $userAccessToken',
-    }, body: {
+        .delete(ApiConstants.unsubscribeFromNotifications, body: {
       'device': deviceToken,
     });
     if (response['status'] == ApiCallStatus.error.value) {

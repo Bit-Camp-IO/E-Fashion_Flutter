@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GendersCategories extends StatefulWidget {
-  const GendersCategories(
-      {super.key, required this.width, required this.selectedGenders});
-
   final double width;
   final void Function(int genderId) selectedGenders;
+  const GendersCategories({super.key, required this.width, required this.selectedGenders});
+
+
 
   @override
   State<GendersCategories> createState() => _GendersCategoriesState();

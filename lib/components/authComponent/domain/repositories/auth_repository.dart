@@ -15,7 +15,7 @@ abstract class AuthRepository {
     required String phoneNumber,
   });
 
-  Either<Failure, Tokens> checkIfTokensExist();
+  bool checkIfTokensExist();
 
   Future<void> deleteTokens();
 

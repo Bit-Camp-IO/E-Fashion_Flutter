@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SelectableProductSize extends StatelessWidget {
+  final String size;
+  final void Function() onTap;
+  final bool isSelected;
   const SelectableProductSize({
     super.key,
     required this.size,
     required this.onTap,
     required this.isSelected,
   });
-
-  final String size;
-  final void Function() onTap;
-  final bool isSelected;
-
   @override
   Widget build(BuildContext context) {
     return InkWell(

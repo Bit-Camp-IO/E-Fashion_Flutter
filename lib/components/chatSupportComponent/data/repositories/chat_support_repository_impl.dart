@@ -23,9 +23,9 @@ class ChatSupportRepositoryImpl extends ChatSupportRepository{
   }
 
   @override
-  Future<Either<Failure, List<ChatMessage>>> getChatMessages({required String userAccessToken, required String chatId}) async{
+  Future<Either<Failure, List<ChatMessage>>> getChatMessages({required String chatId}) async{
     try{
-      final List<ChatMessageModel> chatMessages = await _chatRemoteDataSource.getChatMessages(userAccessToken: userAccessToken, chatId: chatId);
+      final List<ChatMessageModel> chatMessages = await _chatRemoteDataSource.getChatMessages(chatId: chatId);
       return right(chatMessages);
     }on ServerException catch(exception){
       return left(Failure(exception.message!));
@@ -33,9 +33,9 @@ class ChatSupportRepositoryImpl extends ChatSupportRepository{
   }
 
   @override
-  Future<Either<Failure, ChatMessageModel>> sendMessage({required String userAccessToken, required String message, required String chatId}) async{
+  Future<Either<Failure, ChatMessageModel>> sendMessage({required String message, required String chatId}) async{
     try{
-      final ChatMessageModel chatMessage = await _chatRemoteDataSource.sendMessage(userAccessToken: userAccessToken, message: message, chatId: chatId);
+      final ChatMessageModel chatMessage = await _chatRemoteDataSource.sendMessage(message: message, chatId: chatId);
       return right(chatMessage);
     }on ServerException catch(exception){
       return left(Failure(exception.message!));

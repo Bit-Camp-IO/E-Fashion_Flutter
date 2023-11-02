@@ -7,14 +7,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BrandsChipsComponent extends StatefulWidget {
+  final List<Brand> brands;
+  final void Function(List listOfColors) selectedBrands;
   const BrandsChipsComponent({
     super.key,
     required this.brands,
     required this.selectedBrands,
   });
 
-  final List<Brand> brands;
-  final void Function(List listOfColors) selectedBrands;
+
 
   @override
   State<BrandsChipsComponent> createState() => _BrandsChipsComponentState();
@@ -67,14 +68,13 @@ class _BrandsChipsComponentState extends State<BrandsChipsComponent> {
                 onSelected: (isChipSelected) {
                   setState(() {
                     if (brandChips.contains(widget.brands[index].id)) {
-                      brandChips.removeWhere(
-                          (element) => element == widget.brands[index].id);
+                      brandChips.removeWhere((element) => element == widget.brands[index].id);
                       widget.selectedBrands(brandChips);
                     } else {
                       brandChips.add(widget.brands[index].id);
                       widget.selectedBrands(brandChips);
                     }
-                  });
+                  },);
                 },
               ),
             ),

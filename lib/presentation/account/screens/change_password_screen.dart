@@ -32,12 +32,10 @@ class ChangePasswordScreen extends StatelessWidget implements AutoRouteWrapper {
       body: Stack(
         children: [
           BlocBuilder<ProfileCubit, ProfileState>(
-            buildWhen: (previous, current) =>
-                previous.userData != current.userData,
+            buildWhen: (previous, current) => previous.userData != current.userData,
             builder: (context, state) {
               return BlurredBackgroundImage(
-                isLocalImage:
-                    state.userData.profileImagePath != null ? false : true,
+                isLocalImage: state.userData.profileImagePath != null ? false : true,
                 imagePath: state.userData.profileImagePath != null
                     ? ApiConstants.getUserProfilePicture(
                         path: state.userData.profileImagePath!,
@@ -55,11 +53,8 @@ class ChangePasswordScreen extends StatelessWidget implements AutoRouteWrapper {
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
                   child: Visibility(
-                    key: ValueKey<bool>(
-                        FocusScope.of(context).hasPrimaryFocus ||
-                            !FocusScope.of(context).hasFocus),
-                    visible: FocusScope.of(context).hasPrimaryFocus ||
-                        !FocusScope.of(context).hasFocus,
+                    key: ValueKey<bool>(FocusScope.of(context).hasPrimaryFocus || !FocusScope.of(context).hasFocus),
+                    visible: FocusScope.of(context).hasPrimaryFocus || !FocusScope.of(context).hasFocus,
                     child: BlocBuilder<ProfileCubit, ProfileState>(
                       builder: (context, state) {
                         return state.userData.profileImagePath == null

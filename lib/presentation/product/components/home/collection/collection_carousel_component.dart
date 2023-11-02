@@ -3,6 +3,7 @@ import 'package:efashion_flutter/presentation/product/bloc/collections_cubit/col
 import 'package:efashion_flutter/presentation/product/bloc/home_bloc/home_bloc.dart';
 import 'package:efashion_flutter/presentation/product/components/home/collection/collection_shimmer_loading.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:efashion_flutter/presentation/product/components/home/collection/animated_indicator.dart';
@@ -15,12 +16,10 @@ class CollectionCarouselComponent extends StatefulWidget {
   const CollectionCarouselComponent({super.key});
 
   @override
-  State<CollectionCarouselComponent> createState() =>
-      _CollectionCarouselComponentState();
+  State<CollectionCarouselComponent> createState() => _CollectionCarouselComponentState();
 }
 
-class _CollectionCarouselComponentState
-    extends State<CollectionCarouselComponent> {
+class _CollectionCarouselComponentState extends State<CollectionCarouselComponent> {
   ValueNotifier<int> listenableIndicatorIndex = ValueNotifier<int>(0);
 
   @override
@@ -33,8 +32,7 @@ class _CollectionCarouselComponentState
           return Stack(
             children: [
               BlocBuilder<CollectionsCubit, CollectionsState>(
-                buildWhen: (previous, current) =>
-                    previous.collectionsState != current.collectionsState,
+                buildWhen: (previous, current) => previous.collectionsState != current.collectionsState,
                 builder: (context, state) {
                   return CarouselSlider.builder(
                     itemCount: state.collectionsList.length,
@@ -116,9 +114,8 @@ class _CollectionCarouselComponentState
                           dotWidth: 30.w,
                           dotHeight: 4.h,
                           currentIndex: activeIndex,
-                          selectedColor: const Color(0xFFF2F2F2),
-                          unSelectedColor:
-                              const Color(0xFFFFFFFF).withOpacity(0.5),
+                          selectedColor: ColorsManager.activeIndicatorColor,
+                          unSelectedColor: ColorsManager.inActiveIndicatorColor,
                           axisDirection: Axis.horizontal,
                           dotsCount: state.collectionsList.length,
                         );

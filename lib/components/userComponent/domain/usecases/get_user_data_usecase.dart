@@ -9,7 +9,7 @@ class GetUserDataUseCase{
   final UserRepository _userRepository;
   const GetUserDataUseCase(this._userRepository);
 
-  Future<Either<Failure, User>> call({required String userAccessToken}) async{
-    return await _userRepository.getUserData(userAccessToken: userAccessToken);
+  Future<Either<Failure, User>> call() async{
+    return await _userRepository.getUserData();
   }
 }

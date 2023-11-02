@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:efashion_flutter/components/authComponent/domain/usecases/get_user_access_token_usecase.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/product_details.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/review.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/reviewer.dart';
@@ -23,15 +22,12 @@ class DetailsCubit extends Cubit<DetailsState> {
   final GetProductReviewsAndRatingsUseCase _getProductReviewsAndRatingsUseCase;
   final AddOrEditProductReviewUseCase _addOrEditProductReviewUseCase;
   final GetUserProductReviewUseCase _getUserProductReviewUseCase;
-  final GetUserAccessTokenUseCase _getAccessTokenUseCase;
-  late String userAccessToken;
 
   DetailsCubit(
     this._getProductDetailsUseCase,
     this._getProductReviewsAndRatingsUseCase,
     this._addOrEditProductReviewUseCase,
     this._getUserProductReviewUseCase,
-    this._getAccessTokenUseCase,
   ) : super(const DetailsState());
 
   Future<void> getProductDetails({required String productId}) async {
@@ -75,13 +71,9 @@ class DetailsCubit extends Cubit<DetailsState> {
   Future<void> getUserProductReview({
     required String productId,
   }) async {
-    final getAccessToken = await _getAccessTokenUseCase();
-    userAccessToken = getAccessToken.getOrElse(() => '');
-    if (userAccessToken.isNotEmpty) {
       final Either<Failure, Review> response =
           await _getUserProductReviewUseCase(
         productId: productId,
-        userAccessToken: userAccessToken,
       );
       response.fold(
         (failure) => emit(
@@ -108,7 +100,6 @@ class DetailsCubit extends Cubit<DetailsState> {
           );
         },
       );
-    }
   }
 
   Future<void> addOrEditProductReview({
@@ -116,16 +107,13 @@ class DetailsCubit extends Cubit<DetailsState> {
     required double rate,
     String? review,
   }) async {
-    final getAccessToken = await _getAccessTokenUseCase();
-    userAccessToken = getAccessToken.getOrElse(() => '');
-    if (userAccessToken.isNotEmpty && review != state.userReview.comment ||
-        userAccessToken.isNotEmpty && rate != state.userReview.rate) {
+
+    if (review != state.userReview.comment || rate != state.userReview.rate) {
       final Either<Failure, Review> response =
           await _addOrEditProductReviewUseCase(
         productId: productId,
         rate: rate,
         review: review,
-        userAccessToken: userAccessToken,
       );
       response.fold(
         (failure) => emit(
@@ -146,9 +134,9 @@ class DetailsCubit extends Cubit<DetailsState> {
           emit(
             state.copyWith(
                 userReview: review,
-                reviewsAndRatings:
-                    state.reviewsAndRatings.copyWith(reviews: reviewsList),
-                reviewState: CubitState.success),
+                reviewsAndRatings: state.reviewsAndRatings.copyWith(reviews: reviewsList),
+                reviewState: CubitState.success,
+            ),
           );
         },
       );

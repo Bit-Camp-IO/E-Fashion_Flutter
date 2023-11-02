@@ -1,20 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/shared/constants/app_constants.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReviewProductCard extends StatelessWidget {
+  final String productImage;
+  final String productName;
+  final int productPrice;
+
   const ReviewProductCard({
     super.key,
     required this.productImage,
     required this.productName,
     required this.productPrice,
   });
-
-  final String productImage;
-  final String productName;
-  final int productPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +45,11 @@ class ReviewProductCard extends StatelessWidget {
           children: [
             Text(
               productName,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium!
-                  .copyWith(color: Theme.of(context).colorScheme.onSurface,),
+              style: Theme.of(context).textTheme.titleMedium!
+                  .copyWith(color: Theme.of(context).colorScheme.onSurface),
             ),
             Text(
-              '\$$productPrice',
+              '${StringsManager.currencySign}$productPrice',
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium!

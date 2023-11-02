@@ -5,6 +5,7 @@ import 'package:efashion_flutter/presentation/shared/widgets/secondary_button.da
 import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:efashion_flutter/shared/util/stripe_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,15 +51,14 @@ class _CollectionPaymentComponentState extends State<CollectionPaymentComponent>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '\$${widget.collectionPrice}',
+                  '${StringsManager.currencySign}${widget.collectionPrice}',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: Colors.white,
                       ),
                 ),
                 SizedBox(width: 16.w),
                 BlocConsumer<CollectionsCubit, CollectionsState>(
-                  listenWhen: (previous, current) =>
-                      previous.paymentState != current.paymentState,
+                  listenWhen: (previous, current) => previous.paymentState != current.paymentState,
                   listener: (context, state) async {
                     if (state.paymentState == CubitState.loading) {
                       isBuyButtonLoading = true;
@@ -79,7 +79,7 @@ class _CollectionPaymentComponentState extends State<CollectionPaymentComponent>
                           }
                         },
                         onSuccess: () {
-                          context.pushRoute(PaymentSuccessRoute(paymentType: PaymentType.collection, collectionPrice: widget.collectionPrice));
+                          context.pushRoute(OrderReceiptRoute(paymentType: PaymentType.collection, collectionPrice: widget.collectionPrice));
                         },
                       );
                     } else {
@@ -90,7 +90,7 @@ class _CollectionPaymentComponentState extends State<CollectionPaymentComponent>
                     return SecondaryButton(
                       width: 150.w,
                       height: 42.h,
-                      buttonTitle: 'Buy Collection',
+                      buttonTitle: StringsManager.buyCollectionButton,
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       isLoading: isBuyButtonLoading,
                       onTap: () {

@@ -102,12 +102,8 @@ class _DismissibleCartCardState extends State<DismissibleCartCard> {
                     widget.selectedSize != null
                         ? Text(
                             '${StringsManager.sizeSection}${widget.selectedSize!}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface,
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                                  color: Theme.of(context).colorScheme.onSurface,
                                 ),
                           )
                         : const SizedBox.shrink(),
@@ -118,13 +114,9 @@ class _DismissibleCartCardState extends State<DismissibleCartCard> {
                           duration: const Duration(milliseconds: 100),
                           child: Text(
                             key: ValueKey<int>(widget.totalPrice),
-                            '\$${widget.totalPrice}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface,
+                            '${StringsManager.currencySign}${widget.totalPrice}',
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                                  color: Theme.of(context).colorScheme.onSurface,
                                 ),
                           ),
                         ),

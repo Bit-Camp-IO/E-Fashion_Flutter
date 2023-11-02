@@ -40,11 +40,9 @@ class SearchScreen extends StatefulWidget implements AutoRouteWrapper {
   }
 }
 
-class _SearchScreenState extends State<SearchScreen>
-    with TickerProviderStateMixin {
+class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMixin {
   late GlobalKey<FormState> _formKey;
   ValueNotifier switchIndex = ValueNotifier(0);
-
   String searchQuery = '';
   late String categories;
   late String sizes;

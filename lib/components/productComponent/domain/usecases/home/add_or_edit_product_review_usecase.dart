@@ -10,7 +10,7 @@ class AddOrEditProductReviewUseCase{
 
   const AddOrEditProductReviewUseCase(this._productRepository);
 
-  Future<Either<Failure, Review>> call({required String userAccessToken, required String productId, required double rate, String? review}) async{
-    return await _productRepository.addOrEditProductReview(userAccessToken: userAccessToken, productId: productId, rate: rate, review: review);
+  Future<Either<Failure, Review>> call({required String productId, required double rate, String? review}) async{
+    return await _productRepository.addOrEditProductReview(productId: productId, rate: rate, review: review);
   }
 }

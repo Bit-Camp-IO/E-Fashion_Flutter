@@ -1,6 +1,7 @@
 import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -52,7 +53,7 @@ class OrderStatusCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'OrderId : #${orderId.length > 10 ? '${orderId.substring(0, 10)}..' : orderId}',
+                          StringsManager.orderId(orderId),
                           style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
@@ -73,7 +74,7 @@ class OrderStatusCard extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      'Order Price : \$$orderCost',
+                      StringsManager.orderCost(orderCost),
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
@@ -97,11 +98,11 @@ class OrderStatusCard extends StatelessWidget {
 
   String _orderStatusText(){
     if(orderStatus == 1){
-      return 'In Progress';
+      return StringsManager.orderInItsWay;
     }else if (orderStatus == 2){
-      return  "On It's way";
+      return  StringsManager.orderInProgress;
     }else{
-      return  'Delivered';
+      return  StringsManager.orderDelivered;
     }
   }
 

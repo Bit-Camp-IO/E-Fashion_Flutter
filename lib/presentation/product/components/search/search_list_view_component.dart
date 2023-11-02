@@ -51,15 +51,8 @@ void _onScroll() {
           _scrollBackUp();
         }
       },
-      buildWhen: (previous, current) =>
-          previous.searchState != current.searchState,
+      buildWhen: (previous, current) => previous.searchState != current.searchState || previous.loadMoreProductsState != current.loadMoreProductsState,
       builder: (context, state) {
-        switch (state.searchState) {
-          case BlocState.initial || BlocState.loading:
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          case BlocState.success:
             return ListView.builder(
               itemCount: state.searchProducts.length + 1,
               controller: _scrollController,
@@ -109,8 +102,7 @@ void _onScroll() {
                               context: context,
                               builder: (context) {
                                 return BlocProvider(
-                                  create: (context) => getIt<DetailsCubit>()
-                                    ..getProductDetails(productId: productId),
+                                  create: (context) => getIt<DetailsCubit>()..getProductDetails(productId: productId),
                                   child:
                                       BlocBuilder<DetailsCubit, DetailsState>(
                                     buildWhen: (previous, current) => previous.productDetailsState != current.productDetailsState,
@@ -136,19 +128,12 @@ void _onScroll() {
                 }
               },
             );
-          case BlocState.failure:
-            return const Center(
-              child: Text('Load Data Failed'),
-            );
-        }
       },
     );
   }
   @override
   void dispose() {
-    _scrollController
-      ..removeListener(_onScroll)
-      ..dispose();
+    _scrollController..removeListener(_onScroll)..dispose();
     super.dispose();
   }
 }

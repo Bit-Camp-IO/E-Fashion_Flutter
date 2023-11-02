@@ -27,9 +27,9 @@ class UserRepositoryImpl extends UserRepository{
   }
 
   @override
-  Future<Either<Failure, UserModel>> getUserData({required String userAccessToken}) async{
+  Future<Either<Failure, UserModel>> getUserData() async{
     try{
-      final UserModel userData = await _userRemoteDataSource.getUserData(userAccessToken: userAccessToken);
+      final UserModel userData = await _userRemoteDataSource.getUserData();
       return right(userData);
     }on ServerException catch(exception){
       return left(ApiFailure(exception.message!));
@@ -37,9 +37,9 @@ class UserRepositoryImpl extends UserRepository{
   }
 
   @override
-  Future<Either<Failure, String>> updateUserPicture({required String userAccessToken, required String imagePath, required String imageName}) async{
+  Future<Either<Failure, String>> updateUserPicture({required String imagePath, required String imageName}) async{
     try{
-      final String updatedImage = await _userRemoteDataSource.updateUserPicture(userAccessToken: userAccessToken, imagePath: imagePath, imageName: imageName);
+      final String updatedImage = await _userRemoteDataSource.updateUserPicture(imagePath: imagePath, imageName: imageName);
       return right(updatedImage);
     }on ServerException catch(exception){
       return left(ApiFailure(exception.message!));
@@ -47,9 +47,9 @@ class UserRepositoryImpl extends UserRepository{
   }
 
   @override
-  Future<Either<Failure, UserModel>> updateUserData({required String userAccessToken, required String fullName, required String? phoneNumber, required String email}) async{
+  Future<Either<Failure, UserModel>> updateUserData({required String fullName, required String? phoneNumber, required String email}) async{
     try{
-      final UserModel userData = await _userRemoteDataSource.updateUserData(userAccessToken: userAccessToken, fullName: fullName, phoneNumber: phoneNumber, email: email);
+      final UserModel userData = await _userRemoteDataSource.updateUserData(fullName: fullName, phoneNumber: phoneNumber, email: email);
       return right(userData);
     }on ServerException catch(exception){
       return left(ApiFailure(exception.message!));

@@ -2,12 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/favorite_icon_button.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class LargeProductCard extends StatelessWidget {
+  final String productImage;
+  final String productName;
+  final int productPrice;
+  final bool isFavorite;
+  final void Function() onTap;
+  final void Function() onFavoriteTap;
+  final void Function() onCartTap;
   const LargeProductCard({
     super.key,
     required this.productImage,
@@ -18,13 +26,6 @@ class LargeProductCard extends StatelessWidget {
     required this.onFavoriteTap,
     required this.onCartTap,
   });
-  final String productImage;
-  final String productName;
-  final int productPrice;
-  final bool isFavorite;
-  final void Function() onTap;
-  final void Function() onFavoriteTap;
-  final void Function() onCartTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -103,7 +104,7 @@ class LargeProductCard extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      '\$$productPrice',
+                      '${StringsManager.currencySign}$productPrice',
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: Colors.white,
                           ),

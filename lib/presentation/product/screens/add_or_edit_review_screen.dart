@@ -15,11 +15,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
 class AddOrEditReviewScreen extends StatefulWidget {
-  const AddOrEditReviewScreen(
-      {super.key, required this.productId, this.rating = 0});
-
   final String productId;
   final int rating;
+  const AddOrEditReviewScreen({super.key, required this.productId, this.rating = 0});
+
+
 
   @override
   State<AddOrEditReviewScreen> createState() => _AddOrEditReviewScreenState();
@@ -102,12 +102,14 @@ class _AddOrEditReviewScreenState extends State<AddOrEditReviewScreen> {
                             context.read<DetailsCubit>().addOrEditProductReview(
                                 productId: widget.productId,
                                 rate: _rate,
-                                review: _review);
+                                review: _review,
+                            );
                             context.popRoute();
                           }
                         },
                         buttonTitle: StringsManager.addOrEditReviewButton(
-                            state.userReview.createdAt.isEmpty),
+                            state.userReview.createdAt.isEmpty,
+                        ),
                       )
                     ],
                   ),

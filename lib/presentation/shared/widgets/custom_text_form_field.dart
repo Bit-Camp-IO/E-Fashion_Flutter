@@ -4,6 +4,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class CustomTextFormField extends StatefulWidget {
+  final TextEditingController? controller;
+  final TextInputType keyboardType;
+  final IconData? prefixIcon;
+  final IconData? suffixIcon;
+  final bool? obscureText;
+  final String? label;
+  final Function(String submittedText)? onSubmit;
+  final Function(String? value)? onSaved;
+  final VoidCallback? onSuffixPress;
+  final String? hintText;
+  final double? borderRadius;
+  final Color? enableBorderColor;
+  final FormFieldValidator? validator;
+  final double? textFieldHeight;
+  final BoxConstraints? boxConstraints;
   const CustomTextFormField({
     super.key,
     this.controller,
@@ -22,22 +37,6 @@ class CustomTextFormField extends StatefulWidget {
     this.textFieldHeight = 70,
     this.boxConstraints,
   });
-
-  final TextEditingController? controller;
-  final TextInputType keyboardType;
-  final IconData? prefixIcon;
-  final IconData? suffixIcon;
-  final bool? obscureText;
-  final String? label;
-  final Function(String submittedText)? onSubmit;
-  final Function(String? value)? onSaved;
-  final VoidCallback? onSuffixPress;
-  final String? hintText;
-  final double? borderRadius;
-  final Color? enableBorderColor;
-  final FormFieldValidator? validator;
-  final double? textFieldHeight;
-  final BoxConstraints? boxConstraints;
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
 }

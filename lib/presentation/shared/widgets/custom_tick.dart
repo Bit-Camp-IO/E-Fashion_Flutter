@@ -5,8 +5,7 @@ class CustomTick extends StatefulWidget {
   final bool isTickVisible;
   final int tickCount;
 
-  const CustomTick(
-      {super.key, required this.isTickVisible, required this.tickCount});
+  const CustomTick({super.key, required this.isTickVisible, required this.tickCount});
 
   @override
   State<CustomTick> createState() => _CustomTickState();

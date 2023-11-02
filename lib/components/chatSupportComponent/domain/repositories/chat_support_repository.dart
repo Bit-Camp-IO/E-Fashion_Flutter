@@ -8,13 +8,11 @@ abstract class ChatSupportRepository {
   });
 
   Future<Either<Failure, ChatMessage>> sendMessage({
-    required String userAccessToken,
     required String message,
     required String chatId,
   });
 
   Future<Either<Failure, List<ChatMessage>>> getChatMessages({
-    required String userAccessToken,
     required String chatId,
 });
 

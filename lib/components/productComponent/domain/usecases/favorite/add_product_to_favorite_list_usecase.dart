@@ -9,7 +9,7 @@ class AddProductToFavoriteListUseCase {
 
   const AddProductToFavoriteListUseCase(this._productRepository);
 
-  Future<Either<Failure, Set<String>>> call({required String productId, required String userAccessToken}) async {
-    return await _productRepository.addProductToFavoriteList(productId: productId, userAccessToken: userAccessToken);
+  Future<Either<Failure, Set<String>>> call({required String productId}) async {
+    return await _productRepository.addProductToFavoriteList(productId: productId);
   }
 }

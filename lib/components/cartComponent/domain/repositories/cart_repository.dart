@@ -6,7 +6,6 @@ import 'package:efashion_flutter/shared/util/enums.dart';
 
 abstract class CartRepository {
   Future<Either<Failure, Cart>> addProductToCart({
-    required String userAccessToken,
     required String productId,
     required String? productSize,
     required String? productColor,
@@ -14,27 +13,20 @@ abstract class CartRepository {
   });
 
   Future<Either<Failure, Cart>> removeProductFromCart({
-    required String userAccessToken,
     required String productId,
   });
 
   Future<Either<Failure, Cart>> editProductQuantity({
-    required String userAccessToken,
     required String productId,
     required int newQuantity,
   });
 
-  Future<Either<Failure, Cart>> getCartProducts({
-    required String userAccessToken,
-  });
+  Future<Either<Failure, Cart>> getCartProducts();
 
   Future<Either<Failure, String>> createPaymentIntent({
-    required String userAccessToken,
     required PaymentType paymentType,
     String? collectionId,
   });
 
-  Future<Either<Failure, List<CartOrder>>> getOrdersList({
-    required String userAccessToken,
-  });
+  Future<Either<Failure, List<CartOrder>>> getOrdersList();
 }

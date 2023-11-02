@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 class SlideFadeAnimationSwitcher extends StatelessWidget {
+  final Widget child;
   const SlideFadeAnimationSwitcher({
     super.key,
     required this.child,
   });
-
-  final Widget child;
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(

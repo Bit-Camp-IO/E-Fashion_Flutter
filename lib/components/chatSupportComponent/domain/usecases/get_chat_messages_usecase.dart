@@ -10,7 +10,7 @@ class GetChatMessagesUseCase{
 
   const GetChatMessagesUseCase(this._chatSupportRepository);
 
-  Future<Either<Failure, List<ChatMessage>>> call({required String chatId, required userAccessToken}) async {
-    return await _chatSupportRepository.getChatMessages(userAccessToken: userAccessToken, chatId: chatId);
+  Future<Either<Failure, List<ChatMessage>>> call({required String chatId}) async {
+    return await _chatSupportRepository.getChatMessages(chatId: chatId);
   }
 }

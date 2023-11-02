@@ -11,14 +11,12 @@ class AddProductToCartUseCase {
   const AddProductToCartUseCase(this._cartRepository);
 
   Future<Either<Failure, Cart>> call({
-    required String userAccessToken,
     required String productId,
     required String? productSize,
     required String? productColor,
     required int productQuantity,
   }) async {
     return await _cartRepository.addProductToCart(
-      userAccessToken: userAccessToken,
       productId: productId,
       productSize: productSize,
       productColor: productColor,

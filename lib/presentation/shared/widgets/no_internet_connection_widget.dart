@@ -1,5 +1,6 @@
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -25,13 +26,13 @@ class NoInternetConnectionWidget extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           Text(
-            'No internet connection',
+            StringsManager.noInternetTitle,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           SizedBox(height: 4.h),
           Text(
             textAlign: TextAlign.center,
-            'Please make sure that your are\n connected to the wifi',
+            StringsManager.noInternetSubTitle,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           SizedBox(height: 74.h),
@@ -39,7 +40,7 @@ class NoInternetConnectionWidget extends StatelessWidget {
             width: 194.w,
             height: 46.h,
             isLoading: isButtonLoading,
-            buttonTitle: 'Try Again',
+            buttonTitle: StringsManager.noInternetTryAgainButton,
             onTap: onButtonTap,
           ),
         ],

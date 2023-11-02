@@ -16,6 +16,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SkewGridViewComponent extends StatefulWidget {
+  final DiscoverScreenType discoverScreenType;
+  final String? categories;
+  final String brandId;
   const SkewGridViewComponent({
     super.key,
     required this.discoverScreenType,
@@ -23,14 +26,10 @@ class SkewGridViewComponent extends StatefulWidget {
     required this.brandId,
   });
 
-  final DiscoverScreenType discoverScreenType;
-  final String? categories;
-  final String brandId;
 
   @override
   State<SkewGridViewComponent> createState() => _SkewGridViewComponentState();
 }
-
 class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
   late ScrollController _scrollController;
 
@@ -68,7 +67,7 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
             crossAxisSpacing: 10.h,
             mainAxisExtent: 220.h,
           ),
-          itemCount: state.products.isEmpty ? 6 : state.products.length + 2,
+          itemCount: state.products.isEmpty ? 6 : state.hasProductsListReachedMax ? state.products.length : state.products.length + 2,
           controller: _scrollController,
           itemBuilder: (context, index) {
             if (state.products.isNotEmpty && index >= state.products.length) {
@@ -103,9 +102,7 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
                             ));
                           },
                           onFavoriteTap: () {
-                            context
-                                .read<FavoriteCubit>()
-                                .addOrRemoveProductFromFavoriteListEvent(
+                            context.read<FavoriteCubit>().addOrRemoveProductFromFavoriteListEvent(
                                   productId: productId,
                                 );
                           },
@@ -114,20 +111,15 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
                               context: context,
                               builder: (context) {
                                 return BlocProvider(
-                                  create: (context) => getIt<DetailsCubit>()
-                                    ..getProductDetails(productId: productId),
+                                  create: (context) => getIt<DetailsCubit>()..getProductDetails(productId: productId),
                                   child: BlocBuilder<DetailsCubit, DetailsState>(
-                                    buildWhen: (previous, current) =>
-                                        previous.productDetailsState !=
-                                        current.productDetailsState,
+                                    buildWhen: (previous, current) => previous.productDetailsState != current.productDetailsState,
                                     builder: (context, state) {
                                       return CartBottomSheet(
                                         productName: state.productDetails.title,
                                         productId: state.productDetails.id,
-                                        productPrice:
-                                            state.productDetails.price.toInt(),
-                                        productColors:
-                                            state.productDetails.colors,
+                                        productPrice: state.productDetails.price.toInt(),
+                                        productColors: state.productDetails.colors,
                                         productSizes: state.productDetails.sizes,
                                         productStock: state.productDetails.stock,
                                       );
@@ -160,11 +152,7 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
                             );
                           },
                           onFavoriteTap: () {
-                            context
-                                .read<FavoriteCubit>()
-                                .addOrRemoveProductFromFavoriteListEvent(
-                                  productId: productId,
-                                );
+                            context.read<FavoriteCubit>().addOrRemoveProductFromFavoriteListEvent(productId: productId);
                           },
                           onCartTap: () {
                             showModalBottomSheet(
@@ -174,17 +162,13 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
                                   create: (context) => getIt<DetailsCubit>()
                                     ..getProductDetails(productId: productId),
                                   child: BlocBuilder<DetailsCubit, DetailsState>(
-                                    buildWhen: (previous, current) =>
-                                        previous.productDetailsState !=
-                                        current.productDetailsState,
+                                    buildWhen: (previous, current) => previous.productDetailsState != current.productDetailsState,
                                     builder: (context, state) {
                                       return CartBottomSheet(
                                         productName: state.productDetails.title,
                                         productId: state.productDetails.id,
-                                        productPrice:
-                                            state.productDetails.price.toInt(),
-                                        productColors:
-                                            state.productDetails.colors,
+                                        productPrice: state.productDetails.price.toInt(),
+                                        productColors: state.productDetails.colors,
                                         productSizes: state.productDetails.sizes,
                                         productStock: state.productDetails.stock,
                                       );
@@ -216,10 +200,7 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
                             );
                           },
                           onFavoriteTap: () {
-                            context
-                                .read<FavoriteCubit>()
-                                .addOrRemoveProductFromFavoriteListEvent(
-                                    productId: productId);
+                            context.read<FavoriteCubit>().addOrRemoveProductFromFavoriteListEvent(productId: productId);
                           },
                           onCartTap: () {
                             showModalBottomSheet(
@@ -236,10 +217,8 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
                                       return CartBottomSheet(
                                         productName: state.productDetails.title,
                                         productId: state.productDetails.id,
-                                        productPrice:
-                                            state.productDetails.price.toInt(),
-                                        productColors:
-                                            state.productDetails.colors,
+                                        productPrice: state.productDetails.price.toInt(),
+                                        productColors: state.productDetails.colors,
                                         productSizes: state.productDetails.sizes,
                                         productStock: state.productDetails.stock,
                                       );
@@ -271,11 +250,7 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
                             );
                           },
                           onFavoriteTap: () {
-                            context
-                                .read<FavoriteCubit>()
-                                .addOrRemoveProductFromFavoriteListEvent(
-                                  productId: productId,
-                                );
+                            context.read<FavoriteCubit>().addOrRemoveProductFromFavoriteListEvent(productId: productId);
                           },
                           onCartTap: () {
                             showModalBottomSheet(
@@ -292,10 +267,8 @@ class _SkewGridViewComponentState extends State<SkewGridViewComponent> {
                                       return CartBottomSheet(
                                         productName: state.productDetails.title,
                                         productId: state.productDetails.id,
-                                        productPrice:
-                                            state.productDetails.price.toInt(),
-                                        productColors:
-                                            state.productDetails.colors,
+                                        productPrice: state.productDetails.price.toInt(),
+                                        productColors: state.productDetails.colors,
                                         productSizes: state.productDetails.sizes,
                                         productStock: state.productDetails.stock,
                                       );

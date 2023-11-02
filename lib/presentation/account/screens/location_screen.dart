@@ -8,6 +8,7 @@ import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart
 import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -158,11 +159,9 @@ class _LocationScreenState extends State<LocationScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
                 child: PrimaryButton(
-                  buttonTitle: 'Confirm Location',
+                  buttonTitle: StringsManager.confirmLocationButton,
                   onTap: () {
-                    context
-                        .read<MapBloc>()
-                        .add(const UpdateUserLocationEvent());
+                    context.read<MapBloc>().add(const UpdateUserLocationEvent());
                   },
                 ),
               ),

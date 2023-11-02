@@ -8,7 +8,7 @@ class UpdateProfilePictureUseCase{
   final UserRepository _userRepository;
 
   const UpdateProfilePictureUseCase(this._userRepository);
-  Future<Either<Failure, String>> call({required userAccessToken, required String imagePath, required String imageName}) async{
-    return await _userRepository.updateUserPicture(userAccessToken: userAccessToken, imagePath: imagePath, imageName: imageName);
+  Future<Either<Failure, String>> call({required String imagePath, required String imageName}) async{
+    return await _userRepository.updateUserPicture(imagePath: imagePath, imageName: imageName);
   }
 }

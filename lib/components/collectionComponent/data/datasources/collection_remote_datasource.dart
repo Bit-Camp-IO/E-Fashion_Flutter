@@ -16,7 +16,7 @@ abstract class CollectionRemoteDataSource {
 class CollectionRemoteDataSourceImpl extends CollectionRemoteDataSource {
   final ApiConsumer _apiConsumer;
 
-  CollectionRemoteDataSourceImpl(@Named(ApiConstants.mainConsumerName) this._apiConsumer);
+  CollectionRemoteDataSourceImpl(@Named(ApiConstants.unAuthenticatedConsumer) this._apiConsumer);
 
   @override
   Future<List<CollectionModel>> getCollectionsList() async {

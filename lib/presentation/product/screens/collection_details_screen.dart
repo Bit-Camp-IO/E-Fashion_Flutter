@@ -6,6 +6,7 @@ import 'package:efashion_flutter/presentation/product/components/home/collection
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/no_internet_connection_widget.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,7 +46,7 @@ class _CollectionDetailsScreenState extends State<CollectionDetailsScreen> {
           child: Column(
             children: [
               CustomAppBar(
-                appBarTitle: '${widget.collectionName} Collection',
+                appBarTitle: '${widget.collectionName} ${StringsManager.collection}',
                 disableBackButton: false,
                 appBarType: AppBarType.normal,
               ),
@@ -65,7 +66,8 @@ class _CollectionDetailsScreenState extends State<CollectionDetailsScreen> {
                       return NoInternetConnectionWidget(
                         onButtonTap: () {
                           context.read<CollectionsCubit>().getCollectionItemsList(
-                              collectionId: widget.collectionId);
+                              collectionId: widget.collectionId,
+                          );
                         },
                         isButtonLoading: isLoading,
                       );
@@ -74,9 +76,7 @@ class _CollectionDetailsScreenState extends State<CollectionDetailsScreen> {
                         itemCount: state.collectionItemsState == CubitState.loading ? 3 : state.collectionItemsList.length,
                         padding: const EdgeInsets.only(bottom: 200).r,
                         itemBuilder: (context, index) {
-                          if (state.collectionItemsState ==
-                              CubitState.initial || state
-                              .collectionItemsState == CubitState.loading) {
+                          if (state.collectionItemsState == CubitState.initial || state.collectionItemsState == CubitState.loading) {
                             return const CollectionItemCardShimmerLoading();
                           } else {
                             return Padding(
@@ -113,7 +113,7 @@ class _CollectionDetailsScreenState extends State<CollectionDetailsScreen> {
                   ),
                 ),
               );
-        },
+          },
         )
       ],
     );

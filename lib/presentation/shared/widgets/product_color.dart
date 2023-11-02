@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SelectableProductColor extends StatelessWidget {
+
+  final String color;
+  final void Function() onTap;
+  final bool isSelected;
   const SelectableProductColor({
     super.key,
     required this.color,
@@ -9,9 +13,6 @@ class SelectableProductColor extends StatelessWidget {
     required this.isSelected,
   });
 
-  final String color;
-  final void Function() onTap;
-  final bool isSelected;
   int _cleanHexCode(String hexCode){
     String cleanedHex = color.replaceAll("#", "");
     return int.parse('0xFF$cleanedHex');

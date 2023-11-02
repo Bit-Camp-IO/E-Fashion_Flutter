@@ -8,7 +8,7 @@ class GetUserFavoriteProductsIdsUseCase{
   final ProductRepository _productRepository;
   const GetUserFavoriteProductsIdsUseCase(this._productRepository);
 
-  Future<Either<Failure, Set<String>>> call({required String userAccessToken}) async{
-    return await _productRepository.getUserFavoriteProductIds(userAccessToken: userAccessToken);
+  Future<Either<Failure, Set<String>>> call() async{
+    return await _productRepository.getUserFavoriteProductIds();
   }
 }

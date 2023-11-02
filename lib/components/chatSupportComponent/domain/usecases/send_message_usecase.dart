@@ -10,10 +10,9 @@ class SendMessageUseCase{
   const SendMessageUseCase(this._chatSupportRepository);
 
   Future<Either<Failure, ChatMessage>> call({
-    required String userAccessToken,
     required String message,
     required String chatId,
   }) async{
-    return await _chatSupportRepository.sendMessage(userAccessToken: userAccessToken, message: message, chatId: chatId);
+    return await _chatSupportRepository.sendMessage(message: message, chatId: chatId);
   }
 }

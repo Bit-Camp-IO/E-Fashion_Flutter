@@ -17,7 +17,7 @@ import 'package:efashion_flutter/presentation/auth/screens/sign_up_screen.dart';
 import 'package:efashion_flutter/presentation/auth/screens/welcome_screen.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
 import 'package:efashion_flutter/presentation/cart/screens/cart_screen.dart';
-import 'package:efashion_flutter/presentation/cart/screens/payment_success_screen.dart';
+import 'package:efashion_flutter/presentation/cart/screens/order_receipt_screen.dart';
 import 'package:efashion_flutter/presentation/product/screens/collection_details_screen.dart';
 import 'package:efashion_flutter/presentation/product/screens/favorite_screen.dart';
 import 'package:efashion_flutter/presentation/product/screens/add_or_edit_review_screen.dart';
@@ -104,7 +104,7 @@ class AppRouter extends _$AppRouter {
                   page: CollectionDetailsRoute.page,
                 ),
                 CustomRoute(
-                  page: PaymentSuccessRoute.page,
+                  page: OrderReceiptRoute.page,
                   transitionsBuilder: TransitionsBuilders.fadeIn,
                   durationInMilliseconds: 300,
                 ),
@@ -155,7 +155,7 @@ class AppRouter extends _$AppRouter {
                   durationInMilliseconds: 300,
                 ),
                 CustomRoute(
-                  page: PaymentSuccessRoute.page,
+                  page: OrderReceiptRoute.page,
                   transitionsBuilder: TransitionsBuilders.fadeIn,
                   durationInMilliseconds: 300,
                 ),

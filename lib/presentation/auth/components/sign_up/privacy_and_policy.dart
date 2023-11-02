@@ -1,9 +1,11 @@
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 
 class PrivacyAndPolicy extends StatefulWidget {
-  const PrivacyAndPolicy({super.key, this.isError = false, required this.isChecked});
   final bool isError;
   final void Function(bool isChecked) isChecked;
+  const PrivacyAndPolicy({super.key, this.isError = false, required this.isChecked});
+
   @override
   State <PrivacyAndPolicy> createState() => _PrivacyAndPolicyState();
 }
@@ -29,21 +31,21 @@ class _PrivacyAndPolicyState extends State<PrivacyAndPolicy> {
         Center(
           child: Text.rich(
             TextSpan(
-              text: "I Agree with",
+              text: StringsManager.privacyAndPolicyText1,
               style: Theme.of(context).textTheme.bodyMedium,
               children: [
                 TextSpan(
-                  text: " Privacy",
+                  text: StringsManager.privacyAndPolicyText2,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
                 TextSpan(
-                  text: " and",
+                  text: StringsManager.privacyAndPolicyText3,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 TextSpan(
-                  text: " policy",
+                  text: StringsManager.privacyAndPolicyText4,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                   ),

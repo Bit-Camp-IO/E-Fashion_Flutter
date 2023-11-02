@@ -81,11 +81,10 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
-  Future<Either<Failure, Set<String>>> getUserFavoriteProductIds(
-      {required String userAccessToken}) async {
+  Future<Either<Failure, Set<String>>> getUserFavoriteProductIds() async {
     try {
       final Set<String> favoriteSet = await _productRemoteDataSource
-          .getUserFavoriteProductsIds(userAccessToken: userAccessToken);
+          .getUserFavoriteProductsIds();
       return right(favoriteSet);
     } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
@@ -95,12 +94,10 @@ class ProductRepositoryImpl extends ProductRepository {
   @override
   Future<Either<Failure, Set<String>>> addProductToFavoriteList({
     required String productId,
-    required String userAccessToken,
   }) async {
     try {
       final Set<String> favoriteList = await _productRemoteDataSource.addProductToFavoriteList(
         productId: productId,
-        userAccessToken: userAccessToken,
       );
       return right(favoriteList);
     } on ServerException catch (exception) {
@@ -111,12 +108,10 @@ class ProductRepositoryImpl extends ProductRepository {
   @override
   Future<Either<Failure, String>> removeProductFromFavoriteList({
     required String productId,
-    required String userAccessToken,
   }) async {
     try {
       final String removedProductId = await _productRemoteDataSource.removeProductFromFavoriteList(
         productId: productId,
-        userAccessToken: userAccessToken,
       );
       return right(removedProductId);
     } on ServerException catch (exception) {
@@ -169,14 +164,12 @@ class ProductRepositoryImpl extends ProductRepository {
 
   @override
   Future<Either<Failure, ReviewModel>> addOrEditProductReview({
-    required String userAccessToken,
     required String productId,
     required double rate,
     String? review,
   }) async {
     try {
       final ReviewModel productReview = await _productRemoteDataSource.addOrEditProductReview(
-        userAccessToken: userAccessToken,
         productId: productId,
         rate: rate,
         review: review,
@@ -189,12 +182,10 @@ class ProductRepositoryImpl extends ProductRepository {
 
   @override
   Future<Either<Failure, ReviewModel>> getUserProductReview({
-    required String userAccessToken,
     required String productId,
   }) async {
     try {
       final ReviewModel review = await _productRemoteDataSource.getUserProductReview(
-        userAccessToken: userAccessToken,
         productId: productId,
       );
       return right(review);

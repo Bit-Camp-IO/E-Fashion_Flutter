@@ -33,7 +33,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         child: Column(
           children: [
             const CustomAppBar(
-              appBarTitle: 'Favourites 💙',
+              appBarTitle: StringsManager.favoriteScreenTitle,
               disableBackButton: true,
               appBarType: AppBarType.normal,
             ),
@@ -107,29 +107,16 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                         context: context,
                                         builder: (context) {
                                           return BlocProvider.value(
-                                            value:
-                                                context.read<FavoriteCubit>(),
-                                            child: BlocBuilder<FavoriteCubit,
-                                                FavoriteState>(
+                                            value: context.read<FavoriteCubit>(),
+                                            child: BlocBuilder<FavoriteCubit, FavoriteState>(
                                               builder: (context, state) {
                                                 return CartBottomSheet(
-                                                  productName: state
-                                                      .favoriteList[index]
-                                                      .title,
-                                                  productId: state
-                                                      .favoriteList[index].id,
-                                                  productPrice: state
-                                                      .favoriteList[index].price
-                                                      .toInt(),
-                                                  productColors: state
-                                                      .favoriteList[index]
-                                                      .colors,
-                                                  productSizes: state
-                                                      .favoriteList[index]
-                                                      .sizes,
-                                                  productStock: state
-                                                      .favoriteList[index]
-                                                      .stock,
+                                                  productName: state.favoriteList[index].title,
+                                                  productId: state.favoriteList[index].id,
+                                                  productPrice: state.favoriteList[index].price.toInt(),
+                                                  productColors: state.favoriteList[index].colors,
+                                                  productSizes: state.favoriteList[index].sizes,
+                                                  productStock: state.favoriteList[index].stock,
                                                 );
                                               },
                                             ),

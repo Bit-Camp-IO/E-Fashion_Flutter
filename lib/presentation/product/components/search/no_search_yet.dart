@@ -1,11 +1,10 @@
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class NoSearchYet extends StatelessWidget {
-  const NoSearchYet({
-    super.key,
-  });
+  const NoSearchYet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class NoSearchYet extends StatelessWidget {
           SizedBox(height: 16.h),
           Text(
             textAlign: TextAlign.center,
-            'No results yet\n try to type something.',
+            StringsManager.noSearchYet,
             style: Theme.of(context).textTheme.labelMedium!.copyWith(
                   color: Theme.of(context).colorScheme.outline,
                 ),

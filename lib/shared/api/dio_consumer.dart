@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:dio/io.dart';
 import 'package:efashion_flutter/shared/api/api_consumer.dart';
 import 'package:efashion_flutter/shared/api/api_status_code.dart';
-import 'package:efashion_flutter/shared/api/dio_interceptor.dart';
+import 'package:efashion_flutter/shared/api/authenticated_interceptor.dart';
+import 'package:efashion_flutter/shared/api/unauthenticated_interceptor.dart';
 import 'package:efashion_flutter/shared/api/dio_logger.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:efashion_flutter/injection_container.dart';
@@ -13,12 +14,12 @@ import 'package:dio/dio.dart';
 class DioApiConsumer extends ApiConsumer {
   final Dio dioClient;
   final String baseUrl;
-  DioApiConsumer( {required this.dioClient, required this.baseUrl,}) {
+  final Interceptor? interceptor;
+  DioApiConsumer({required this.dioClient, required this.baseUrl, this.interceptor}) {
     // Fix for dio handshake error
     (dioClient.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
       final dioClient = HttpClient();
-      dioClient.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
+      dioClient.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
       return dioClient;
     };
     // dio validation
@@ -29,8 +30,12 @@ class DioApiConsumer extends ApiConsumer {
       ..validateStatus = (status) {
         return status! < ApiStatusCodes.internalServerError;
       };
+    if(interceptor == null){
+      dioClient.interceptors.add(getIt<UnAuthenticatedInterceptor>());
+    }else{
+      dioClient.interceptors.add(getIt<AuthenticatedInterceptor>());
+    }
 
-    dioClient.interceptors.add(getIt<DioInterceptor>());
     if (kDebugMode) {
       dioClient.interceptors.add(getIt<DioLogInterceptor>());
     }

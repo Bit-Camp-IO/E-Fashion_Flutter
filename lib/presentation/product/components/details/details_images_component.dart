@@ -5,6 +5,7 @@ import 'package:efashion_flutter/presentation/product/components/home/collection
 import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_shimmer_effect.dart';
 import 'package:efashion_flutter/shared/constants/app_constants.dart';
+import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/size_manager.dart';
 import 'package:flutter/material.dart';
@@ -80,9 +81,8 @@ class _DetailsImagesComponentState extends State<DetailsImagesComponent> {
                           dotHeight: 4.h,
                           minDotWidth: 10.h,
                           currentIndex: activeIndex,
-                          selectedColor: const Color(0xFFF2F2F2),
-                          unSelectedColor:
-                              const Color(0xFFFFFFFF).withOpacity(0.5),
+                          selectedColor: ColorsManager.activeIndicatorColor,
+                          unSelectedColor: ColorsManager.inActiveIndicatorColor,
                           axisDirection: Axis.horizontal,
                           dotsCount: state.productDetails.images.length,
                         );

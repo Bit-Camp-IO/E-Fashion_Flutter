@@ -37,20 +37,14 @@ class WelcomeContainerComponent extends StatelessWidget {
                       children: [
                         Text(
                           StringsManager.welcomeTitle,
-                          style:
-                              Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: Colors.white,
-                                  ),
+                          style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
                         ),
                         SizedBox(
                           height: 16.h,
                         ),
                         Text(
                           StringsManager.welcomeSubtitle,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    color: Colors.white,
-                                  ),
+                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
                         ),
                       ],
                     ),

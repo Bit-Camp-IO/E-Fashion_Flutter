@@ -1,3 +1,4 @@
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -37,10 +38,8 @@ class CategoriesButton extends StatelessWidget {
                         const Icon(Iconsax.filter,
                             color: Colors.white, size: 16),
                         Text(
-                          'Apply',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelMedium!
+                          StringsManager.applyButtonTitle,
+                          style: Theme.of(context).textTheme.labelMedium!
                               .copyWith(color: Colors.white),
                         ),
                       ],

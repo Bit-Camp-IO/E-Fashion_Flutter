@@ -15,8 +15,7 @@ import 'package:injectable/injectable.dart';
 class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   final ApiConsumer _apiConsumer;
 
-  ProductRemoteDataSourceImpl(
-      @Named(ApiConstants.mainConsumerName) this._apiConsumer);
+  ProductRemoteDataSourceImpl(@Named(ApiConstants.authenticatedConsumer) this._apiConsumer);
 
   @override
   Future<List<CategoryModel>> getCategories({required int genderId}) async {
@@ -104,26 +103,21 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   }
 
   @override
-  Future<Set<String>> getUserFavoriteProductsIds(
-      {required String userAccessToken}) async {
+  Future<Set<String>> getUserFavoriteProductsIds() async {
     final Map<String, dynamic> response = await _apiConsumer.get(
       ApiConstants.userFavoriteListEndPoint,
       queryParameters: {"data": "id"},
-      headers: {
-        'Authorization': 'Bearer $userAccessToken',
-      },
     );
     return Set<String>.from((response['data'] as List<dynamic>)
         .map((productId) => productId));
   }
 
   @override
-  Future<Set<String>> addProductToFavoriteList(
-      {required String productId, required String userAccessToken}) async {
+  Future<Set<String>> addProductToFavoriteList({required String productId}) async {
     final Map<String, dynamic> response = await _apiConsumer.post(
         ApiConstants.userFavoriteListEndPoint,
         body: {'id': productId},
-        headers: {'Authorization': 'Bearer $userAccessToken'});
+    );
     if (response['status'] == ApiCallStatus.success.value) {
       return Set<String>.from((response['data'] as List<dynamic>)
           .map((favoriteResponse) => favoriteResponse['id']));
@@ -133,12 +127,11 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   }
 
   @override
-  Future<String> removeProductFromFavoriteList(
-      {required String productId, required String userAccessToken}) async {
+  Future<String> removeProductFromFavoriteList({required String productId}) async {
     final response = await _apiConsumer.delete(
         ApiConstants.userFavoriteListEndPoint,
         body: {'id': productId},
-        headers: {'Authorization': 'Bearer $userAccessToken'});
+    );
     if (response['status'] == ApiCallStatus.success.value) {
       return productId;
     } else {
@@ -196,7 +189,6 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
 
   @override
   Future<ReviewModel> addOrEditProductReview({
-    required String userAccessToken,
     required String productId,
     required double rate,
     required String? review,
@@ -211,7 +203,7 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
                 : {
                     'rate': rate,
                   },
-            headers: {'Authorization': 'Bearer $userAccessToken'});
+    );
     if (response['status'] == ApiCallStatus.success.value) {
       return ReviewModel.fromJson(response['data']);
     } else {
@@ -220,11 +212,10 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   }
 
   @override
-  Future<ReviewModel> getUserProductReview(
-      {required String userAccessToken, required String productId}) async {
+  Future<ReviewModel> getUserProductReview({required String productId}) async {
     final response = await _apiConsumer.get(
         ApiConstants.userReviewEndPoint(productId: productId),
-        headers: {'Authorization': 'Bearer $userAccessToken'});
+    );
     if (response['status'] == ApiCallStatus.success.value) {
       return ReviewModel.fromJson(response['data']);
     } else {

@@ -5,6 +5,7 @@ import 'package:efashion_flutter/presentation/shared/widgets/custom_text_form_fi
 import 'package:efashion_flutter/presentation/shared/widgets/secondary_button.dart';
 import 'package:efashion_flutter/presentation/account/components/shared/account_clipped_container.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:efashion_flutter/shared/util/validation_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,8 +16,7 @@ class ChangePasswordContainerComponent extends StatefulWidget {
   const ChangePasswordContainerComponent({super.key});
 
   @override
-  State<ChangePasswordContainerComponent> createState() =>
-      _ChangePasswordContainerComponentState();
+  State<ChangePasswordContainerComponent> createState() => _ChangePasswordContainerComponentState();
 }
 
 class _ChangePasswordContainerComponentState
@@ -92,7 +92,7 @@ class _ChangePasswordContainerComponentState
                 ),
                 Center(
                   child: Text(
-                    "Change Password",
+                    StringsManager.changePasswordTab,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
@@ -102,7 +102,7 @@ class _ChangePasswordContainerComponentState
                 CustomTextFormField(
                   keyboardType: TextInputType.text,
                   prefixIcon: Iconsax.lock,
-                  label: "Current Password",
+                  label: StringsManager.currentPassword,
                   obscureText: true,
                   onSaved: (value) {
                     if (value != null) {
@@ -114,7 +114,7 @@ class _ChangePasswordContainerComponentState
                   controller: newPasswordController,
                   keyboardType: TextInputType.text,
                   prefixIcon: Iconsax.lock_1,
-                  label: "New Password",
+                  label: StringsManager.newPassword,
                   obscureText: true,
                   onSaved: (value) {
                     if (value != null) {
@@ -130,7 +130,7 @@ class _ChangePasswordContainerComponentState
                   controller: confirmNewPasswordController,
                   keyboardType: TextInputType.text,
                   prefixIcon: Iconsax.lock_1,
-                  label: "Confirm Password",
+                  label: StringsManager.confirmPassword,
                   obscureText: true,
                   onSaved: (value) {
                     if (value != null) {
@@ -146,7 +146,7 @@ class _ChangePasswordContainerComponentState
                   child: BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
                     builder: (context, state) {
                       return SecondaryButton(
-                        buttonTitle: 'Change Password',
+                        buttonTitle: StringsManager.changePasswordTab,
                         width: 150.w,
                         height: 42.h,
                         backgroundColor: Theme.of(context).colorScheme.primary,

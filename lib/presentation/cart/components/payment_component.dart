@@ -49,7 +49,7 @@ class _PaymentComponentState extends State<PaymentComponent> with AutoRouteAware
                       duration: const Duration(milliseconds: 200),
                       child: Text(
                         key: ValueKey<int>(state.cart.subTotal),
-                        '\$${state.cart.subTotal}',
+                        '${StringsManager.currencySign}${state.cart.subTotal}',
                         style: Theme.of(context).textTheme.titleMedium!
                             .copyWith(
                               color: Theme.of(context).colorScheme.onSurface,
@@ -62,8 +62,7 @@ class _PaymentComponentState extends State<PaymentComponent> with AutoRouteAware
             ),
             SizedBox(height: 8.h),
             BlocConsumer<CartCubit, CartState>(
-              listenWhen: (previous, current) =>
-                  previous.paymentState != current.paymentState,
+              listenWhen: (previous, current) => previous.paymentState != current.paymentState,
               listener: (context, state) async {
                 if (state.paymentState == CubitState.loading) {
                   isCheckOutLoading = true;
@@ -84,15 +83,23 @@ class _PaymentComponentState extends State<PaymentComponent> with AutoRouteAware
                       }
                     },
                     onSuccess: () {
-                      context.pushRoute(PaymentSuccessRoute(paymentType: PaymentType.cart));
+                      context.pushRoute(OrderReceiptRoute(paymentType: PaymentType.cart));
                     },
                   );
-                } else {
+                } else if(state.paymentState == CubitState.failure){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    CustomSnackBar.show(
+                      customSnackBarType: CustomSnackBarType.error,
+                      message: StringsManager.cartLocationError,
+                      context: context,
+                    ),
+                  );
+                  isCheckOutLoading = false;
+                }else{
                   isCheckOutLoading = false;
                 }
               },
-              buildWhen: (previous, current) =>
-                  previous.paymentState != current.paymentState,
+              buildWhen: (previous, current) => previous.paymentState != current.paymentState,
               builder: (context, state) => PrimaryButton(
                 buttonTitle: StringsManager.cartCheckOutButtonTitle,
                 isLoading: isCheckOutLoading,

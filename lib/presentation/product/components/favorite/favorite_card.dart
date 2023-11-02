@@ -1,12 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/favorite_icon_button.dart';
 import 'package:efashion_flutter/shared/constants/app_constants.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class FavoriteCard extends StatelessWidget {
+  final String productImage;
+  final String productId;
+  final String productName;
+  final int productPrice;
+  final bool isFavorite;
+  final void Function() onFavoriteTap;
+  final void Function() onCartTap;
+  final void Function() onCardTap;
   const FavoriteCard({
     super.key,
     required this.productImage,
@@ -18,15 +27,6 @@ class FavoriteCard extends StatelessWidget {
     required this.onCartTap,
     required this.onCardTap,
   });
-
-  final String productImage;
-  final String productId;
-  final String productName;
-  final int productPrice;
-  final bool isFavorite;
-  final void Function() onFavoriteTap;
-  final void Function() onCartTap;
-  final void Function() onCardTap;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +98,7 @@ class FavoriteCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 Text(
-                  '\$$productPrice',
+                  '${StringsManager.currencySign}$productPrice',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],

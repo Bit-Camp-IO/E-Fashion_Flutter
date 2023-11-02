@@ -12,9 +12,9 @@ class NotificationsRepositoryImpl extends NotificationsRepository{
 
   NotificationsRepositoryImpl(this._notificationsDataSource);
   @override
-  Future<Either<Failure, List<AppNotificationModel>>> getNotificationsList({required String userAccessToken}) async{
+  Future<Either<Failure, List<AppNotificationModel>>> getNotificationsList() async{
     try{
-      final List<AppNotificationModel> notificationsList = await _notificationsDataSource.getNotificationsList(userAccessToken: userAccessToken);
+      final List<AppNotificationModel> notificationsList = await _notificationsDataSource.getNotificationsList();
       return right(notificationsList);
     }on ServerException catch(exception){
       return left(ApiFailure(exception.message!));
@@ -22,9 +22,9 @@ class NotificationsRepositoryImpl extends NotificationsRepository{
   }
 
   @override
-  Future<Either<Failure, void>> subscribeToNotifications({required String userAccessToken, required deviceToken}) async{
+  Future<Either<Failure, void>> subscribeToNotifications({required deviceToken}) async{
     try{
-      final void response = await _notificationsDataSource.subscripeToNotifications(userAccessToken: userAccessToken, deviceToken: deviceToken);
+      final void response = await _notificationsDataSource.subscribeToNotifications(deviceToken: deviceToken);
       return Right(response);
     }on ServerException catch(exception){
       return left(ApiFailure(exception.message!));
@@ -32,9 +32,9 @@ class NotificationsRepositoryImpl extends NotificationsRepository{
   }
 
   @override
-  Future<Either<Failure, void>>  unSubscribeFromNotifications({required String userAccessToken, required deviceToken}) async{
+  Future<Either<Failure, void>>  unSubscribeFromNotifications({required deviceToken}) async{
     try{
-      final void response = await _notificationsDataSource.unSubscripeFromNotifications(userAccessToken: userAccessToken, deviceToken: deviceToken);
+      final void response = await _notificationsDataSource.unSubscribeFromNotifications(deviceToken: deviceToken);
       return Right(response);
     }on ServerException catch(exception){
       return left(ApiFailure(exception.message!));

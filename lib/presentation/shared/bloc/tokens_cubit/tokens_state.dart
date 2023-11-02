@@ -11,11 +11,11 @@ class TokensInitialState extends TokensState {}
 class TokensLoadingState extends TokensState {}
 
 class TokensAuthenticatedState extends TokensState {
-  final Tokens tokens;
 
-  const TokensAuthenticatedState({required this.tokens});
+
+  const TokensAuthenticatedState();
   @override
-  List<Object> get props => [tokens];
+  List<Object> get props => [];
 }
 
 class TokensUnAuthenticatedState extends TokensState {}

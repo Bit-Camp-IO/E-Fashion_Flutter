@@ -7,6 +7,7 @@ import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/size_manager.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,10 +15,12 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
 @RoutePage()
-class PaymentSuccessScreen extends StatelessWidget {
+class OrderReceiptScreen extends StatelessWidget {
   final PaymentType paymentType;
   final int? collectionPrice;
-  const PaymentSuccessScreen({super.key, required this.paymentType, this.collectionPrice});
+
+  const OrderReceiptScreen(
+      {super.key, required this.paymentType, this.collectionPrice});
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +30,15 @@ class PaymentSuccessScreen extends StatelessWidget {
         child: Column(
           children: [
             Center(
-                child: Text(
-              'ORDER RECEIPT',
-              style: Theme.of(context)
-                  .textTheme
-                  .displaySmall!
-                  .copyWith(fontSize: 30.sp, color: Theme.of(context).colorScheme.onSurface, fontFamily: AssetsManager.primaryFontFamily),
-            )),
+              child: Text(
+                StringsManager.orderReceiptTitle,
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                      fontSize: 30.sp,
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontFamily: AssetsManager.primaryFontFamily,
+                    ),
+              ),
+            ),
             Expanded(
               child: Center(
                 child: ClipPath(
@@ -51,14 +56,11 @@ class PaymentSuccessScreen extends StatelessWidget {
                           size: 40.sp,
                         ),
                         Text(
-                          'Congratulations',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(color: Colors.black),
+                          StringsManager.orderReceiptCongratulations,
+                          style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.black),
                         ),
                         Text(
-                          'Your order is confirmed',
+                          StringsManager.orderReceiptConfirmation,
                           style:
                               Theme.of(context).textTheme.titleSmall!.copyWith(
                                     color: ColorsManager.textColorPrimary,
@@ -74,7 +76,14 @@ class PaymentSuccessScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Ordered By : ${context.read<ProfileCubit>().state.userData.fullName}',
+                                  '${StringsManager.orderReceiptOrderedBy}${context.read<ProfileCubit>().state.userData.fullName}',
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                        color: ColorsManager.textColorPrimary,
+                                      ),
+                                ),
+                                SizedBox(height: 8.h),
+                                Text(
+                                  '${StringsManager.orderReceiptDate}${DateFormat('d, MMM, y').format(DateTime.now())}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -84,31 +93,13 @@ class PaymentSuccessScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 8.h),
                                 Text(
-                                  'Date : ${DateFormat('d, MMM, y').format(DateTime.now())}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        color: ColorsManager.textColorPrimary,
-                                      ),
+                                  '${StringsManager.orderReceiptTime}${DateFormat('h:mm a').format(DateTime.now())}',
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: ColorsManager.textColorPrimary),
                                 ),
                                 SizedBox(height: 8.h),
                                 Text(
-                                  'Time : ${DateFormat('h:mm a').format(DateTime.now())}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                          color:
-                                              ColorsManager.textColorPrimary),
-                                ),
-                                SizedBox(height: 8.h),
-                                Text(
-                                  'Delivery Date : ${DateFormat('d, MMM, y').format(DateTime.now().add(const Duration(days: 2)))}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
+                                  '${StringsManager.orderReceiptDeliverDate}${DateFormat('d, MMM, y').format(DateTime.now().add(const Duration(days: 2)))}',
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                                         color: ColorsManager.textColorPrimary,
                                       ),
                                 ),
@@ -126,17 +117,13 @@ class PaymentSuccessScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Order Price : ',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium!
+                                StringsManager.orderReceiptPrice,
+                                style: Theme.of(context).textTheme.titleMedium!
                                     .copyWith(color: Colors.black),
                               ),
                               Text(
-                                '\$${ paymentType == PaymentType.collection ? collectionPrice : context.read<CartCubit>().state.cart.total} ',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium!
+                                '${StringsManager.currencySign}${paymentType == PaymentType.collection ? collectionPrice : context.read<CartCubit>().state.cart.total} ',
+                                style: Theme.of(context).textTheme.titleMedium!
                                     .copyWith(color: Colors.black),
                               ),
                             ],
@@ -146,7 +133,7 @@ class PaymentSuccessScreen extends StatelessWidget {
                         SecondaryButton(
                           width: 170.w,
                           height: 42.h,
-                          buttonTitle: 'Go Back',
+                          buttonTitle: StringsManager.orderReceiptGoBackButton,
                           onTap: () {
                             context.router.popUntilRoot();
                           },

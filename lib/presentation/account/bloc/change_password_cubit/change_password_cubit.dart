@@ -12,7 +12,8 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   final ChangePasswordUseCase _changePasswordUseCase;
   late String userAccessToken;
 
-  ChangePasswordCubit(this._getAccessTokenUseCase, this._changePasswordUseCase) : super(ChangePasswordInitial());
+  ChangePasswordCubit(this._getAccessTokenUseCase, this._changePasswordUseCase)
+      : super(ChangePasswordInitial());
 
   Future<void> changePassword({
     required oldPassword,
@@ -22,23 +23,19 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     emit(ChangePasswordLoadingState());
     final getAccessToken = await _getAccessTokenUseCase();
     userAccessToken = getAccessToken.getOrElse(() => '');
-    if (userAccessToken.isNotEmpty) {
-      final response = await _changePasswordUseCase(
-        userAccessToken: userAccessToken,
-        oldPassword: oldPassword,
-        newPassword: newPassword,
-        confirmNewPassword: confirmNewPassword,
-      );
-      response.fold(
-        (failure) => emit(
-          ChangePasswordFailureState(message: failure.message),
-        ),
-        (successMessage) => emit(
-          ChangePasswordSuccessState(message: successMessage),
-        ),
-      );
-    } else {
-      emit(const ChangePasswordFailureState(message: 'There Was an Error!'));
-    }
+    final response = await _changePasswordUseCase(
+      userAccessToken: userAccessToken,
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+      confirmNewPassword: confirmNewPassword,
+    );
+    response.fold(
+      (failure) => emit(
+        ChangePasswordFailureState(message: failure.message),
+      ),
+      (successMessage) => emit(
+        ChangePasswordSuccessState(message: successMessage),
+      ),
+    );
   }
 }

@@ -57,13 +57,8 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Either<Failure, Tokens> checkIfTokensExist() {
-    try{
-      final tokens  = _authLocalDataSource.checkIfTokensExist();
-      return right(tokens.toAuthTokens());
-    } on TokensException catch(exception){
-      return left(CacheFailure(exception.message!));
-    }
+  bool checkIfTokensExist() {
+      return _authLocalDataSource.checkIfTokensExist();
   }
 
   @override

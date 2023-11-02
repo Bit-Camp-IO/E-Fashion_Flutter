@@ -125,7 +125,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       response.fold(
         (failure) => emit(
           state.copyWith(
-            loadMoreProductsState: BlocState.failure,
+            searchState: BlocState.failure,
             searchFailMessage: failure.message,
           ),
         ),

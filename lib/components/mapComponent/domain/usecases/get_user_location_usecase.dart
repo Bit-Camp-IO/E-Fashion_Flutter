@@ -9,7 +9,7 @@ class GetUserLocationUseCase{
   final MapRepository _mapRepository;
   const GetUserLocationUseCase(this._mapRepository);
 
-  Future<Either<Failure, PlaceData>> call({required String userAccessToken}) async{
-    return await _mapRepository.getUserLocationUseCase(userAccessToken: userAccessToken);
+  Future<Either<Failure, PlaceData>> call() async{
+    return await _mapRepository.getUserLocationUseCase();
   }
 }

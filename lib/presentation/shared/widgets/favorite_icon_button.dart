@@ -3,14 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class FavoriteIconButton extends StatelessWidget {
+  final bool isFavorite;
+  final void Function() onFavoriteTap;
   const FavoriteIconButton({
     super.key,
     required this.isFavorite,
     required this.onFavoriteTap,
   });
-
-  final bool isFavorite;
-  final void Function() onFavoriteTap;
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(

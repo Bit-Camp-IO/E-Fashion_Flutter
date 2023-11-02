@@ -2,7 +2,8 @@ final class ApiConstants {
   //! Core
   static const String baseUrl = 'http://192.168.1.20:8080/api';
   static const String mapsBaseUrl = 'https://maps.googleapis.com/maps/api';
-  static const String mainConsumerName = 'mainApiConsumer';
+  static const String unAuthenticatedConsumer = 'unAuthenticatedConsumer';
+  static const String authenticatedConsumer = 'authenticatedConsumer';
   static const String mapsConsumerName = 'mapsApiConsumer';
   static const String headerContentType = 'Content-Type';
   static const String headerContentTypeValue = 'application/json';

@@ -5,6 +5,7 @@ import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/auth/components/shared/auth_clipped_container.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_text_form_field.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:efashion_flutter/shared/util/validation_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,7 +81,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       height: 60.h,
                     ),
                     Text(
-                      "Reset Password",
+                      StringsManager.resetPasswordTitle,
                       style:
                           Theme.of(context).textTheme.headlineSmall!.copyWith(
                                 color: Theme.of(context).colorScheme.primary,
@@ -89,7 +90,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     const SizedBox(height: 8),
                     Text(
                       textAlign: TextAlign.center,
-                      "Your new password must be different\n from previous used password.",
+                      StringsManager.resetPasswordSubtitle,
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: Theme.of(context).colorScheme.outline,
                           ),
@@ -98,12 +99,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       height: 40.h,
                     ),
                     CustomTextFormField(
-                      label: "Password",
+                      label: StringsManager.password,
                       controller: _passwordController,
                       obscureText: true,
                       prefixIcon: Iconsax.lock,
                       keyboardType: TextInputType.visiblePassword,
-                      hintText: "Password",
+                      hintText: StringsManager.password,
                       onSaved: (value) {
                         if (value != null) {
                           password = value;
@@ -115,12 +116,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       ),
                     ),
                     CustomTextFormField(
-                      label: "Confirm Password",
+                      label: StringsManager.confirmPassword,
                       controller: _confirmPasswordController,
                       obscureText: true,
                       prefixIcon: Iconsax.lock,
                       keyboardType: TextInputType.visiblePassword,
-                      hintText: "Password",
+                      hintText: StringsManager.confirmPassword,
                       onSaved: (value) {
                         if (value != null) {
                           confirmPassword = value;
@@ -140,12 +141,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-                              context
-                                  .read<ForgetPasswordCubit>()
-                                  .resetPassword(newPassword: confirmPassword);
+                              context.read<ForgetPasswordCubit>().resetPassword(newPassword: confirmPassword);
                             }
                           },
-                          buttonTitle: 'Continue',
+                          buttonTitle: StringsManager.continueButtonTitle,
                           isLoading: _isLoading,
                         );
                       },

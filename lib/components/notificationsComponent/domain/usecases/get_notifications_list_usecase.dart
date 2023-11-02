@@ -10,7 +10,7 @@ class GetNotificationsListUseCase{
 
   const GetNotificationsListUseCase(this._notificationsRepository);
 
-  Future<Either<Failure, List<AppNotification>>> call({required String userAccessToken}) async{
-    return await _notificationsRepository.getNotificationsList(userAccessToken: userAccessToken);
+  Future<Either<Failure, List<AppNotification>>> call() async{
+    return await _notificationsRepository.getNotificationsList();
   }
 }

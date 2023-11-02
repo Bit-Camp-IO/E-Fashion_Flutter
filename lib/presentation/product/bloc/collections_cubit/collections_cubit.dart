@@ -1,4 +1,3 @@
-import 'package:efashion_flutter/components/authComponent/domain/usecases/get_user_access_token_usecase.dart';
 import 'package:efashion_flutter/components/cartComponent/domain/usecases/create_payment_intent_usecase.dart';
 import 'package:efashion_flutter/components/collectionComponent/domain/entities/collection.dart';
 import 'package:efashion_flutter/components/collectionComponent/domain/entities/collection_item.dart';
@@ -13,15 +12,11 @@ part 'collections_state.dart';
 
 @injectable
 class CollectionsCubit extends Cubit<CollectionsState> {
-  final GetUserAccessTokenUseCase _getUserAccessTokenUseCase;
   final GetCollectionsListUseCase _getCollectionsListUseCase;
   final GetCollectionItemsListUseCase _getCollectionItemsListUseCase;
   final CreatePaymentIntentUseCase _createPaymentIntentUseCase;
 
-  late String userAccessToken;
-
   CollectionsCubit(
-    this._getUserAccessTokenUseCase,
     this._getCollectionsListUseCase,
     this._getCollectionItemsListUseCase,
     this._createPaymentIntentUseCase,
@@ -46,8 +41,7 @@ class CollectionsCubit extends Cubit<CollectionsState> {
     );
   }
 
-  Future<void> getCollectionItemsList(
-      {required String collectionId}) async {
+  Future<void> getCollectionItemsList({required String collectionId}) async {
     emit(state.copyWith(collectionItemsState: CubitState.loading));
     final response =
         await _getCollectionItemsListUseCase(collectionId: collectionId);
@@ -69,30 +63,25 @@ class CollectionsCubit extends Cubit<CollectionsState> {
 
   Future<void> createPaymentIntent({required String collectionId}) async {
     emit(state.copyWith(paymentState: CubitState.loading));
-    final getUserAccessToken = await _getUserAccessTokenUseCase();
-    userAccessToken = getUserAccessToken.getOrElse(() => '');
-    if (userAccessToken.isNotEmpty) {
-      final response = await _createPaymentIntentUseCase(
-        paymentType: PaymentType.collection,
-        collectionId: collectionId,
-        userAccessToken: userAccessToken,
-      );
-      response.fold(
-        (failure) => emit(
-          state.copyWith(
-            paymentState: CubitState.failure,
-            paymentMessage: failure.message,
-          ),
+    final response = await _createPaymentIntentUseCase(
+      paymentType: PaymentType.collection,
+      collectionId: collectionId,
+    );
+    response.fold(
+      (failure) => emit(
+        state.copyWith(
+          paymentState: CubitState.failure,
+          paymentMessage: failure.message,
         ),
-        (clientSecret) {
-          emit(
-            state.copyWith(
-              paymentClientSecret: clientSecret,
-              paymentState: CubitState.success,
-            ),
-          );
-        },
-      );
-    }
+      ),
+      (clientSecret) {
+        emit(
+          state.copyWith(
+            paymentClientSecret: clientSecret,
+            paymentState: CubitState.success,
+          ),
+        );
+      },
+    );
   }
 }

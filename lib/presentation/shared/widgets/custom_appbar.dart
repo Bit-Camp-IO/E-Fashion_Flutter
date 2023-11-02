@@ -5,6 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class CustomAppBar extends StatelessWidget {
+  final String appBarTitle;
+  final AppBarType appBarType;
+  final void Function(int? currentIndex)? onIndexChange;
+  final bool disableBackButton;
+  final void Function()? onBackTap;
   const CustomAppBar({
     super.key,
     required this.appBarTitle,
@@ -14,11 +19,6 @@ class CustomAppBar extends StatelessWidget {
     this.onBackTap,
   });
 
-  final String appBarTitle;
-  final AppBarType appBarType;
-  final void Function(int? currentIndex)? onIndexChange;
-  final bool disableBackButton;
-  final void Function()? onBackTap;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -43,9 +43,7 @@ class CustomAppBar extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
           ),
-          const Spacer(
-            flex: 1,
-          ),
+          const Spacer(),
           appBarType == AppBarType.switcher
               ? AnimatedSwitcherButton(
                   onSwitchIndexChanged: (buttonIndex) {

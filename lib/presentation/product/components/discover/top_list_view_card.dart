@@ -4,11 +4,20 @@ import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/card_bottom_skew_clipper.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/cart_icon_button.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/favorite_icon_button.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TopListViewCard extends StatelessWidget {
+  final String productImage;
+  final String productName;
+  final int productPrice;
+  final bool isFavorite;
+  final void Function() onTap;
+  final void Function() onFavoriteTap;
+  final void Function() onCartTap;
+
   const TopListViewCard({
     super.key,
     required this.productImage,
@@ -19,14 +28,6 @@ class TopListViewCard extends StatelessWidget {
     required this.onFavoriteTap,
     required this.onCartTap,
   });
-  final String productImage;
-  final String productName;
-  final int productPrice;
-  final bool isFavorite;
-  final void Function() onTap;
-  final void Function() onFavoriteTap;
-  final void Function() onCartTap;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -96,7 +97,7 @@ class TopListViewCard extends StatelessWidget {
                             ),
                       ),
                       Text(
-                        '\$$productPrice',
+                        '${StringsManager.currencySign}$productPrice',
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Colors.white,
                             ),

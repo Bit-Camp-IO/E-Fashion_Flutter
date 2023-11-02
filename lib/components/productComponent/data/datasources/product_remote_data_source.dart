@@ -23,17 +23,14 @@ abstract class ProductRemoteDataSource {
     required String productId,
   });
 
-  Future<Set<String>> getUserFavoriteProductsIds(
-      {required String userAccessToken});
+  Future<Set<String>> getUserFavoriteProductsIds();
 
   Future<Set<String>> addProductToFavoriteList({
     required String productId,
-    required String userAccessToken,
   });
 
   Future<String> removeProductFromFavoriteList({
     required String productId,
-    required String userAccessToken,
   });
 
   Future<List<ProductModel>> getBrandProducts({
@@ -51,14 +48,12 @@ abstract class ProductRemoteDataSource {
   });
 
   Future<ReviewModel> addOrEditProductReview({
-    required String userAccessToken,
     required String productId,
     required double rate,
     required String? review,
   });
 
   Future<ReviewModel> getUserProductReview({
-    required String userAccessToken,
     required String productId,
   });
 

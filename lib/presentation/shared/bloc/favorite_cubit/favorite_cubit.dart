@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:efashion_flutter/components/authComponent/domain/usecases/get_user_access_token_usecase.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/product_details.dart';
 import 'package:efashion_flutter/components/productComponent/domain/usecases/favorite/add_product_to_favorite_list_usecase.dart';
 import 'package:efashion_flutter/components/productComponent/domain/usecases/favorite/get_favorite_products_usecase.dart';
@@ -16,17 +15,14 @@ part 'favorite_state.dart';
 
 @injectable
 class FavoriteCubit extends Cubit<FavoriteState> {
-  final GetUserAccessTokenUseCase _getAccessTokenUseCase;
   final GetUserFavoriteProductsIdsUseCase _getUserFavoriteProductsIdsUseCase;
   final AddProductToFavoriteListUseCase _addProductToFavoriteListUseCase;
   final RemoveProductFromFavoriteListUseCase
       _removeProductFromFavoriteListUseCase;
   final GetProductDetailsUseCase _getProductDetailsUseCase;
   final GetFavoriteProductsUseCase _getFavoriteProductsUseCase;
-  late String userAccessToken;
 
   FavoriteCubit(
-    this._getAccessTokenUseCase,
     this._getUserFavoriteProductsIdsUseCase,
     this._addProductToFavoriteListUseCase,
     this._removeProductFromFavoriteListUseCase,
@@ -36,12 +32,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
 
   Future<void> getUserFavoriteIdList() async {
     emit(state.copyWith(favoriteListState: CubitState.loading));
-    final getUserAccessToken = await _getAccessTokenUseCase();
-    userAccessToken = getUserAccessToken.getOrElse(() => '');
-    if (userAccessToken.isNotEmpty) {
-      final response = await _getUserFavoriteProductsIdsUseCase(
-        userAccessToken: userAccessToken,
-      );
+      final response = await _getUserFavoriteProductsIdsUseCase();
       response.fold(
         (failure) => emit(
           state.copyWith(
@@ -55,17 +46,11 @@ class FavoriteCubit extends Cubit<FavoriteState> {
           _getFavoriteProductsList();
         },
       );
-    }
   }
 
-  Future<void> addOrRemoveProductFromFavoriteListEvent(
-      {required String productId}) async {
-    final getUserAccessToken = await _getAccessTokenUseCase();
-    userAccessToken = getUserAccessToken.getOrElse(() => '');
-    if (userAccessToken.isNotEmpty) {
+  Future<void> addOrRemoveProductFromFavoriteListEvent({required String productId}) async {
       if (state.favoritesIds.contains(productId)) {
-        final response = await _removeProductFromFavoriteListUseCase(
-            productId: productId, userAccessToken: userAccessToken);
+        final response = await _removeProductFromFavoriteListUseCase(productId: productId);
         response.fold(
           (failure) => emit(state.copyWith(addOrRemoveFromFavoriteFailMessage: failure.message)),
           (removeMessage) => _removeFavoriteFromSetAndList(productId: productId),
@@ -73,7 +58,6 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       } else {
         final response = await _addProductToFavoriteListUseCase(
           productId: productId,
-          userAccessToken: userAccessToken,
         );
         response.fold(
             (failure) => emit(state.copyWith(addOrRemoveFromFavoriteFailMessage: failure.message)),
@@ -84,7 +68,6 @@ class FavoriteCubit extends Cubit<FavoriteState> {
           _addFavoriteToList(productId: productId);
         });
       }
-    }
   }
 
   Future<void> _getFavoriteProductsList() async {

@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 @RoutePage()
 class ChatSupportScreen extends StatefulWidget implements AutoRouteWrapper {
@@ -43,7 +44,7 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
         child: Column(
           children: [
             const CustomAppBar(
-              appBarTitle: 'Chat Support',
+              appBarTitle: StringsManager.chatScreenTitle,
               appBarType: AppBarType.normal,
             ),
             SizedBox(
@@ -83,9 +84,7 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
                         padding: EdgeInsets.zero,
                         children: [
                           ListView.builder(
-                            itemCount: state.chatState == CubitState.loading
-                                ? 8
-                                : state.chatMessages.length,
+                            itemCount: state.chatState == CubitState.loading ? 8 : state.chatMessages.length,
                             shrinkWrap: true,
                             reverse: true,
                             padding: EdgeInsets.zero,
@@ -98,9 +97,7 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
                                   return const ShimmerLoadingMessage(isReversed: true);
                                 }
                               } else {
-                                final date = DateTime.parse(
-                                  state.chatMessages[index].date,
-                                ).toLocal();
+                                final date = DateFormat.jm().format(DateTime.parse(state.chatMessages[index].date,).toLocal());
                                 if (state.chatMessages[index].isMe == true) {
                                   return Padding(
                                     padding: const EdgeInsets.only(bottom: 16.0).r,

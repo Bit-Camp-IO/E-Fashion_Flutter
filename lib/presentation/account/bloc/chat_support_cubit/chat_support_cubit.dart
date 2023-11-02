@@ -60,10 +60,7 @@ class ChatSupportCubit extends Cubit<ChatSupportState> {
   }
 
   Future<void> _getChatMessages() async {
-    final getAccessToken = await _getUserAccessTokenUseCase();
-    userAccessToken = getAccessToken.getOrElse(() => '');
-    final response = await _getChatMessagesUseCase(
-        userAccessToken: userAccessToken, chatId: state.chatId);
+    final response = await _getChatMessagesUseCase(chatId: state.chatId);
     response.fold(
       (failure) => emit(
         state.copyWith(
@@ -81,13 +78,10 @@ class ChatSupportCubit extends Cubit<ChatSupportState> {
   }
 
   Future<void> sendMessage({required String message}) async {
-    final getAccessToken = await _getUserAccessTokenUseCase();
-    userAccessToken = getAccessToken.getOrElse(() => '');
     if (state.chatId.isNotEmpty) {
       final response = await _sendMessageUseCase(
         message: message,
         chatId: state.chatId,
-        userAccessToken: userAccessToken,
       );
       response.fold(
         (failure) => emit(

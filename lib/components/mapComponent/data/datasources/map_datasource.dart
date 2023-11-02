@@ -8,8 +8,8 @@ import 'package:injectable/injectable.dart';
 abstract class MapDataSource {
  Future<List<PlaceModel>> getPlacesSuggestions({required String searchQuery});
  Future<PlaceDataModel> getPlaceLatitudeAndLongitude({required String placeId});
- Future<PlaceDataModel> getUserLocationUseCase({required String userAccessToken});
- Future<String> updateUserLocationUseCase({required String userAccessToken, required double latitude, required double longitude});
+ Future<PlaceDataModel> getUserLocationUseCase();
+ Future<String> updateUserLocationUseCase({required double latitude, required double longitude});
 }
 
 @LazySingleton(as: MapDataSource)
@@ -20,7 +20,7 @@ class MapDataSourceImpl extends MapDataSource {
   final googleMapsKey = dotenv.env["GOOGLE_MAPS_KEY"]!;
 
   MapDataSourceImpl(
-    @Named(ApiConstants.mainConsumerName) this._mainApiConsumer,
+    @Named(ApiConstants.authenticatedConsumer) this._mainApiConsumer,
     @Named(ApiConstants.mapsConsumerName) this._mapApiConsumer,
   );
 
@@ -45,10 +45,8 @@ class MapDataSourceImpl extends MapDataSource {
   }
 
   @override
-  Future<PlaceDataModel> getUserLocationUseCase({required String userAccessToken}) async{
-    final response = await _mainApiConsumer.get(ApiConstants.addressEndPoint, headers: {
-      'Authorization' : 'Bearer $userAccessToken',
-    });
+  Future<PlaceDataModel> getUserLocationUseCase() async{
+    final response = await _mainApiConsumer.get(ApiConstants.addressEndPoint);
     if(response['status'] == ApiCallStatus.success.value){
       return PlaceDataModel.fromJson(response['data']['location']);
     }else{
@@ -57,10 +55,8 @@ class MapDataSourceImpl extends MapDataSource {
   }
 
   @override
-  Future<String> updateUserLocationUseCase({required String userAccessToken, required double latitude, required double longitude}) async{
-    final response = await _mainApiConsumer.post(ApiConstants.addressEndPoint, headers: {
-      'Authorization' : 'Bearer $userAccessToken',
-    },
+  Future<String> updateUserLocationUseCase({required double latitude, required double longitude}) async{
+    final response = await _mainApiConsumer.post(ApiConstants.addressEndPoint,
       body: {
         "latitude" : latitude,
         "longitude" : longitude

@@ -9,7 +9,7 @@ class SubscribeToNotificationsUseCase{
 
   const SubscribeToNotificationsUseCase(this._notificationsRepository);
 
-  Future<Either<Failure, void>> call({required String userAccessToken, required String deviceToken}) async{
-    return await _notificationsRepository.subscribeToNotifications(userAccessToken: userAccessToken, deviceToken: deviceToken);
+  Future<Either<Failure, void>> call({required String deviceToken}) async{
+    return await _notificationsRepository.subscribeToNotifications(deviceToken: deviceToken);
   }
 }

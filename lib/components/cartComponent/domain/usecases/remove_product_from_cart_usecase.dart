@@ -10,7 +10,7 @@ class RemoveProductFromCartUseCase {
 
   const RemoveProductFromCartUseCase(this._cartRepository);
 
-  Future<Either<Failure, Cart>> call({required String userAccessToken, required String productId}) async {
-    return await _cartRepository.removeProductFromCart(userAccessToken: userAccessToken, productId: productId);
+  Future<Either<Failure, Cart>> call({required String productId}) async {
+    return await _cartRepository.removeProductFromCart(productId: productId);
   }
 }

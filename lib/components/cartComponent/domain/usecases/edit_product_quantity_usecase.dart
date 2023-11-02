@@ -10,7 +10,7 @@ class EditProductQuantityUseCase{
 
   const EditProductQuantityUseCase(this._cartRepository);
 
-  Future<Either<Failure, Cart>> call({required String userAccessToken, required String productId, required int newQuantity}) async{
-    return await _cartRepository.editProductQuantity(userAccessToken: userAccessToken, productId: productId, newQuantity: newQuantity);
+  Future<Either<Failure, Cart>> call({required String productId, required int newQuantity}) async{
+    return await _cartRepository.editProductQuantity(productId: productId, newQuantity: newQuantity);
   }
 }

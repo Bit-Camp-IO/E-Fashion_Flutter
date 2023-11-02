@@ -9,7 +9,7 @@ class GetCartProductsUseCase{
   final CartRepository _cartRepository;
 
   const GetCartProductsUseCase(this._cartRepository);
-  Future<Either<Failure, Cart>> call({required String userAccessToken}) async {
-    return await _cartRepository.getCartProducts(userAccessToken: userAccessToken);
+  Future<Either<Failure, Cart>> call() async {
+    return await _cartRepository.getCartProducts();
   }
 }

@@ -11,13 +11,11 @@ class UpdateUserDataUseCase {
   const UpdateUserDataUseCase(this._userRepository);
 
   Future<Either<Failure, User>> call({
-    required String userAccessToken,
     required String fullName,
     required String? phoneNumber,
     required String email,
   }) async {
     return await _userRepository.updateUserData(
-      userAccessToken: userAccessToken,
       fullName: fullName,
       phoneNumber: phoneNumber,
       email: email,

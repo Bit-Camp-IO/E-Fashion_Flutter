@@ -1,17 +1,17 @@
 import 'package:efashion_flutter/components/mapComponent/domain/entities/place.dart';
 import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
 import 'package:efashion_flutter/shared/util/size_manager.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class MapSearchField extends StatefulWidget {
-  const MapSearchField(
-      {super.key, required this.onChanged, required this.places, required this.onPlaceChoose,});
 
   final ValueChanged<String> onChanged;
   final List<Place> places;
   final void Function(String placeId) onPlaceChoose;
+  const MapSearchField({super.key, required this.onChanged, required this.places, required this.onPlaceChoose,});
 
   @override
   State<MapSearchField> createState() => _MapSearchFieldState();
@@ -59,7 +59,7 @@ class _MapSearchFieldState extends State<MapSearchField> {
                 ),
                 filled: true,
                 fillColor: Theme.of(context).colorScheme.surfaceVariant,
-                hintText: 'Search...',
+                hintText: StringsManager.searchHint,
                 hintStyle: Theme.of(context).textTheme.bodyMedium,
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide.none,

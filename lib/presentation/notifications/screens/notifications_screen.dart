@@ -5,7 +5,10 @@ import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart'
 import 'package:efashion_flutter/presentation/notifications/componenets/delivery_notification.dart';
 import 'package:efashion_flutter/presentation/notifications/componenets/message_notification.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/no_internet_connection_widget.dart';
+import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,7 +38,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         child: Column(
           children: [
             const CustomAppBar(
-              appBarTitle: 'Notifications',
+              appBarTitle: StringsManager.notificationsScreenTitle,
               appBarType: AppBarType.normal,
             ),
             Expanded(
@@ -56,45 +59,51 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       isButtonLoading: isLoading,
                     );
                   }else{
-                    return ListView.builder(
-                      itemCount: state.notificationsState == CubitState.loading ? 6 : state.notifications.length,
-                      padding: const EdgeInsets.only(top: 30, bottom: 100).r,
-                      itemBuilder: (context, index) {
-                        if (state.notificationsState == CubitState.initial || state.notificationsState == CubitState.loading) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 16.0).r,
-                            child: const NotificationShimmerLoading(),
-                          );
-                        } else {
-                          String formattedDate = DateFormat.jm().format(
-                            DateTime.parse(state.notifications[index].date)
-                                .toLocal(),
-                          );
-                          if (state.notifications[index].type == NotificationType.newMessage.value) {
+                    if(state.notifications.isEmpty && state.notificationsState == CubitState.success){
+                      return Center(
+                        child: Image.asset(AssetsManager.noNotifications),
+                      );
+                    }else{
+                      return ListView.builder(
+                        itemCount: state.notificationsState == CubitState.loading ? 6 : state.notifications.length,
+                        padding: const EdgeInsets.only(top: 30, bottom: 100).r,
+                        itemBuilder: (context, index) {
+                          if (state.notificationsState == CubitState.initial || state.notificationsState == CubitState.loading) {
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 16.0).r,
-                              child: MessageNotification(
-                                notificationBody: state.notifications[index].body,
-                                notificationTime: formattedDate,
-                              ),
+                              child: const NotificationShimmerLoading(),
                             );
                           } else {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 16.0).r,
-                              child: DeliveryNotification(
-                                notificationTitle:
-                                state.notifications[index].title,
-                                notificationBody: state.notifications[index].body,
-                                deliveryStatus: 2,
-                                notificationTime: formattedDate,
-                              ),
+                            String formattedDate = DateFormat.jm().format(DateTime.parse(state.notifications[index].date).toLocal(),
                             );
+                            if (state.notifications[index].type == NotificationType.newMessage.value) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16.0).r,
+                                child: MessageNotification(
+                                  onMessageTap: () {
+                                    context.pushRoute(const ChatSupportRoute());
+                                  },
+                                  notificationBody: state.notifications[index].body,
+                                  notificationTime: formattedDate,
+                                ),
+                              );
+                            } else {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16.0).r,
+                                child: DeliveryNotification(
+                                  notificationTitle:
+                                  state.notifications[index].title,
+                                  notificationBody: state.notifications[index].body,
+                                  deliveryStatus: 2,
+                                  notificationTime: formattedDate,
+                                ),
+                              );
+                            }
                           }
-                        }
-                      },
-                    );
+                        },
+                      );
+                    }
                   }
-
                 },
               ),
             ),

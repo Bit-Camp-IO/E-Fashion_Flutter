@@ -4,6 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class EmptyProfilePicture extends StatelessWidget {
+  final String name;
+  final double? width;
+  final double? height;
+  final bool isLarge;
+  final void Function()? onRefreshPress;
+
   const EmptyProfilePicture({
     super.key,
     required this.name,
@@ -12,13 +18,6 @@ class EmptyProfilePicture extends StatelessWidget {
     this.isLarge = false,
     this.onRefreshPress,
   });
-
-  final String name;
-  final double? width;
-  final double? height;
-  final bool isLarge;
-
-  final void Function()? onRefreshPress;
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +34,19 @@ class EmptyProfilePicture extends StatelessWidget {
                 name[0],
                 style: isLarge
                     ? Theme.of(context).textTheme.displayLarge!.copyWith(
-                        color: Colors.white,
-                        fontFamily: AssetsManager.primaryFontFamily)
-                    : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Colors.white,
+                          fontFamily: AssetsManager.primaryFontFamily,
+                        ) : Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: Colors.white,
                         ),
               )
             : IconButton(
-                onPressed: onRefreshPress, icon: const Icon(Iconsax.refresh, color: Colors.white,)),
+                onPressed: onRefreshPress,
+                icon: const Icon(
+                  Iconsax.refresh,
+                  color: Colors.white,
+                ),
+              ),
       ),
     );
   }

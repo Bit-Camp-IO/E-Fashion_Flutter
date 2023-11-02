@@ -14,6 +14,7 @@ import 'package:injectable/injectable.dart';
 import 'package:rxdart/transformers.dart';
 
 part 'home_event.dart';
+
 part 'home_state.dart';
 
 @injectable
@@ -25,6 +26,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   late String userAccessToken;
   String? categories;
+
   HomeBloc(
     this._getCategoriesUseCase,
     this._getProductsOffersUseCase,
@@ -53,8 +55,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           categoriesState: BlocState.failure,
         ),
       ),
-      (categoriesList) => emit(state.copyWith(
-          categories: categoriesList, categoriesState: BlocState.success)),
+      (categoriesList) => emit(
+        state.copyWith(
+          categories: categoriesList,
+          categoriesState: BlocState.success,
+        ),
+      ),
     );
   }
 
@@ -97,28 +103,27 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  Future<void> _getBrandsProductsEvent(GetBrandsProductsEvent event, emit) async {
+  Future<void> _getBrandsProductsEvent(
+      GetBrandsProductsEvent event, emit) async {
     if (state.brands.isNotEmpty) {
       emit(state.copyWith(brandsProductsState: BlocState.loading));
       categories = event.categories;
       final Either<Failure, Map<String, List<Product>>> brandsProductsResponse =
-      await _getBrandsProductsUseCase(
-          brandsList: state.brands, categories: event.categories);
+          await _getBrandsProductsUseCase(
+              brandsList: state.brands, categories: event.categories);
       brandsProductsResponse.fold(
-            (failure) =>
-            emit(
-              state.copyWith(
-                brandsProductsFailureMessage: failure.message,
-                brandsProductsState: BlocState.failure,
-              ),
-            ),
-            (brandsProducts) =>
-            emit(
-              state.copyWith(
-                brandsProducts: brandsProducts,
-                brandsProductsState: BlocState.success,
-              ),
-            ),
+        (failure) => emit(
+          state.copyWith(
+            brandsProductsFailureMessage: failure.message,
+            brandsProductsState: BlocState.failure,
+          ),
+        ),
+        (brandsProducts) => emit(
+          state.copyWith(
+            brandsProducts: brandsProducts,
+            brandsProductsState: BlocState.success,
+          ),
+        ),
       );
     }
   }

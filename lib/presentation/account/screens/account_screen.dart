@@ -31,8 +31,7 @@ class AccountScreen extends StatelessWidget {
         child: Stack(
           children: [
             BlocBuilder<ProfileCubit, ProfileState>(
-              buildWhen: (previous, current) =>
-                  previous.userData != current.userData,
+              buildWhen: (previous, current) => previous.userData != current.userData,
               builder: (context, state) {
                 return BlurredBackgroundImage(
                   isLocalImage: state.userData.profileImagePath != null ? false : true,
@@ -49,8 +48,7 @@ class AccountScreen extends StatelessWidget {
               right: 0.0,
               top: 90.h,
               child: BlocBuilder<ProfileCubit, ProfileState>(
-                buildWhen: (previous, current) =>
-                    previous.userData != current.userData,
+                buildWhen: (previous, current) => previous.userData != current.userData,
                 builder: (context, state) {
                   return Column(
                     children: [

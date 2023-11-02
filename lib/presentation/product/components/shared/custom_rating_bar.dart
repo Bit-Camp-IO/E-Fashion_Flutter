@@ -12,7 +12,7 @@ class CustomRatingBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return RatingBar(
       initialRating: initialRating,
-      minRating: 0,
+      minRating: 1,
       direction: Axis.horizontal,
       itemCount: 5,
       allowHalfRating: true,

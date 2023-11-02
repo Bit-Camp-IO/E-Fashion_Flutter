@@ -1,19 +1,20 @@
+import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SectionWidget extends StatelessWidget {
-  const SectionWidget({
-    super.key,
-    required this.sectionTitle,
-    this.sectionButtonTitle = 'Discover',
-    this.onTextButtonTap,
-    this.sectionType = SectionType.normal,
-  });
-
   final String sectionTitle;
   final String sectionButtonTitle;
   final void Function()? onTextButtonTap;
   final SectionType sectionType;
+
+  const SectionWidget({
+    super.key,
+    required this.sectionTitle,
+    this.sectionButtonTitle = StringsManager.sectionButtonDefaultTitle,
+    this.onTextButtonTap,
+    this.sectionType = SectionType.normal,
+  });
   @override
   Widget build(BuildContext context) {
     return Padding(

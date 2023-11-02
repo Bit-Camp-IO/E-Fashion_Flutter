@@ -10,7 +10,7 @@ class GetUserProductReviewUseCase{
 
   const GetUserProductReviewUseCase(this._productRepository);
 
-  Future<Either<Failure, Review>> call({required String userAccessToken, required String productId}) async{
-    return await _productRepository.getUserProductReview(userAccessToken: userAccessToken, productId: productId);
+  Future<Either<Failure, Review>> call({required String productId}) async{
+    return await _productRepository.getUserProductReview(productId: productId);
   }
 }

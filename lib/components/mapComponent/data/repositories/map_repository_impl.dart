@@ -34,9 +34,9 @@ class MapRepositoryImpl extends MapRepository{
   }
 
   @override
-  Future<Either<Failure, String>> updateUserLocationUseCase({required String userAccessToken, required double latitude, required double longitude}) async{
+  Future<Either<Failure, String>> updateUserLocationUseCase({required double latitude, required double longitude}) async{
     try{
-      final String updateMessage = await _mapDataSource.updateUserLocationUseCase(userAccessToken: userAccessToken,latitude: latitude, longitude: longitude);
+      final String updateMessage = await _mapDataSource.updateUserLocationUseCase(latitude: latitude, longitude: longitude);
       return right(updateMessage);
     }on ServerException catch(exception){
       return left(Failure(exception.message!));
@@ -44,9 +44,9 @@ class MapRepositoryImpl extends MapRepository{
   }
 
   @override
-  Future<Either<Failure, PlaceData>> getUserLocationUseCase({required String userAccessToken}) async{
+  Future<Either<Failure, PlaceData>> getUserLocationUseCase() async{
     try{
-      final PlaceDataModel placeData = await _mapDataSource.getUserLocationUseCase(userAccessToken: userAccessToken);
+      final PlaceDataModel placeData = await _mapDataSource.getUserLocationUseCase();
       return right(placeData);
     }on ServerException catch(exception){
       return left(Failure(exception.message!));

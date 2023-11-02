@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 
 abstract class AuthLocalDataSource{
   Future<void> addAuthTokens({required TokensModel authTokensModel});
-  TokensModel checkIfTokensExist();
+  bool checkIfTokensExist();
   String getAccessToken();
   Future<String> getRefreshToken();
   Future<void> updateAccessToken({required String accessToken});
@@ -23,11 +23,11 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource{
   }
 
   @override
-  TokensModel checkIfTokensExist() {
+  bool checkIfTokensExist() {
     if(authDatabase.containsKey(AppConstants.authBox)){
-      return authDatabase.get(AppConstants.authBox)!;
+      return true;
     }else{
-      throw const TokensException('No Tokens Found');
+      return false;
     }
   }
 

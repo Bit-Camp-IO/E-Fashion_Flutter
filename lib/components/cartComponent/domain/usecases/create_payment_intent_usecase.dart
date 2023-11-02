@@ -9,7 +9,7 @@ class CreatePaymentIntentUseCase{
 
   const CreatePaymentIntentUseCase(this._cartRepository);
 
-  Future<Either<Failure, String>> call({required String userAccessToken, required PaymentType paymentType, String? collectionId}) async{
-    return await _cartRepository.createPaymentIntent(userAccessToken: userAccessToken, paymentType: paymentType, collectionId: collectionId);
+  Future<Either<Failure, String>> call({required PaymentType paymentType, String? collectionId}) async{
+    return await _cartRepository.createPaymentIntent(paymentType: paymentType, collectionId: collectionId);
   }
 }
