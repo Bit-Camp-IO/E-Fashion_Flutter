@@ -90,9 +90,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             duration: const Duration(seconds: 1),
                             curve: Curves.easeInOut,
                             decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onInverseSurface,
+                              color: Theme.of(context).colorScheme.onInverseSurface,
                               borderRadius: isSheetExpandedValue
                                   ? null
                                   : BorderRadius.only(
@@ -108,34 +106,47 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                 children: [
                                   SizedBox(height: 30.h),
                                   Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 16.0).r,
-                                    child: AnimatedSwitcher(
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                      child: isSheetExpandedValue
-                                          ? SizedBox(
-                                              width: 48.w,
-                                              height: 48.h,
-                                              child: IconButton(
-                                                onPressed: () {
-                                                  context.popRoute();
-                                                },
-                                                icon: Icon(
-                                                  Iconsax.arrow_left,
-                                                  color: Colors.white,
-                                                  size: 24.sp,
+                                    padding: const EdgeInsets.only(left: 16.0).r,
+                                    child: Row(
+                                      children: [
+                                        AnimatedSwitcher(
+                                          duration: const Duration(seconds: 1),
+                                          child: isSheetExpandedValue
+                                              ? SizedBox(
+                                                  width: 48.w,
+                                                  height: 48.h,
+                                                  child: IconButton(
+                                                    onPressed: () {
+                                                      context.popRoute();
+                                                    },
+                                                    icon: Icon(
+                                                      Iconsax.arrow_left,
+                                                      color: Theme.of(context).colorScheme.onSurface,
+                                                      size: 24.sp,
+                                                    ),
+                                                  ),
+                                                )
+                                              : ClippedContainerButton(
+                                                  key: ValueKey<bool>(isSheetExpandedValue),
+                                                  onTap: () {
+                                                    context.popRoute();
+                                                  },
+                                                  icon: Iconsax.arrow_left,
                                                 ),
-                                              ),
-                                            )
-                                          : ClippedContainerButton(
-                                              key: ValueKey<bool>(
-                                                  isSheetExpandedValue),
-                                              onTap: () {
-                                                context.popRoute();
-                                              },
-                                              icon: Iconsax.arrow_left,
-                                            ),
+                                        ),
+                                        SizedBox(width: 5.w),
+                                        AnimatedSwitcher(
+                                          switchInCurve: Curves.easeIn,
+                                          switchOutCurve: Curves.easeOut,
+                                          duration: const Duration(milliseconds: 700),
+                                          child: isSheetExpandedValue ? Text(
+                                          state.productDetails.title,
+                                           overflow: TextOverflow.ellipsis,
+                                            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                            color: Theme.of(context).colorScheme.onSurface,
+                                          ),
+                                        ) : const SizedBox.shrink()),
+                                      ],
                                     ),
                                   ),
                                   SizedBox(height: 10.h),
@@ -160,6 +171,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                                     productDescription: state.productDetails.description,
                                                     productStock: state.productDetails.stock,
                                                     productPrice: state.productDetails.price.toInt(),
+                                                    isSheetExpanded: isSheetExpandedValue,
                                                   ),
                                                   RatingAndReviewsComponent(
                                                     productId: widget.productId,

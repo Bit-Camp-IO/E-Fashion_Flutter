@@ -1,6 +1,7 @@
 final class ApiConstants {
   //! Core
-  static const String baseUrl = 'http://192.168.1.20:8080/api';
+  static const String apiUrl = 'http://192.168.1.20:8080';
+  static const String baseUrl = '$apiUrl/api';
   static const String mapsBaseUrl = 'https://maps.googleapis.com/maps/api';
   static const String unAuthenticatedConsumer = 'unAuthenticatedConsumer';
   static const String authenticatedConsumer = 'authenticatedConsumer';

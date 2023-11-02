@@ -8,6 +8,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 class DismissibleCartCard extends StatefulWidget {
+  final String productName;
+  final String productImage;
+  final String productId;
+  final int totalPrice;
+  final String? selectedSize;
+  final String? selectedColor;
+  final int stock;
+  final int quantity;
+  final void Function() onPiecesIncrement;
+  final void Function() onPiecesDecrement;
+  final void Function(DismissDirection dismissDirection) onDismissed;
   const DismissibleCartCard({
     super.key,
     required this.productName,
@@ -16,28 +27,24 @@ class DismissibleCartCard extends StatefulWidget {
     required this.productImage,
     required this.stock,
     this.selectedSize,
+    this.selectedColor,
     required this.quantity,
     required this.onPiecesIncrement,
     required this.onPiecesDecrement,
     required this.onDismissed,
   });
 
-  final String productName;
-  final String productImage;
-  final String productId;
-  final int totalPrice;
-  final String? selectedSize;
-  final int stock;
-  final int quantity;
-  final void Function() onPiecesIncrement;
-  final void Function() onPiecesDecrement;
-  final void Function(DismissDirection dismissDirection) onDismissed;
 
   @override
   State<DismissibleCartCard> createState() => _DismissibleCartCardState();
 }
 
 class _DismissibleCartCardState extends State<DismissibleCartCard> {
+  int _cleanHexCode(String hexCode){
+    String cleanedHex = hexCode.replaceAll("#", "");
+    return int.parse('0xFF$cleanedHex');
+  }
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -52,14 +59,14 @@ class _DismissibleCartCardState extends State<DismissibleCartCard> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Icon(Iconsax.trash),
+              const Icon(Iconsax.trash, color: Colors.white,),
               SizedBox(width: 30.w),
             ],
           ),
         ),
         child: Container(
           width: 312.w,
-          height: 120.h,
+          height: 140.h,
           color: Theme.of(context).colorScheme.surfaceVariant,
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -72,7 +79,7 @@ class _DismissibleCartCardState extends State<DismissibleCartCard> {
                   borderRadius: BorderRadius.circular(15).r,
                   child: CachedNetworkImage(
                     width: 90.w,
-                    height: 100.h,
+                    height: 120.h,
                     fit: BoxFit.cover,
                     imageUrl: widget.productImage,
                     cacheManager: CacheManager(
@@ -99,6 +106,26 @@ class _DismissibleCartCardState extends State<DismissibleCartCard> {
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
                     ),
+                    SizedBox(
+                      height: widget.selectedSize == null && widget.selectedColor == null ? 0 : 10.h,
+                    ),
+                    widget.selectedColor != null ?
+                        Row(
+                          children: [
+                            Text(StringsManager.colorSection,
+                              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                             ),
+                            ),
+                            SizedBox(width: 4.w),
+                            CircleAvatar(
+                              radius: 7.r,
+                              backgroundColor: Color(_cleanHexCode(widget.selectedColor!)),
+                            ),
+                          ],
+                        )
+                        : const SizedBox.shrink(),
+                    SizedBox(height: widget.selectedSize == null && widget.selectedColor == null ?  0 : 4.h),
                     widget.selectedSize != null
                         ? Text(
                             '${StringsManager.sizeSection}${widget.selectedSize!}',
@@ -107,7 +134,6 @@ class _DismissibleCartCardState extends State<DismissibleCartCard> {
                                 ),
                           )
                         : const SizedBox.shrink(),
-                    SizedBox(height: widget.selectedSize != null ? 8.h : 4.h),
                     Row(
                       children: [
                         AnimatedSwitcher(

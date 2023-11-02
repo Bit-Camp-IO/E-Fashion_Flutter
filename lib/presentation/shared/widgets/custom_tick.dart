@@ -65,7 +65,7 @@ class _CustomTickState extends State<CustomTick> with SingleTickerProviderStateM
                 child: Text(
                   key: ValueKey<int>(widget.tickCount),
                   widget.tickCount.toString(),
-                  style: TextStyle(fontSize: 10.sp),
+                  style: TextStyle(fontSize: 10.sp, color: Colors.white),
                 ),
               ),
             ),

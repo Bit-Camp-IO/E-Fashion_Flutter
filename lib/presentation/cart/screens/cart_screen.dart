@@ -48,8 +48,7 @@ class _CartScreenState extends State<CartScreen> {
                 builder: (context, state) {
                   if (state.cartState == CubitState.initial || state.cartState == CubitState.loading) {
                     return const CartShimmerLoading();
-                  } else if (state.cart.products.isEmpty &&
-                      state.cartState == CubitState.success) {
+                  } else if (state.cart.products.isEmpty && state.cartState == CubitState.success) {
                     return const EmptyWidget(
                       image: AssetsManager.cartImage,
                       title: StringsManager.emptyCartTitle,

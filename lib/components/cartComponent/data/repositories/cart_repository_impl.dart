@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:efashion_flutter/components/cartComponent/data/datasources/cart_datasource.dart';
 import 'package:efashion_flutter/components/cartComponent/data/models/cart_model.dart';
 import 'package:efashion_flutter/components/cartComponent/data/models/cart_order_model.dart';
+import 'package:efashion_flutter/components/cartComponent/domain/entities/cart.dart';
+import 'package:efashion_flutter/components/cartComponent/domain/entities/cart_order.dart';
 import 'package:efashion_flutter/components/cartComponent/domain/repositories/cart_repository.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:efashion_flutter/shared/error/failure.dart';
@@ -13,42 +15,42 @@ class CartRepositoryImpl extends CartRepository{
 
   CartRepositoryImpl(this._cartDataSource);
   @override
-  Future<Either<Failure, CartModel>> addProductToCart({required String productId, required String? productSize, required String? productColor, required int productQuantity}) async{
+  Future<Either<Failure, Cart>> addProductToCart({required String productId, required String? productSize, required String? productColor, required int productQuantity}) async{
     try{
     final CartModel response = await _cartDataSource.addProductToCart(productId: productId, productSize: productSize, productColor: productColor, productQuantity: productQuantity);
     return right(response);
     }on ServerException catch(exception){
-      return left(Failure(exception.message!));
+      return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, CartModel>> editProductQuantity({required String productId, required int newQuantity}) async{
+  Future<Either<Failure, Cart>> editProductQuantity({required String productId, required int newQuantity}) async{
     try{
     final CartModel response = await _cartDataSource.editProductQuantity(productId: productId, newQuantity: newQuantity);
     return right(response);
     }on ServerException catch(exception){
-      return left(Failure(exception.message!));
+      return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, CartModel>> getCartProducts() async{
+  Future<Either<Failure, Cart>> getCartProducts() async{
     try{
     final CartModel cartProducts = await _cartDataSource.getCartProducts();
     return right(cartProducts);
     }on ServerException catch(exception){
-      return left(Failure(exception.message!));
+      return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, CartModel>> removeProductFromCart({required String productId}) async{
+  Future<Either<Failure, Cart>> removeProductFromCart({required String productId}) async{
     try{
     final CartModel response = await _cartDataSource.removeProductFromCart(productId: productId);
     return Right(response);
     }on ServerException catch(exception){
-      return left(Failure(exception.message!));
+      return left(ApiFailure(exception.message!));
     }
   }
 
@@ -58,12 +60,12 @@ class CartRepositoryImpl extends CartRepository{
       final String response = await _cartDataSource.createPaymentIntent(paymentType: paymentType, collectionId: collectionId);
       return Right(response);
     }on ServerException catch(exception){
-      return left(Failure(exception.message!));
+      return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, List<CartOrderModel>>> getOrdersList() async{
+  Future<Either<Failure, List<CartOrder>>> getOrdersList() async{
     try{
       final List<CartOrderModel> ordersList = await _cartDataSource.getOrdersList();
       return right(ordersList);

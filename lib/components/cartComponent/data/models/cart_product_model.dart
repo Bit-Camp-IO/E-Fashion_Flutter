@@ -6,6 +6,7 @@ class CartProductModel extends CartProduct {
     required super.title,
     required super.imageUrl,
     required super.size,
+    required super.color,
     required super.quantity,
     required super.stock,
     required super.price,
@@ -14,10 +15,11 @@ class CartProductModel extends CartProduct {
 
   factory CartProductModel.fromJson(Map<String, dynamic> jsonData) {
     return CartProductModel(
-      id: jsonData['productId'],
+      id: jsonData['id'],
       title: jsonData['title'],
       imageUrl: jsonData['imageUrl'],
       size: jsonData['size'],
+      color: jsonData['color'],
       quantity: jsonData['quantity'],
       stock: jsonData['stock'],
       price: jsonData['price'],

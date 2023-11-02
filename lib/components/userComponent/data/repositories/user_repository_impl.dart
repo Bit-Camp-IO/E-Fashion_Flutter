@@ -3,6 +3,7 @@ import 'package:efashion_flutter/components/userComponent/data/datasources/local
 import 'package:efashion_flutter/components/userComponent/data/datasources/remote/user_remote_data_source.dart';
 import 'package:efashion_flutter/components/userComponent/data/models/user_model.dart';
 import 'package:efashion_flutter/components/userComponent/domain/entities/app_theme.dart';
+import 'package:efashion_flutter/components/userComponent/domain/entities/user.dart';
 import 'package:efashion_flutter/components/userComponent/domain/repositories/user_repository.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:efashion_flutter/shared/error/failure.dart';
@@ -27,7 +28,7 @@ class UserRepositoryImpl extends UserRepository{
   }
 
   @override
-  Future<Either<Failure, UserModel>> getUserData() async{
+  Future<Either<Failure, User>> getUserData() async{
     try{
       final UserModel userData = await _userRemoteDataSource.getUserData();
       return right(userData);
@@ -47,7 +48,7 @@ class UserRepositoryImpl extends UserRepository{
   }
 
   @override
-  Future<Either<Failure, UserModel>> updateUserData({required String fullName, required String? phoneNumber, required String email}) async{
+  Future<Either<Failure, User>> updateUserData({required String fullName, required String phoneNumber, required String email}) async{
     try{
       final UserModel userData = await _userRemoteDataSource.updateUserData(fullName: fullName, phoneNumber: phoneNumber, email: email);
       return right(userData);

@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:efashion_flutter/components/productComponent/data/datasources/product_remote_data_source.dart';
 import 'package:efashion_flutter/components/productComponent/data/models/review_model.dart';
+import 'package:efashion_flutter/components/productComponent/domain/entities/category.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/product.dart';
+import 'package:efashion_flutter/components/productComponent/domain/entities/review.dart';
 import 'package:efashion_flutter/components/productComponent/domain/entities/reviews_and_rating.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
 import 'package:efashion_flutter/shared/error/failure.dart';
@@ -21,7 +23,7 @@ class ProductRepositoryImpl extends ProductRepository {
   const ProductRepositoryImpl(this._productRemoteDataSource);
 
   @override
-  Future<Either<Failure, List<CategoryModel>>> getCategories(
+  Future<Either<Failure, List<Category>>> getCategories(
       {required int genderId}) async {
     try {
       final List<CategoryModel> categoriesList =
@@ -33,10 +35,9 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductModel>>> getProductsOffers({String? categories, int? pageNumber}) async {
+  Future<Either<Failure, List<Product>>> getProductsOffers({String? categories, int? pageNumber}) async {
     try {
-      final List<ProductModel> productList = await _productRemoteDataSource
-          .getProductsOffers(categories: categories, pageNumber: pageNumber);
+      final List<ProductModel> productList = await _productRemoteDataSource.getProductsOffers(categories: categories, pageNumber: pageNumber);
       return right(productList);
     } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
@@ -44,7 +45,7 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
-  Future<Either<Failure, List<BrandModel>>> getBrands() async {
+  Future<Either<Failure, List<Brand>>> getBrands() async {
     try {
       final List<BrandModel> brandsList =
           await _productRemoteDataSource.getBrands();
@@ -55,12 +56,9 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
-  Future<Either<Failure, Map<String, List<ProductModel>>>> getAllBrandsProducts(
-      {required List<Brand> brandsList, String? categories}) async {
+  Future<Either<Failure, Map<String, List<Product>>>> getAllBrandsProducts({required List<Brand> brandsList, String? categories}) async {
     try {
-      final Map<String, List<ProductModel>> brandsProducts =
-          await _productRemoteDataSource.getAllBrandsProducts(
-              brands: brandsList, categories: categories);
+      final Map<String, List<ProductModel>> brandsProducts = await _productRemoteDataSource.getAllBrandsProducts(brands: brandsList, categories: categories);
       return right(brandsProducts);
     } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
@@ -68,12 +66,9 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
-  Future<Either<Failure, ProductDetails>> getProductDetails(
-      {required String productId}) async {
+  Future<Either<Failure, ProductDetails>> getProductDetails({required String productId}) async {
     try {
-      final ProductDetailsModel allBrandsProducts =
-          await _productRemoteDataSource.getProductDetails(
-              productId: productId);
+      final ProductDetailsModel allBrandsProducts = await _productRemoteDataSource.getProductDetails(productId: productId);
       return right(allBrandsProducts);
     } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
@@ -83,8 +78,7 @@ class ProductRepositoryImpl extends ProductRepository {
   @override
   Future<Either<Failure, Set<String>>> getUserFavoriteProductIds() async {
     try {
-      final Set<String> favoriteSet = await _productRemoteDataSource
-          .getUserFavoriteProductsIds();
+      final Set<String> favoriteSet = await _productRemoteDataSource.getUserFavoriteProductsIds();
       return right(favoriteSet);
     } on ServerException catch (exception) {
       return left(ApiFailure(exception.message!));
@@ -120,7 +114,7 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductModel>>> getBrandProducts({
+  Future<Either<Failure, List<Product>>> getBrandProducts({
     required String brandId,
     required int pageNumber,
     required String? categories,
@@ -138,7 +132,7 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductDetailsModel>>> getFavoriteProducts(
+  Future<Either<Failure, List<ProductDetails>>> getFavoriteProducts(
       {required Set<String> favoriteIds}) async {
     try {
       final List<ProductDetailsModel> brandsProducts = await _productRemoteDataSource.getFavoriteProducts(
@@ -163,7 +157,7 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
-  Future<Either<Failure, ReviewModel>> addOrEditProductReview({
+  Future<Either<Failure, Review>> addOrEditProductReview({
     required String productId,
     required double rate,
     String? review,
@@ -181,7 +175,7 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
-  Future<Either<Failure, ReviewModel>> getUserProductReview({
+  Future<Either<Failure, Review>> getUserProductReview({
     required String productId,
   }) async {
     try {

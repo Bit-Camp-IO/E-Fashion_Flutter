@@ -17,7 +17,7 @@ abstract class UserRepository {
 
   Future<Either<Failure, User>> updateUserData({
     required String fullName,
-    required String? phoneNumber,
+    required String phoneNumber,
     required String email,
   });
 }

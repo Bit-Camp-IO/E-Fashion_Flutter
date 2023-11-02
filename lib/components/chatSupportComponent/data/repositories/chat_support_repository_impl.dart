@@ -18,32 +18,32 @@ class ChatSupportRepositoryImpl extends ChatSupportRepository{
       final String chatId = await _chatRemoteDataSource.createOrJoinChat(userAccessToken: userAccessToken);
       return right(chatId);
     }on ServerException catch(exception){
-      return left(Failure(exception.message!));
+      return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, List<ChatMessage>>> getChatMessages({required String chatId}) async{
+  Future<Either<ApiFailure, List<ChatMessage>>> getChatMessages({required String chatId}) async{
     try{
       final List<ChatMessageModel> chatMessages = await _chatRemoteDataSource.getChatMessages(chatId: chatId);
       return right(chatMessages);
     }on ServerException catch(exception){
-      return left(Failure(exception.message!));
+      return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Future<Either<Failure, ChatMessageModel>> sendMessage({required String message, required String chatId}) async{
+  Future<Either<Failure, ChatMessage>> sendMessage({required String message, required String chatId}) async{
     try{
       final ChatMessageModel chatMessage = await _chatRemoteDataSource.sendMessage(message: message, chatId: chatId);
       return right(chatMessage);
     }on ServerException catch(exception){
-      return left(Failure(exception.message!));
+      return left(ApiFailure(exception.message!));
     }
   }
 
   @override
-  Stream<ChatMessageModel> getChatStream() {
+  Stream<ChatMessage> getChatStream() {
     return _chatRemoteDataSource.getChatStream();
   }
 

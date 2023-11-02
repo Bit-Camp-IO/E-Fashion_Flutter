@@ -4,7 +4,6 @@ class ProfileState extends Equatable {
   final User userData;
   final String userDataLoadFailMessage;
   final CubitState userDataState;
-
   final String updateProfilePictureFailMessage;
   final CubitState updateProfilePictureState;
 
@@ -13,6 +12,8 @@ class ProfileState extends Equatable {
         userData,
         userDataLoadFailMessage,
         userDataState,
+        updateProfilePictureFailMessage,
+        updateProfilePictureState,
       ];
 
   const ProfileState({
@@ -20,8 +21,8 @@ class ProfileState extends Equatable {
       id: '',
       email: '',
       fullName: '',
+      phoneNumber: '',
       profileImagePath: null,
-      phoneNumber: null
     ),
     this.userDataLoadFailMessage = '',
     this.userDataState = CubitState.initial,
@@ -39,13 +40,10 @@ class ProfileState extends Equatable {
   }) {
     return ProfileState(
       userData: userData ?? this.userData,
-      userDataLoadFailMessage:
-          userDataLoadFailMessage ?? this.userDataLoadFailMessage,
+      userDataLoadFailMessage: userDataLoadFailMessage ?? this.userDataLoadFailMessage,
       userDataState: userDataState ?? this.userDataState,
-      updateProfilePictureFailMessage: updateProfilePictureFailMessage ??
-          this.updateProfilePictureFailMessage,
-      updateProfilePictureState:
-          updateProfilePictureState ?? this.updateProfilePictureState,
+      updateProfilePictureFailMessage: updateProfilePictureFailMessage ?? this.updateProfilePictureFailMessage,
+      updateProfilePictureState: updateProfilePictureState ?? this.updateProfilePictureState,
     );
   }
 }

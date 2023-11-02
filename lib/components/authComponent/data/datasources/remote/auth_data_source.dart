@@ -26,18 +26,20 @@ abstract class AuthRemoteDataSource {
   Future<String> resetPassword(
       {required String email, required String otpCode, required newPassword});
 
-  Future<String> changePassword(
-      {required String userAccessToken,
-      required String oldPassword,
-      required String newPassword,
-      required String confirmNewPassword});
+  Future<String> changePassword({
+    required String userAccessToken,
+    required String oldPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+  });
 }
 
 @LazySingleton(as: AuthRemoteDataSource)
 class AuthDataSourceImpl extends AuthRemoteDataSource {
   final ApiConsumer _apiConsumer;
 
-  AuthDataSourceImpl(@Named(ApiConstants.unAuthenticatedConsumer) this._apiConsumer);
+  AuthDataSourceImpl(
+      @Named(ApiConstants.unAuthenticatedConsumer) this._apiConsumer);
 
   @override
   Future<TokensModel> userLogin({
@@ -51,7 +53,7 @@ class AuthDataSourceImpl extends AuthRemoteDataSource {
         "password": password,
       },
     );
-    if (response['status'] == 'success') {
+    if (response['status'] == ApiCallStatus.success.value) {
       return TokensModel.fromJson(response);
     } else {
       throw const ServerException('Error! Wrong email or password.');
@@ -75,7 +77,7 @@ class AuthDataSourceImpl extends AuthRemoteDataSource {
         "phone": phoneNumber,
       },
     );
-    if (response['status'] == 'success') {
+    if (response['status'] == ApiCallStatus.success.value) {
       return TokensModel.fromJson(response);
     } else {
       throw const ServerException('Error! Invalid email address.');
@@ -88,7 +90,7 @@ class AuthDataSourceImpl extends AuthRemoteDataSource {
         await _apiConsumer.get(ApiConstants.refreshAccessToken, headers: {
       'X-Refresh-Token': refreshToken,
     });
-    if (newAccessToken['status'] == 'success') {
+    if (newAccessToken['status'] == ApiCallStatus.success.value) {
       return newAccessToken['data']['accessToken'];
     } else {
       throw TokensException(newAccessToken['error']['message']);

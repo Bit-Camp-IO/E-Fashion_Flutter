@@ -16,7 +16,7 @@ abstract class UserRemoteDataSource {
 
   Future<UserModel> updateUserData({
     required String fullName,
-    required String? phoneNumber,
+    required String phoneNumber,
     required String email,
   });
 }
@@ -67,17 +67,14 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
   @override
   Future<UserModel> updateUserData({
     required String fullName,
-    required String? phoneNumber,
+    required String phoneNumber,
     required String email,
   }) async {
     final response = await _mainApiConsumer.patch(
       ApiConstants.editUserDataEndPoint,
-      body: phoneNumber != null ? {
+      body: {
         "email": email,
         "phoneNumber": phoneNumber,
-        "fullName": fullName
-      }: {
-        "email": email,
         "fullName": fullName
       }
     );

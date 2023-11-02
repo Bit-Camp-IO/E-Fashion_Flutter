@@ -37,12 +37,7 @@ class _EditProfileContainerComponentState extends State<EditProfileContainerComp
     profileCubit = context.read<ProfileCubit>();
     _formKey = GlobalKey<FormState>();
     _nameController = TextEditingController(text: profileCubit.state.userData.fullName);
-    if (profileCubit.state.userData.phoneNumber != null) {
-      _phoneController = TextEditingController(text: profileCubit.state.userData.phoneNumber);
-    } else {
-      _phoneController = TextEditingController();
-    }
-
+    _phoneController = TextEditingController(text: profileCubit.state.userData.phoneNumber);
     _emailController = TextEditingController(text: profileCubit.state.userData.email);
     super.initState();
   }

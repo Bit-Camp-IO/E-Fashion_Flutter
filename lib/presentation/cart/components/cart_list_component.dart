@@ -23,6 +23,8 @@ class CartListComponent extends StatelessWidget {
               final String productName = state.cart.products[index].title;
               final String productId = state.cart.products[index].id;
               final int totalPrice = state.cart.products[index].totalPrice;
+              final String? selectedSize = state.cart.products[index].size;
+              final String? selectedColor = state.cart.products[index].color;
               final String productImage = state.cart.products[index].imageUrl;
               int productQuantity = state.cart.products[index].quantity;
               final int productStock = state.cart.products[index].stock;
@@ -33,12 +35,13 @@ class CartListComponent extends StatelessWidget {
                   productName: productName,
                   productId: productId,
                   totalPrice: totalPrice,
+                  selectedSize: selectedSize,
+                  selectedColor: selectedColor,
                   productImage: productImage,
                   quantity: productQuantity,
                   stock: productStock,
                   onPiecesIncrement: () async {
-                    if (productQuantity <=
-                        state.cart.products[index].stock) {
+                    if (productQuantity <= state.cart.products[index].stock) {
                       productQuantity++;
                       await cartCubit.editProductQuantity(
                         productId: productId,

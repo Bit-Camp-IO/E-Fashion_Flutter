@@ -5,7 +5,7 @@ class User extends Equatable {
   final String email;
   final String fullName;
   final String? profileImagePath;
-  final String? phoneNumber;
+  final String phoneNumber;
 
   const User({
     required this.id,

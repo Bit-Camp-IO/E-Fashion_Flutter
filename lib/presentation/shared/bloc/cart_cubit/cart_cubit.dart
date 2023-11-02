@@ -6,6 +6,7 @@ import 'package:efashion_flutter/components/cartComponent/domain/usecases/get_ca
 import 'package:efashion_flutter/components/cartComponent/domain/usecases/remove_product_from_cart_usecase.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -50,6 +51,8 @@ class CartCubit extends Cubit<CartState> {
   Future<void> addProductToCart({
     required String productId,
   }) async {
+    debugPrint('========== ${state.selectedColor} ============ ');
+    debugPrint('========== ${state.selectedSize} ============ ');
     emit(
       state.copyWith(
         cartState: CubitState.loading,
@@ -148,15 +151,16 @@ class CartCubit extends Cubit<CartState> {
       );
   }
 
+
+  void updateSelectedColor(String? color) {
+    emit(state.copyWith(selectedColor: () => color));
+  }
+
+  void updateSelectedSize(String? size) {
+    emit(state.copyWith(selectedSize: () => size));
+  }
   void updateSelectedQuantity(int quantity) {
     emit(state.copyWith(selectedQuantity: quantity));
   }
 
-  void updateSelectedColor(String? color) {
-    emit(state.copyWith(selectedColor: color != null ? color.toString() : color));
-  }
-
-  void updateSelectedSize(String? size) {
-    emit(state.copyWith(selectedSize: size));
-  }
 }

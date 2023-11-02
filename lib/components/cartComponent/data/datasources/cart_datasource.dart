@@ -46,13 +46,18 @@ class CartDataSourceImpl extends CartDataSource {
     required String? productColor,
     required int productQuantity,
   }) async {
-    final response =
-        await _apiConsumer.post(ApiConstants.cartEndPoint, body: {
+    final requestBody = {
       'id': productId,
-      'size': productSize,
-      'color': productColor,
       'quantity': productQuantity,
-    });
+    };
+    if (productSize != null) {
+      requestBody['size'] = productSize;
+    }
+    if (productColor != null) {
+      requestBody['color'] = productColor;
+    }
+    final response =
+        await _apiConsumer.post(ApiConstants.cartEndPoint,body: requestBody);
     if (response['status'] == ApiCallStatus.success.value) {
       return CartModel.fromJson(response['data']);
     } else {

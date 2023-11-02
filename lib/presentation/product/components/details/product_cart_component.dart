@@ -19,7 +19,7 @@ class ProductCartComponent extends StatefulWidget {
   final int productStock;
   final int productPrice;
 
-
+  final bool isSheetExpanded;
   const ProductCartComponent({
     super.key,
     required this.productId,
@@ -29,6 +29,7 @@ class ProductCartComponent extends StatefulWidget {
     required this.productDescription,
     required this.productStock,
     required this.productPrice,
+    required this.isSheetExpanded,
   });
 
 
@@ -61,19 +62,29 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.productName,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
+           AnimatedSwitcher(
+             switchInCurve: Curves.easeIn,
+             switchOutCurve: Curves.easeOut,
+             duration: const Duration(seconds: 1),
+             child: widget.isSheetExpanded == false ?  Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.productName,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                 ),
-          ),
-          Text(
-            '${StringsManager.currencySign}${widget.productPrice}',
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
+                Text(
+                  '${StringsManager.currencySign}${widget.productPrice}',
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
-          ),
+              ],
+              ) : const SizedBox.shrink(),
+           ),
           SizedBox(height: 20.h),
           widget.productColors.isNotEmpty
               ? Row(
@@ -161,7 +172,7 @@ class _ProductCartComponentState extends State<ProductCartComponent> {
                     }
                   },
                   onDecrementPress: () {
-                    if (productPieces.value != 0) {
+                    if (productPieces.value != 1) {
                       productPieces.value--;
                       cartCubit.updateSelectedQuantity(productPieces.value);
                     }

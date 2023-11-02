@@ -69,7 +69,7 @@ class ChatRemoteDataSourceImpl extends ChatRemoteDataSource {
 
   void _connectToSocket(
       {required userAccessToken, required String chatId}) async {
-      socketConsumer = IO.io('http://192.168.1.20:8080/', <String, dynamic>{
+      socketConsumer = IO.io(ApiConstants.apiUrl, <String, dynamic>{
         'autoConnect': false,
         'transports': ['websocket'],
         'auth': {'token': userAccessToken},

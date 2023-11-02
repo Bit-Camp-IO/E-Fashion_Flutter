@@ -74,11 +74,11 @@ class AuthRepositoryImpl extends AuthRepository {
           await _authLocalDataSource.updateAccessToken(accessToken: newAccessToken);
           return right(newAccessToken);
         }on ServerException catch(exception){
-          return left(Failure(exception.message!));
+          return left(ApiFailure(exception.message!));
         }
       }
     }on TokensException catch(exception){
-      return left(Failure(exception.message!));
+      return left(CacheFailure(exception.message!));
     }
   }
 
@@ -88,7 +88,7 @@ class AuthRepositoryImpl extends AuthRepository {
       final forgetPasswordRequest = await _authRemoteDataSource.forgetPassword(email: email);
       return right(forgetPasswordRequest);
     }on ServerException catch (exception){
-      return left(Failure(exception.message!));
+      return left(ApiFailure(exception.message!));
     }
   }
 
@@ -98,7 +98,7 @@ class AuthRepositoryImpl extends AuthRepository {
       final verifyOtpRequest = await _authRemoteDataSource.verifyOtp(email: email, otpCode: otpCode);
       return right(verifyOtpRequest);
     }on ServerException catch (exception){
-      return left(Failure(exception.message!));
+      return left(ApiFailure(exception.message!));
     }
   }
 
@@ -108,7 +108,7 @@ class AuthRepositoryImpl extends AuthRepository {
       final resetPasswordRequest = await _authRemoteDataSource.resetPassword(email: email, otpCode: otpCode, newPassword: newPassword);
       return right(resetPasswordRequest);
     }on ServerException catch (exception){
-      return left(Failure(exception.message!));
+      return left(ApiFailure(exception.message!));
     }
   }
 
@@ -118,7 +118,7 @@ class AuthRepositoryImpl extends AuthRepository {
       final changePasswordRequest = await _authRemoteDataSource.changePassword(userAccessToken: userAccessToken, oldPassword: oldPassword, newPassword: newPassword, confirmNewPassword: confirmNewPassword);
       return right(changePasswordRequest);
     }on ServerException catch (exception){
-      return left(Failure(exception.message!));
+      return left(ApiFailure(exception.message!));
     }
   }
 }

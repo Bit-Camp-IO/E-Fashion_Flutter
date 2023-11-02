@@ -12,7 +12,7 @@ class UpdateUserDataUseCase {
 
   Future<Either<Failure, User>> call({
     required String fullName,
-    required String? phoneNumber,
+    required String phoneNumber,
     required String email,
   }) async {
     return await _userRepository.updateUserData(

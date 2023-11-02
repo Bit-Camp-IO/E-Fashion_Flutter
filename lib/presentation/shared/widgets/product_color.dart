@@ -14,7 +14,7 @@ class SelectableProductColor extends StatelessWidget {
   });
 
   int _cleanHexCode(String hexCode){
-    String cleanedHex = color.replaceAll("#", "");
+    String cleanedHex = hexCode.replaceAll("#", "");
     return int.parse('0xFF$cleanedHex');
   }
   @override
