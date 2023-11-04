@@ -55,7 +55,6 @@ This repository contains the source code for the E-Fashion Flutter App, This rep
   
   - User profile with personal informations like (Name - Picture - Email - Location - Order History)
   - Ability to change personal informations like (Uploading new picture, Change (name, email, phone number, passowrd, location))
-  - لإ
   
   ### Order Tracking
   
