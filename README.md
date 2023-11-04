@@ -8,76 +8,76 @@ This repository contains the source code for the E-Fashion Flutter App, This rep
 
 ## 🚀: Features
 
-### Theming
-- Material 3 Supprot
-- ColorScheme System
-- Theme Switching (Light - Dark)
+  ### Theming
+  - Material 3 Supprot
+  - ColorScheme System
+  - Theme Switching (Light - Dark)
+    
+  ### Authentication
+  - **Login*.
+  - **Register**
+  - **Forget Password**: Allow users to reset their passwords using email-based one-time passwords (OTPs).
   
-### Authentication
-- **Login*.
-- **Register**
-- **Forget Password**: Allow users to reset their passwords using email-based one-time passwords (OTPs).
-
-### Dynamic Home Feature
-- Collections
-- Offers
-- Brands
-- Discover(Brands - Products) *PAGINATED*
-- Filter and sort products by category, gender, price, and brand.
-- Easy Add To Cart option
-
-### Product Details
-
-- View detailed information for each product, including images, description, price, and available sizes and colors.
-- Add or edit rating
-- Add or edit review
-
-### Products Search
-- Search for a products by name.
-- Filter Search By (Category - Brand - Price Range)
-
-### Favorites
-
-- Save favorite product to a favorites list to buy it later.
-
-### Shopping Cart
-
-- Add products to a shopping cart.
-- Adjust product quantities and remove items from the cart.
-- Calculate the total order amount.
-
-### Checkout and Payment with [Stripe](https://stripe.com/)
-
-- Secure and streamlined checkout process .
-- Multiple payment options (Credit/Debit Cards).
-
-### User Profile
-
-- User profile with personal informations like (Name - Picture - Email - Location - Order History)
-- Ability to change personal informations like (Uploading new picture, Change (name, email, phone number, passowrd, location))
-- لإ
-
-### Order Tracking
-
-- Track the status of orders.
-- Receive real-time updates on order processing and shipping.
+  ### Dynamic Home Feature
+  - Collections
+  - Offers
+  - Brands
+  - Discover(Brands - Products) *PAGINATED*
+  - Filter and sort products by category, gender, price, and brand.
+  - Easy Add To Cart option
   
-### Location **Google Maps**
-
-- Ability to set or change current locations
-- Search for a location
-- Search locations suggestions **Google Maps Places API** 
-- Set location marker
-
-### Real-Time Chat with **WebSockets**
-
-- Real-time chat functionality for customer support using **WebSockets**. This feature fosters seamless communication between user and support.
-
-###  Notifications 
-- **Notifications List**: A list showcasing recent recived notifications
-- **Chat Support Push Notifications**: Recive a message push notifications whenever the user outside the support chat.
-- **Order Status Push Notifications**: Recive a push notifications for order status changes
-- **General Push Notifications**: Recive a Custom Push Notifications From the app
+  ### Product Details
+  
+  - View detailed information for each product, including images, description, price, and available sizes and colors.
+  - Add or edit rating
+  - Add or edit review
+  
+  ### Products Search
+  - Search for a products by name.
+  - Filter Search By (Category - Brand - Price Range)
+  
+  ### Favorites
+  
+  - Save favorite product to a favorites list to buy it later.
+  
+  ### Shopping Cart
+  
+  - Add products to a shopping cart.
+  - Adjust product quantities and remove items from the cart.
+  - Calculate the total order amount.
+  
+  ### Checkout and Payment with [Stripe](https://stripe.com/)
+  
+  - Secure and streamlined checkout process .
+  - Multiple payment options (Credit/Debit Cards).
+  
+  ### User Profile
+  
+  - User profile with personal informations like (Name - Picture - Email - Location - Order History)
+  - Ability to change personal informations like (Uploading new picture, Change (name, email, phone number, passowrd, location))
+  - لإ
+  
+  ### Order Tracking
+  
+  - Track the status of orders.
+  - Receive real-time updates on order processing and shipping.
+    
+  ### Location **Google Maps**
+  
+  - Ability to set or change current locations
+  - Search for a location
+  - Search locations suggestions **Google Maps Places API** 
+  - Set location marker
+  
+  ### Real-Time Chat with **WebSockets**
+  
+  - Real-time chat functionality for customer support using **WebSockets**. This feature fosters seamless communication between user and support.
+  
+  ###  Notifications 
+  - **Notifications List**: A list showcasing recent recived notifications
+  - **Chat Support Push Notifications**: Recive a message push notifications whenever the user outside the support chat.
+  - **Order Status Push Notifications**: Recive a push notifications for order status changes
+  - **General Push Notifications**: Recive a Custom Push Notifications From the app
 
 
 ## Prerequisites
