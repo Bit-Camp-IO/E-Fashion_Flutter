@@ -50,7 +50,8 @@ git clone https://github.com/Bit-Camp-IO/E-Fashion_Flutter.git
 STRIPE_PUBLISHABLE_KEY='YOUR_STRIPE_KEY'
 GOOGLE_MAPS_KEY = 'YOUR_GOOGLE_MAPS_KEY'
 ```
-9. Open android => app => main => AndroidManifast scroll to the end and look for `com.google.android.geo.API_KEY` and add your google maps key
+9. Open android => app => main => AndroidManifast.xml
+Scroll to the end and look for `com.google.android.geo.API_KEY` and add your google maps key
  ```xml
 <meta-data android:name="com.google.android.geo.API_KEY" android:value="YOUR_GOOGLE_MAPS_KEY"/>
 ```
@@ -61,6 +62,28 @@ apiUrl = 'YOUR_BACK_END_URL';
 ```
 12. Save the file.
 13. Run the app on an emulator or physical device by clicking the "Run" button in Android Studio Or VS Code.
+
+## Important Used Packages
+ ```xml
+- Flutter_Screen_Util
+- Flutter_bloc
+- Bloc_Concurrency
+- RxDart
+- Dartz
+- Intl
+- Firebase_Messaging
+- Flutter_Local_Notifications
+- Flutter_Hive
+- Auto_Route
+- Cached_Network_Image
+- Google_Maps_Flutter
+- Socket_IO_Client
+- Permession_handeler
+- Flutter_Stripe
+- GetIt
+- Injectable
+- Image_Picker
+```
 
 ## API Usage
 
