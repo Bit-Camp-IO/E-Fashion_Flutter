@@ -26,14 +26,14 @@ This repository contains the source code for the E-Fashion Flutter App, This rep
 Before running the app, ensure that you have the following:
 
 - Android Studio (version 2022.2.1 or higher) or VS Code.
-- Flutter 3.10 and Dart 3.0.6
-- EFashion BackEnd : ([Efashion-BackEnd](https://github.com/Bit-Camp-IO/E-Fashion_BackEnd) E-FashionBackEnd Repository)
+- Flutter 3.13 and Dart 3.0.6
+- EFashion BackEnd : ([E-FASHION-BACKEND REPOSITORY](https://github.com/Bit-Camp-IO/E-Fashion_BackEnd))
 
 ## Getting Started
 
 To get started with the E-Fashion Flutter app, follow these steps:
 
-1. Clone E-Fashion BackEnd Repository, and Follow their readme for setting it up ([Efashion-BackEnd-Readme](https://github.com/Bit-Camp-IO/E-Fashion_BackEnd/blob/main/README.md) BackEnd Readme)
+1. Clone E-Fashion BackEnd Repository, and Follow their readme for setting it up ([E-FASHION-BACKEND README](https://github.com/Bit-Camp-IO/E-Fashion_BackEnd/blob/main/README.md)
 2. Clone this repository to your local machine using the following command:
 
 ```bash
