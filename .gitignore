@@ -10,6 +10,7 @@
 .svn/
 migrate_working_dir/
 .env
+firebase_options.dart
 # IntelliJ related
 *.iml
 *.ipr
@@ -42,3 +43,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/app/src/main/AndroidManifest.xml
