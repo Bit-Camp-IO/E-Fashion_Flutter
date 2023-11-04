@@ -6,7 +6,7 @@
 
 This repository contains the source code for the E-Fashion Flutter App, This repository applies clean archticture princeples by component.
 
-## 🚀: Features
+## Features 🚀:
 
   ### Theming
   - Material 3 Supprot
