@@ -45,12 +45,12 @@ git clone https://github.com/Bit-Camp-IO/E-Fashion_Flutter.git
 5. Android Studio will build and sync the project automatically.
 6. Once the project is synced run `flutter pub get`.
 7. After the packages load successfully, navigate to the `lib` directory in the project.
-8. Rename .env-example file to .env and open it, replace 'STRIPE_PUBLISHABLE_KEY' and 'GOOGLE_MAPS_KEY' with your keys
+8. Rename `.example-env` file to `.env` and open it, replace 'STRIPE_PUBLISHABLE_KEY' and 'GOOGLE_MAPS_KEY' with your keys
  ```xml
 STRIPE_PUBLISHABLE_KEY='YOUR_STRIPE_KEY'
 GOOGLE_MAPS_KEY = 'YOUR_GOOGLE_MAPS_KEY'
 ```
-9. Open android => app => main => AndroidManifast.xml
+9. Open android => app => main => AndroidManifest.xml
 Scroll to the end and look for `com.google.android.geo.API_KEY` and add your google maps key
  ```xml
 <meta-data android:name="com.google.android.geo.API_KEY" android:value="YOUR_GOOGLE_MAPS_KEY"/>
