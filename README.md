@@ -4,7 +4,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/Bit-Camp-IO/E-Fashion_Flutter)
 ![GitHub issues](https://img.shields.io/github/issues/Bit-Camp-IO/Bit-Camp-IO/E-Fashion_Flutter)
 
-This repository contains the source code for the E-Fashion Flutter App, This repository applies clean archticture princeples by component.
+This repository contains the source code for the E-Fashion Flutter App, This repository applies clean archticture packaging by component.
 
 ## Features 🚀:
 
@@ -14,7 +14,7 @@ This repository contains the source code for the E-Fashion Flutter App, This rep
   - Theme Switching (Light - Dark)
     
   ### Authentication
-  - **Login*.
+  - **Login**
   - **Register**
   - **Forget Password**: Allow users to reset their passwords using email-based one-time passwords (OTPs).
   
@@ -54,7 +54,7 @@ This repository contains the source code for the E-Fashion Flutter App, This rep
   ### User Profile
   
   - User profile with personal informations like (Name - Picture - Email - Location - Order History)
-  - Ability to change personal informations like (Uploading new picture, Change (name, email, phone number, passowrd, location))
+  - Update user profile (Uploading new picture, Change (name, email, phone number, passowrd, location))
   
   ### Order Tracking
   
@@ -108,8 +108,8 @@ git clone https://github.com/Bit-Camp-IO/E-Fashion_Flutter.git
 STRIPE_PUBLISHABLE_KEY='YOUR_STRIPE_KEY'
 GOOGLE_MAPS_KEY = 'YOUR_GOOGLE_MAPS_KEY'
 ```
-9. Open android => app => main => AndroidManifest.xml
-Scroll to the end and look for `com.google.android.geo.API_KEY` and add your google maps key
+9. Open android => app => main => AndroidManifest.xml, Scroll to the end and look for `com.google.android.geo.API_KEY`
+and add your own google maps key
  ```xml
 <meta-data android:name="com.google.android.geo.API_KEY" android:value="YOUR_GOOGLE_MAPS_KEY"/>
 ```
@@ -148,6 +148,47 @@ apiUrl = 'YOUR_BACK_END_URL';
 The E-Fashion Flutter app utilizes the E-Fashion BackEnd API that empower all of the app's features. make sure to setup the backend server as mentioned in the prerequisites.
 
 The API URL is stored in the `api_constants.dart` file as described in the "Getting Started" section. This apiUrl is used by the app to communicate with the api and the websockets server.
+
+## Project Architecture Advantages
+- Full independance away from the presentation.
+- improve maintainability, modularity, and testabilit.
+- Bloc/Cubit can easily use several components without any restrections unlike packaging by feature.
+- No need for repeating usecases or entities or sharing them
+- Project Structure Example :
+ ```
+Lib
+├───components
+│   ├───firstComponent
+│   │   ├───data
+│   │   │   ├───datasources
+│   │   │   │   ├───local
+│   │   │   │   └───remote
+│   │   │   ├───models
+│   │   │   └───repositories
+│   │   └───domain
+│   │       ├───entities
+│   │       ├───repositories
+│   │       └───usecases
+├───presentation
+│   ├───firstPersentation
+│   │   ├───bloc
+│   │   │   └───first_cubit
+│   │   ├───components
+│   │   │   └───firstComponent
+│   │   └───screens
+│   └───shared
+│       ├───animations
+│       ├───bloc
+│       │   ├───shared_cubit
+│       └───widgets
+└───shared
+    ├───api
+    ├───constants
+    ├───error
+    ├───router
+    ├───theme
+    └───util
+```
 
 ## Contributing
 
