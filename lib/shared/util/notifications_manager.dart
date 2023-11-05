@@ -22,8 +22,7 @@ class NotificationsManager {
   }
 
   static Future<void> requestNotificationsPermissions() async{
-    await _notification
-        .resolvePlatformSpecificImplementation<
+    await _notification.resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>()
         ?.requestNotificationsPermission();
   }
@@ -35,7 +34,7 @@ class NotificationsManager {
       onDidReceiveNotificationResponse: onNotificationTap,
       onDidReceiveBackgroundNotificationResponse: onNotificationTap,
       const InitializationSettings(
-        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+        android: AndroidInitializationSettings('@mipmap/notifications'),
         iOS: DarwinInitializationSettings(
           requestSoundPermission: true,
           requestAlertPermission: true,

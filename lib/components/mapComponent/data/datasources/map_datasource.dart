@@ -31,7 +31,11 @@ class MapDataSourceImpl extends MapDataSource {
       'radius' : 500,
       'key' : googleMapsKey,
     });
-    return List<PlaceModel>.from((response['predictions'] as List).map((place) => PlaceModel.fromJson(place)));
+    if(response['status'] == GoogleMapsCallStatus.ok.value){
+      return List<PlaceModel>.from((response['predictions'] as List).map((place) => PlaceModel.fromJson(place)));
+    }else{
+      throw const FetchDataException();
+    }
   }
 
   @override
@@ -41,7 +45,11 @@ class MapDataSourceImpl extends MapDataSource {
       'radius' : 500,
       'key' : googleMapsKey,
     });
-    return PlaceDataModel.fromJson(response['result']['geometry']['location']);
+    if(response['status'] == GoogleMapsCallStatus.ok.value){
+      return PlaceDataModel.fromJson(response['result']['geometry']['location']);
+    }else{
+      throw const FetchDataException();
+    }
   }
 
   @override

@@ -93,6 +93,7 @@ class StringsManager {
   static const String profileTitle = "Profile Settings";
   static const String myProfileTab = "My Profile";
   static const String locationTab = "Location";
+  static const String ordersTab = "My Orders";
   static const String chatTab = "Chat Support";
   static const String changePasswordTab = "Change Password";
   static const String notificationSwitch = "Notifications";
@@ -106,6 +107,7 @@ class StringsManager {
   //map
   static const String markerError = "ERROR! You should set a marker first.";
   static const String confirmLocationButton = 'Confirm Location';
+  static const String updateLocationButton = 'Update Location';
 
   // Chat
   static const String chatScreenTitle = 'Chat Support';

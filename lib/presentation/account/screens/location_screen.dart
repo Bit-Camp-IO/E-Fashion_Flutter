@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/account/bloc/maps_bloc/map_bloc.dart';
 import 'package:efashion_flutter/presentation/account/components/map/map_search_field.dart';
+import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/theme_cubit/theme_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
@@ -72,25 +73,29 @@ class _LocationScreenState extends State<LocationScreen> {
       resizeToAvoidBottomInset: false,
       body: BlocListener<MapBloc, MapState>(
         listener: (context, state) async {
-          if (state.locationUpdateState == BlocState.failure || state.locationUpdateState == BlocState.success) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              CustomSnackBar.show(
-                customSnackBarType:
-                state.locationUpdateState == BlocState.failure
-                    ? CustomSnackBarType.error
-                    : CustomSnackBarType.success,
-                message: state.locationUpdateMessage,
-                context: context,
-              ),
-            );
-            context.popRoute();
+          if (state.locationUpdateState == BlocState.failure ||
+              state.locationUpdateState == BlocState.success) {
+            await Future.delayed(const Duration(milliseconds: 500));
+            if(mounted){
+              ScaffoldMessenger.of(context).showSnackBar(
+                CustomSnackBar.show(
+                  customSnackBarType:
+                  state.locationUpdateState == BlocState.failure
+                      ? CustomSnackBarType.error
+                      : CustomSnackBarType.success,
+                  message: state.locationUpdateMessage,
+                  context: context,
+                ),
+              );
+              context.popRoute();
+            }
           } else if (state.placeDataState == BlocState.success &&
               state.setMarkerState == BlocState.success) {
             await _moveCamera(
               latitude: state.placeData.latitude,
               longitude: state.placeData.longitude,
             );
-          }else if (state.userLocationState == BlocState.success) {
+          } else if (state.userLocationState == BlocState.success) {
             Future.delayed(const Duration(milliseconds: 300));
             await _moveCamera(
               latitude: state.userLocation.latitude,
@@ -114,11 +119,11 @@ class _LocationScreenState extends State<LocationScreen> {
                   zoomControlsEnabled: false,
                   onTap: (argument) async {
                     context.read<MapBloc>().add(
-                      AddPlaceMarkerEvent(
-                        latitude: argument.latitude,
-                        longitude: argument.longitude,
-                      ),
-                    );
+                          AddPlaceMarkerEvent(
+                            latitude: argument.latitude,
+                            longitude: argument.longitude,
+                          ),
+                        );
                   },
                   initialCameraPosition: _setInitialPosition(),
                   onMapCreated: (GoogleMapController controller) async {
@@ -156,21 +161,32 @@ class _LocationScreenState extends State<LocationScreen> {
               left: 0,
               right: 0,
               bottom: 60.h,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
-                child: PrimaryButton(
-                  buttonTitle: StringsManager.confirmLocationButton,
-                  onTap: () {
-                    context.read<MapBloc>().add(const UpdateUserLocationEvent());
-                  },
-                ),
+              child: BlocBuilder<MapBloc, MapState>(
+                builder: (context, state) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0).r,
+                    child: Visibility(
+                      visible: state.setMarkerState == BlocState.success,
+                      child: CustomFadeAnimation(
+                        duration: const Duration(milliseconds: 500),
+                        child: PrimaryButton(
+                            buttonTitle: state.userLocation.latitude != 0 ? StringsManager.updateLocationButton :  StringsManager.confirmLocationButton,
+                            onTap: () {
+                              context.read<MapBloc>().add(const UpdateUserLocationEvent());
+                            },
+                          ),
+                      ),
+                    )
+                  );
+                },
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
+
   @override
   void dispose() {
     _mapController.dispose();

@@ -23,17 +23,19 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
       ApiConstants.categoriesEndPoint,
       queryParameters: {'gender': genderId},
     );
-    List<CategoryModel> categoriesList = List.from(
-      (response['data'] as List).map(
-        (category) => CategoryModel.fromJson(category),
-      ),
-    );
-    return categoriesList;
+    if (response['status'] == ApiCallStatus.success.value){
+      return List.from(
+        (response['data'] as List).map(
+              (category) => CategoryModel.fromJson(category),
+        ),
+      );
+    }else{
+      throw const FetchDataException();
+    }
   }
 
   @override
-  Future<List<ProductModel>> getProductsOffers(
-      {String? categories, int? pageNumber}) async {
+  Future<List<ProductModel>> getProductsOffers({String? categories, int? pageNumber}) async {
     final Map<String, dynamic> response = await _apiConsumer.get(
       ApiConstants.productsEndPoint,
       queryParameters: {
@@ -42,12 +44,15 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
         'page': pageNumber ?? 1,
       },
     );
-    List<ProductModel> offersList = List.from(
-      (response['data']['products'] as List).map(
-        (category) => ProductModel.fromJson(category),
-      ),
-    );
-    return offersList;
+    if (response['status'] == ApiCallStatus.success.value){
+      return  List.from(
+        (response['data']['products'] as List).map(
+              (category) => ProductModel.fromJson(category),
+        ),
+      );
+    }else{
+      throw const FetchDataException();
+    }
   }
 
   @override
@@ -55,17 +60,18 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
     final Map<String, dynamic> response = await _apiConsumer.get(
       ApiConstants.brandsEndPoint,
     );
-    List<BrandModel> brandsList = List.from(
-      (response['data'] as List).map(
-        (category) => BrandModel.fromJson(category),
-      ),
-    );
-    return brandsList;
+    if (response['status'] == ApiCallStatus.success.value){
+      return  List.from((response['data'] as List).map(
+              (category) => BrandModel.fromJson(category),
+        ),
+      );
+    }else{
+      throw const FetchDataException();
+    }
   }
 
   @override
-  Future<Map<String, List<ProductModel>>> getAllBrandsProducts(
-      {required List<Brand> brands, String? categories}) async {
+  Future<Map<String, List<ProductModel>>> getAllBrandsProducts({required List<Brand> brands, String? categories}) async {
     final List<String> brandIds = brands.map((brand) => brand.id).toList();
     final productsLists = await Future.wait(
       brandIds.map(
@@ -80,13 +86,17 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
     );
     Map<String, List<ProductModel>> allBrandsProducts = {};
     for (int index = 0; index < productsLists.length; index++) {
-      allBrandsProducts.addAll(
-        {
-          brandIds[index]: List.from(
-              (productsLists[index]['data']['products'] as List)
-                  .map((product) => ProductModel.fromJson(product)))
-        },
-      );
+      if(productsLists[index]['status'] == ApiCallStatus.success.value){
+        allBrandsProducts.addAll(
+          {
+            brandIds[index]: List.from(
+                (productsLists[index]['data']['products'] as List)
+                    .map((product) => ProductModel.fromJson(product)))
+          },
+        );
+      }else{
+        throw const FetchDataException();
+      }
     }
     return allBrandsProducts;
   }
@@ -108,8 +118,13 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
       ApiConstants.userFavoriteListEndPoint,
       queryParameters: {"data": "id"},
     );
-    return Set<String>.from((response['data'] as List<dynamic>)
-        .map((productId) => productId));
+    if (response['status'] == ApiCallStatus.success.value){
+      return Set<String>.from((response['data'] as List<dynamic>)
+          .map((productId) => productId));
+    } else {
+      throw const FetchDataException();
+    }
+
   }
 
   @override
@@ -164,15 +179,22 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   @override
   Future<List<ProductDetailsModel>> getFavoriteProducts(
       {required Set<String> favoriteIds}) async {
-    final productsLists = await Future.wait(
+    final productDetailsRequests = await Future.wait(
       favoriteIds.map(
         (productId) => _apiConsumer.get(
           ApiConstants.productDetailsEndPoint(productId: productId),
         ),
       ),
     );
-    return List<ProductDetailsModel>.from(productsLists.map((productDetails) =>
-        ProductDetailsModel.fromJson(productDetails['data'])));
+    final List<ProductDetailsModel> products = [];
+    for(Map<String, dynamic> product in productDetailsRequests) {
+      if (product['status'] == ApiCallStatus.success.value) {
+        products.add(ProductDetailsModel.fromJson(product['data']));
+      } else {
+        throw const FetchDataException();
+      }
+    }
+    return products;
   }
 
   @override
@@ -193,16 +215,14 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
     required double rate,
     required String? review,
   }) async {
-    final response = await _apiConsumer
-        .post(ApiConstants.productReviewsEndPoint(productId: productId),
-            body: review != null
-                ? {
-                    'rate': rate,
-                    'comment': review,
-                  }
-                : {
-                    'rate': rate,
-                  },
+    final Map<String, dynamic> requestBody = {
+      'rate': rate,
+    };
+    if(review != null){
+      requestBody['comment'] = review;
+    }
+    final response = await _apiConsumer.post(ApiConstants.productReviewsEndPoint(productId: productId),
+            body: requestBody
     );
     if (response['status'] == ApiCallStatus.success.value) {
       return ReviewModel.fromJson(response['data']);
@@ -243,11 +263,15 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
         'brands': brands,
       },
     );
-    List<ProductModel> searchList = List.from(
-      (response['data']['products'] as List).map(
-        (category) => ProductModel.fromJson(category),
-      ),
-    );
-    return searchList;
+    if(response['data']['status'] == ApiCallStatus.success){
+      List<ProductModel> searchList = List.from(
+        (response['data']['products'] as List).map(
+              (category) => ProductModel.fromJson(category),
+        ),
+      );
+   return searchList;
+    }else{
+      throw const FetchDataException();
+    }
   }
 }

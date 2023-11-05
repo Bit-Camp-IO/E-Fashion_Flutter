@@ -65,3 +65,10 @@ enum ApiCallStatus{
   const ApiCallStatus(this.value);
   final String value;
 }
+
+enum GoogleMapsCallStatus{
+  ok('OK'),
+  invalidRequest('INVALID_REQUEST');
+  const GoogleMapsCallStatus(this.value);
+  final String value;
+}

@@ -70,7 +70,7 @@ class AccountContainerComponent extends StatelessWidget {
                 onTap: () {
                   context.pushRoute(const OrdersRoute());
                 },
-                text: StringsManager.locationTab,
+                text: StringsManager.ordersTab,
                 prefixIcon: Iconsax.bag_2,
               ),
               AccountCustomRow(

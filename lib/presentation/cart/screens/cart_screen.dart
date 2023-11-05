@@ -46,6 +46,7 @@ class _CartScreenState extends State<CartScreen> {
                   }
                 },
                 builder: (context, state) {
+
                   if (state.cartState == CubitState.initial || state.cartState == CubitState.loading) {
                     return const CartShimmerLoading();
                   } else if (state.cart.products.isEmpty && state.cartState == CubitState.success) {
@@ -54,16 +55,16 @@ class _CartScreenState extends State<CartScreen> {
                       title: StringsManager.emptyCartTitle,
                       subTitle: StringsManager.emptyCartSubTitle,
                     );
-                  } else if (state.cartState == CubitState.success) {
-                    return const Column(
-                      children: [CartListComponent(), PaymentComponent()],
-                    );
-                  } else {
+                  } else if (state.cartState == CubitState.failure && state.cart.products.isEmpty) {
                     return NoInternetConnectionWidget(
                       onButtonTap: () {
                         context.read<CartCubit>().getCartProducts();
                       },
                       isButtonLoading: isLoading,
+                    );
+                  } else {
+                    return const Column(
+                      children: [CartListComponent(), PaymentComponent()],
                     );
                   }
                 },
