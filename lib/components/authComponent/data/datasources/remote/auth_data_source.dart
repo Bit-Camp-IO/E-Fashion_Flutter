@@ -118,8 +118,7 @@ class AuthDataSourceImpl extends AuthRemoteDataSource {
       'email': email,
       'otp': otpCode,
     });
-    if (verifyOtpRequest['status'] == ApiCallStatus.error.value ||
-        verifyOtpRequest['data']['ok'] == false) {
+    if (verifyOtpRequest['status'] == ApiCallStatus.error.value || verifyOtpRequest['data']['ok'] == false) {
       throw const NotFoundException("Error! Wrong OTP Code.");
     }
   }

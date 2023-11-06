@@ -78,8 +78,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         onTapOutside: (event) => FocusScope.of(context).unfocus(),
                         forceErrorState: _otpError,
                         onCompleted: (value) async {
-                          otpCode = value;
-                          await context.read<ForgetPasswordCubit>().verifyOtp(otpCode: otpCode);
+                          await context.read<ForgetPasswordCubit>().verifyOtp(otpCode: value);
                         },
                         defaultPinTheme: PinTheme(
                           width: 40.w,

@@ -5,7 +5,7 @@ class NotificationsState extends Equatable {
   final CubitState notificationsState;
   final String notificationsFailMessage;
   final bool isUserSubscribedToNotifications;
-
+  final CubitState userNotificationsSubscriptionState;
   final NotificationsPermissionsState notificationsPermissionsState;
 
   const NotificationsState({
@@ -13,6 +13,7 @@ class NotificationsState extends Equatable {
     this.notificationsState = CubitState.initial,
     this.notificationsFailMessage = '',
     this.isUserSubscribedToNotifications = false,
+    this.userNotificationsSubscriptionState = CubitState.initial,
     this.notificationsPermissionsState = NotificationsPermissionsState.loading,
   });
 
@@ -22,6 +23,7 @@ class NotificationsState extends Equatable {
         notificationsState,
         notificationsFailMessage,
         isUserSubscribedToNotifications,
+        userNotificationsSubscriptionState,
         notificationsPermissionsState,
       ];
 
@@ -30,16 +32,16 @@ class NotificationsState extends Equatable {
     CubitState? notificationsState,
     String? notificationsFailMessage,
     bool? isUserSubscribedToNotifications,
+    CubitState? userNotificationsSubscriptionState,
     NotificationsPermissionsState? notificationsPermissionsState,
   }) {
     return NotificationsState(
       notifications: notifications ?? this.notifications,
       notificationsState: notificationsState ?? this.notificationsState,
-      notificationsFailMessage:
-          notificationsFailMessage ?? this.notificationsFailMessage,
-      isUserSubscribedToNotifications: isUserSubscribedToNotifications ??
-          this.isUserSubscribedToNotifications,
-      notificationsPermissionsState: notificationsPermissionsState ?? this.notificationsPermissionsState
+      notificationsFailMessage: notificationsFailMessage ?? this.notificationsFailMessage,
+      isUserSubscribedToNotifications: isUserSubscribedToNotifications ?? this.isUserSubscribedToNotifications,
+      userNotificationsSubscriptionState: userNotificationsSubscriptionState ?? this.userNotificationsSubscriptionState,
+      notificationsPermissionsState: notificationsPermissionsState ?? this.notificationsPermissionsState,
     );
   }
 }

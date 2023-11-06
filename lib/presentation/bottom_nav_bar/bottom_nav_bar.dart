@@ -55,13 +55,16 @@ class _BottomNavBarState extends State<BottomNavBar>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     debugPrint(state.toString());
     if (state == AppLifecycleState.resumed) {
-      getIt<NotificationsCubit>().checkForNotificationsPermission();
+      if(context.read<NotificationsCubit>().state.notificationsPermissionsState == NotificationsPermissionsState.permanentlyDenied){
+        context.read<NotificationsCubit>().checkForNotificationsPermission();
+      }
     }
   }
 
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+    context.read<NotificationsCubit>().getNotificationsState();
     NotificationsManager.onClickNotification.stream.listen((event) {
       if (event.payload == NotificationType.newMessage.value) {
         context.pushRoute(const ChatSupportRoute());

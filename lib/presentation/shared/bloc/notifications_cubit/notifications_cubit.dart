@@ -28,50 +28,62 @@ class NotificationsCubit extends Cubit<NotificationsState> {
 
   Future<void> getNotificationsList() async {
     emit(state.copyWith(notificationsState: CubitState.loading));
-      final response = await _getNotificationsListUseCase();
-      response.fold(
-        (failure) => emit(state.copyWith(
-          notificationsFailMessage: failure.message,
-          notificationsState: CubitState.failure,
-        )),
-        (notificationsList) => emit(state.copyWith(
-          notifications: notificationsList,
-          notificationsState: CubitState.success,
-        )),
-      );
+    final response = await _getNotificationsListUseCase();
+    response.fold(
+      (failure) => emit(state.copyWith(
+        notificationsFailMessage: failure.message,
+        notificationsState: CubitState.failure,
+      )),
+      (notificationsList) => emit(state.copyWith(
+        notifications: notificationsList,
+        notificationsState: CubitState.success,
+      )),
+    );
   }
 
   Future<void> subscribeToNotifications() async {
     if (state.notificationsPermissionsState == NotificationsPermissionsState.granted) {
+      emit(state.copyWith(userNotificationsSubscriptionState: CubitState.loading));
       final String? deviceToken = await NotificationsManager.getDeviceToken();
-      await _subscribeToNotificationsUseCase(
+      final response = await _subscribeToNotificationsUseCase(
         deviceToken: deviceToken!,
       );
-      emit(state.copyWith(isUserSubscribedToNotifications: true));
-    } else {
-      emit(state.copyWith(isUserSubscribedToNotifications: false));
+      response.fold(
+        (l) => emit(
+          state.copyWith(userNotificationsSubscriptionState: CubitState.failure),
+        ),
+        (r) => emit(
+          state.copyWith(isUserSubscribedToNotifications: true, userNotificationsSubscriptionState: CubitState.success),
+        ),
+      );
     }
   }
 
   Future<void> unSubscribeFromNotifications() async {
+    emit(state.copyWith(userNotificationsSubscriptionState: CubitState.loading));
     final String? deviceToken = await NotificationsManager.getDeviceToken();
-    await _unSubscribeFromNotificationsUseCase(
+    final response = await _unSubscribeFromNotificationsUseCase(
       deviceToken: deviceToken!,
     );
-    emit(state.copyWith(isUserSubscribedToNotifications: false));
+    response.fold(
+      (l) => emit(state.copyWith(userNotificationsSubscriptionState: CubitState.failure)),
+      (r) => emit(
+        state.copyWith(isUserSubscribedToNotifications: false, userNotificationsSubscriptionState: CubitState.success),
+      ),
+    );
   }
 
   Future<void> getNotificationsState() async {
     await checkForNotificationsPermission();
     final isUserLoggedIn = _checkIfTokensExistUseCase();
-    if(isUserLoggedIn){
+    if (isUserLoggedIn) {
       emit(
-        state.copyWith( isUserSubscribedToNotifications:
-        state.notificationsPermissionsState == NotificationsPermissionsState.granted ? true
-            : false,
+        state.copyWith(
+          isUserSubscribedToNotifications: state.notificationsPermissionsState == NotificationsPermissionsState.granted
+              ? true : false,
         ),
       );
-    }else{
+    } else {
       emit(
         state.copyWith(
           isUserSubscribedToNotifications: false,

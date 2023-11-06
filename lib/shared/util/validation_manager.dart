@@ -14,7 +14,7 @@ class ValidationManager {
   }
 
   static phoneNumberValidator({required TextEditingController phoneController,}){
-    final phoneNumberRegex = RegExp(r'^\+\d{12}$');
+    final phoneNumberRegex = RegExp(r'^\d{11}$');
     return  (value) {
       if (!phoneNumberRegex.hasMatch(value ?? '')) {
         return StringsManager.phoneNumberValidationMessage;

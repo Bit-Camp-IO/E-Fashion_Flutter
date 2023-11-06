@@ -164,7 +164,7 @@ class StringsManager {
   //! TextField Validation
   static const String textIsRequired = ' is required';
   static const String textIsTooShort = 'is too short';
-  static const String phoneNumberValidationMessage = 'Invalid Phone Number ex: +21045678910';
+  static const String phoneNumberValidationMessage = 'Invalid Phone Number ex: 01045678910';
   static const String emailValidationMessage = 'Not a valid email address';
   static const String passwordIsRequiredMessage = 'Password is required';
   static const String passwordNoMatch = "Passwords don't match";

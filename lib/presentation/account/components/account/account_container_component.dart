@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/notifications_cubit/notifications_cubit.dart';
+import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/notifications_permissions_dialog.dart';
 import 'package:efashion_flutter/shared/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
@@ -9,6 +10,7 @@ import 'package:efashion_flutter/presentation/account/components/account/account
 import 'package:efashion_flutter/presentation/account/components/shared/account_clipped_container.dart';
 import 'package:efashion_flutter/presentation/account/components/shared/icon_switcher.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/theme_cubit/theme_cubit.dart';
+import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -102,6 +104,9 @@ class AccountContainerComponent extends StatelessWidget {
                     );
                   }else if (state.notificationsPermissionsState == NotificationsPermissionsState.granted && state.isUserSubscribedToNotifications == false){
                     context.read<NotificationsCubit>().subscribeToNotifications();
+                  }
+                  if (state.userNotificationsSubscriptionState == CubitState.failure){
+                    ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar.show(customSnackBarType: CustomSnackBarType.error, message: "ERROR! Check your internet connection", context: context));
                   }
                 },
                 builder: (context, state) {

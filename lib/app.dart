@@ -21,7 +21,7 @@ class EfashionApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => getIt<ThemeCubit>()..getAppTheme()),
         BlocProvider(create: (context) => getIt<TokensCubit>()..checkIfUserExist()),
-        BlocProvider(create: (context) => getIt<NotificationsCubit>()..getNotificationsState(), lazy: false,)
+        BlocProvider(create: (context) => getIt<NotificationsCubit>()..getNotificationsState())
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {

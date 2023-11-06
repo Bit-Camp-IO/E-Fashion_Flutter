@@ -1,4 +1,7 @@
+import 'package:efashion_flutter/firebase_options.dart';
+import 'package:efashion_flutter/main.dart';
 import 'package:efashion_flutter/shared/constants/app_constants.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -28,8 +31,9 @@ class NotificationsManager {
   }
 
   static Future<void> init() async {
-    FirebaseMessaging.instance
-        .subscribeToTopic(AppConstants.generalNotificationsTopic);
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    FirebaseMessaging.instance.subscribeToTopic(AppConstants.generalNotificationsTopic);
     _notification.initialize(
       onDidReceiveNotificationResponse: onNotificationTap,
       onDidReceiveBackgroundNotificationResponse: onNotificationTap,

@@ -39,8 +39,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
 
   Future<void> verifyOtp({required String otpCode}) async {
     emit(const ForgetPasswordLoadingState());
-    final forgetPasswordResponse =
-        await _verifyOtpUseCase(email: email, otpCode: otpCode);
+    final forgetPasswordResponse = await _verifyOtpUseCase(email: email, otpCode: otpCode);
     forgetPasswordResponse.fold(
       (failure) => emit(
         VerifyOtpFailState(message: failure.message),

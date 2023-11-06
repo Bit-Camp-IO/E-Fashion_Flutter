@@ -263,7 +263,7 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
         'brands': brands,
       },
     );
-    if(response['data']['status'] == ApiCallStatus.success){
+    if(response['status'] == ApiCallStatus.success.value){
       List<ProductModel> searchList = List.from(
         (response['data']['products'] as List).map(
               (category) => ProductModel.fromJson(category),

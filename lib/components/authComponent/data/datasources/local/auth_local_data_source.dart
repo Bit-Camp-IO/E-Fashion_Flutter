@@ -33,23 +33,31 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource{
 
   @override
   String getAccessToken() {
-     final accessTokenExpireTime = authDatabase.get(AppConstants.authBox)!.accessTokenTimeStamp.add(const Duration(minutes: 10));
-     final currentTime = DateTime.now();
+    if(checkIfTokensExist()){
+      final accessTokenExpireTime = authDatabase.get(AppConstants.authBox)!.accessTokenTimeStamp.add(const Duration(minutes: 10));
+      final currentTime = DateTime.now();
       if(currentTime.isBefore(accessTokenExpireTime)){
         return authDatabase.get(AppConstants.authBox)!.accessToken;
       } else{
         return '';
+      }
+    }else{
+      return '';
     }
   }
 
   @override
   Future<String> getRefreshToken() async{
-    final refRefreshExpireTime = authDatabase.get(AppConstants.authBox)!.refreshTokenTimeStamp.add(const Duration(days: 30));
-    final currentTime = DateTime.now();
-    if(currentTime.isBefore(refRefreshExpireTime)){
-      return authDatabase.get(AppConstants.authBox)!.refreshToken;
-    } else{
-      await authDatabase.delete(AppConstants.authBox);
+    if(checkIfTokensExist()){
+      final refRefreshExpireTime = authDatabase.get(AppConstants.authBox)!.refreshTokenTimeStamp.add(const Duration(days: 30));
+      final currentTime = DateTime.now();
+      if(currentTime.isBefore(refRefreshExpireTime)){
+        return authDatabase.get(AppConstants.authBox)!.refreshToken;
+      } else{
+        await authDatabase.delete(AppConstants.authBox);
+        throw const TokensException('Refresh Token Expired');
+      }
+    }else{
       throw const TokensException('Refresh Token Expired');
     }
   }
