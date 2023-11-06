@@ -8,7 +8,7 @@ This repository contains the source code for the E-Fashion Flutter App
 This repository applies clean archticture packaging by component
 The repository allows you to create a fashion store app with alot of features.
 
-##📱 App Preview
+📱 App Preview:
 ![eFashion in app preview](https://i.imgur.com/A43otzv.png)
 
 ## Features 🚀:
