@@ -4,7 +4,12 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/Bit-Camp-IO/E-Fashion_Flutter)
 ![GitHub issues](https://img.shields.io/github/issues/Bit-Camp-IO/Bit-Camp-IO/E-Fashion_Flutter)
 
-This repository contains the source code for the E-Fashion Flutter App, This repository applies clean archticture packaging by component.
+This repository contains the source code for the E-Fashion Flutter App
+This repository applies clean archticture packaging by component
+The repository allows you to create a fashion store app with alot of features.
+
+##📱 App Preview
+![eFashion in app preview](https://i.imgur.com/A43otzv.png)
 
 ## Features 🚀:
 
