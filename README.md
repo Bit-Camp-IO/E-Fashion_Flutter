@@ -155,7 +155,7 @@ The E-Fashion Flutter app utilizes the E-Fashion BackEnd API that empower all of
 The API URL is stored in the `api_constants.dart` file as described in the "Getting Started" section. This apiUrl is used by the app to communicate with the api and the websockets server.
 
 ## Project Architecture Advantages
-- Full independance away from the presentation.
+- Full independance from the presentation layer.
 - improve maintainability, modularity, and testabilit.
 - Bloc/Cubit can easily use several components without any restrections unlike packaging by feature.
 - No need for repeating usecases or entities or sharing them
