@@ -2,7 +2,7 @@
 ![Project Version](https://img.shields.io/badge/version-0.0.1-blue)
 ![GitHub license](https://img.shields.io/github/license/Bit-Camp-IO/E-Fashion_Flutter)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Bit-Camp-IO/E-Fashion_Flutter)
-![GitHub issues](https://img.shields.io/github/issues/Bit-Camp-IO/Bit-Camp-IO/E-Fashion_Flutter)
+![GitHub issues](https://img.shields.io/github/issues/Bit-Camp-IO/E-Fashion_Flutter)
 
 This repository contains the source code for the E-Fashion Flutter App
 This repository applies clean archticture packaging by component
