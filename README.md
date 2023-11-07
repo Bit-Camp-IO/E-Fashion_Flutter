@@ -9,7 +9,7 @@ This repository applies clean archticture packaging by component
 The repository allows you to create a fashion store app with alot of features.
 
 📱 App Preview:
-![eFashion in app preview](https://i.imgur.com/A43otzv.png)
+![eFashion in app preview](https://i.imgur.com/oAQa1JL.png)
 
 ## Features 🚀:
 
