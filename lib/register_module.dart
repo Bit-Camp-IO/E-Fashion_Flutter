@@ -8,16 +8,19 @@ import 'package:injectable/injectable.dart';
 
 @module
 abstract class RegisterModule {
+  @lazySingleton
+  Dio get dioClient => Dio();
+
   @Named(ApiConstants.unAuthenticatedConsumer)
   @lazySingleton
   ApiConsumer get mainApiConsumer => DioApiConsumer(
-        dioClient: Dio(),
+    dioClient: getIt<Dio>(),
         baseUrl: ApiConstants.baseUrl,
       );
   @Named(ApiConstants.authenticatedConsumer)
   @lazySingleton
   ApiConsumer get authenticatedApiConsumer => DioApiConsumer(
-    dioClient: Dio(),
+    dioClient: getIt<Dio>(),
     baseUrl: ApiConstants.baseUrl,
     interceptor: getIt<AuthenticatedInterceptor>(),
   );

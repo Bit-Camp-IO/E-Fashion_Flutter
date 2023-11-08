@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dio/io.dart';
 import 'package:efashion_flutter/shared/api/api_consumer.dart';
 import 'package:efashion_flutter/shared/api/api_status_code.dart';
-import 'package:efashion_flutter/shared/api/authenticated_interceptor.dart';
 import 'package:efashion_flutter/shared/api/unauthenticated_interceptor.dart';
 import 'package:efashion_flutter/shared/api/dio_logger.dart';
 import 'package:efashion_flutter/shared/error/exception.dart';
@@ -30,10 +29,10 @@ class DioApiConsumer extends ApiConsumer {
       ..validateStatus = (status) {
         return status! < ApiStatusCodes.internalServerError;
       };
-    if(interceptor == null){
-      dioClient.interceptors.add(getIt<UnAuthenticatedInterceptor>());
+    if(interceptor != null){
+      dioClient.interceptors.add(interceptor!);
     }else{
-      dioClient.interceptors.add(getIt<AuthenticatedInterceptor>());
+       dioClient.interceptors.add(getIt<UnAuthenticatedInterceptor>());
     }
 
     if (kDebugMode) {
