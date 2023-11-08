@@ -58,8 +58,8 @@ The repository allows you to create a fashion store app with a lot of features.
   
   ### User Profile
   
-  - User profile with personal informations like (Name - Picture - Email - Location - Order History)
-  - Update user profile (Uploading new picture, Change (name, email, phone number, passowrd, location))
+  - User profile with personal information like (Name - Picture - Email - Location - Order History)
+  - Update user profile (Uploading new picture, Change (name, email, phone number, password, location))
   
   ### Order Tracking
   
@@ -78,10 +78,10 @@ The repository allows you to create a fashion store app with a lot of features.
   - Real-time chat functionality for customer support using **WebSockets**. This feature fosters seamless communication between user and support.
   
   ###  Notifications 
-  - **Notifications List**: A list showcasing recent recived notifications
-  - **Chat Support Push Notifications**: Recive a message push notifications whenever the user outside the support chat.
-  - **Order Status Push Notifications**: Recive a push notifications for order status changes
-  - **General Push Notifications**: Recive a Custom Push Notifications From the app
+  - **Notifications List**: A list showcasing recent received notifications
+  - **Chat Support Push Notifications**: Receive a message push notifications whenever the user outside the support chat.
+  - **Order Status Push Notifications**: Receive a push notifications for order status changes
+  - **General Push Notifications**: Receive a Custom Push Notifications From the app
 
 
 ## Prerequisites
