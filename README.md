@@ -2,13 +2,13 @@
 ![Project Version](https://img.shields.io/badge/version-0.0.1-blue)
 ![GitHub license](https://img.shields.io/github/license/Bit-Camp-IO/E-Fashion_Flutter)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Bit-Camp-IO/E-Fashion_Flutter)
-![GitHub issues](https://img.shields.io/github/issues/Bit-Camp-IO/Bit-Camp-IO/E-Fashion_Flutter)
+![GitHub issues](https://img.shields.io/github/issues/Bit-Camp-IO/E-Fashion_Flutter)
 
 This repository contains the source code for the E-Fashion Flutter App
 This repository applies clean architecture packaging by component
 The repository allows you to create a fashion store app with a lot of features.
 
-📱 App Preview:
+📱 App Preview: [Watch On Youtube](https://www.youtube.com/watch?v=drZ33Vldnz8)
 ![eFashion in app preview](https://i.imgur.com/oAQa1JL.png)
 
 ## Features 🚀:
