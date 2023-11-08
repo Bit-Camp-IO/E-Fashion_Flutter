@@ -5,8 +5,8 @@
 ![GitHub issues](https://img.shields.io/github/issues/Bit-Camp-IO/Bit-Camp-IO/E-Fashion_Flutter)
 
 This repository contains the source code for the E-Fashion Flutter App
-This repository applies clean archticture packaging by component
-The repository allows you to create a fashion store app with alot of features.
+This repository applies clean architecture packaging by component
+The repository allows you to create a fashion store app with a lot of features.
 
 📱 App Preview:
 ![eFashion in app preview](https://i.imgur.com/oAQa1JL.png)
@@ -14,7 +14,7 @@ The repository allows you to create a fashion store app with alot of features.
 ## Features 🚀:
 
   ### Theming
-  - Material 3 Supprot
+  - Material 3 Support
   - ColorScheme System
   - Theme Switching (Light - Dark)
     
@@ -141,7 +141,7 @@ apiUrl = 'YOUR_BACK_END_URL';
 - Cached_Network_Image
 - Google_Maps_Flutter
 - Socket_IO_Client
-- Permession_handeler
+- Permission_handler
 - Flutter_Stripe
 - GetIt
 - Injectable
@@ -155,9 +155,9 @@ The E-Fashion Flutter app utilizes the E-Fashion BackEnd API that empower all of
 The API URL is stored in the `api_constants.dart` file as described in the "Getting Started" section. This apiUrl is used by the app to communicate with the api and the websockets server.
 
 ## Project Architecture Advantages
-- Full independance from the presentation layer.
-- improve maintainability, modularity, and testabilit.
-- Bloc/Cubit can easily use several components without any restrections unlike packaging by feature.
+- Full independence from the presentation layer.
+- improve maintainability, modularity, and testability.
+- Bloc/Cubit can easily use several components without any restrictions unlike packaging by feature.
 - No need for repeating usecases or entities or sharing them
 - Project Structure Example :
  ```
