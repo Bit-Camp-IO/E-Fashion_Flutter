@@ -3,7 +3,7 @@ import 'package:efashion_flutter/components/userComponent/data/models/app_theme_
 import 'package:efashion_flutter/shared/constants/app_constants.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class HiveConfigration{
+class HiveConfiguration{
    static Future<void> init() async{
      await Hive.initFlutter();
      Hive.registerAdapter(AppThemeModelAdapter());

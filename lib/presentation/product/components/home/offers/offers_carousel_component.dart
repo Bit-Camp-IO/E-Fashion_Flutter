@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:efashion_flutter/presentation/product/components/home/offers/offers_shimmer_loading.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/section_shimmer_loading.dart';
-import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/home_bloc/home_bloc.dart';
 import 'package:efashion_flutter/presentation/product/components/shared/section_widget.dart';

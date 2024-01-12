@@ -34,7 +34,6 @@ class DioApiConsumer extends ApiConsumer {
     }else{
        dioClient.interceptors.add(getIt<UnAuthenticatedInterceptor>());
     }
-
     if (kDebugMode) {
       dioClient.interceptors.add(getIt<DioLogInterceptor>());
     }

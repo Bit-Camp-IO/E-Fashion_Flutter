@@ -4,11 +4,12 @@ import 'package:efashion_flutter/shared/api/api_consumer.dart';
 import 'package:efashion_flutter/shared/api/authenticated_interceptor.dart';
 import 'package:efashion_flutter/shared/api/dio_consumer.dart';
 import 'package:efashion_flutter/shared/constants/api_constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 
 @module
 abstract class RegisterModule {
-  @lazySingleton
+  @factory
   Dio get dioClient => Dio();
 
   @Named(ApiConstants.unAuthenticatedConsumer)

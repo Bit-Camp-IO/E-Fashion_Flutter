@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
 import 'package:efashion_flutter/shared/constants/api_constants.dart';
-import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
 import 'package:efashion_flutter/presentation/product/components/shared/review_card.dart';

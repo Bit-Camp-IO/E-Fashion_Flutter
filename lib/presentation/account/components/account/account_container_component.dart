@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/notifications_cubit/notifications_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/notifications_permissions_dialog.dart';
-import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/tokens_cubit/tokens_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/container_button.dart';

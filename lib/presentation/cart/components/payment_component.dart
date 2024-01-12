@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/primary_button.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_snack_bar.dart';
-import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
-import 'package:efashion_flutter/shared/util/stripe_manager.dart';
+import 'package:efashion_flutter/shared/util/payment_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -68,7 +69,7 @@ class _PaymentComponentState extends State<PaymentComponent> with AutoRouteAware
                   isCheckOutLoading = true;
                 } else if (state.paymentState == CubitState.success) {
                   isCheckOutLoading = false;
-                  await StripeManager.initPaymentSheet(
+                  await getIt<PaymentManager>().initPaymentSheet(
                     clientSecretKey: state.paymentClientSecret,
                     context: context,
                     onFailure: (error) {

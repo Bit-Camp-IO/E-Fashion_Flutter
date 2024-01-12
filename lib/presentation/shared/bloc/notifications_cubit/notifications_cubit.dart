@@ -44,7 +44,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   Future<void> subscribeToNotifications() async {
     if (state.notificationsPermissionsState == NotificationsPermissionsState.granted) {
       emit(state.copyWith(userNotificationsSubscriptionState: CubitState.loading));
-      final String? deviceToken = await NotificationsManager.getDeviceToken();
+      final String? deviceToken = await NotificationsManagerImpl().getDeviceToken();
       final response = await _subscribeToNotificationsUseCase(
         deviceToken: deviceToken!,
       );
@@ -61,7 +61,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
 
   Future<void> unSubscribeFromNotifications() async {
     emit(state.copyWith(userNotificationsSubscriptionState: CubitState.loading));
-    final String? deviceToken = await NotificationsManager.getDeviceToken();
+    final String? deviceToken = await NotificationsManagerImpl().getDeviceToken();
     final response = await _unSubscribeFromNotificationsUseCase(
       deviceToken: deviceToken!,
     );

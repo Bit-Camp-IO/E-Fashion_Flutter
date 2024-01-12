@@ -6,7 +6,7 @@ import 'package:efashion_flutter/presentation/shared/widgets/cart_bottom_sheet.d
 import 'package:efashion_flutter/presentation/shared/widgets/custom_appbar.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/empty_widget.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/no_internet_connection_widget.dart';
-import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';

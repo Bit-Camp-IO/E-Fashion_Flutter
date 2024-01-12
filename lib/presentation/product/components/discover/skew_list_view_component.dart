@@ -3,7 +3,7 @@ import 'package:efashion_flutter/presentation/product/components/discover/list_v
 import 'package:efashion_flutter/presentation/product/components/discover/list_view_card_shimmer_loading.dart';
 import 'package:efashion_flutter/presentation/product/components/discover/top_list_view_card_shimmer_loading.dart';
 import 'package:efashion_flutter/presentation/shared/animations/custom_fade_animation.dart';
-import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/injection_container.dart';
 import 'package:efashion_flutter/presentation/product/bloc/details_cubit/details_cubit.dart';
 import 'package:efashion_flutter/presentation/product/bloc/discover_cubit/discover_bloc.dart';

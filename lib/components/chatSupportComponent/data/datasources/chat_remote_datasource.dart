@@ -29,8 +29,7 @@ class ChatRemoteDataSourceImpl extends ChatRemoteDataSource {
   ChatRemoteDataSourceImpl(@Named(ApiConstants.authenticatedConsumer) this._apiConsumer);
 
   late IO.Socket socketConsumer;
-  StreamController<ChatMessageModel> chatMessageController =
-      StreamController<ChatMessageModel>.broadcast();
+  StreamController<ChatMessageModel> chatMessageController = StreamController<ChatMessageModel>.broadcast();
 
   @override
   Future<String> createOrJoinChat({required userAccessToken}) async {

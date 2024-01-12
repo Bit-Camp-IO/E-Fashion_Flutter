@@ -1,4 +1,4 @@
-import 'package:efashion_flutter/shared/theme/color_scheme.dart';
+import 'package:efashion_flutter/core/theme/color_scheme.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/shared/util/colors_manager.dart';
 import 'package:flutter/material.dart';
@@ -14,14 +14,15 @@ class ThemeManager {
       useMaterial3: true,
       appBarTheme: AppBarTheme(
         backgroundColor: const Color(0xFFF1F0F4),
-          scrolledUnderElevation: 0,
-          elevation: 0,
-          titleSpacing: 10.w,
-          titleTextStyle: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w500,
-            color: ColorsManager.textColorPrimary,
-          )),
+        scrolledUnderElevation: 0,
+        elevation: 0,
+        titleSpacing: 10.w,
+        titleTextStyle: TextStyle(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w500,
+          color: ColorsManager.textColorPrimary,
+        ),
+      ),
       textTheme: TextTheme(
         displayLarge: TextStyle(
           fontSize: 57.sp,
@@ -93,7 +94,6 @@ class ThemeManager {
         backgroundColor: Colors.black.withOpacity(0.8),
         selectedItemColor: ColorsManager.lightPrimaryColor,
         unselectedItemColor: Colors.white.withOpacity(0.6),
-
       ),
     );
   }
@@ -190,7 +190,8 @@ class ThemeManager {
     );
   }
 
-  static PaymentSheetAppearance stripeSheetTheme({required BuildContext context}){
+  static PaymentSheetAppearance stripeSheetTheme(
+      {required BuildContext context}) {
     return PaymentSheetAppearance(
       colors: PaymentSheetAppearanceColors(
         primary: Theme.of(context).colorScheme.primary,

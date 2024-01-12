@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:efashion_flutter/app_routes_observer.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/notifications_cubit/notifications_cubit.dart';
-import 'package:efashion_flutter/shared/router/app_router.dart';
-import 'package:efashion_flutter/shared/theme/theme_manager.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
+import 'package:efashion_flutter/core/theme/theme_manager.dart';
 import 'package:efashion_flutter/shared/util/size_manager.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/theme_cubit/theme_cubit.dart';
 import 'package:efashion_flutter/injection_container.dart';

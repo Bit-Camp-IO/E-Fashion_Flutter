@@ -6,7 +6,7 @@ import 'package:efashion_flutter/presentation/shared/bloc/favorite_cubit/favorit
 import 'package:efashion_flutter/presentation/shared/bloc/cart_cubit/cart_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/notifications_cubit/notifications_cubit.dart';
 import 'package:efashion_flutter/presentation/shared/widgets/custom_tick.dart';
-import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/enums.dart';
 import 'package:efashion_flutter/shared/util/notifications_manager.dart';
 import 'package:efashion_flutter/shared/util/strings_manager.dart';
@@ -65,7 +65,7 @@ class _BottomNavBarState extends State<BottomNavBar>
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     context.read<NotificationsCubit>().getNotificationsState();
-    NotificationsManager.onClickNotification.stream.listen((event) {
+    NotificationsManagerImpl().onClickNotification.stream.listen((event) {
       if (event.payload == NotificationType.newMessage.value) {
         context.pushRoute(const ChatSupportRoute());
       } else {

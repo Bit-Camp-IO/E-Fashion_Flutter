@@ -4,7 +4,7 @@ import 'package:efashion_flutter/presentation/account/bloc/profile_cubit/profile
 import 'package:efashion_flutter/presentation/shared/widgets/no_profile_picture.dart';
 import 'package:efashion_flutter/shared/constants/api_constants.dart';
 import 'package:efashion_flutter/shared/constants/app_constants.dart';
-import 'package:efashion_flutter/shared/router/app_router.dart';
+import 'package:efashion_flutter/core/router/app_router.dart';
 import 'package:efashion_flutter/shared/util/assets_manager.dart';
 import 'package:efashion_flutter/presentation/account/components/account/account_container_component.dart';
 import 'package:efashion_flutter/presentation/shared/bloc/tokens_cubit/tokens_cubit.dart';

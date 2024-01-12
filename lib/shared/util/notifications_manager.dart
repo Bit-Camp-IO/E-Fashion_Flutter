@@ -7,30 +7,30 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
 
-class NotificationsManager {
-  static final _notification = FlutterLocalNotificationsPlugin();
-  static final onClickNotification = BehaviorSubject<NotificationResponse>();
-  static bool isInit = false;
-  static final NotificationsManager _notificationService =
-      NotificationsManager._internal();
+abstract class NotificationManager{
+  Future<void> init();
+  void onNotificationTap(NotificationResponse notificationResponse);
+  Future<void> requestNotificationsPermissions();
+  void showNotification({
+    required RemoteMessage message,
+    bool isForeground = true,
+  });
+  Future<String?> getDeviceToken();
+  Future<void> close();
+}
+class NotificationsManagerImpl extends NotificationManager{
+  final FlutterLocalNotificationsPlugin _notification = FlutterLocalNotificationsPlugin();
+  final BehaviorSubject<NotificationResponse> onClickNotification = BehaviorSubject<NotificationResponse>();
+  static final NotificationsManagerImpl _notificationService = NotificationsManagerImpl._internal();
 
-  factory NotificationsManager() {
+  factory NotificationsManagerImpl() {
     return _notificationService;
   }
 
-  NotificationsManager._internal();
+  NotificationsManagerImpl._internal();
 
-  static void onNotificationTap(NotificationResponse notificationResponse) {
-    onClickNotification.add(notificationResponse);
-  }
-
-  static Future<void> requestNotificationsPermissions() async{
-    await _notification.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestNotificationsPermission();
-  }
-
-  static Future<void> init() async {
+  @override
+  Future<void> init() async {
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     FirebaseMessaging.instance.subscribeToTopic(AppConstants.generalNotificationsTopic);
@@ -47,7 +47,7 @@ class NotificationsManager {
       ),
     );
     FirebaseMessaging.onMessage.listen((event) async {
-      await NotificationsManager.showNotification(message: event);
+      await NotificationsManagerImpl().showNotification(message: event);
     });
     final NotificationAppLaunchDetails? notificationBackgroundDetails = await _notification.getNotificationAppLaunchDetails();
     if(notificationBackgroundDetails!.didNotificationLaunchApp){
@@ -55,7 +55,19 @@ class NotificationsManager {
     }
   }
 
-  static Future<String?> getDeviceToken() async {
+  @override
+  void onNotificationTap(NotificationResponse notificationResponse) {
+    onClickNotification.add(notificationResponse);
+  }
+
+  @override
+  Future<void> requestNotificationsPermissions() async{
+    await _notification.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
+  }
+
+  Future<String?> getDeviceToken() async {
     final fcmToken = await FirebaseMessaging.instance.getToken();
     if (kDebugMode) {
       debugPrint('Token: $fcmToken');
@@ -63,19 +75,20 @@ class NotificationsManager {
     return fcmToken;
   }
 
-  static showNotification({
+  @override
+  Future<void> showNotification({
     required RemoteMessage message,
     bool isForeground = true,
   }) async {
-    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+    AndroidNotificationDetails androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'high_importance_channel',
       'eFashion Notifications',
       channelDescription: 'channel used for very important notifications',
       importance: Importance.max,
       priority: Priority.high,
     );
-    var iOSPlatformChannelSpecifics = const DarwinNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
+    DarwinNotificationDetails iOSPlatformChannelSpecifics = const DarwinNotificationDetails();
+    NotificationDetails platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
       iOS: iOSPlatformChannelSpecifics,
     );
@@ -88,7 +101,8 @@ class NotificationsManager {
     );
   }
 
-  static close() async{
+  @override
+  Future<void> close() async{
     await onClickNotification.close();
     await FirebaseMessaging.instance.unsubscribeFromTopic(AppConstants.generalNotificationsTopic);
   }
